@@ -23,6 +23,6 @@
 		</e:Group>
 		<e:Button id="m_btn_reset" label="重置" horizontalCenter="0" y="47" touchEnabled="true" touchChildren="true" enabled="true"/>
 		<e:Group width="160" height="160" x="422.65" y="534" scaleX="0.4" scaleY="0.4" anchorOffsetX="80" anchorOffsetY="80"/>
-		<e:Image id="m_basket_ball" source="qiu_png" x="134.4" y="470" scaleX="0.4" scaleY="0.4" anchorOffsetX="94" anchorOffsetY="94"/>
+		<e:Image id="m_basket_ball" source="qiu_png" x="332.4" y="692" scaleX="0.4" scaleY="0.4" anchorOffsetX="94" anchorOffsetY="94"/>
 	</e:Group>
 </e:Skin>
