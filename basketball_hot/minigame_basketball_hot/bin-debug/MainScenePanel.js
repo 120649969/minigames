@@ -25,6 +25,9 @@ var MainScenePanel = (function (_super) {
         _this._isStop = false;
         _this._current_times = 0;
         _this._currnet_index = 0;
+        _this._last_x = 0;
+        _this._last_y = 0;
+        _this._is_hit_resolve = false;
         _this.skinName = "MainScene";
         _this.initUI();
         _this.addEventListener(egret.Event.ADDED_TO_STAGE, _this.onAddToStage, _this);
@@ -35,16 +38,22 @@ var MainScenePanel = (function (_super) {
         this._last_time = egret.getTimer();
         this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
         this.m_container.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
-        this._ballCircleRadius = this.m_basket_ball.width * this.m_basket_ball.scaleX / 2 - 5;
-        this.m_basket_ball.x = 360;
-        this.m_basket_ball.y = 770;
+        // this._ballCircleRadius = this.m_basket_ball.width * this.m_basket_ball.scaleX / 2 - 5;
+        this._ballCircleRadius = 25;
+        var init_x = this.m_basket_ball.x;
+        var init_y = this.m_basket_ball.y;
+        this._basketball_speed_x = 3;
+        //	this.m_basket_ball.x = 360;
+        //this.m_basket_ball.y = 770;
         this.m_btn_reset.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function (event) {
-            this.m_basket_ball.x = 360;
-            this.m_basket_ball.y = 770;
-            this._basketball_speed_x = 0;
+            this.m_basket_ball.x = init_x;
+            this.m_basket_ball.y = init_y;
+            this._basketball_speed_x = 3;
             this._basketball_speed_y = 0;
             this._isOnFloor = false;
             this._isStop = false;
+            this.removeEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
+            this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
             event.stopPropagation();
         }.bind(this), this);
     };
@@ -61,7 +70,7 @@ var MainScenePanel = (function (_super) {
         this._current_impluse.x = 0;
         this._current_impluse.y = 0;
         var total_speed = Math.sqrt(Math.pow(this._basketball_speed_x, 2) + Math.pow(this._baskball_speed_y, 2));
-        var step_speed = 1;
+        var step_speed = 2;
         var times = Math.ceil(total_speed / step_speed);
         var curr_speend_x = this._basketball_speed_x / times;
         var curr_speend_y = this._baskball_speed_y / times;
@@ -72,6 +81,8 @@ var MainScenePanel = (function (_super) {
                 curr_speend_x = this._basketball_speed_x - this._basketball_speed_x / times * (times - 1);
                 curr_speend_y = this._baskball_speed_y - this._baskball_speed_y / times * (times - 1);
             }
+            this._last_x = this.m_basket_ball.x;
+            this._last_y = this.m_basket_ball.y;
             this.m_basket_ball.x += curr_speend_x;
             this.m_basket_ball.y += curr_speend_y;
             this.m_basket_ball.x = Math.max(this.m_basket_ball.x, 0);
@@ -80,14 +91,342 @@ var MainScenePanel = (function (_super) {
             if (this.checkHitFloor()) {
                 return;
             }
-            if (this.checkHitBasketCircle()) {
+            if (this.checkHitBasketTopScope()) {
+                if (this._is_hit_resolve) {
+                    console.log(this.m_basket_ball.x + " toback  " + this.m_basket_ball.y);
+                    this.m_basket_ball.x = this._last_x;
+                    this.m_basket_ball.y = this._last_y;
+                    this._is_hit_resolve = false;
+                }
+                console.log(this.m_basket_ball.x + " to1  " + this.m_basket_ball.y);
                 return;
             }
-            if (this.checkHitBoard()) {
-                return;
+            console.log(this.m_basket_ball.x + " to2  " + this.m_basket_ball.y);
+            // if(this.checkHitBasketCircle())
+            // {
+            // 	return
+            // }
+            // if(this.checkHitBoard())
+            // {
+            // 	return;
+            // }
+        }
+        // this.checkHitNet();
+    };
+    MainScenePanel.prototype.checkHitBasketTopScope = function () {
+        var global_ball_center_point = new egret.Point();
+        this.m_basket_ball.localToGlobal(this.m_basket_ball.width / 2, this.m_basket_ball.width / 2, global_ball_center_point);
+        var right_scope_left_top_point = new egret.Point();
+        this.m_basket_container.localToGlobal(this.m_right_scope.x, this.m_right_scope.y, right_scope_left_top_point);
+        var right_scope_right_down_point = new egret.Point();
+        this.m_basket_container.localToGlobal(this.m_right_scope.x + this.m_right_scope.width, this.m_right_scope.y + this.m_right_scope.height, right_scope_right_down_point);
+        if (global_ball_center_point.y < right_scope_left_top_point.y) {
+            //上方，框的顶部，只有圆的下方才能和顶部碰撞，圆的上方就算和顶部碰撞了，也视作为左右两侧的碰撞
+            //去除x没在范围的情况
+            if (global_ball_center_point.x > right_scope_right_down_point.x + this._ballCircleRadius) {
+                return false;
+            }
+            else if (global_ball_center_point.x < right_scope_left_top_point.x - this._ballCircleRadius) {
+                return false;
+            }
+            //去除y没在范围的情况
+            var delta_y = right_scope_left_top_point.y - global_ball_center_point.y;
+            if (delta_y > this._ballCircleRadius) {
+                return false;
+            }
+            else {
+                //这里去没有相交的情况
+                //去除y在范围，x在范围 但是不符合矩形和圆相交的情况
+                var top_line_cirle_width = Math.sqrt(Math.pow(this._ballCircleRadius, 2) - Math.pow(delta_y, 2));
+                if (global_ball_center_point.x > right_scope_right_down_point.x) {
+                    if (global_ball_center_point.x - right_scope_right_down_point.x > top_line_cirle_width) {
+                        return false;
+                    }
+                }
+                else if (global_ball_center_point.x < right_scope_left_top_point.x) {
+                    if (right_scope_left_top_point.x - global_ball_center_point.x > top_line_cirle_width) {
+                        return false;
+                    }
+                }
+            }
+            if (delta_y > this._ballCircleRadius / 2) {
+                this._is_hit_resolve = true;
+                //此时需要根据碰撞的具体位置来判断
+                if (global_ball_center_point.x > right_scope_right_down_point.x) {
+                    if (this._basketball_speed_x < 0) {
+                        var message = this._basketball_speed_x + "  " + this._baskball_speed_y;
+                        if (this._baskball_speed_y < 0) {
+                            return false;
+                        }
+                        var _rate = Math.abs(this._baskball_speed_y / this._basketball_speed_x);
+                        if (Math.abs(this._basketball_speed_x) < 3) {
+                            if (_rate > 1) {
+                                this._basketball_speed_x = 5;
+                                this._baskball_speed_y *= -0.7;
+                            }
+                            else {
+                                this._basketball_speed_x = 5;
+                                this._baskball_speed_y *= 0.7;
+                            }
+                        }
+                        else {
+                            if (_rate >= 1) {
+                                this._basketball_speed_x *= 0.7;
+                                this._baskball_speed_y *= -0.7;
+                            }
+                            else {
+                                this._basketball_speed_x *= -0.7;
+                                this._baskball_speed_y *= 0.7;
+                            }
+                            this._basketball_speed_x = Math.min(this._basketball_speed_x, -5);
+                            if (Math.abs(this._baskball_speed_y) < 5) {
+                                this._baskball_speed_y = this._baskball_speed_y / Math.abs(this._baskball_speed_y) * 5;
+                            }
+                        }
+                    }
+                    else {
+                        if (this._basketball_speed_x == 0) {
+                            this._basketball_speed_x = 5;
+                        }
+                        else {
+                            this._basketball_speed_x = Math.max(this._basketball_speed_x, 5);
+                        }
+                        this._baskball_speed_y *= -0.7;
+                    }
+                }
+                else if (global_ball_center_point.x < right_scope_left_top_point.x) {
+                    if (this._basketball_speed_x < 0) {
+                        var _rate = Math.abs(this._baskball_speed_y / this._basketball_speed_x);
+                        if (_rate >= 1) {
+                            this._basketball_speed_x *= 0.7;
+                            this._baskball_speed_y *= -0.7;
+                        }
+                        else {
+                            this._basketball_speed_x *= -0.7;
+                            this._baskball_speed_y *= 0.7;
+                        }
+                    }
+                    else {
+                        if (this._basketball_speed_x == 0) {
+                            this._basketball_speed_x = -5;
+                            this._baskball_speed_y *= 0.7;
+                        }
+                        else {
+                            this._basketball_speed_x *= -0.7;
+                            this._baskball_speed_y *= 0.7;
+                        }
+                        this._basketball_speed_x = Math.max(this._basketball_speed_x, -5);
+                    }
+                }
+                else if (global_ball_center_point.x > right_scope_left_top_point.x - this._ballCircleRadius && global_ball_center_point.x < right_scope_right_down_point.x + this._ballCircleRadius) {
+                    if (this._basketball_speed_x == 0) {
+                        this._basketball_speed_x = 5;
+                    }
+                    else {
+                        this._basketball_speed_x *= 0.7;
+                        this._baskball_speed_y *= -0.7;
+                        this._basketball_speed_x = 0.7;
+                    }
+                }
+                else {
+                    this._is_hit_resolve = false;
+                    return false;
+                }
+                return true;
+            }
+            else {
+                if (global_ball_center_point.x > right_scope_right_down_point.x) {
+                    if (Math.abs(this._basketball_speed_x) < 3) {
+                        this._baskball_speed_y *= -0.7;
+                        this._basketball_speed_x = 5;
+                    }
+                    else {
+                        if (this._basketball_speed_x < 0) {
+                            this._basketball_speed_x *= -3;
+                            this._baskball_speed_y *= 0;
+                        }
+                        else {
+                            // this._basketball_speed_x *= 0.7
+                            this._baskball_speed_y *= -0.7;
+                        }
+                    }
+                }
+                else if (global_ball_center_point.x < right_scope_left_top_point.x) {
+                    if (Math.abs(this._basketball_speed_x) < 3) {
+                        this._baskball_speed_y *= -0.7;
+                        this._basketball_speed_x = -5;
+                    }
+                    else {
+                        if (this._basketball_speed_x < 0) {
+                            this._basketball_speed_x *= -0.7;
+                            this._baskball_speed_y *= 0.7;
+                        }
+                        else {
+                            this._basketball_speed_x *= 0.7;
+                            this._baskball_speed_y *= -0.7;
+                        }
+                    }
+                }
+                else {
+                    console.error("速度过快了");
+                }
+                this._is_hit_resolve = true;
+                return true;
             }
         }
-        this.checkHitNet();
+        return false;
+    };
+    MainScenePanel.prototype.checkHitBasketRightScope = function () {
+        var curr_x = this.m_basket_ball.x;
+        var curr_y = this.m_basket_ball.y;
+        var global_ball_center_point = new egret.Point();
+        this.m_basket_ball.localToGlobal(this.m_basket_ball.width / 2, this.m_basket_ball.width / 2, global_ball_center_point);
+        var right_scope_left_top_point = new egret.Point();
+        this.m_basket_container.localToGlobal(this.m_right_scope.x, this.m_right_scope.y, right_scope_left_top_point);
+        var right_scope_right_down_point = new egret.Point();
+        this.m_basket_container.localToGlobal(this.m_right_scope.x + this.m_right_scope.width, this.m_right_scope.y + this.m_right_scope.height, right_scope_right_down_point);
+        if (global_ball_center_point.y < right_scope_left_top_point.y) {
+            //上方，框的顶部，只有圆的下方才能和顶部碰撞，圆的上方就算和顶部碰撞了，也视作为左右两侧的碰撞
+            //去除x没在范围的情况
+            if (global_ball_center_point.x > right_scope_right_down_point.x + this._ballCircleRadius) {
+                return false;
+            }
+            else if (global_ball_center_point.x < right_scope_left_top_point.x - this._ballCircleRadius) {
+                return false;
+            }
+            //去除y没在范围的情况
+            var delta_y = right_scope_left_top_point.y - global_ball_center_point.y;
+            if (delta_y > this._ballCircleRadius) {
+                return false;
+            }
+            else {
+                //这里去没有相交的情况
+                //去除y在范围，x在范围 但是不符合矩形和圆相交的情况
+                var top_line_cirle_width = Math.sqrt(Math.pow(this._ballCircleRadius, 2) - Math.pow(delta_y, 2));
+                if (global_ball_center_point.x > right_scope_right_down_point.x) {
+                    if (global_ball_center_point.x - right_scope_right_down_point.x > top_line_cirle_width) {
+                        return false;
+                    }
+                }
+                else if (global_ball_center_point.x < right_scope_left_top_point.x) {
+                    if (right_scope_left_top_point.x - global_ball_center_point.x > top_line_cirle_width) {
+                        return false;
+                    }
+                }
+            }
+            if (delta_y > this._ballCircleRadius / 2) {
+                this._is_hit_resolve = true;
+                //此时需要根据碰撞的具体位置来判断
+                if (global_ball_center_point.x > right_scope_right_down_point.x) {
+                    if (this._basketball_speed_x < 0) {
+                        var message = this._basketball_speed_x + "  " + this._baskball_speed_y;
+                        if (this._baskball_speed_y < 0) {
+                            return false;
+                        }
+                        var _rate = Math.abs(this._baskball_speed_y / this._basketball_speed_x);
+                        if (Math.abs(this._basketball_speed_x) < 3) {
+                            if (_rate > 1) {
+                                this._basketball_speed_x = 5;
+                                this._baskball_speed_y *= -0.7;
+                            }
+                            else {
+                                this._basketball_speed_x = 5;
+                                this._baskball_speed_y *= 0.7;
+                            }
+                        }
+                        else {
+                            if (_rate >= 1) {
+                                this._basketball_speed_x *= 0.7;
+                                this._baskball_speed_y *= -0.7;
+                            }
+                            else {
+                                this._basketball_speed_x *= -0.7;
+                                this._baskball_speed_y *= 0.7;
+                            }
+                            this._basketball_speed_x = Math.min(this._basketball_speed_x, -5);
+                            if (Math.abs(this._baskball_speed_y) < 5) {
+                                this._baskball_speed_y = this._baskball_speed_y / Math.abs(this._baskball_speed_y) * 5;
+                            }
+                        }
+                    }
+                    else {
+                        if (this._basketball_speed_x == 0) {
+                            this._basketball_speed_x = 5;
+                        }
+                        else {
+                            this._basketball_speed_x = Math.max(this._basketball_speed_x, 5);
+                        }
+                        this._baskball_speed_y *= -0.7;
+                    }
+                }
+                else if (global_ball_center_point.x < right_scope_left_top_point.x && global_ball_center_point.x > right_scope_left_top_point.x - this._ballCircleRadius) {
+                    if (this._basketball_speed_x < 0) {
+                        var _rate = Math.abs(this._baskball_speed_y / this._basketball_speed_x);
+                        if (_rate >= 1) {
+                            this._basketball_speed_x *= 0.7;
+                            this._baskball_speed_y *= -0.7;
+                        }
+                        else {
+                            this._basketball_speed_x *= -0.7;
+                            this._baskball_speed_y *= 0.7;
+                        }
+                    }
+                    else {
+                        if (this._basketball_speed_x == 0) {
+                            this._basketball_speed_x = -5;
+                            this._baskball_speed_y *= 0.7;
+                        }
+                        else {
+                            this._basketball_speed_x *= -0.7;
+                            this._baskball_speed_y *= 0.7;
+                        }
+                        this._basketball_speed_x = Math.max(this._basketball_speed_x, -5);
+                    }
+                }
+                else if (global_ball_center_point.x > right_scope_left_top_point.x - this._ballCircleRadius && global_ball_center_point.x < right_scope_right_down_point.x + this._ballCircleRadius) {
+                    if (this._basketball_speed_x == 0) {
+                        this._basketball_speed_x = 5;
+                    }
+                    else {
+                        this._basketball_speed_x *= 0.7;
+                        this._baskball_speed_y *= -0.7;
+                        this._basketball_speed_x = 0.7;
+                    }
+                }
+                else {
+                    this._is_hit_resolve = false;
+                    return false;
+                }
+                return true;
+            }
+            else {
+                var come_here = 0;
+                // if(global_ball_center_point.x  > right_scope_right_down_point.x) {  //碰到了右上方的角
+                // 	if(this._basketball_speed_x < 0){ //反弹，并且减速
+                // 		this._basketball_speed_x *= -0.7;
+                // 		this._baskball_speed_y *= 0.7;
+                // 	}else{
+                // 		this._basketball_speed_x  += 0.3;
+                // 		this._baskball_speed_y *= 0.7;
+                // 	}
+                // } else if(global_ball_center_point.x  < right_scope_left_top_point.x) { //碰到了左上方的角
+                // 	if(this._basketball_speed_x < 0){ //反弹，并且减速
+                // 		this._basketball_speed_x  == 0.3;
+                // 		this._baskball_speed_y *= 0.7;
+                // 	}else{
+                // 		this._basketball_speed_x *= -0.7;
+                // 		this._baskball_speed_y *= 0.7;
+                // 	}
+                // }
+                // this._is_hit_resolve = true
+                // return true;
+            }
+        }
+        else if (global_ball_center_point.y > right_scope_right_down_point.y) {
+        }
+        else {
+        }
+        return false;
     };
     MainScenePanel.prototype.onEnterFrame = function (event) {
         if (this._isStop) {
@@ -212,15 +551,45 @@ var MainScenePanel = (function (_super) {
         if (condition1 && condition2) {
             var center_y_1 = (bigCircleLeftTopPoint.y + bigCircleRightDownPoint.y) / 2;
             if (temp_global_point.y < center_y_1 + this._ballCircleRadius && temp_global_point.y > center_y_1 - this._ballCircleRadius) {
-                if (temp_global_point.y > center_y_1) {
-                    this._basketball_speed_x *= 1;
-                    this._baskball_speed_y *= -1;
+                var is_down = false;
+                if (temp_global_point.y < center_y_1) {
+                    is_down = true;
+                    if (this._baskball_speed_y > 0) {
+                        this._basketball_speed_x *= 1;
+                        this._baskball_speed_y *= -1;
+                        console.log("#####11#######", this._basketball_speed_x, this._baskball_speed_y);
+                    }
+                    else {
+                        this._basketball_speed_x *= -1;
+                        this._baskball_speed_y *= 1;
+                        console.log("#####22#######", this._basketball_speed_x, this._baskball_speed_y);
+                    }
                 }
                 else {
-                    this._basketball_speed_x *= 1;
-                    this._baskball_speed_y *= -1;
+                    if (temp_global_point.x < bigCircleRightDownPoint.x + this._ballCircleRadius / 2) {
+                        console.log("#####33#######", this._basketball_speed_x, this._baskball_speed_y);
+                        if (this._baskball_speed_y < 0) {
+                            this._basketball_speed_x *= 0.7;
+                            this._baskball_speed_y *= -0.7;
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+                    }
+                    else {
+                        console.log("#####44#######", this._basketball_speed_x, this._baskball_speed_y);
+                        if (this._basketball_speed_x < 0) {
+                            this._basketball_speed_x *= -0.7;
+                            this._baskball_speed_y *= 0.7;
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+                    }
                 }
-                console.log("#####hit circle###########", this._basketball_speed_x, this._baskball_speed_y, this._current_times, this._currnet_index);
+                console.log("#####hit circle###########", this._basketball_speed_x, this._baskball_speed_y, this._current_times, this._currnet_index, is_down);
                 //this._isStop = true;
                 return true;
             }
