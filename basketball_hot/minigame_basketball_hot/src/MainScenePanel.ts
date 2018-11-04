@@ -4,6 +4,7 @@ class MainScenePanel extends eui.Component{
 	private m_floor : eui.Group;
 	private m_basket_container : eui.Group;
 	private m_board_scope: eui.Group;
+	private m_skip_board_scope : eui.Group;
 	private m_net_scope: eui.Group;
 	private m_joint_scope: eui.Group;
 	private m_big_basketcircle_scope: eui.Group;
@@ -46,18 +47,15 @@ class MainScenePanel extends eui.Component{
 		this._last_time = egret.getTimer();
 		this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
 		this.m_container.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
-		// this._ballCircleRadius = this.m_basket_ball.width * this.m_basket_ball.scaleX / 2 - 5;
 		this._ballCircleRadius = 25;
 		
 
 		let init_x = this.m_basket_ball.x
 		let init_y = this.m_basket_ball.y
 		let init_speed_x = 0
-		let init_speed_y = -20
-		// this._basketball_speed_x = init_speed_x
-		// this._baskball_speed_y = init_speed_y
-	//	this.m_basket_ball.x = 360;
-		//this.m_basket_ball.y = 770;
+		let init_speed_y = 0
+		this._basketball_speed_x = init_speed_x
+		this._baskball_speed_y = init_speed_y
 		this.m_btn_reset.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.TouchEvent){
 			this.m_basket_ball.x = init_x;
 			this.m_basket_ball.y = init_y;
@@ -82,6 +80,7 @@ class MainScenePanel extends eui.Component{
 	private _last_x = 0
 	private _last_y = 0
 	private _is_hit_resolve = false;
+	private _is_next_frame_skil_times = false;
 	private _updateBallCurrentState():void
 	{
 		let delta_speed_x = this._current_impluse.x;
@@ -99,6 +98,10 @@ class MainScenePanel extends eui.Component{
 		let step_speed = 2
 		
 		let times = Math.ceil(total_speed / step_speed)
+		if(this._is_next_frame_skil_times){
+			times = 1;
+			this._is_next_frame_skil_times = false;
+		}
 		let curr_speend_x = this._basketball_speed_x / times
 		let curr_speend_y = this._baskball_speed_y / times
 		this._current_times = times;
@@ -126,7 +129,7 @@ class MainScenePanel extends eui.Component{
 				return
 			}
 
-			if(this.checkHitBasketTopScope() || this.checkHitBasketDownScope())
+			if(this.checkHitBasketTopScope() || this.checkHitBasketDownScope() || this.checkHitBoardNew() || this.checkHitBasketLeftScope())
 			{
 				if(this._is_hit_resolve){
 					// console.log(this.m_basket_ball.x + " toback  " + this.m_basket_ball.y)
@@ -142,13 +145,65 @@ class MainScenePanel extends eui.Component{
 			// {
 			// 	return
 			// }
-
-			if(this.checkHitBoard())
-			{
-				return;
-			}
 		}
 		// this.checkHitNet();
+	}
+
+	private checkHitBasketLeftScope():boolean
+	{
+
+		let global_ball_center_point:egret.Point = new egret.Point();
+		this.m_basket_ball.localToGlobal(this.m_basket_ball.width / 2, this.m_basket_ball.width / 2, global_ball_center_point);
+
+		let left_scope_left_top_point:egret.Point = new egret.Point();
+		this.m_basket_container.localToGlobal(this.m_left_scope.x, this.m_left_scope.y, left_scope_left_top_point);
+		let left_scope_right_down_point:egret.Point = new egret.Point();
+		this.m_basket_container.localToGlobal(this.m_left_scope.x + this.m_left_scope.width, this.m_left_scope.y + this.m_left_scope.height, left_scope_right_down_point);
+
+		if(global_ball_center_point.y > left_scope_right_down_point.y + this._ballCircleRadius || global_ball_center_point.y < left_scope_left_top_point.y - this._ballCircleRadius)
+		{
+			return false;
+		}
+
+		if(global_ball_center_point.x < left_scope_left_top_point.x || global_ball_center_point.x > left_scope_right_down_point.x + this._ballCircleRadius)
+		{
+			return false;
+		}
+
+		if(global_ball_center_point.y < left_scope_left_top_point.y)  //顶部附近
+		{
+			console.assert(this._basketball_speed_x < 0, "left scope  top ball speed_x < 0");
+			if(this._basketball_speed_x == 0){
+				this._basketball_speed_x = 5;
+			}else{
+				this._basketball_speed_x *= -1;
+			}
+			
+			this._baskball_speed_y *= -1;
+			this._is_hit_resolve = true;
+			return true;
+		}
+
+		if(global_ball_center_point.y > left_scope_right_down_point.y) //底部附近
+		{
+
+			if(this._basketball_speed_x == 0)
+			{
+				this._baskball_speed_y *= 0.5
+				this._basketball_speed_x = 5
+			} else {
+				this._basketball_speed_x *= -3;
+				this._baskball_speed_y *= 0.5
+			}
+
+			this._is_hit_resolve = true;
+			return true
+		}
+		this._basketball_speed_x *= -1;
+		this._baskball_speed_y *= 0.5
+		this._is_hit_resolve = true;
+
+		return false;
 	}
 
 	private checkHitBasketDownScope():boolean
@@ -606,18 +661,117 @@ class MainScenePanel extends eui.Component{
 				new_speed_y = 0;
 			}
 			this._baskball_speed_y = new_speed_y;
+			this._basketball_speed_x = 0;
 			return true;
 		}
 		return false;
 	}
 
+	private checkHitBoardNew():boolean
+	{
+		let global_ball_center_point:egret.Point = new egret.Point();
+		this.m_basket_ball.localToGlobal(this.m_basket_ball.width / 2, this.m_basket_ball.width / 2, global_ball_center_point);
+
+		let board_scope_left_top_point:egret.Point = new egret.Point();
+		this.m_basket_container.localToGlobal(this.m_board_scope.x, this.m_board_scope.y, board_scope_left_top_point);
+		let board_scope_right_down_point:egret.Point = new egret.Point();
+		this.m_basket_container.localToGlobal(this.m_board_scope.x + this.m_board_scope.width, this.m_board_scope.y + this.m_board_scope.height, board_scope_right_down_point);
+
+		let skip_board_scope_left_top_point:egret.Point = new egret.Point();
+		this.m_basket_container.localToGlobal(this.m_skip_board_scope.x, this.m_skip_board_scope.y, skip_board_scope_left_top_point);
+		let skip_board_scope_right_down_point:egret.Point = new egret.Point();
+		this.m_basket_container.localToGlobal(this.m_skip_board_scope.x + this.m_skip_board_scope.width, this.m_board_scope.y + this.m_board_scope.height, skip_board_scope_right_down_point);
+
+		//x无效范围
+		if(global_ball_center_point.x > board_scope_right_down_point.x + this._ballCircleRadius || global_ball_center_point.x < board_scope_left_top_point.x - this._ballCircleRadius)
+		{
+			return false;
+		}
+		
+		//y无效范围
+		if(global_ball_center_point.y > board_scope_right_down_point.y + this._ballCircleRadius || global_ball_center_point.y < board_scope_left_top_point.y - this._ballCircleRadius)
+		{
+			return false
+		}
+		if(global_ball_center_point.y < skip_board_scope_left_top_point.y) //在挡板的上半部分附近
+		{
+			let top_line_circle_width = Math.sqrt(Math.pow(this._ballCircleRadius, 2) - Math.pow(global_ball_center_point.y - board_scope_left_top_point.y, 2));
+			if(global_ball_center_point.x < board_scope_left_top_point.x){
+				if(board_scope_left_top_point.x - global_ball_center_point.x > top_line_circle_width) //左边圆和矩形没有相交
+				{
+					return false
+				}
+			} else if(global_ball_center_point.x > board_scope_right_down_point.x){
+				if(global_ball_center_point.x - board_scope_right_down_point.x > top_line_circle_width)//右边圆和矩形没有相交
+				{
+					return false
+				}
+			}
+
+			this._is_hit_resolve = true;
+			//处理上面相交过程
+			if(this._basketball_speed_x > 0){ //可以反弹
+				if(this._baskball_speed_y < 0){
+					this._is_hit_resolve = false;
+					return false;
+				}
+				this._basketball_speed_x *= 0.7;
+				this._baskball_speed_y *= -0.7;
+			} else if(this._basketball_speed_x == 0){
+				this._basketball_speed_x = 5;
+			} else if(this._basketball_speed_x < 0){
+				this._basketball_speed_x = -3;
+				this._baskball_speed_y = -10;
+				this._is_next_frame_skil_times = true
+			}
+
+			return true;
+		}
+
+		if(global_ball_center_point.y > board_scope_right_down_point.y) //在挡板的底部附近
+		{
+			let down_line_circle_width = Math.sqrt(Math.pow(this._ballCircleRadius, 2) - Math.pow(global_ball_center_point.y - board_scope_right_down_point.y, 2));
+			if(global_ball_center_point.x < board_scope_left_top_point.x){
+				if(board_scope_left_top_point.x - global_ball_center_point.x > down_line_circle_width) //左边圆和矩形没有相交
+				{
+					return false
+				}
+			} else if(global_ball_center_point.x > board_scope_right_down_point.x){
+				if(global_ball_center_point.x - board_scope_right_down_point.x > down_line_circle_width)//右边圆和矩形没有相交
+				{
+					return false
+				}
+			}
+
+			this._is_hit_resolve = true;
+
+			
+			if(this._basketball_speed_x == 0){
+				if(global_ball_center_point.x > board_scope_right_down_point.x){
+					this._basketball_speed_x = 5.0;
+				} else if(global_ball_center_point.x < board_scope_left_top_point.x) {
+					this._basketball_speed_x = -5.0
+				}
+				this._baskball_speed_y *= -0.7;  //直接反弹
+			} else {
+				this._baskball_speed_y *= -1;  //直接反弹
+			}
+			return true;
+		}
+
+		//下面就是碰撞左右两边了
+		this._is_hit_resolve = true;
+		this._basketball_speed_x *= -1;
+		return true;
+	}
+
 	private checkHitBoard():boolean
 	{
-		let temp_global_point:egret.Point = new egret.Point();
-		this.m_basket_ball.localToGlobal(this.m_basket_ball.width / 2, this.m_basket_ball.width / 2, temp_global_point);
+		let global_ball_center_point:egret.Point = new egret.Point();
+		this.m_basket_ball.localToGlobal(this.m_basket_ball.width / 2, this.m_basket_ball.width / 2, global_ball_center_point);
 
 		let localInContainerPoint:egret.Point = new egret.Point();
-		this.m_basket_container.globalToLocal(temp_global_point.x, temp_global_point.y, localInContainerPoint);
+		this.m_basket_container.globalToLocal(global_ball_center_point.x, global_ball_center_point.y, localInContainerPoint);
 
 		if(localInContainerPoint.y <= this.m_board_scope.y){  //top
 			if(localInContainerPoint.y - this.m_board_scope.y <= this._ballCircleRadius && (localInContainerPoint.x <= this.m_board_scope.x + this._ballCircleRadius && localInContainerPoint.x >= this.m_board_scope.x - this._ballCircleRadius))
