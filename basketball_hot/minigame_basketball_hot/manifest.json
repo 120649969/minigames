@@ -9,10 +9,14 @@
 	],
 	"game": [
 		"bin-debug/AssetAdapter.js",
+		"bin-debug/HitConst.js",
+		"bin-debug/HitManager.js",
+		"bin-debug/HitManagerNew.js",
 		"bin-debug/LoadingUI.js",
 		"bin-debug/Main.js",
 		"bin-debug/MainScenePanel.js",
 		"bin-debug/Platform.js",
+		"bin-debug/PlayerBall.js",
 		"bin-debug/ThemeAdapter.js"
 	]
 }
