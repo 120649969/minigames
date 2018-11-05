@@ -34,6 +34,24 @@ var HitConst = (function () {
         }
         return 1.0;
     };
+    HitConst.SwapPoint = function (point1, point2) {
+        var temp_point_x = point1.x;
+        var temp_point_y = point1.y;
+        point1.x = point2.x;
+        point1.y = point2.y;
+        point2.x = temp_point_x;
+        point2.y = temp_point_y;
+    };
+    HitConst.SwapPointXY = function (left_top_point, right_down) {
+        var left_x = right_down.x;
+        var left_y = left_top_point.y;
+        var right_x = left_top_point.x;
+        var right_y = right_down.y;
+        left_top_point.x = left_x;
+        left_top_point.y = left_y;
+        right_down.x = right_x;
+        right_down.y = right_y;
+    };
     HitConst.floor_restitution = -0.7; //地面反弹系数，反弹会改变方向，所以要改成负数
     HitConst.floor_friction = 1.0; //地面摩擦系数
     HitConst.basket_right_line_restitution = -0.7; //篮筐前沿反弹系数
@@ -42,6 +60,7 @@ var HitConst = (function () {
     HitConst.basket_left_line_friction = 1.0; //篮筐后沿摩擦系数 
     HitConst.basket_board_restitution = -0.7; //篮框后方挡板反弹系数
     HitConst.basket_board_friction = 1.0; //篮框后方挡板摩擦系数 
+    HitConst.Max_Speed_X = 3; //x方向的速度
     return HitConst;
 }());
 __reflect(HitConst.prototype, "HitConst");

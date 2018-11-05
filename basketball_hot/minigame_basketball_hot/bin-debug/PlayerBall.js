@@ -32,34 +32,45 @@ var PlayerBall = (function () {
         }
     };
     //检测是否进球
-    PlayerBall.prototype._checkGoal = function () {
+    PlayerBall.prototype._checkGoal = function (firstPoint, secondPoint) {
         var global_circle_scope_left_top_point = this.mainPanel.m_circle_scope.parent.localToGlobal(this.mainPanel.m_circle_scope.x, this.mainPanel.m_circle_scope.y);
         var global_circle_scope_right_down_point = this.mainPanel.m_circle_scope.parent.localToGlobal(this.mainPanel.m_circle_scope.x + this.mainPanel.m_circle_scope.width, this.mainPanel.m_circle_scope.y + this.mainPanel.m_circle_scope.height);
-        var last_global_ball_left_top_point = new egret.Point(this._last_x, this._last_y);
-        var last_global_ball_right_down_point = new egret.Point(this._last_x + this.m_basket_ball.width, this._last_y + this.m_basket_ball.height);
+        if (!this.mainPanel.IsFaceLeft()) {
+            HitConst.SwapPointXY(global_circle_scope_left_top_point, global_circle_scope_right_down_point);
+        }
+        var last_global_ball_left_top_point = this.mainPanel.m_basket_ball.parent.localToGlobal(firstPoint.x, firstPoint.y);
+        var last_global_ball_right_down_point = this.mainPanel.m_basket_ball.parent.localToGlobal(firstPoint.x + this.m_basket_ball.width, firstPoint.y + this.m_basket_ball.height);
         this._last_x = this.m_basket_ball.x;
         this._last_y = this.m_basket_ball.y;
-        // let last_global_ball_left_top_point = this.mainPanel.m_basket_ball.parent.localToGlobal(this._last_x, this._last_y);
-        // let last_global_ball_right_down_point = this.mainPanel.m_basket_ball.parent.localToGlobal(this._last_x + this.m_basket_ball.width, this._last_y + this.m_basket_ball.height)
         if (last_global_ball_left_top_point.x < global_circle_scope_left_top_point.x - 10 || last_global_ball_right_down_point.x > global_circle_scope_right_down_point.x + 10) {
-            return;
+            return false;
         }
-        var current_global_ball_left_top_point = new egret.Point(this.m_basket_ball.x, this.m_basket_ball.y);
-        var current_global_ball_right_down_point = new egret.Point(this.m_basket_ball.x + this.m_basket_ball.width, this.m_basket_ball.y + this.m_basket_ball.height);
-        // let current_global_ball_left_top_point = this.mainPanel.m_basket_ball.parent.localToGlobal(this.m_basket_ball.x, this.m_basket_ball.y);
-        // let current_global_ball_right_down_point = this.mainPanel.m_basket_ball.parent.localToGlobal(this.m_basket_ball.x + this.m_basket_ball.width, this.m_basket_ball.y + this.m_basket_ball.height);
+        var current_global_ball_left_top_point = this.mainPanel.m_basket_ball.parent.localToGlobal(secondPoint.x, secondPoint.y);
+        var current_global_ball_right_down_point = this.mainPanel.m_basket_ball.parent.localToGlobal(secondPoint.x + this.m_basket_ball.width, secondPoint.y + this.m_basket_ball.height);
         if (current_global_ball_left_top_point.x < global_circle_scope_left_top_point.x - 10 || current_global_ball_right_down_point.x > global_circle_scope_right_down_point.x + 10) {
-            return;
+            return false;
         }
         var global_circle_center_point = new egret.Point((global_circle_scope_left_top_point.x + global_circle_scope_right_down_point.x) / 2, (global_circle_scope_left_top_point.y + global_circle_scope_right_down_point.y) / 2);
         if (last_global_ball_left_top_point.y <= global_circle_center_point.y && current_global_ball_left_top_point.y >= global_circle_center_point.y) {
             console.log("#########进球了###");
-            return;
+            return true;
         }
-        // console.log("###_checkGoal####", last_global_ball_left_top_point.x, last_global_ball_left_top_point.y, current_global_ball_left_top_point.x, current_global_ball_left_top_point.y, global_circle_center_point.y)
+        return false;
+    };
+    PlayerBall.prototype._isCurrentInCricleScope = function () {
+        var global_circle_scope_left_top_point = this.mainPanel.m_circle_scope.parent.localToGlobal(this.mainPanel.m_circle_scope.x, this.mainPanel.m_circle_scope.y);
+        var global_circle_scope_right_down_point = this.mainPanel.m_circle_scope.parent.localToGlobal(this.mainPanel.m_circle_scope.x + this.mainPanel.m_circle_scope.width, this.mainPanel.m_circle_scope.y + this.mainPanel.m_circle_scope.height);
+        if (!this.mainPanel.IsFaceLeft()) {
+            HitConst.SwapPointXY(global_circle_scope_left_top_point, global_circle_scope_right_down_point);
+        }
+        var current_global_ball_left_top_point = this.mainPanel.m_basket_ball.parent.localToGlobal(this.m_basket_ball.x, this.m_basket_ball.y);
+        var current_global_ball_right_down_point = this.mainPanel.m_basket_ball.parent.localToGlobal(this.m_basket_ball.x + this.m_basket_ball.width, this.m_basket_ball.y + this.m_basket_ball.height);
+        if (current_global_ball_left_top_point.x < global_circle_scope_left_top_point.x - 10 || current_global_ball_right_down_point.x > global_circle_scope_right_down_point.x + 10) {
+            return false;
+        }
+        return true;
     };
     PlayerBall.prototype.Update = function () {
-        this._checkGoal();
         this._updateRotationTween();
         this._adjustBallPosition();
         var delta_speed_y = this.mainPanel._gravity + this.mainPanel._current_impluse.y;
@@ -76,6 +87,8 @@ var PlayerBall = (function () {
         }
         var step_speend_x = this.mainPanel._basketball_speed_x / times;
         var step_speend_y = this.mainPanel._baskball_speed_y / times;
+        var is_current_in_circle_scope = this._isCurrentInCricleScope();
+        var has_goal = this.mainPanel.HasGoal();
         for (var step_idx = 1; step_idx <= times; step_idx++) {
             if (step_idx == times) {
                 step_speend_x = this.mainPanel._basketball_speed_x - this.mainPanel._basketball_speed_x / times * (times - 1);
@@ -90,6 +103,14 @@ var PlayerBall = (function () {
                 this.m_basket_ball.x = temp_last_x;
                 this.m_basket_ball.y = temp_last_y;
                 return;
+            }
+            if (is_current_in_circle_scope) {
+                if (!has_goal) {
+                    has_goal = this._checkGoal(new egret.Point(temp_last_x, temp_last_y), new egret.Point(this.m_basket_ball.x, this.m_basket_ball.y));
+                    if (has_goal) {
+                        this.mainPanel.SetGoal(true);
+                    }
+                }
             }
             // if(this._hitManager.checkHitFloor())
             // {

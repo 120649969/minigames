@@ -39,43 +39,62 @@ class PlayerBall {
 	}
 
 	//检测是否进球
-	private _checkGoal():void
+	private _checkGoal(firstPoint:egret.Point, secondPoint:egret.Point):boolean
 	{
 		let global_circle_scope_left_top_point = this.mainPanel.m_circle_scope.parent.localToGlobal(this.mainPanel.m_circle_scope.x, this.mainPanel.m_circle_scope.y)
 		let global_circle_scope_right_down_point = this.mainPanel.m_circle_scope.parent.localToGlobal(this.mainPanel.m_circle_scope.x + this.mainPanel.m_circle_scope.width, this.mainPanel.m_circle_scope.y + this.mainPanel.m_circle_scope.height)
-		let last_global_ball_left_top_point = new egret.Point(this._last_x, this._last_y)
-		let last_global_ball_right_down_point = new egret.Point(this._last_x + this.m_basket_ball.width, this._last_y + this.m_basket_ball.height)
-
+		
+		if(!this.mainPanel.IsFaceLeft())
+		{
+			HitConst.SwapPointXY(global_circle_scope_left_top_point, global_circle_scope_right_down_point)
+		}
+		
+		let last_global_ball_left_top_point = this.mainPanel.m_basket_ball.parent.localToGlobal(firstPoint.x,firstPoint.y);
+		let last_global_ball_right_down_point = this.mainPanel.m_basket_ball.parent.localToGlobal(firstPoint.x + this.m_basket_ball.width, firstPoint.y + this.m_basket_ball.height)
 		this._last_x = this.m_basket_ball.x
 		this._last_y = this.m_basket_ball.y
-		// let last_global_ball_left_top_point = this.mainPanel.m_basket_ball.parent.localToGlobal(this._last_x, this._last_y);
-		// let last_global_ball_right_down_point = this.mainPanel.m_basket_ball.parent.localToGlobal(this._last_x + this.m_basket_ball.width, this._last_y + this.m_basket_ball.height)
 		if(last_global_ball_left_top_point.x < global_circle_scope_left_top_point.x - 10 || last_global_ball_right_down_point.x > global_circle_scope_right_down_point.x + 10)
 		{
-			return
+			return false;
 		}
 
-		let current_global_ball_left_top_point = new egret.Point(this.m_basket_ball.x,this.m_basket_ball.y)
-		let current_global_ball_right_down_point = new egret.Point(this.m_basket_ball.x + this.m_basket_ball.width,this.m_basket_ball.y + this.m_basket_ball.height)
-		// let current_global_ball_left_top_point = this.mainPanel.m_basket_ball.parent.localToGlobal(this.m_basket_ball.x, this.m_basket_ball.y);
-		// let current_global_ball_right_down_point = this.mainPanel.m_basket_ball.parent.localToGlobal(this.m_basket_ball.x + this.m_basket_ball.width, this.m_basket_ball.y + this.m_basket_ball.height);
+		let current_global_ball_left_top_point = this.mainPanel.m_basket_ball.parent.localToGlobal(secondPoint.x, secondPoint.y);
+		let current_global_ball_right_down_point = this.mainPanel.m_basket_ball.parent.localToGlobal(secondPoint.x + this.m_basket_ball.width, secondPoint.y + this.m_basket_ball.height);
 		if(current_global_ball_left_top_point.x < global_circle_scope_left_top_point.x - 10 || current_global_ball_right_down_point.x > global_circle_scope_right_down_point.x + 10)
 		{
-			return
+			return false;
+
 		}
 		let global_circle_center_point = new egret.Point((global_circle_scope_left_top_point.x + global_circle_scope_right_down_point.x) / 2, (global_circle_scope_left_top_point.y + global_circle_scope_right_down_point.y) / 2)
 		if(last_global_ball_left_top_point.y <= global_circle_center_point.y && current_global_ball_left_top_point.y >= global_circle_center_point.y)
 		{
 			console.log("#########进球了###")
-			return
+			return true;
 		}
-		// console.log("###_checkGoal####", last_global_ball_left_top_point.x, last_global_ball_left_top_point.y, current_global_ball_left_top_point.x, current_global_ball_left_top_point.y, global_circle_center_point.y)
+		return false;
+	}
+
+	private _isCurrentInCricleScope():boolean
+	{
+		let global_circle_scope_left_top_point = this.mainPanel.m_circle_scope.parent.localToGlobal(this.mainPanel.m_circle_scope.x, this.mainPanel.m_circle_scope.y)
+		let global_circle_scope_right_down_point = this.mainPanel.m_circle_scope.parent.localToGlobal(this.mainPanel.m_circle_scope.x + this.mainPanel.m_circle_scope.width, this.mainPanel.m_circle_scope.y + this.mainPanel.m_circle_scope.height)
+
+		if(!this.mainPanel.IsFaceLeft())
+		{
+			HitConst.SwapPointXY(global_circle_scope_left_top_point, global_circle_scope_right_down_point)
+		}
+		let current_global_ball_left_top_point = this.mainPanel.m_basket_ball.parent.localToGlobal(this.m_basket_ball.x, this.m_basket_ball.y);
+		let current_global_ball_right_down_point = this.mainPanel.m_basket_ball.parent.localToGlobal(this.m_basket_ball.x + this.m_basket_ball.width, this.m_basket_ball.y + this.m_basket_ball.height);
+		if(current_global_ball_left_top_point.x < global_circle_scope_left_top_point.x - 10 || current_global_ball_right_down_point.x > global_circle_scope_right_down_point.x + 10)
+		{
+			return false
+		}
+		return true;
 	}
 
 	public Update():void
 	{
 
-		this._checkGoal();
 		this._updateRotationTween()
 		this._adjustBallPosition()
 
@@ -97,6 +116,8 @@ class PlayerBall {
 		let step_speend_x = this.mainPanel._basketball_speed_x / times
 		let step_speend_y = this.mainPanel._baskball_speed_y / times
 		
+		let is_current_in_circle_scope = this._isCurrentInCricleScope();
+		let has_goal = this.mainPanel.HasGoal();
 		for(let step_idx = 1; step_idx <= times; step_idx++)
 		{
 			if(step_idx == times)
@@ -116,6 +137,18 @@ class PlayerBall {
 				this.m_basket_ball.x = temp_last_x
 				this.m_basket_ball.y = temp_last_y
 				return
+			}
+
+			if(is_current_in_circle_scope)
+			{
+				if(!has_goal)
+				{
+					has_goal = this._checkGoal(new egret.Point(temp_last_x, temp_last_y), new egret.Point(this.m_basket_ball.x, this.m_basket_ball.y))
+					if(has_goal)
+					{
+						this.mainPanel.SetGoal(true);
+					}
+				}
 			}
 
 			// if(this._hitManager.checkHitFloor())

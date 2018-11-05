@@ -5,7 +5,7 @@
 		<e:Group id="m_floor" height="10" y="967" left="0" right="0" anchorOffsetX="320" locked="true">
 			<e:Rect scaleX="1" scaleY="1" left="0" top="0" right="0" bottom="0"/>
 		</e:Group>
-		<e:Group id="m_basket_container" anchorOffsetX="0" anchorOffsetY="569" scaleX="0.4" scaleY="0.4" width="720" height="1138" verticalCenter="-2.5" x="0">
+		<e:Group id="m_basket_container" anchorOffsetX="0" anchorOffsetY="569" scaleX="0.4" scaleY="0.4" width="640" height="1138" verticalCenter="-2.5" x="0">
 			<e:Image source="ban_png" x="0" y="278" scaleX="1" scaleY="1" locked="true"/>
 			<e:Image source="wang_png" x="142.5" y="569" scaleX="1" scaleY="1" locked="true"/>
 			<e:Image source="kuang_png" x="112" y="569" scaleX="1" scaleY="1" locked="true"/>

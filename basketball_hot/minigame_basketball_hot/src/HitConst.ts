@@ -11,6 +11,9 @@ class HitConst {
 	public static basket_board_restitution = -0.7; //篮框后方挡板反弹系数
 	public static basket_board_friction = 1.0 //篮框后方挡板摩擦系数 
 
+	public static Max_Speed_X:number = 3; //x方向的速度
+
+
 	public static getHitRestitution(hitType:HitType):number
 	{
 		if(hitType == HitType.Floor)
@@ -61,6 +64,29 @@ class HitConst {
 		return 1.0
 	}
 	
+	public static SwapPoint(point1:egret.Point, point2:egret.Point):void
+	{
+		let temp_point_x = point1.x;
+		let temp_point_y = point1.y;
+		point1.x = point2.x;
+		point1.y = point2.y
+		point2.x = temp_point_x
+		point2.y = temp_point_y;
+	}
+
+	public static SwapPointXY(left_top_point:egret.Point, right_down:egret.Point):void
+	{
+		let left_x = right_down.x;
+		let left_y = left_top_point.y;
+		let right_x = left_top_point.x;
+		let right_y = right_down.y
+
+		left_top_point.x = left_x
+		left_top_point.y = left_y
+
+		right_down.x = right_x
+		right_down.y = right_y
+	}
 }
 
 

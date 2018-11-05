@@ -96,6 +96,11 @@ class HitManagerNew {
 		let right_line_left_point:egret.Point = new egret.Point();
 		this.mainPanel.m_right_line.parent.localToGlobal(this.mainPanel.m_right_line.x, this.mainPanel.m_right_line.y, right_line_left_point);
 
+		if(!this.mainPanel.IsFaceLeft())  //对称
+		{
+			HitConst.SwapPoint(right_line_right_point, right_line_right_point)
+		}
+
 		//is right ok
 		if(global_ball_left_top_point.x > right_line_right_point.x)
 		{
@@ -172,6 +177,11 @@ class HitManagerNew {
 		let left_line_left_point:egret.Point = new egret.Point();
 		this.mainPanel.m_right_line.parent.localToGlobal(this.mainPanel.m_left_line.x, this.mainPanel.m_left_line.y, left_line_left_point);
 
+		if(!this.mainPanel.IsFaceLeft())  //对称
+		{
+			HitConst.SwapPoint(left_line_right_point, left_line_left_point)
+		}
+
 		//is right ok
 		if(global_ball_left_top_point.x > left_line_right_point.x)
 		{
@@ -210,13 +220,24 @@ class HitManagerNew {
 		}
 
 		//以下必定相交
-		if(global_ball_center_point.x > left_line_right_point.x){
-			let global_hit_point = new egret.Point(global_ball_center_point.x - top_line_cirle_width, left_line_right_point.y)
-			let local_hit_point = new egret.Point()
-			this.mainPanel.m_basket_ball.globalToLocal(global_hit_point.x, global_hit_point.y, local_hit_point)
-			this.HandleBallHit(local_hit_point, HitType.Left_Line)
-			return true;
+		if(this.mainPanel.IsFaceLeft()){
+			if(global_ball_center_point.x > left_line_right_point.x){
+				let global_hit_point = new egret.Point(global_ball_center_point.x - top_line_cirle_width, left_line_right_point.y)
+				let local_hit_point = new egret.Point()
+				this.mainPanel.m_basket_ball.globalToLocal(global_hit_point.x, global_hit_point.y, local_hit_point)
+				this.HandleBallHit(local_hit_point, HitType.Left_Line)
+				return true;
+			}
+		} else { 
+			if(global_ball_center_point.x < left_line_left_point.x){
+				let global_hit_point = new egret.Point(global_ball_center_point.x + top_line_cirle_width, left_line_right_point.y)
+				let local_hit_point = new egret.Point()
+				this.mainPanel.m_basket_ball.globalToLocal(global_hit_point.x, global_hit_point.y, local_hit_point)
+				this.HandleBallHit(local_hit_point, HitType.Left_Line)
+				return true;
+			}
 		}
+		
 
 		//不打算处理在左边和中间的情况，因为这不可能发生，就算发生了也不正常，让篮框的挡板去碰撞。
 
@@ -240,6 +261,10 @@ class HitManagerNew {
 		let board_right_down_point:egret.Point = new egret.Point();
 		this.mainPanel.m_board_scope.parent.localToGlobal(this.mainPanel.m_board_scope.x + this.mainPanel.m_board_scope.width, this.mainPanel.m_board_scope.y + this.mainPanel.m_board_scope.height, board_right_down_point);
 
+		if(!this.mainPanel.IsFaceLeft())
+		{
+			HitConst.SwapPointXY(board_left_top_point, board_right_down_point)
+		}
 		//is right ok
 		if(global_ball_left_top_point.x > board_right_down_point.x)
 		{
