@@ -1,19 +1,19 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-var HitManagerNew = (function () {
-    function HitManagerNew(_mainPanel) {
+var HitManager = (function () {
+    function HitManager(_mainPanel) {
         this._isOnFloor = false;
         this._hitType = HitType.None;
         this.mainPanel = _mainPanel;
     }
-    HitManagerNew.prototype.IsOnFloor = function () {
+    HitManager.prototype.IsOnFloor = function () {
         return this._isOnFloor;
     };
-    HitManagerNew.prototype.GetHitType = function () {
+    HitManager.prototype.GetHitType = function () {
         return this._hitType;
     };
-    HitManagerNew.prototype.CheckHit = function () {
+    HitManager.prototype.CheckHit = function () {
         this._hitType = HitType.None;
         if (this.CheckHitFloor()) {
             return true;
@@ -28,10 +28,10 @@ var HitManagerNew = (function () {
             return true;
         }
     };
-    HitManagerNew.prototype.HandleBallHit = function (localBallHitPoint, hitType) {
+    HitManager.prototype.HandleBallHit = function (localBallHitPoint, hitType) {
         var restition = HitConst.getHitRestitution(hitType);
         var friction = HitConst.getHitFriction(hitType);
-        var speed_vec = new egret.Point(this.mainPanel._basketball_speed_x, this.mainPanel._baskball_speed_y);
+        var speed_vec = new egret.Point(this.mainPanel.basketball_speed_x, this.mainPanel.basketball_speed_y);
         var global_ball_center_point = this.mainPanel.m_basket_ball.localToGlobal(this.mainPanel.m_basket_ball.width / 2, this.mainPanel.m_basket_ball.height / 2);
         var global_hit_point = this.mainPanel.m_basket_ball.localToGlobal(localBallHitPoint.x, localBallHitPoint.y);
         var hit_vec = new egret.Point(global_hit_point.x - global_ball_center_point.x, global_hit_point.y - global_ball_center_point.y);
@@ -42,11 +42,11 @@ var HitManagerNew = (function () {
         var restitution_dot_vec = new egret.Point(restition * dot_vec.x, restition * dot_vec.y);
         var friction_vec = new egret.Point(friction * vertical_vec.x, friction * vertical_vec.y);
         var target_speed = new egret.Point(restitution_dot_vec.x + friction_vec.x, restitution_dot_vec.y + friction_vec.y);
-        this.mainPanel._basketball_speed_x = target_speed.x;
-        this.mainPanel._baskball_speed_y = target_speed.y;
-        // console.log("########", this.mainPanel._basketball_speed_x, this.mainPanel._baskball_speed_y)
+        this.mainPanel.basketball_speed_x = target_speed.x;
+        this.mainPanel.basketball_speed_y = target_speed.y;
+        // console.log("########", this.mainPanel.basketball_speed_x, this.mainPanel.basketball_speed_y)
     };
-    HitManagerNew.prototype.CheckHitFloor = function () {
+    HitManager.prototype.CheckHitFloor = function () {
         var curr_y = this.mainPanel.m_basket_ball.y;
         if (curr_y >= this.mainPanel.m_floor.y - this.mainPanel.m_basket_ball.height) {
             this._hitType = HitType.Floor;
@@ -55,17 +55,17 @@ var HitManagerNew = (function () {
             }
             this.HandleBallHit(new egret.Point(this.mainPanel.m_basket_ball.width / 2, this.mainPanel.m_basket_ball.height), HitType.Floor);
             // //处理反弹
-            // let new_speed_y = this.mainPanel._baskball_speed_y * this._floorRestitution * -1;
-            if (Math.abs(this.mainPanel._baskball_speed_y) <= 0.3) {
-                this.mainPanel._baskball_speed_y = 0;
+            // let new_speed_y = this.mainPanel.basketball_speed_y * this._floorRestitution * -1;
+            if (Math.abs(this.mainPanel.basketball_speed_y) <= 0.3) {
+                this.mainPanel.basketball_speed_y = 0;
                 this._isOnFloor = true;
             }
             if (this.mainPanel.HasTouchBegin()) {
                 if (this.mainPanel.IsFaceLeft()) {
-                    this.mainPanel._basketball_speed_x = HitConst.Max_Speed_X * -0.5;
+                    this.mainPanel.basketball_speed_x = HitConst.Max_Speed_X * -0.5;
                 }
                 else {
-                    this.mainPanel._basketball_speed_x = HitConst.Max_Speed_X * 0.5;
+                    this.mainPanel.basketball_speed_x = HitConst.Max_Speed_X * 0.5;
                 }
             }
             return true;
@@ -73,7 +73,7 @@ var HitManagerNew = (function () {
         this._isOnFloor = false;
         return false;
     };
-    HitManagerNew.prototype.CheckHitRightLine = function () {
+    HitManager.prototype.CheckHitRightLine = function () {
         var global_ball_left_top_point = new egret.Point();
         this.mainPanel.m_basket_ball.localToGlobal(0, 0, global_ball_left_top_point);
         var global_ball_right_down_point = new egret.Point();
@@ -136,7 +136,7 @@ var HitManagerNew = (function () {
         this.HandleBallHit(new egret.Point(this.mainPanel.m_basket_ball.width / 2, this.mainPanel.m_basket_ball.height), HitType.Right_Line);
         return true;
     };
-    HitManagerNew.prototype.CheckLeftLine = function () {
+    HitManager.prototype.CheckLeftLine = function () {
         var global_ball_left_top_point = new egret.Point();
         this.mainPanel.m_basket_ball.localToGlobal(0, 0, global_ball_left_top_point);
         var global_ball_right_down_point = new egret.Point();
@@ -203,7 +203,7 @@ var HitManagerNew = (function () {
         //不打算处理在左边和中间的情况，因为这不可能发生，就算发生了也不正常，让篮框的挡板去碰撞。
         return false;
     };
-    HitManagerNew.prototype.CheckHitBoard = function () {
+    HitManager.prototype.CheckHitBoard = function () {
         var global_ball_left_top_point = new egret.Point();
         this.mainPanel.m_basket_ball.localToGlobal(0, 0, global_ball_left_top_point);
         var global_ball_right_down_point = new egret.Point();
@@ -305,7 +305,7 @@ var HitManagerNew = (function () {
         this._hitType = HitType.Board;
         return true;
     };
-    return HitManagerNew;
+    return HitManager;
 }());
-__reflect(HitManagerNew.prototype, "HitManagerNew");
-//# sourceMappingURL=HitManagerNew.js.map
+__reflect(HitManager.prototype, "HitManager");
+//# sourceMappingURL=HitManager.js.map

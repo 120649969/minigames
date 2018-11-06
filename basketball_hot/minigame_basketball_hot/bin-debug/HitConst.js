@@ -60,9 +60,17 @@ var HitConst = (function () {
     HitConst.basket_left_line_friction = 1.0; //篮筐后沿摩擦系数 
     HitConst.basket_board_restitution = -0.7; //篮框后方挡板反弹系数
     HitConst.basket_board_friction = 1.0; //篮框后方挡板摩擦系数 
-    HitConst.Max_Speed_X = 4; //x方向的速度
-    HitConst.Frame_Speed_X = 0.05;
-    HitConst.PUSH_DOWN_IMPLUSE_Y = -20;
+    HitConst.Factor = 8; //米和像素的转换单位
+    HitConst.Gravity = 9.8; //重力加速度
+    HitConst.Max_Speed_X = 4 * HitConst.Factor; //x方向的速度
+    HitConst.MIN_SPEED_Y = -20 * HitConst.Factor; //y在负方向最小的速度
+    HitConst.PUSH_DOWN_IMPLUSE_Y = -20 * HitConst.Factor; //按下y方向的瞬时加速度
+    HitConst.Frame_Speed_X = 0.05 * HitConst.Factor; //每帧影响x方向速度的风速
+    HitConst.BACK_Gravity = HitConst.Gravity;
+    HitConst.BACK_Max_Speed_X = HitConst.Max_Speed_X;
+    HitConst.BACK_MIN_SPEED_Y = HitConst.MIN_SPEED_Y;
+    HitConst.BACK_PUSH_DOWN_IMPLUSE_Y = HitConst.PUSH_DOWN_IMPLUSE_Y;
+    HitConst.BACK_Frame_Speed_X = HitConst.Frame_Speed_X;
     return HitConst;
 }());
 __reflect(HitConst.prototype, "HitConst");

@@ -1,32 +1,23 @@
 class MainScenePanel extends eui.Component{
 
-	public m_bg: eui.Image;
 	public m_floor : eui.Group;
 	public m_basket_container : eui.Group;
 	public m_board_scope: eui.Group;
 	public m_net_scope: eui.Group;
 	public m_basket_ball: eui.Group;
 	public m_top: eui.Group;
-	public m_btn_reset : eui.Button;
 	public m_container : eui.Group;
 	public m_image_ball:eui.Image
 	public m_right_line:eui.Group
 	public m_left_line:eui.Group
 	public m_circle_scope:eui.Group  //篮圈
 
-	public _gravity:number = 1.2;
-	public _basketball_speed_x:number = 0.0;
-	public _baskball_speed_y:number = 0.0;
-
-	private _touchdown_impluse:egret.Point = new egret.Point(-5.0, -20.0);
-
-	private _is_game_end:boolean = false;
-	private _last_time:number;
+	public basketball_speed_x:number = 0.0;
+	public basketball_speed_y:number = 0.0;
 	public _current_impluse:egret.Point = new egret.Point();
-	private _ballCircleRadius:number = 0;
+	private _isUsingMi:boolean = true;
 
-	private _isStart:boolean = false;
-	private _isStop:boolean = false;
+	private btn_debug:eui.Button
 
 	public constructor() {
 		super();
@@ -36,35 +27,23 @@ class MainScenePanel extends eui.Component{
 
 	private onAddToStage(event:egret.Event):void
 	{
-		this._isStart = true;
-		this._last_time = egret.getTimer();
 		this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
 		this.m_container.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
-		this._ballCircleRadius = 25;
 
-		this.initGame();
-		let init_x = this.m_basket_ball.x
-		let init_y = this.m_basket_ball.y
-		let init_speed_x = 0
-		let init_speed_y = 0
-		this._basketball_speed_x = init_speed_x
-		this._baskball_speed_y = init_speed_y
-		this.m_btn_reset.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.TouchEvent){
-			this.m_basket_ball.x = init_x;
-			this.m_basket_ball.y = init_y;
-			this._basketball_speed_x = init_speed_x;
-			this._baskball_speed_y = init_speed_y
-
-			this._isOnFloor = false;
-			this._isStop = false
-			this.removeEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this)
-			this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
+		let __this = this
+		this.btn_debug.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.Event){
+			let debugPanel = new DebugPanel()
+			__this.addChild(debugPanel)
 			event.stopPropagation();
-		}.bind(this), this);
+		}.bind(this), this)
+		this.initGame();
 	}
 
 	private _playerBall:PlayerBall;
-	private _hitManagerNew:HitManagerNew
+	private _hitManager:HitManager
+
+	private _playerBallMi:PlayerBallMi
+	private _hitManagerMi:HitManagerMi
 
 	private _auto_enter_next_round:boolean = false;
 	private _is_first_round:boolean = true;
@@ -81,15 +60,23 @@ class MainScenePanel extends eui.Component{
 		return this._hasTouchBegin
 	}
 
-	public getHitManagerNew():HitManagerNew
+	public getHitManager():HitManager
 	{
-		return this._hitManagerNew
+		return this._hitManager
+	}
+
+	public getHitManagerMi():HitManagerMi
+	{
+		return this._hitManagerMi
 	}
 
 	private initGame():void
 	{
-		this._hitManagerNew = new HitManagerNew(this);
+		this._hitManager = new HitManager(this);
 		this._playerBall = new PlayerBall(this.m_basket_ball, this)
+
+		this._hitManagerMi = new HitManagerMi(this);
+		this._playerBallMi = new PlayerBallMi(this.m_basket_ball, this);
 
 		this._left_basket_container_x = this.m_basket_container.x;
 		this._left_basket_container_y = this.m_basket_container.y;
@@ -149,13 +136,13 @@ class MainScenePanel extends eui.Component{
 				let random_ball_y = this.m_floor.y - Math.random() * 30 - 200 - this.m_basket_ball.height;
 				this.m_basket_ball.x = random_ball_x
 				this.m_basket_ball.y = random_ball_y
-				this._basketball_speed_x = HitConst.Max_Speed_X * -1;
+				this.basketball_speed_x = HitConst.Max_Speed_X * -1;
 			} else {
 				let random_ball_x = 0 - Math.random() * 30;
 				let random_ball_y = this.m_floor.y - Math.random() * 30 - 200 - this.m_basket_ball.height;
 				this.m_basket_ball.x = random_ball_x
 				this.m_basket_ball.y = random_ball_y
-				this._basketball_speed_x = HitConst.Max_Speed_X;
+				this.basketball_speed_x = HitConst.Max_Speed_X;
 			}
 		}else{
 			let random_ball_x = this.stage.stageWidth / 2 - this.m_basket_ball.width / 2;
@@ -165,20 +152,26 @@ class MainScenePanel extends eui.Component{
 		}
 		
 		this._is_first_round = false;
-		this._playerBall.EnterNextRound()
+
+		if(this._isUsingMi){
+			this._playerBallMi.EnterNextRound()
+		} else {
+			this._playerBall.EnterNextRound()
+		}
+		
 	}
 
 	private onEnterFrame(event : egret.Event):void
 	{
-		if(this._isStop)
-		{
-			return;
-		}
 		if(this._auto_enter_next_round){
 			this.NextRound();
 			this._auto_enter_next_round = false;
 		}
-		this._playerBall.Update()
+		if(this._isUsingMi){
+			this._playerBallMi.Update()
+		} else {
+			this._playerBall.Update()
+		}
 	}
 
 	private onTouchBegin(event : egret.TouchEvent):void
@@ -191,34 +184,34 @@ class MainScenePanel extends eui.Component{
 		{
 			return;
 		}
-		if(this._baskball_speed_y > 0)
+		if(this.basketball_speed_y > 0)
 		{
-			this._baskball_speed_y = 0;
+			this.basketball_speed_y = 0;
 		}
 		this._current_impluse.y = HitConst.PUSH_DOWN_IMPLUSE_Y;
 
-		this._basketball_speed_x = HitConst.Max_Speed_X * (this._is_face_left ? -1 : 1);
+		this.basketball_speed_x = HitConst.Max_Speed_X * (this._is_face_left ? -1 : 1);
 	}
 
 	
 
 	//和篮网的碰撞
-	public checkHitNet():void
-	{
-		let temp_global_point:egret.Point = new egret.Point();
-		this.m_basket_ball.localToGlobal(this.m_basket_ball.width / 2, this.m_basket_ball.width / 2, temp_global_point);
+	// public checkHitNet():void
+	// {
+	// 	let temp_global_point:egret.Point = new egret.Point();
+	// 	this.m_basket_ball.localToGlobal(this.m_basket_ball.width / 2, this.m_basket_ball.width / 2, temp_global_point);
 
-		let localPoint:egret.Point = new egret.Point();
-		this.m_basket_container.globalToLocal(temp_global_point.x, temp_global_point.y, localPoint);
+	// 	let localPoint:egret.Point = new egret.Point();
+	// 	this.m_basket_container.globalToLocal(temp_global_point.x, temp_global_point.y, localPoint);
 
-		if(localPoint.x <= this.m_net_scope.x + this.m_net_scope.width + this._ballCircleRadius && localPoint.x >= this.m_net_scope.x - this._ballCircleRadius)
-		{
-			if(localPoint.y <= this.m_net_scope.y + this.m_net_scope.height + this._ballCircleRadius && localPoint.y >= this.m_net_scope.y + this.m_net_scope.height / 2)
-			{
-				console.log("#####hit net#####")
-			}
-		}
-	}
+	// 	if(localPoint.x <= this.m_net_scope.x + this.m_net_scope.width + this._ballCircleRadius && localPoint.x >= this.m_net_scope.x - this._ballCircleRadius)
+	// 	{
+	// 		if(localPoint.y <= this.m_net_scope.y + this.m_net_scope.height + this._ballCircleRadius && localPoint.y >= this.m_net_scope.y + this.m_net_scope.height / 2)
+	// 		{
+	// 			console.log("#####hit net#####")
+	// 		}
+	// 	}
+	// }
 
 	public isLeft():boolean
 	{

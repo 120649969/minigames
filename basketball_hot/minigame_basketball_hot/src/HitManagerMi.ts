@@ -1,4 +1,4 @@
-class HitManagerNew {
+class HitManagerMi {
 
 	private mainPanel:MainScenePanel
 	private _isOnFloor:boolean = false;
@@ -45,7 +45,7 @@ class HitManagerNew {
 	{
 		let restition = HitConst.getHitRestitution(hitType)
 		let friction = HitConst.getHitFriction(hitType)
-		let speed_vec = new egret.Point(this.mainPanel._basketball_speed_x, this.mainPanel._baskball_speed_y);
+		let speed_vec = new egret.Point(this.mainPanel.basketball_speed_x, this.mainPanel.basketball_speed_y);
 
 		let global_ball_center_point = this.mainPanel.m_basket_ball.localToGlobal(this.mainPanel.m_basket_ball.width / 2, this.mainPanel.m_basket_ball.height / 2);
 		let global_hit_point = this.mainPanel.m_basket_ball.localToGlobal(localBallHitPoint.x, localBallHitPoint.y)
@@ -60,9 +60,9 @@ class HitManagerNew {
 
 		let target_speed = new egret.Point(restitution_dot_vec.x + friction_vec.x, restitution_dot_vec.y + friction_vec.y)
 
-		this.mainPanel._basketball_speed_x = target_speed.x
-		this.mainPanel._baskball_speed_y = target_speed.y
-		// console.log("########", this.mainPanel._basketball_speed_x, this.mainPanel._baskball_speed_y)
+		this.mainPanel.basketball_speed_x = target_speed.x
+		this.mainPanel.basketball_speed_y = target_speed.y
+		// console.log("########", this.mainPanel.basketball_speed_x, this.mainPanel.basketball_speed_y)
 	}
 
 	private CheckHitFloor():boolean
@@ -78,17 +78,17 @@ class HitManagerNew {
 			
 			this.HandleBallHit(new egret.Point(this.mainPanel.m_basket_ball.width / 2, this.mainPanel.m_basket_ball.height), HitType.Floor);
 			// //处理反弹
-			// let new_speed_y = this.mainPanel._baskball_speed_y * this._floorRestitution * -1;
-			if(Math.abs(this.mainPanel._baskball_speed_y) <= 0.3)
+			// let new_speed_y = this.mainPanel.basketball_speed_y * this._floorRestitution * -1;
+			if(Math.abs(this.mainPanel.basketball_speed_y) <= 0.3 * HitConst.Factor)
 			{
-				this.mainPanel._baskball_speed_y = 0;
+				this.mainPanel.basketball_speed_y = 0;
 				this._isOnFloor = true
 			}
 			if(this.mainPanel.HasTouchBegin()){
 				if(this.mainPanel.IsFaceLeft()){
-					this.mainPanel._basketball_speed_x = HitConst.Max_Speed_X * -0.5;
+					this.mainPanel.basketball_speed_x = HitConst.Max_Speed_X * -0.5;
 				} else {
-					this.mainPanel._basketball_speed_x = HitConst.Max_Speed_X * 0.5;
+					this.mainPanel.basketball_speed_x = HitConst.Max_Speed_X * 0.5;
 				}
 			}
 			
