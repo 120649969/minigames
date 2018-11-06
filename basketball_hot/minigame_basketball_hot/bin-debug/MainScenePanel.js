@@ -77,8 +77,8 @@ var MainScenePanel = (function (_super) {
     };
     MainScenePanel.prototype.NextRound = function () {
         this.SetGoal(false);
-        // this._is_face_left = Math.floor(Math.random() * 2) == 0
-        this._is_face_left = !this._is_face_left;
+        this._is_face_left = Math.floor(Math.random() * 2) == 0;
+        // this._is_face_left = !this._is_face_left
         if (this._is_first_round) {
             this._is_face_left = true;
         }
@@ -93,22 +93,7 @@ var MainScenePanel = (function (_super) {
             this.m_basket_container.y = this._right_basket_container_y;
             this.m_basket_container.scaleX = Math.abs(this.m_basket_container.scaleX) * -1;
         }
-        if (!this._is_first_round) {
-            // if(this._is_face_left){
-            // 	let random_ball_x = this.stage.stageWidth + Math.random() * 30;
-            // 	let random_ball_y = this.m_floor.y - Math.random() * 30 - 200 - this.m_basket_ball.height;
-            // 	this.m_basket_ball.x = random_ball_x
-            // 	this.m_basket_ball.y = random_ball_y
-            // 	// this.basketball_speed_x = HitConst.Max_Speed_X * -1;
-            // } else {
-            // 	let random_ball_x = 0 - Math.random() * 30;
-            // 	let random_ball_y = this.m_floor.y - Math.random() * 30 - 200 - this.m_basket_ball.height;
-            // 	this.m_basket_ball.x = random_ball_x
-            // 	this.m_basket_ball.y = random_ball_y
-            // 	// this.basketball_speed_x = HitConst.Max_Speed_X;
-            // }
-        }
-        else {
+        if (this._is_first_round) {
             var random_ball_x = this.stage.stageWidth / 2 - this.m_basket_ball.width / 2;
             var random_ball_y = this.m_floor.y - 200;
             this.m_basket_ball.x = random_ball_x;

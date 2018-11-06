@@ -131,10 +131,8 @@ var PlayerBallMi = (function () {
         var times = Math.ceil(total_speed / step_speed);
         var step_speend_x = this.mainPanel.basketball_speed_x / times;
         var step_speend_y = this.mainPanel.basketball_speed_y / times;
-        // console.log("#####Update3333####", this.mainPanel.basketball_speed_x)
         var is_current_in_circle_scope = this._isCurrentInCricleScope();
         var has_goal = this.mainPanel.HasGoal();
-        var last_speed_x = this.mainPanel.basketball_speed_x;
         for (var step_idx = 1; step_idx <= times; step_idx++) {
             if (step_idx == times) {
                 step_speend_x = this.mainPanel.basketball_speed_x - this.mainPanel.basketball_speed_x / times * (times - 1);
@@ -145,8 +143,6 @@ var PlayerBallMi = (function () {
             this.m_basket_ball.x += step_speend_x / HitConst.Factor;
             this.m_basket_ball.y += step_speend_y / HitConst.Factor;
             this.m_basket_ball.y = Math.min(this.m_basket_ball.y, this.mainPanel.m_floor.y - this.m_basket_ball.height);
-            if (last_speed_x == this.mainPanel.basketball_speed_x * -1) {
-            }
             if (this._hitManager.CheckHit()) {
                 this.m_basket_ball.x = temp_last_x;
                 this.m_basket_ball.y = temp_last_y;
@@ -166,6 +162,7 @@ var PlayerBallMi = (function () {
         }
         else if (this._hitManager.GetHitType() != HitType.None) {
             if (this._hitManager.GetHitType() == this._last_hit_type) {
+                // this.m_basket_ball.y = this.m_basket_ball.y - 2
                 console.log("####连续碰撞#####", this.mainPanel.basketball_speed_y);
             }
         }

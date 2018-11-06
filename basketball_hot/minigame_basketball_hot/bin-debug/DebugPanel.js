@@ -19,39 +19,42 @@ var DebugPanel = (function (_super) {
         }.bind(_this), _this);
         _this.btn_ok.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function () {
             var new_value = parseFloat(__this.label_gravity.text);
-            if (new_value) {
+            if (new_value != null) {
                 HitConst.Gravity = new_value;
             }
             new_value = parseFloat(__this.label_max_x.text);
-            if (new_value) {
+            if (new_value != null) {
                 HitConst.Max_Speed_X = new_value;
             }
             new_value = parseFloat(__this.label_min_y.text);
-            if (new_value) {
+            if (new_value != null) {
                 HitConst.MIN_SPEED_Y = new_value;
             }
             new_value = parseFloat(__this.label_impluse_y.text);
-            if (new_value) {
+            if (new_value != null) {
                 HitConst.PUSH_DOWN_IMPLUSE_Y = new_value;
             }
             new_value = parseFloat(__this.label_wind.text);
-            if (new_value) {
+            if (new_value != null) {
                 HitConst.Frame_Speed_X = new_value;
             }
+            else {
+                console.log("##new_value####is nil######", new_value);
+            }
             new_value = parseFloat(__this.label_floor_restitution.text);
-            if (new_value) {
+            if (new_value != null) {
                 HitConst.floor_restitution = new_value;
             }
             new_value = parseFloat(__this.label_right_restitution.text);
-            if (new_value) {
+            if (new_value != null) {
                 HitConst.basket_right_line_restitution = new_value;
             }
             new_value = parseFloat(__this.label_left_restitution.text);
-            if (new_value) {
+            if (new_value != null) {
                 HitConst.basket_left_line_restitution = new_value;
             }
             new_value = parseFloat(__this.label_board_restitution.text);
-            if (new_value) {
+            if (new_value != null) {
                 HitConst.basket_board_restitution = new_value;
             }
             __this.parent.removeChild(__this);

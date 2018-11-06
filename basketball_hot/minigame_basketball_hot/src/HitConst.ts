@@ -17,8 +17,8 @@ class HitConst {
 	public static Max_Speed_X:number = 4 * HitConst.Factor; //x方向的速度
 	public static MIN_SPEED_Y:number = -20 * HitConst.Factor  //y在负方向最小的速度
 	public static PUSH_DOWN_IMPLUSE_Y:number = -20 * HitConst.Factor //按下y方向的瞬时加速度
-	// public static Frame_Speed_X:number = 4  //每帧影响x方向速度的风速
-	public static Frame_Speed_X:number = 0.05 * HitConst.Factor  //每帧影响x方向速度的风速
+	public static Frame_Speed_X:number = 4  //每帧影响x方向速度的风速
+	// public static Frame_Speed_X:number = 0.05 * HitConst.Factor  //每帧影响x方向速度的风速
 	
 	public static BACK_Gravity = HitConst.Gravity;
 	public static BACK_Max_Speed_X = HitConst.Max_Speed_X;

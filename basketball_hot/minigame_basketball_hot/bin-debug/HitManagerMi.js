@@ -60,6 +60,14 @@ var HitManagerMi = (function () {
                 this.mainPanel.basketball_speed_y = 0;
                 this._isOnFloor = true;
             }
+            if (this.mainPanel.HasTouchBegin() && !this.mainPanel.HasGoal()) {
+                if (this.mainPanel.IsFaceLeft()) {
+                    this.mainPanel.basketball_speed_x = HitConst.Max_Speed_X * -1;
+                }
+                else {
+                    this.mainPanel.basketball_speed_x = HitConst.Max_Speed_X;
+                }
+            }
             return true;
         }
         this._isOnFloor = false;

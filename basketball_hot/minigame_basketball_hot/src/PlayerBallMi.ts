@@ -203,6 +203,7 @@ class PlayerBallMi {
 			this.m_basket_ball.x += this.mainPanel.basketball_speed_x / HitConst.Factor
 		}else if(this._hitManager.GetHitType() != HitType.None) {
 			if(this._hitManager.GetHitType() == this._last_hit_type){
+				// this.m_basket_ball.y = this.m_basket_ball.y - 2
 				console.log("####连续碰撞#####", this.mainPanel.basketball_speed_y)
 			}
 		}
