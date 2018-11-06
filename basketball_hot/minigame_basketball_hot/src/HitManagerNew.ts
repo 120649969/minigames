@@ -2,12 +2,24 @@ class HitManagerNew {
 
 	private mainPanel:MainScenePanel
 	private _isOnFloor:boolean = false;
+	private _hitType:HitType = HitType.None
 	public constructor(_mainPanel:MainScenePanel) {
 		this.mainPanel = _mainPanel
 	}
 
+	public IsOnFloor():boolean
+	{
+		return this._isOnFloor;
+	}
+
+	public GetHitType():HitType
+	{
+		return this._hitType
+	}
+
 	public CheckHit():boolean
 	{
+		this._hitType = HitType.None
 		if(this.CheckHitFloor())
 		{
 			return true
@@ -58,6 +70,7 @@ class HitManagerNew {
 		let curr_y = this.mainPanel.m_basket_ball.y;
 		if(curr_y >= this.mainPanel.m_floor.y - this.mainPanel.m_basket_ball.height)
 		{
+			this._hitType = HitType.Floor
 			if(this._isOnFloor)  //一直在地面上
 			{
 				return true;
@@ -71,7 +84,14 @@ class HitManagerNew {
 				this.mainPanel._baskball_speed_y = 0;
 				this._isOnFloor = true
 			}
-			this.mainPanel._basketball_speed_x = 0;
+			if(this.mainPanel.HasTouchBegin()){
+				if(this.mainPanel.IsFaceLeft()){
+					this.mainPanel._basketball_speed_x = HitConst.Max_Speed_X * -0.5;
+				} else {
+					this.mainPanel._basketball_speed_x = HitConst.Max_Speed_X * 0.5;
+				}
+			}
+			
 			return true;
 		}
 		this._isOnFloor = false;
@@ -137,6 +157,8 @@ class HitManagerNew {
 				return false
 			}
 		}
+
+		this._hitType = HitType.Right_Line
 
 		//以下必定相交
 		if(global_ball_center_point.x > right_line_right_point.x){
@@ -226,6 +248,8 @@ class HitManagerNew {
 				let local_hit_point = new egret.Point()
 				this.mainPanel.m_basket_ball.globalToLocal(global_hit_point.x, global_hit_point.y, local_hit_point)
 				this.HandleBallHit(local_hit_point, HitType.Left_Line)
+
+				this._hitType = HitType.Left_Line
 				return true;
 			}
 		} else { 
@@ -234,6 +258,8 @@ class HitManagerNew {
 				let local_hit_point = new egret.Point()
 				this.mainPanel.m_basket_ball.globalToLocal(global_hit_point.x, global_hit_point.y, local_hit_point)
 				this.HandleBallHit(local_hit_point, HitType.Left_Line)
+
+				this._hitType = HitType.Left_Line
 				return true;
 			}
 		}
@@ -347,7 +373,6 @@ class HitManagerNew {
 			} else{//中间
 				this.HandleBallHit(new egret.Point(this.mainPanel.m_basket_ball.width, this.mainPanel.m_basket_ball.height / 2), HitType.Board)
 			}
-			return true;
 		} else { //上下
 			let is_top = global_ball_center_point.y < board_left_top_point.y
 			let is_down = global_ball_center_point.y > board_right_down_point.y
@@ -357,6 +382,8 @@ class HitManagerNew {
 				this.HandleBallHit(new egret.Point(this.mainPanel.m_basket_ball.width / 2, 0), HitType.Board)
 			}
 		}
+
+		this._hitType = HitType.Board
 		return true;
 	}
 }

@@ -4,17 +4,11 @@ class MainScenePanel extends eui.Component{
 	public m_floor : eui.Group;
 	public m_basket_container : eui.Group;
 	public m_board_scope: eui.Group;
-	public m_skip_board_scope : eui.Group;
 	public m_net_scope: eui.Group;
-	public m_joint_scope: eui.Group;
-	public m_big_basketcircle_scope: eui.Group;
-	public m_small_basketcircle_scope: eui.Group;
 	public m_basket_ball: eui.Group;
 	public m_top: eui.Group;
 	public m_btn_reset : eui.Button;
 	public m_container : eui.Group;
-	public m_right_scope : eui.Group;
-	public m_left_scope : eui.Group;
 	public m_image_ball:eui.Image
 	public m_right_line:eui.Group
 	public m_left_line:eui.Group
@@ -24,7 +18,7 @@ class MainScenePanel extends eui.Component{
 	public _basketball_speed_x:number = 0.0;
 	public _baskball_speed_y:number = 0.0;
 
-	private _touchdown_impluse:egret.Point = new egret.Point(-5.0, -16.0);
+	private _touchdown_impluse:egret.Point = new egret.Point(-5.0, -20.0);
 
 	private _is_game_end:boolean = false;
 	private _last_time:number;
@@ -70,7 +64,6 @@ class MainScenePanel extends eui.Component{
 	}
 
 	private _playerBall:PlayerBall;
-	private _hitManager:HitManager;
 	private _hitManagerNew:HitManagerNew
 
 	private _auto_enter_next_round:boolean = false;
@@ -83,9 +76,9 @@ class MainScenePanel extends eui.Component{
 	private _right_basket_container_x:number;
 	private _right_basket_container_y:number;
 
-	public getHitManager():HitManager
+	public HasTouchBegin():boolean
 	{
-		return this._hitManager
+		return this._hasTouchBegin
 	}
 
 	public getHitManagerNew():HitManagerNew
@@ -95,7 +88,6 @@ class MainScenePanel extends eui.Component{
 
 	private initGame():void
 	{
-		this._hitManager = new HitManager(this);
 		this._hitManagerNew = new HitManagerNew(this);
 		this._playerBall = new PlayerBall(this.m_basket_ball, this)
 
@@ -119,20 +111,24 @@ class MainScenePanel extends eui.Component{
 	public SetGoal(has_global):void
 	{
 		this._has_goal = has_global;
+	}
 
-		if(has_global){
-			let __this = this;
-			setTimeout(function(){
-				__this._auto_enter_next_round =  true
-			}.bind(this), 2 * 1000)
-		}
+	public AutoEnterNextRound():void
+	{
+		this._auto_enter_next_round =  true
+	}
+
+	public IsInAutoEnterNextRound():boolean
+	{
+		return this._auto_enter_next_round
 	}
 
 
 	public NextRound():void
 	{
 		this.SetGoal(false);
-		this._is_face_left = Math.floor(Math.random() * 2) == 0
+		// this._is_face_left = Math.floor(Math.random() * 2) == 0
+		this._is_face_left = !this._is_face_left
 		if(this._is_first_round){
 			this._is_face_left = true
 		}
@@ -169,6 +165,7 @@ class MainScenePanel extends eui.Component{
 		}
 		
 		this._is_first_round = false;
+		this._playerBall.EnterNextRound()
 	}
 
 	private onEnterFrame(event : egret.Event):void
@@ -178,8 +175,8 @@ class MainScenePanel extends eui.Component{
 			return;
 		}
 		if(this._auto_enter_next_round){
-			this._auto_enter_next_round = false;
 			this.NextRound();
+			this._auto_enter_next_round = false;
 		}
 		this._playerBall.Update()
 	}
@@ -198,8 +195,7 @@ class MainScenePanel extends eui.Component{
 		{
 			this._baskball_speed_y = 0;
 		}
-		this._current_impluse.x = this._touchdown_impluse.x;
-		this._current_impluse.y = this._touchdown_impluse.y;
+		this._current_impluse.y = HitConst.PUSH_DOWN_IMPLUSE_Y;
 
 		this._basketball_speed_x = HitConst.Max_Speed_X * (this._is_face_left ? -1 : 1);
 	}

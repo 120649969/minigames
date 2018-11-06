@@ -60,7 +60,9 @@ var HitConst = (function () {
     HitConst.basket_left_line_friction = 1.0; //篮筐后沿摩擦系数 
     HitConst.basket_board_restitution = -0.7; //篮框后方挡板反弹系数
     HitConst.basket_board_friction = 1.0; //篮框后方挡板摩擦系数 
-    HitConst.Max_Speed_X = 3; //x方向的速度
+    HitConst.Max_Speed_X = 4; //x方向的速度
+    HitConst.Frame_Speed_X = 0.05;
+    HitConst.PUSH_DOWN_IMPLUSE_Y = -20;
     return HitConst;
 }());
 __reflect(HitConst.prototype, "HitConst");
@@ -70,5 +72,6 @@ var HitType;
     HitType[HitType["Right_Line"] = 1] = "Right_Line";
     HitType[HitType["Left_Line"] = 2] = "Left_Line";
     HitType[HitType["Board"] = 3] = "Board";
+    HitType[HitType["None"] = 4] = "None";
 })(HitType || (HitType = {}));
 //# sourceMappingURL=HitConst.js.map

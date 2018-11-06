@@ -10,7 +10,6 @@
 	"game": [
 		"bin-debug/AssetAdapter.js",
 		"bin-debug/HitConst.js",
-		"bin-debug/HitManager.js",
 		"bin-debug/HitManagerNew.js",
 		"bin-debug/LoadingUI.js",
 		"bin-debug/Main.js",

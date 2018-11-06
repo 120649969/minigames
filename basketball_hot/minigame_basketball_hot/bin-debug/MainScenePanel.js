@@ -15,7 +15,7 @@ var MainScenePanel = (function (_super) {
         _this._gravity = 1.2;
         _this._basketball_speed_x = 0.0;
         _this._baskball_speed_y = 0.0;
-        _this._touchdown_impluse = new egret.Point(-5.0, -16.0);
+        _this._touchdown_impluse = new egret.Point(-5.0, -20.0);
         _this._is_game_end = false;
         _this._current_impluse = new egret.Point();
         _this._ballCircleRadius = 0;
@@ -55,14 +55,13 @@ var MainScenePanel = (function (_super) {
             event.stopPropagation();
         }.bind(this), this);
     };
-    MainScenePanel.prototype.getHitManager = function () {
-        return this._hitManager;
+    MainScenePanel.prototype.HasTouchBegin = function () {
+        return this._hasTouchBegin;
     };
     MainScenePanel.prototype.getHitManagerNew = function () {
         return this._hitManagerNew;
     };
     MainScenePanel.prototype.initGame = function () {
-        this._hitManager = new HitManager(this);
         this._hitManagerNew = new HitManagerNew(this);
         this._playerBall = new PlayerBall(this.m_basket_ball, this);
         this._left_basket_container_x = this.m_basket_container.x;
@@ -79,16 +78,17 @@ var MainScenePanel = (function (_super) {
     };
     MainScenePanel.prototype.SetGoal = function (has_global) {
         this._has_goal = has_global;
-        if (has_global) {
-            var __this_1 = this;
-            setTimeout(function () {
-                __this_1._auto_enter_next_round = true;
-            }.bind(this), 2 * 1000);
-        }
+    };
+    MainScenePanel.prototype.AutoEnterNextRound = function () {
+        this._auto_enter_next_round = true;
+    };
+    MainScenePanel.prototype.IsInAutoEnterNextRound = function () {
+        return this._auto_enter_next_round;
     };
     MainScenePanel.prototype.NextRound = function () {
         this.SetGoal(false);
-        this._is_face_left = Math.floor(Math.random() * 2) == 0;
+        // this._is_face_left = Math.floor(Math.random() * 2) == 0
+        this._is_face_left = !this._is_face_left;
         if (this._is_first_round) {
             this._is_face_left = true;
         }
@@ -125,14 +125,15 @@ var MainScenePanel = (function (_super) {
             this.m_basket_ball.y = random_ball_y;
         }
         this._is_first_round = false;
+        this._playerBall.EnterNextRound();
     };
     MainScenePanel.prototype.onEnterFrame = function (event) {
         if (this._isStop) {
             return;
         }
         if (this._auto_enter_next_round) {
-            this._auto_enter_next_round = false;
             this.NextRound();
+            this._auto_enter_next_round = false;
         }
         this._playerBall.Update();
     };
@@ -146,8 +147,7 @@ var MainScenePanel = (function (_super) {
         if (this._baskball_speed_y > 0) {
             this._baskball_speed_y = 0;
         }
-        this._current_impluse.x = this._touchdown_impluse.x;
-        this._current_impluse.y = this._touchdown_impluse.y;
+        this._current_impluse.y = HitConst.PUSH_DOWN_IMPLUSE_Y;
         this._basketball_speed_x = HitConst.Max_Speed_X * (this._is_face_left ? -1 : 1);
     };
     //和篮网的碰撞

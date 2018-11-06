@@ -6,29 +6,29 @@
 			<e:Rect scaleX="1" scaleY="1" left="0" top="0" right="0" bottom="0"/>
 		</e:Group>
 		<e:Group id="m_basket_container" anchorOffsetX="0" anchorOffsetY="569" scaleX="0.4" scaleY="0.4" width="640" height="1138" verticalCenter="-2.5" x="0">
-			<e:Image source="ban_png" x="0" y="278" scaleX="1" scaleY="1" locked="true"/>
-			<e:Image source="wang_png" x="142.5" y="569" scaleX="1" scaleY="1" locked="true"/>
-			<e:Image source="kuang_png" x="112" y="569" scaleX="1" scaleY="1" locked="true"/>
-			<e:Group id="m_board_scope" width="40" height="440" x="74" y="273" scaleX="1" scaleY="1" anchorOffsetY="0" anchorOffsetX="0"/>
-			<e:Group id="m_net_scope" width="180" height="130" x="170" y="676" scaleX="1" scaleY="1" anchorOffsetX="0" anchorOffsetY="0"/>
-			<e:Group id="m_left_scope" width="14.87" height="17.27" x="109.11" y="583.43" scaleX="2.0408163265306123" scaleY="2.0408163265306123" anchorOffsetX="0" anchorOffsetY="0"/>
-			<e:Group id="m_big_basketcircle_scope" width="250" height="68" x="130" y="569" scaleX="1" scaleY="1" anchorOffsetX="0" anchorOffsetY="0"/>
-			<e:Group id="m_small_basketcircle_scope" width="220" height="38" x="142.5" y="584.67" scaleX="1" scaleY="1" anchorOffsetX="0" anchorOffsetY="0">
+			<e:Image source="wang_png" x="146.05" y="586.31" scaleX="1.5" scaleY="1.5"/>
+			<e:Image source="wang2_png" x="131.67" y="615.02" scaleX="1.8" scaleY="1.8"/>
+			<e:Image source="ban_png" x="0" y="278" scaleX="1" scaleY="1"/>
+
+			<e:Image source="kuang_png" x="112" y="569" scaleX="1" scaleY="1"/>
+			<e:Group id="m_board_scope" width="40" height="440" x="74" y="273" scaleX="1" scaleY="1" anchorOffsetY="0" anchorOffsetX="0" locked="true"/>
+			<e:Group id="m_net_scope" width="180" height="130" x="170" y="676" scaleX="1" scaleY="1" anchorOffsetX="0" anchorOffsetY="0" locked="true">
 			</e:Group>
-			<e:Group id="m_right_scope" width="24" height="20" x="360.18" y="591.77" visible="false">
-				<e:Rect width="24" height="20" x="0" y="0" scaleX="1" scaleY="1" fillAlpha="0.5"/>
-			</e:Group>
-			<e:Group id="m_skip_board_scope" width="40" height="50" x="74" y="273"/>
-			<e:Group id="m_right_line" width="8" height="1" x="362" y="600.67" scaleX="2.5" scaleY="2.5"/>
-			<e:Group id="m_left_line" width="30" height="1" x="110.5" y="599.67" scaleX="1" scaleY="1"/>
-			<e:Group id="m_circle_scope" width="260" height="30" x="118.26" y="584.35" anchorOffsetX="0" anchorOffsetY="0" scaleX="1" scaleY="1"/>
+
+
+
+
+
+			<e:Group id="m_right_line" width="8" height="1" x="362" y="600.67" scaleX="2.5" scaleY="2.5" locked="true"/>
+			<e:Group id="m_left_line" width="30" height="1" x="110.5" y="599.67" scaleX="1" scaleY="1" locked="true"/>
+			<e:Group id="m_circle_scope" width="260" height="30" x="118.26" y="584.35" anchorOffsetX="0" anchorOffsetY="0" scaleX="1" scaleY="1" locked="true"/>
 		</e:Group>
 		<e:Group id="m_top" height="10" y="157" left="0" right="0" anchorOffsetX="320" locked="true">
 			<e:Rect scaleX="1" scaleY="1" left="0" top="0" right="0" bottom="0"/>
 		</e:Group>
 		<e:Button id="m_btn_reset" label="重置" horizontalCenter="0" y="47" touchEnabled="true" touchChildren="true" enabled="true" locked="true"/>
 		<e:Group id="m_basket_ball" width="60" height="60" x="255" y="664">
-			<e:Image id="m_image_ball" source="qiu_png" scaleX="0.4" scaleY="0.4" anchorOffsetX="94" anchorOffsetY="94" horizontalCenter="0" verticalCenter="-0.5"/>
+			<e:Image id="m_image_ball" source="qiu_png" scaleX="0.4" scaleY="0.4" anchorOffsetX="94" anchorOffsetY="94" horizontalCenter="0" verticalCenter="-0.5" locked="true"/>
 		</e:Group>
 	</e:Group>
 </e:Skin>

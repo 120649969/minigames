@@ -11,7 +11,10 @@ class HitConst {
 	public static basket_board_restitution = -0.7; //篮框后方挡板反弹系数
 	public static basket_board_friction = 1.0 //篮框后方挡板摩擦系数 
 
-	public static Max_Speed_X:number = 3; //x方向的速度
+	public static Max_Speed_X:number = 4; //x方向的速度
+	public static Frame_Speed_X:number = 0.05
+
+	public static PUSH_DOWN_IMPLUSE_Y:number = -20
 
 
 	public static getHitRestitution(hitType:HitType):number
@@ -95,4 +98,5 @@ enum HitType {
 	Right_Line, //篮筐前沿
 	Left_Line, //篮筐后沿
 	Board, //后方的篮板
+	None
 }

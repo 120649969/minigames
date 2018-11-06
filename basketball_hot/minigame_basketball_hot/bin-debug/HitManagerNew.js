@@ -4,9 +4,17 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
 var HitManagerNew = (function () {
     function HitManagerNew(_mainPanel) {
         this._isOnFloor = false;
+        this._hitType = HitType.None;
         this.mainPanel = _mainPanel;
     }
+    HitManagerNew.prototype.IsOnFloor = function () {
+        return this._isOnFloor;
+    };
+    HitManagerNew.prototype.GetHitType = function () {
+        return this._hitType;
+    };
     HitManagerNew.prototype.CheckHit = function () {
+        this._hitType = HitType.None;
         if (this.CheckHitFloor()) {
             return true;
         }
@@ -41,6 +49,7 @@ var HitManagerNew = (function () {
     HitManagerNew.prototype.CheckHitFloor = function () {
         var curr_y = this.mainPanel.m_basket_ball.y;
         if (curr_y >= this.mainPanel.m_floor.y - this.mainPanel.m_basket_ball.height) {
+            this._hitType = HitType.Floor;
             if (this._isOnFloor) {
                 return true;
             }
@@ -51,7 +60,14 @@ var HitManagerNew = (function () {
                 this.mainPanel._baskball_speed_y = 0;
                 this._isOnFloor = true;
             }
-            this.mainPanel._basketball_speed_x = 0;
+            if (this.mainPanel.HasTouchBegin()) {
+                if (this.mainPanel.IsFaceLeft()) {
+                    this.mainPanel._basketball_speed_x = HitConst.Max_Speed_X * -0.5;
+                }
+                else {
+                    this.mainPanel._basketball_speed_x = HitConst.Max_Speed_X * 0.5;
+                }
+            }
             return true;
         }
         this._isOnFloor = false;
@@ -100,6 +116,7 @@ var HitManagerNew = (function () {
                 return false;
             }
         }
+        this._hitType = HitType.Right_Line;
         //以下必定相交
         if (global_ball_center_point.x > right_line_right_point.x) {
             var global_hit_point = new egret.Point(global_ball_center_point.x - top_line_cirle_width, right_line_left_point.y);
@@ -169,6 +186,7 @@ var HitManagerNew = (function () {
                 var local_hit_point = new egret.Point();
                 this.mainPanel.m_basket_ball.globalToLocal(global_hit_point.x, global_hit_point.y, local_hit_point);
                 this.HandleBallHit(local_hit_point, HitType.Left_Line);
+                this._hitType = HitType.Left_Line;
                 return true;
             }
         }
@@ -178,6 +196,7 @@ var HitManagerNew = (function () {
                 var local_hit_point = new egret.Point();
                 this.mainPanel.m_basket_ball.globalToLocal(global_hit_point.x, global_hit_point.y, local_hit_point);
                 this.HandleBallHit(local_hit_point, HitType.Left_Line);
+                this._hitType = HitType.Left_Line;
                 return true;
             }
         }
@@ -272,7 +291,6 @@ var HitManagerNew = (function () {
             else {
                 this.HandleBallHit(new egret.Point(this.mainPanel.m_basket_ball.width, this.mainPanel.m_basket_ball.height / 2), HitType.Board);
             }
-            return true;
         }
         else {
             var is_top = global_ball_center_point.y < board_left_top_point.y;
@@ -284,6 +302,7 @@ var HitManagerNew = (function () {
                 this.HandleBallHit(new egret.Point(this.mainPanel.m_basket_ball.width / 2, 0), HitType.Board);
             }
         }
+        this._hitType = HitType.Board;
         return true;
     };
     return HitManagerNew;
