@@ -56,18 +56,18 @@ class PlayerBallMi {
 			target_x = this.mainPanel.m_basket_ball.x - this.mainPanel.stage.stageWidth
 			is_change_pos = true
 		}
+		
 		if(is_change_pos){ //超过了边界才开始下一轮
 			if(this.mainPanel.HasGoal()){
 				this.mainPanel.AutoEnterNextRound();
-			}else{
-				this.mainPanel.m_basket_ball.x = target_x
 			}
+			this.mainPanel.m_basket_ball.x = target_x
 		}
 	}
 
 	private _adjustSpeed():void
 	{
-		if(!this.mainPanel.HasTouchBegin()){
+		if(!this.mainPanel.HasThisRoundTouch() || this.mainPanel.HasGoal()){
 			return
 		}
 		if(this.mainPanel.IsFaceLeft()){
@@ -139,24 +139,16 @@ class PlayerBallMi {
 		return true;
 	}
 
-	private _is_new_round:boolean = false;
 	public EnterNextRound():void
 	{
-		this._is_new_round = true;
 	}
 
 	public Update():void
 	{
 		this._adjustSpeed();
 		this._updateRotationTween()
-		if(this._is_new_round){
-			if(this.mainPanel.m_basket_ball.x > 0 && this.mainPanel.m_basket_ball.x < this.mainPanel.stage.stageWidth){
-				this._is_new_round = false
-			}
-		}
-		if(!this._is_new_round &&  !this.mainPanel.IsInAutoEnterNextRound()){
-			this._adjustBallPosition()
-		}
+		this._adjustBallPosition()
+		
 		let delta_speed_y = HitConst.Gravity + this.mainPanel._current_impluse.y;
 		this.mainPanel.basketball_speed_y += delta_speed_y;
 		this.mainPanel.basketball_speed_y = Math.max(this.mainPanel.basketball_speed_y, HitConst.MIN_SPEED_Y);
@@ -205,24 +197,18 @@ class PlayerBallMi {
 			}
 		}
 
+		
+
 		if(this._hitManager.GetHitType() == HitType.Floor){
 			this.m_basket_ball.x += this.mainPanel.basketball_speed_x / HitConst.Factor
 		}else if(this._hitManager.GetHitType() != HitType.None) {
 			if(this._hitManager.GetHitType() == this._last_hit_type){
-				// if(Math.abs(this.mainPanel.basketball_speed_y) < 5 * HitConst.Factor){
-				// 	this.mainPanel.basketball_speed_y = this.mainPanel.basketball_speed_y / Math.abs(this.mainPanel.basketball_speed_y) * 5 * -1
-				// } else{
-				// 	if(Math.abs(this.mainPanel.basketball_speed_y) > 10* HitConst.Factor){
-				// 		this.mainPanel.basketball_speed_y = this.mainPanel.basketball_speed_y / Math.abs(this.mainPanel.basketball_speed_y) * 10 * -1
-				// 	} else{
-				// 		this.mainPanel.basketball_speed_y = this.mainPanel.basketball_speed_y * -1
-				// 	}
-				// }
-				this.mainPanel.m_basket_ball.y += 2
-				// this.mainPanel.basketball_speed_y *= -2;
 				console.log("####连续碰撞#####", this.mainPanel.basketball_speed_y)
 			}
 		}
 		this._last_hit_type = this._hitManager.GetHitType()
+
 	}
+
+	
 }

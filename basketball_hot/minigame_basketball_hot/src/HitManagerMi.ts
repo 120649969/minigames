@@ -62,7 +62,6 @@ class HitManagerMi {
 
 		this.mainPanel.basketball_speed_x = target_speed.x
 		this.mainPanel.basketball_speed_y = target_speed.y
-		// console.log("########", this.mainPanel.basketball_speed_x, this.mainPanel.basketball_speed_y)
 	}
 
 	private CheckHitFloor():boolean
@@ -77,19 +76,13 @@ class HitManagerMi {
 			}
 			
 			this.HandleBallHit(new egret.Point(this.mainPanel.m_basket_ball.width / 2, this.mainPanel.m_basket_ball.height), HitType.Floor);
-			// //处理反弹
-			// let new_speed_y = this.mainPanel.basketball_speed_y * this._floorRestitution * -1;
+			this.mainPanel.basketball_speed_x = Math.max(this.mainPanel.basketball_speed_x, -1 * HitConst.Max_Speed_X)
+			this.mainPanel.basketball_speed_x = Math.min(this.mainPanel.basketball_speed_x, HitConst.Max_Speed_X)
+			//处理反弹
 			if(Math.abs(this.mainPanel.basketball_speed_y) <= 0.3 * HitConst.Factor)
 			{
 				this.mainPanel.basketball_speed_y = 0;
 				this._isOnFloor = true
-			}
-			if(this.mainPanel.HasTouchBegin()){
-				if(this.mainPanel.IsFaceLeft()){
-					this.mainPanel.basketball_speed_x = HitConst.Max_Speed_X * -0.5;
-				} else {
-					this.mainPanel.basketball_speed_x = HitConst.Max_Speed_X * 0.5;
-				}
 			}
 			
 			return true;

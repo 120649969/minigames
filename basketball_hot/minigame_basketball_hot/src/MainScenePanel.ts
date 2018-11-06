@@ -48,6 +48,7 @@ class MainScenePanel extends eui.Component{
 	private _auto_enter_next_round:boolean = false;
 	private _is_first_round:boolean = true;
 	private _hasTouchBegin:boolean = false;
+	private _hasThisRoundTouch:boolean = false;
 	private _is_face_left:boolean = true;
 	private _has_goal:boolean = false;
 	private _left_basket_container_x:number;
@@ -68,6 +69,11 @@ class MainScenePanel extends eui.Component{
 	public getHitManagerMi():HitManagerMi
 	{
 		return this._hitManagerMi
+	}
+
+	public HasThisRoundTouch():boolean
+	{
+		return this._hasThisRoundTouch
 	}
 
 	private initGame():void
@@ -119,7 +125,8 @@ class MainScenePanel extends eui.Component{
 		if(this._is_first_round){
 			this._is_face_left = true
 		}
-		
+
+		this._hasThisRoundTouch = false;
 		if(this._is_face_left){
 			this.m_basket_container.x = this._left_basket_container_x;
 			this.m_basket_container.y = this._left_basket_container_y;
@@ -130,21 +137,7 @@ class MainScenePanel extends eui.Component{
 			this.m_basket_container.scaleX = Math.abs(this.m_basket_container.scaleX) * -1;
 		}
 
-		if(!this._is_first_round){
-			if(this._is_face_left){
-				let random_ball_x = this.stage.stageWidth + Math.random() * 30;
-				let random_ball_y = this.m_floor.y - Math.random() * 30 - 200 - this.m_basket_ball.height;
-				this.m_basket_ball.x = random_ball_x
-				this.m_basket_ball.y = random_ball_y
-				this.basketball_speed_x = HitConst.Max_Speed_X * -1;
-			} else {
-				let random_ball_x = 0 - Math.random() * 30;
-				let random_ball_y = this.m_floor.y - Math.random() * 30 - 200 - this.m_basket_ball.height;
-				this.m_basket_ball.x = random_ball_x
-				this.m_basket_ball.y = random_ball_y
-				this.basketball_speed_x = HitConst.Max_Speed_X;
-			}
-		}else{
+		if(this._is_first_round){
 			let random_ball_x = this.stage.stageWidth / 2 - this.m_basket_ball.width / 2;
 			let random_ball_y = this.m_floor.y - 200
 			this.m_basket_ball.x = random_ball_x
@@ -180,6 +173,8 @@ class MainScenePanel extends eui.Component{
 		{
 			this._hasTouchBegin = true;
 		}
+
+		this._hasThisRoundTouch = true
 		if(this.m_basket_ball.y <= this.m_top.y)
 		{
 			return;
