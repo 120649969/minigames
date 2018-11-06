@@ -19,6 +19,7 @@ var MainScenePanel = (function (_super) {
         _this._auto_enter_next_round = false;
         _this._is_first_round = true;
         _this._hasTouchBegin = false;
+        _this._hasThisRoundTouch = false;
         _this._is_face_left = true;
         _this._has_goal = false;
         _this.skinName = "MainScene";
@@ -44,6 +45,9 @@ var MainScenePanel = (function (_super) {
     };
     MainScenePanel.prototype.getHitManagerMi = function () {
         return this._hitManagerMi;
+    };
+    MainScenePanel.prototype.HasThisRoundTouch = function () {
+        return this._hasThisRoundTouch;
     };
     MainScenePanel.prototype.initGame = function () {
         this._hitManager = new HitManager(this);
@@ -78,6 +82,7 @@ var MainScenePanel = (function (_super) {
         if (this._is_first_round) {
             this._is_face_left = true;
         }
+        this._hasThisRoundTouch = false;
         if (this._is_face_left) {
             this.m_basket_container.x = this._left_basket_container_x;
             this.m_basket_container.y = this._left_basket_container_y;
@@ -89,20 +94,19 @@ var MainScenePanel = (function (_super) {
             this.m_basket_container.scaleX = Math.abs(this.m_basket_container.scaleX) * -1;
         }
         if (!this._is_first_round) {
-            if (this._is_face_left) {
-                var random_ball_x = this.stage.stageWidth + Math.random() * 30;
-                var random_ball_y = this.m_floor.y - Math.random() * 30 - 200 - this.m_basket_ball.height;
-                this.m_basket_ball.x = random_ball_x;
-                this.m_basket_ball.y = random_ball_y;
-                this.basketball_speed_x = HitConst.Max_Speed_X * -1;
-            }
-            else {
-                var random_ball_x = 0 - Math.random() * 30;
-                var random_ball_y = this.m_floor.y - Math.random() * 30 - 200 - this.m_basket_ball.height;
-                this.m_basket_ball.x = random_ball_x;
-                this.m_basket_ball.y = random_ball_y;
-                this.basketball_speed_x = HitConst.Max_Speed_X;
-            }
+            // if(this._is_face_left){
+            // 	let random_ball_x = this.stage.stageWidth + Math.random() * 30;
+            // 	let random_ball_y = this.m_floor.y - Math.random() * 30 - 200 - this.m_basket_ball.height;
+            // 	this.m_basket_ball.x = random_ball_x
+            // 	this.m_basket_ball.y = random_ball_y
+            // 	// this.basketball_speed_x = HitConst.Max_Speed_X * -1;
+            // } else {
+            // 	let random_ball_x = 0 - Math.random() * 30;
+            // 	let random_ball_y = this.m_floor.y - Math.random() * 30 - 200 - this.m_basket_ball.height;
+            // 	this.m_basket_ball.x = random_ball_x
+            // 	this.m_basket_ball.y = random_ball_y
+            // 	// this.basketball_speed_x = HitConst.Max_Speed_X;
+            // }
         }
         else {
             var random_ball_x = this.stage.stageWidth / 2 - this.m_basket_ball.width / 2;
@@ -134,6 +138,7 @@ var MainScenePanel = (function (_super) {
         if (!this._hasTouchBegin) {
             this._hasTouchBegin = true;
         }
+        this._hasThisRoundTouch = true;
         if (this.m_basket_ball.y <= this.m_top.y) {
             return;
         }
