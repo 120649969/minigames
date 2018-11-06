@@ -5,6 +5,7 @@ var HitManagerMi = (function () {
     function HitManagerMi(_mainPanel) {
         this._isOnFloor = false;
         this._hitType = HitType.None;
+        this._isCurrentHitNeedCheck = false;
         this.mainPanel = _mainPanel;
     }
     HitManagerMi.prototype.IsOnFloor = function () {
@@ -53,6 +54,7 @@ var HitManagerMi = (function () {
                 return true;
             }
             this.HandleBallHit(new egret.Point(this.mainPanel.m_basket_ball.width / 2, this.mainPanel.m_basket_ball.height), HitType.Floor);
+            //掉到地上，解决x速度太快的问题。
             this.mainPanel.basketball_speed_x = Math.max(this.mainPanel.basketball_speed_x, -1 * HitConst.Max_Speed_X);
             this.mainPanel.basketball_speed_x = Math.min(this.mainPanel.basketball_speed_x, HitConst.Max_Speed_X);
             //处理反弹
@@ -60,13 +62,17 @@ var HitManagerMi = (function () {
                 this.mainPanel.basketball_speed_y = 0;
                 this._isOnFloor = true;
             }
-            if (this.mainPanel.HasTouchBegin() && !this.mainPanel.HasGoal()) {
+            if (this.mainPanel.HasThisRoundTouch() && !this.mainPanel.HasGoal()) {
                 if (this.mainPanel.IsFaceLeft()) {
                     this.mainPanel.basketball_speed_x = HitConst.Max_Speed_X * -1;
                 }
                 else {
                     this.mainPanel.basketball_speed_x = HitConst.Max_Speed_X;
                 }
+            }
+            //而且又进球掉到地板上x速度太慢而停下来的问题，这里给一个小的速度
+            if (this.mainPanel.HasGoal() && Math.abs(this.mainPanel.basketball_speed_x) < 2 * HitConst.Factor) {
+                this.mainPanel.basketball_speed_x = 2 * HitConst.Factor * this.mainPanel.basketball_speed_x / Math.abs(this.mainPanel.basketball_speed_x);
             }
             return true;
         }
@@ -117,6 +123,10 @@ var HitManagerMi = (function () {
             }
         }
         this._hitType = HitType.Right_Line;
+        var is_top = global_ball_center_point.y < right_line_right_point.y;
+        if (is_top) {
+            this.SetCurrentHitNeedCheck(true); //上部分需要二次确认
+        }
         //以下必定相交
         if (global_ball_center_point.x > right_line_right_point.x) {
             var global_hit_point = new egret.Point(global_ball_center_point.x - top_line_cirle_width, right_line_left_point.y);
@@ -287,6 +297,9 @@ var HitManagerMi = (function () {
                 var local_hit_point = new egret.Point();
                 this.mainPanel.m_basket_ball.globalToLocal(global_hit_point.x, global_hit_point.y, local_hit_point);
                 this.HandleBallHit(local_hit_point, HitType.Board);
+                if (is_top) {
+                    this.SetCurrentHitNeedCheck(true); //上部分需要二次确认
+                }
             }
             else {
                 this.HandleBallHit(new egret.Point(this.mainPanel.m_basket_ball.width, this.mainPanel.m_basket_ball.height / 2), HitType.Board);
@@ -296,14 +309,26 @@ var HitManagerMi = (function () {
             var is_top = global_ball_center_point.y < board_left_top_point.y;
             var is_down = global_ball_center_point.y > board_right_down_point.y;
             if (is_top) {
+                this.SetCurrentHitNeedCheck(true); //上部分需要二次确认
                 this.HandleBallHit(new egret.Point(this.mainPanel.m_basket_ball.width / 2, this.mainPanel.m_basket_ball.height), HitType.Board);
             }
             else if (is_down) {
                 this.HandleBallHit(new egret.Point(this.mainPanel.m_basket_ball.width / 2, 0), HitType.Board);
             }
+            else {
+                //解决切换回合篮板互换位置的瞬间，刚好球在篮板的新位置上，这里忽略碰撞
+                return false;
+            }
         }
         this._hitType = HitType.Board;
         return true;
+    };
+    //在篮板前沿的上沿和篮筐挡板上沿需要进行二次确认，以免篮球停留在这两个位置
+    HitManagerMi.prototype.SetCurrentHitNeedCheck = function (need_check) {
+        this._isCurrentHitNeedCheck = need_check;
+    };
+    HitManagerMi.prototype.IsCurrentHitNeedCheck = function () {
+        return this._isCurrentHitNeedCheck;
     };
     return HitManagerMi;
 }());

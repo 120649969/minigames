@@ -77,8 +77,8 @@ var MainScenePanel = (function (_super) {
     };
     MainScenePanel.prototype.NextRound = function () {
         this.SetGoal(false);
-        this._is_face_left = Math.floor(Math.random() * 2) == 0;
-        // this._is_face_left = !this._is_face_left
+        // this._is_face_left = Math.floor(Math.random() * 2) == 0
+        this._is_face_left = !this._is_face_left;
         if (this._is_first_round) {
             this._is_face_left = true;
         }

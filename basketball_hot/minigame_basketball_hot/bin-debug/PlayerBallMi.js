@@ -44,18 +44,28 @@ var PlayerBallMi = (function () {
         var is_change_pos = false;
         var target_x = 0;
         if (this.mainPanel.m_basket_ball.x < 0 - this.mainPanel.m_basket_ball.width) {
-            target_x = this.mainPanel.m_basket_ball.x + this.mainPanel.stage.stageWidth;
+            // target_x = this.mainPanel.m_basket_ball.x + this.mainPanel.stage.stageWidth
             is_change_pos = true;
         }
         else if (this.mainPanel.m_basket_ball.x > this.mainPanel.stage.stageWidth) {
-            target_x = this.mainPanel.m_basket_ball.x - this.mainPanel.stage.stageWidth;
+            // target_x = this.mainPanel.m_basket_ball.x - this.mainPanel.stage.stageWidth
             is_change_pos = true;
         }
         if (is_change_pos) {
             if (this.mainPanel.HasGoal()) {
                 this.mainPanel.AutoEnterNextRound();
             }
-            this.mainPanel.m_basket_ball.x = target_x;
+            //预留30个像素的位置
+            var ball_left_x = -30 - this.mainPanel.m_basket_ball.width;
+            var ball_right_x = this.mainPanel.stage.stageWidth + this.mainPanel.m_basket_ball.width + 30;
+            if (this.mainPanel.m_basket_ball.x < ball_left_x) {
+                this.mainPanel.m_basket_ball.x = ball_right_x - this.mainPanel.m_basket_ball.width;
+                this.mainPanel.m_basket_ball.y = this.mainPanel.m_floor.y - this.mainPanel.m_basket_ball.height - 50 - Math.random() * 50; //将y降低到篮板一下，以免和刚出来的篮板挡板出现在同一个位置
+            }
+            else if (this.mainPanel.m_basket_ball.x > ball_right_x) {
+                this.mainPanel.m_basket_ball.x = ball_left_x + this.mainPanel.m_basket_ball.width;
+                this.mainPanel.m_basket_ball.y = this.mainPanel.m_floor.y - this.mainPanel.m_basket_ball.height - 50 - Math.random() * 50;
+            }
         }
     };
     PlayerBallMi.prototype._adjustSpeed = function () {
@@ -119,7 +129,7 @@ var PlayerBallMi = (function () {
     PlayerBallMi.prototype.EnterNextRound = function () {
     };
     PlayerBallMi.prototype.Update = function () {
-        this._adjustSpeed();
+        // this._adjustSpeed();
         this._updateRotationTween();
         this._adjustBallPosition();
         var delta_speed_y = HitConst.Gravity + this.mainPanel._current_impluse.y;
@@ -131,6 +141,8 @@ var PlayerBallMi = (function () {
         var times = Math.ceil(total_speed / step_speed);
         var step_speend_x = this.mainPanel.basketball_speed_x / times;
         var step_speend_y = this.mainPanel.basketball_speed_y / times;
+        this._hitManager.SetCurrentHitNeedCheck(false); //每帧开始前重置
+        //篮球此刻是否在判断入网的x范围
         var is_current_in_circle_scope = this._isCurrentInCricleScope();
         var has_goal = this.mainPanel.HasGoal();
         for (var step_idx = 1; step_idx <= times; step_idx++) {
@@ -157,11 +169,34 @@ var PlayerBallMi = (function () {
                 }
             }
         }
+        //掉在地板上，因为和地板碰撞，上面的碰撞过程不会移动位置。但是x方向是需要移动位置的。所以在这里处理一下
         if (this._hitManager.GetHitType() == HitType.Floor) {
             this.m_basket_ball.x += this.mainPanel.basketball_speed_x / HitConst.Factor;
         }
         else if (this._hitManager.GetHitType() != HitType.None) {
             if (this._hitManager.GetHitType() == this._last_hit_type) {
+                if (this._hitManager.IsCurrentHitNeedCheck()) {
+                    if (this.mainPanel.IsFaceLeft()) {
+                        if (this._hitManager.GetHitType() == HitType.Right_Line) {
+                            this.m_basket_ball.y += 5;
+                            this.mainPanel.basketball_speed_y += 2 * HitConst.Factor;
+                        }
+                        else {
+                            this.m_basket_ball.x -= 5;
+                        }
+                        //
+                    }
+                    else {
+                        if (this._hitManager.GetHitType() == HitType.Right_Line) {
+                            this.m_basket_ball.y += 5;
+                            this.mainPanel.basketball_speed_y += 2 * HitConst.Factor;
+                        }
+                        else {
+                            this.m_basket_ball.x += 5;
+                        }
+                        // this.m_basket_ball.x += 5
+                    }
+                }
                 // this.m_basket_ball.y = this.m_basket_ball.y - 2
                 console.log("####连续碰撞#####", this.mainPanel.basketball_speed_y);
             }
