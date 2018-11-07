@@ -57,6 +57,10 @@ class HitConst {
 			return HitConst.basket_board_top_down_restitution
 		}
 
+		if(hitType == HitType.Board_Left_Right){
+			return HitConst.basket_board_restitution
+		}
+
 		return 1
 	}
 
@@ -83,6 +87,10 @@ class HitConst {
 		}
 
 		if(hitType == HitType.Board_Top){
+			return HitConst.basket_board_friction
+		}
+
+		if(hitType == HitType.Board_Left_Right){
 			return HitConst.basket_board_friction
 		}
 
@@ -120,6 +128,7 @@ enum HitType {
 	Right_Line, //篮筐前沿
 	Left_Line, //篮筐后沿
 	Board, //后方的篮板
+	Board_Left_Right,
 	Board_Top, 
 	None
 }

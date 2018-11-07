@@ -64,17 +64,6 @@ class PlayerBallMi {
 				this.mainPanel.m_basket_ball.y = this.mainPanel.m_floor.y - this.mainPanel.m_basket_ball.height - 50 - Math.random() * 50 //将y降低到篮板一下，以免和刚出来的篮板挡板出现在同一个位置
 				this.mainPanel.AutoEnterNextRound();
 			}
-
-			//预留30个像素的位置
-			// let ball_left_x = -30 - this.mainPanel.m_basket_ball.width
-			// let ball_right_x = this.mainPanel.stage.stageWidth + this.mainPanel.m_basket_ball.width + 30 
-			// if(this.mainPanel.m_basket_ball.x < ball_left_x){ //超出了左边边界
-			// 	this.mainPanel.m_basket_ball.x = ball_right_x - this.mainPanel.m_basket_ball.width
-			// 	this.mainPanel.m_basket_ball.y = this.mainPanel.m_floor.y - this.mainPanel.m_basket_ball.height - 50 - Math.random() * 50 //将y降低到篮板一下，以免和刚出来的篮板挡板出现在同一个位置
-			// } else if(this.mainPanel.m_basket_ball.x > ball_right_x) { //超出了右边边界
-			// 	this.mainPanel.m_basket_ball.x = ball_left_x + this.mainPanel.m_basket_ball.width
-			// 	this.mainPanel.m_basket_ball.y = this.mainPanel.m_floor.y - this.mainPanel.m_basket_ball.height - 50 - Math.random() * 50
-			// }
 		}
 	}
 
@@ -167,11 +156,6 @@ class PlayerBallMi {
 		this._updateRotationTween()
 		this._adjustBallPosition()
 		
-		let cur_spped_x = this.mainPanel.basketball_speed_x
-		let cur_spped_y = this.mainPanel.basketball_speed_y
-		let cur_position_x = this.m_basket_ball.x
-		let cur_position_y = this.m_basket_ball.y
-
 		let delta_speed_y = HitConst.Gravity + this.mainPanel._current_impluse.y;
 		this.mainPanel.basketball_speed_y += delta_speed_y;
 		this.mainPanel.basketball_speed_y = Math.max(this.mainPanel.basketball_speed_y, HitConst.MIN_SPEED_Y);
@@ -184,7 +168,6 @@ class PlayerBallMi {
 		let step_speend_x = this.mainPanel.basketball_speed_x / times
 		let step_speend_y = this.mainPanel.basketball_speed_y / times
 		
-		this._hitManager.SetCurrentHitNeedCheck(false) //每帧开始前重置
 		//篮球此刻是否在判断入网的x范围
 		let is_current_in_circle_scope = this._isCurrentInCricleScope();
 		let has_goal = this.mainPanel.HasGoal();
@@ -201,11 +184,25 @@ class PlayerBallMi {
 			this.m_basket_ball.x += step_speend_x / HitConst.Factor;
 			this.m_basket_ball.y += step_speend_y / HitConst.Factor;
 			let hit_result = this._hitManager.CheckHit()
-			if(hit_result && this._hitManager.GetHitType() == HitType.Floor){
+			if(hit_result){
 				this.m_basket_ball.x = temp_last_x
 				this.m_basket_ball.y = temp_last_y
-				break
-			} else if(hit_result && this._hitManager.GetHitType() != this._last_hit_type){
+				
+				if(this._hitManager.GetHitType() !=  HitType.Floor){
+					let new_type = this._hitManager.GetHitType()
+					let percent = (times - step_idx) / times
+					let new_total_speed = Math.sqrt(Math.pow(this.mainPanel.basketball_speed_x, 2) + Math.pow(this.mainPanel.basketball_speed_y, 2)) / HitConst.Factor;
+					if(percent == 0){
+						percent = 1
+					}
+					new_total_speed *= percent
+					let copy_new_total_speed = Math.min(new_total_speed, 5) //设置一个10个像素
+					let delta_x = (this.mainPanel.basketball_speed_x * percent / HitConst.Factor)  * copy_new_total_speed / new_total_speed
+					let delta_y = (this.mainPanel.basketball_speed_y * percent / HitConst.Factor) * copy_new_total_speed / new_total_speed 
+					// console.log("##########", delta_x, delta_y, percent)
+					this.m_basket_ball.x += delta_x
+					this.m_basket_ball.y += delta_y
+				}
 				break
 			}
 
@@ -221,25 +218,13 @@ class PlayerBallMi {
 				}
 			}
 		}
+
 		// console.log("######", this.mainPanel.m_basket_ball.x, this.mainPanel.m_basket_ball.y, this.mainPanel.basketball_speed_x, this.mainPanel.basketball_speed_y)
-		
 		//掉在地板上，因为和地板碰撞，上面的碰撞过程不会移动位置。但是x方向是需要移动位置的。所以在这里处理一下
 		if(this._hitManager.GetHitType() == HitType.Floor){  
 			this.m_basket_ball.x += this.mainPanel.basketball_speed_x / HitConst.Factor
-		}else if(this._hitManager.GetHitType() != HitType.None) {  //避免一直碰撞某个位置
-			if(this._hitManager.GetHitType() == this._last_hit_type){
-				if(this._hitManager.IsCurrentHitNeedCheck()){
-				}
-				// console.log("####连续碰撞1#####", cur_spped_x, cur_spped_y, cur_position_x, cur_position_y)
-				// console.log("####连续碰撞2#####", this.last_s_x, this.last_s_y, this.last_pos_x, this.last_pos_y)
-			}
 		}
 		this._last_hit_type = this._hitManager.GetHitType()
-
-		this.last_s_x = cur_spped_x
-		this.last_s_y = cur_spped_y
-		this.last_pos_x = cur_position_x
-		this.last_pos_y = cur_position_y
 	}
 
 	public getLastHitType():HitType
