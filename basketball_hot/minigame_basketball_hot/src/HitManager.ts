@@ -51,7 +51,8 @@ class HitManager {
 	{
 		let restition = HitConst.getHitRestitution(hitType)
 		let friction = HitConst.getHitFriction(hitType)
-		let speed_vec = new egret.Point(this.mainPanel.basketball_speed_x, this.mainPanel.basketball_speed_y);
+		
+		let speed_vec = new egret.Point(this.mainPanel.GetPlayerBall().basketball_speed_x, this.mainPanel.GetPlayerBall().basketball_speed_y);
 
 		let global_ball_center_point = this.mainPanel.m_basket_ball.localToGlobal(this.mainPanel.m_basket_ball.width / 2, this.mainPanel.m_basket_ball.height / 2);
 		let global_hit_point = this.mainPanel.m_basket_ball.localToGlobal(localBallHitPoint.x, localBallHitPoint.y)
@@ -83,8 +84,8 @@ class HitManager {
 		}
 		this._hitType = hitType
 
-		this.mainPanel.basketball_speed_x = target_speed.x
-		this.mainPanel.basketball_speed_y = target_speed.y
+		this.mainPanel.GetPlayerBall().basketball_speed_x = target_speed.x
+		this.mainPanel.GetPlayerBall().basketball_speed_y = target_speed.y
 	}
 
 	private CheckHitFloor():boolean
@@ -95,22 +96,21 @@ class HitManager {
 			this.HandleBallHit(new egret.Point(this.mainPanel.m_basket_ball.width / 2, this.mainPanel.m_basket_ball.height), HitType.Floor);
 
 			//掉到地上，解决x速度太快的问题。
-			this.mainPanel.basketball_speed_x = Math.max(this.mainPanel.basketball_speed_x, -1 * HitConst.Max_Speed_X)
-			this.mainPanel.basketball_speed_x = Math.min(this.mainPanel.basketball_speed_x, HitConst.Max_Speed_X)
+			this.mainPanel.GetPlayerBall().basketball_speed_x = Math.max(this.mainPanel.GetPlayerBall().basketball_speed_x, -1 * HitConst.Max_Speed_X)
+			this.mainPanel.GetPlayerBall().basketball_speed_x = Math.min(this.mainPanel.GetPlayerBall().basketball_speed_x, HitConst.Max_Speed_X)
 
 			if(this.mainPanel.HasThisRoundTouch() && !this.mainPanel.HasGoal()){
 				if(this.mainPanel.IsFaceLeft()){
-					this.mainPanel.basketball_speed_x = HitConst.Max_Speed_X * -1;
+					this.mainPanel.GetPlayerBall().basketball_speed_x = HitConst.Max_Speed_X * -1;
 				} else {
-					this.mainPanel.basketball_speed_x = HitConst.Max_Speed_X;
+					this.mainPanel.GetPlayerBall().basketball_speed_x = HitConst.Max_Speed_X;
 				}
 			}
 
-			//而且又进球掉到地板上x速度太慢而停下来的问题，这里给一个小的速度
-			if(this.mainPanel.HasGoal() && Math.abs(this.mainPanel.basketball_speed_x) < 3 * HitConst.Factor){
-				this.mainPanel.basketball_speed_x = 3 * HitConst.Factor * this.mainPanel.basketball_speed_x / Math.abs(this.mainPanel.basketball_speed_x)
+			//进球掉到地板上x速度太慢而停下来的问题，这里给一个小的速度
+			if(this.mainPanel.HasGoal() && Math.abs(this.mainPanel.GetPlayerBall().basketball_speed_x) < 3 * HitConst.Factor){
+				this.mainPanel.GetPlayerBall().basketball_speed_x = 3 * HitConst.Factor * this.mainPanel.GetPlayerBall().basketball_speed_x / Math.abs(this.mainPanel.GetPlayerBall().basketball_speed_x)
 			}
-			
 			return true;
 		}
 		return false;

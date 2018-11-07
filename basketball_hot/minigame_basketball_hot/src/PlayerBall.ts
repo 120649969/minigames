@@ -10,11 +10,15 @@ class PlayerBall {
 
 	private _rotate_time = 0.8
 	private _last_hit_type = HitType.None
+	private _push_acce_y:number = 0
+
+	public basketball_speed_x:number = 0.0;
+	public basketball_speed_y:number = 0.0;
 
 	public constructor(_ball:eui.Group, _mainPanel:MainScenePanel) {
 		this.m_basket_ball = _ball;
 		this.mainPanel = _mainPanel;
-		this._hitManager = _mainPanel.getHitManagerMi();
+		this._hitManager = _mainPanel.GetHitManagerMi();
 	}
 
 	private _updateRotationTween():void
@@ -23,7 +27,7 @@ class PlayerBall {
 			return
 		}
 		if(this._tweenDir == 0){
-			if(this.mainPanel.basketball_speed_x < 0){
+			if(this.basketball_speed_x < 0){
 				egret.Tween.get(this.mainPanel.m_image_ball, {loop:true}).to({rotation:-180}, this._rotate_time * 1000).to({rotation:-360}, this._rotate_time * 1000)
 				this._tweenDir = -1
 			} else{
@@ -32,12 +36,12 @@ class PlayerBall {
 			}
 			return
 		}
-		if(this.mainPanel.basketball_speed_x < 0 && this._tweenDir > 0){
+		if(this.basketball_speed_x < 0 && this._tweenDir > 0){
 			this.mainPanel.m_image_ball.rotation = 0
 			this._tweenDir = -1;
 			egret.Tween.removeTweens(this.mainPanel.m_image_ball)
 			egret.Tween.get(this.mainPanel.m_image_ball, {loop:true}).to({rotation:-180}, this._rotate_time * 1000).to({rotation:-360}, this._rotate_time * 1000)
-		}else if(this.mainPanel.basketball_speed_x > 0 && this._tweenDir < 0){
+		}else if(this.basketball_speed_x > 0 && this._tweenDir < 0){
 			this._tweenDir = 1;
 			this.mainPanel.m_image_ball.rotation = 0
 			egret.Tween.removeTweens(this.mainPanel.m_image_ball)
@@ -73,15 +77,15 @@ class PlayerBall {
 			return
 		}
 		if(this.mainPanel.IsFaceLeft()){
-			if(this.mainPanel.basketball_speed_x > HitConst.Max_Speed_X * -1){
-				this.mainPanel.basketball_speed_x -= HitConst.Frame_Speed_X
+			if(this.basketball_speed_x > HitConst.Max_Speed_X * -1){
+				this.basketball_speed_x -= HitConst.Frame_Speed_X
 			}
-			this.mainPanel.basketball_speed_x = Math.max(this.mainPanel.basketball_speed_x, HitConst.Max_Speed_X * -1)
+			this.basketball_speed_x = Math.max(this.basketball_speed_x, HitConst.Max_Speed_X * -1)
 		} else {
-			if(this.mainPanel.basketball_speed_x < HitConst.Max_Speed_X){
-				this.mainPanel.basketball_speed_x += HitConst.Frame_Speed_X
+			if(this.basketball_speed_x < HitConst.Max_Speed_X){
+				this.basketball_speed_x += HitConst.Frame_Speed_X
 			}
-			this.mainPanel.basketball_speed_x = Math.min(this.mainPanel.basketball_speed_x, HitConst.Max_Speed_X)
+			this.basketball_speed_x = Math.min(this.basketball_speed_x, HitConst.Max_Speed_X)
 		}
 	}
 
@@ -145,10 +149,15 @@ class PlayerBall {
 	{
 	}
 
-	private last_s_x:number
-	private last_s_y:number
-	private last_pos_x:number
-	private last_pos_y:number
+	public OnPushDown():void
+	{
+		if(this.basketball_speed_y > 0)
+		{
+			this.basketball_speed_y = 0;
+		}
+		this._push_acce_y = HitConst.PUSH_DOWN_IMPLUSE_Y;
+		this.basketball_speed_x = HitConst.Max_Speed_X * (this.mainPanel.IsFaceLeft() ? -1 : 1);
+	}
 
 	public Update():void
 	{
@@ -156,29 +165,24 @@ class PlayerBall {
 		this._updateRotationTween()
 		this._adjustBallPosition()
 		
-		let delta_speed_y = HitConst.Gravity + this.mainPanel._current_impluse.y;
-		this.mainPanel.basketball_speed_y += delta_speed_y;
-		this.mainPanel.basketball_speed_y = Math.max(this.mainPanel.basketball_speed_y, HitConst.MIN_SPEED_Y);
-		this.mainPanel._current_impluse.y = 0
+		let acce_speed_y = HitConst.Gravity + this._push_acce_y;  //y方向的加速度
+		let start_speed_y = this.basketball_speed_y
+		this.basketball_speed_y += acce_speed_y;
+		this.basketball_speed_y = Math.max(this.basketball_speed_y, HitConst.MIN_SPEED_Y);
+		this._push_acce_y = 0 //重置瞬间加速度
 
-		let total_speed = Math.sqrt(Math.pow(this.mainPanel.basketball_speed_x, 2) + Math.pow(this.mainPanel.basketball_speed_y, 2)) / HitConst.Factor;
+		let total_speed = Math.sqrt(Math.pow(this.basketball_speed_x, 2) + Math.pow(this.basketball_speed_y, 2)) / HitConst.Factor;
 		let step_speed = 2
 		
 		let times = Math.ceil(total_speed / step_speed)
-		let step_speend_x = this.mainPanel.basketball_speed_x / times
-		let step_speend_y = this.mainPanel.basketball_speed_y / times
+		let step_speend_x = this.basketball_speed_x / times
+		let step_speend_y = this.basketball_speed_y / times
 		
 		//篮球此刻是否在判断入网的x范围
 		let is_current_in_circle_scope = this._isCurrentInCricleScope();
 		let has_goal = this.mainPanel.HasGoal();
 		for(let step_idx = 1; step_idx <= times; step_idx++)
 		{
-			if(step_idx == times)
-			{
-				step_speend_x = this.mainPanel.basketball_speed_x - this.mainPanel.basketball_speed_x / times * (times - 1)
-				step_speend_y = this.mainPanel.basketball_speed_y - this.mainPanel.basketball_speed_y / times * (times - 1)
-			}
-
 			let temp_last_x = this.m_basket_ball.x
 			let temp_last_y = this.m_basket_ball.y
 			this.m_basket_ball.x += step_speend_x / HitConst.Factor;
@@ -191,14 +195,14 @@ class PlayerBall {
 				if(this._hitManager.GetHitType() !=  HitType.Floor){
 					let new_type = this._hitManager.GetHitType()
 					let percent = (times - step_idx) / times
-					let new_total_speed = Math.sqrt(Math.pow(this.mainPanel.basketball_speed_x, 2) + Math.pow(this.mainPanel.basketball_speed_y, 2)) / HitConst.Factor;
+					let new_total_speed = Math.sqrt(Math.pow(this.basketball_speed_x, 2) + Math.pow(this.basketball_speed_y, 2)) / HitConst.Factor;
 					if(percent == 0){
 						percent = 1
 					}
 					new_total_speed *= percent
 					let copy_new_total_speed = Math.min(new_total_speed, 5) //设置一个10个像素
-					let delta_x = (this.mainPanel.basketball_speed_x * percent / HitConst.Factor)  * copy_new_total_speed / new_total_speed
-					let delta_y = (this.mainPanel.basketball_speed_y * percent / HitConst.Factor) * copy_new_total_speed / new_total_speed 
+					let delta_x = (this.basketball_speed_x * percent / HitConst.Factor)  * copy_new_total_speed / new_total_speed
+					let delta_y = (this.basketball_speed_y * percent / HitConst.Factor) * copy_new_total_speed / new_total_speed 
 					// console.log("##########", delta_x, delta_y, percent)
 					this.m_basket_ball.x += delta_x
 					this.m_basket_ball.y += delta_y
@@ -219,10 +223,10 @@ class PlayerBall {
 			}
 		}
 
-		// console.log("######", this.mainPanel.m_basket_ball.x, this.mainPanel.m_basket_ball.y, this.mainPanel.basketball_speed_x, this.mainPanel.basketball_speed_y)
+		// console.log("######", this.mainPanel.m_basket_ball.x, this.mainPanel.m_basket_ball.y, this.basketball_speed_x, this.basketball_speed_y)
 		//掉在地板上，因为和地板碰撞，上面的碰撞过程不会移动位置。但是x方向是需要移动位置的。所以在这里处理一下
 		if(this._hitManager.GetHitType() == HitType.Floor){  
-			this.m_basket_ball.x += this.mainPanel.basketball_speed_x / HitConst.Factor
+			this.m_basket_ball.x += this.basketball_speed_x / HitConst.Factor
 		}
 		this._last_hit_type = this._hitManager.GetHitType()
 	}
