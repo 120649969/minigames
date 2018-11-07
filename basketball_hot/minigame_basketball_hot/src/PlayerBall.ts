@@ -166,7 +166,6 @@ class PlayerBall {
 		this._adjustBallPosition()
 		
 		let acce_speed_y = HitConst.Gravity + this._push_acce_y;  //y方向的加速度
-		let start_speed_y = this.basketball_speed_y
 		this.basketball_speed_y += acce_speed_y;
 		this.basketball_speed_y = Math.max(this.basketball_speed_y, HitConst.MIN_SPEED_Y);
 		this._push_acce_y = 0 //重置瞬间加速度

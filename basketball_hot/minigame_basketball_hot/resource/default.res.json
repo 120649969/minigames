@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,bg_jpg,egret_icon_png,description_json,ban_png,kuang_png,qiu_png,qiu1_png,wang_png,bg2_jpg,wang2_png,Qiand_close_png,Button_yellow03_png",
+			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,bg_jpg,description_json,ban_png,kuang_png,qiu_png,qiu1_png,wang_png,wang2_png,Qiand_close_png,Button_yellow03_png,kuang2_png,bj2_jpg,egret_icon_png",
 			"name": "preload"
 		}
 	],
@@ -127,11 +127,6 @@
 			"name": "bg_jpg"
 		},
 		{
-			"url": "assets/egret_icon.png",
-			"type": "image",
-			"name": "egret_icon_png"
-		},
-		{
 			"name": "description_json",
 			"type": "json",
 			"url": "config/description.json"
@@ -162,11 +157,6 @@
 			"url": "assets/wang.png"
 		},
 		{
-			"name": "bg2_jpg",
-			"type": "image",
-			"url": "assets/bg2.jpg"
-		},
-		{
 			"name": "wang2_png",
 			"type": "image",
 			"url": "assets/wang2.png"
@@ -180,6 +170,21 @@
 			"name": "Button_yellow03_png",
 			"type": "image",
 			"url": "assets/Button_yellow03.png"
+		},
+		{
+			"name": "kuang2_png",
+			"type": "image",
+			"url": "assets/kuang2.png"
+		},
+		{
+			"name": "bj2_jpg",
+			"type": "image",
+			"url": "assets/bj2.jpg"
+		},
+		{
+			"name": "egret_icon_png",
+			"type": "image",
+			"url": "assets/egret_icon.png"
 		}
 	]
 }

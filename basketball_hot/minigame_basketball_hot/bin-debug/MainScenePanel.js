@@ -12,9 +12,6 @@ var MainScenePanel = (function (_super) {
     __extends(MainScenePanel, _super);
     function MainScenePanel() {
         var _this = _super.call(this) || this;
-        _this.basketball_speed_x = 0.0;
-        _this.basketball_speed_y = 0.0;
-        _this._current_impluse = new egret.Point();
         _this._isUsingMi = true;
         _this._auto_enter_next_round = false;
         _this._is_first_round = true;
@@ -23,42 +20,37 @@ var MainScenePanel = (function (_super) {
         _this._is_face_left = true;
         _this._has_goal = false;
         _this.skinName = "MainScene";
-        _this.addEventListener(egret.Event.ADDED_TO_STAGE, _this.onAddToStage, _this);
+        _this.addEventListener(egret.Event.ADDED_TO_STAGE, _this._onAddToStage, _this);
         return _this;
     }
-    MainScenePanel.prototype.onAddToStage = function (event) {
-        this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
-        this.m_container.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
+    MainScenePanel.prototype._onAddToStage = function (event) {
+        this.addEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this);
+        this.m_container.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onTouchBegin, this);
         var __this = this;
         this.btn_debug.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function (event) {
             var debugPanel = new DebugPanel();
             __this.addChild(debugPanel);
             event.stopPropagation();
         }.bind(this), this);
-        this.initGame();
+        this._initGame();
     };
     MainScenePanel.prototype.HasTouchBegin = function () {
         return this._hasTouchBegin;
     };
-    MainScenePanel.prototype.getHitManager = function () {
+    MainScenePanel.prototype.GetHitManagerMi = function () {
         return this._hitManager;
-    };
-    MainScenePanel.prototype.getHitManagerMi = function () {
-        return this._hitManagerMi;
     };
     MainScenePanel.prototype.HasThisRoundTouch = function () {
         return this._hasThisRoundTouch;
     };
-    MainScenePanel.prototype.initGame = function () {
+    MainScenePanel.prototype._initGame = function () {
         this._hitManager = new HitManager(this);
         this._playerBall = new PlayerBall(this.m_basket_ball, this);
-        this._hitManagerMi = new HitManagerMi(this);
-        this._playerBallMi = new PlayerBallMi(this.m_basket_ball, this);
-        this._left_basket_container_x = this.m_basket_container.x;
-        this._left_basket_container_y = this.m_basket_container.y;
+        this._left_basket_container_x = this.m_basket_container_back.x;
+        this._left_basket_container_y = this.m_basket_container_back.y;
         this._right_basket_container_x = this.stage.stageWidth;
         this._right_basket_container_y = this._left_basket_container_y;
-        this.NextRound();
+        this._nextRound();
     };
     MainScenePanel.prototype.IsFaceLeft = function () {
         return this._is_face_left;
@@ -75,23 +67,32 @@ var MainScenePanel = (function (_super) {
     MainScenePanel.prototype.IsInAutoEnterNextRound = function () {
         return this._auto_enter_next_round;
     };
-    MainScenePanel.prototype.NextRound = function () {
+    MainScenePanel.prototype.GetPlayerBall = function () {
+        return this._playerBall;
+    };
+    MainScenePanel.prototype._nextRound = function () {
         this.SetGoal(false);
-        // this._is_face_left = Math.floor(Math.random() * 2) == 0
-        this._is_face_left = !this._is_face_left;
+        this._is_face_left = Math.floor(Math.random() * 2) == 0;
+        // this._is_face_left = !this._is_face_left
         if (this._is_first_round) {
             this._is_face_left = true;
         }
         this._hasThisRoundTouch = false;
         if (this._is_face_left) {
-            this.m_basket_container.x = this._left_basket_container_x;
-            this.m_basket_container.y = this._left_basket_container_y;
-            this.m_basket_container.scaleX = Math.abs(this.m_basket_container.scaleX);
+            this.m_basket_container_pre.x = this._left_basket_container_x;
+            this.m_basket_container_pre.y = this._left_basket_container_y;
+            this.m_basket_container_pre.scaleX = Math.abs(this.m_basket_container_back.scaleX);
+            this.m_basket_container_back.x = this._left_basket_container_x;
+            this.m_basket_container_back.y = this._left_basket_container_y;
+            this.m_basket_container_back.scaleX = Math.abs(this.m_basket_container_back.scaleX);
         }
         else {
-            this.m_basket_container.x = this._right_basket_container_x;
-            this.m_basket_container.y = this._right_basket_container_y;
-            this.m_basket_container.scaleX = Math.abs(this.m_basket_container.scaleX) * -1;
+            this.m_basket_container_pre.x = this._right_basket_container_x;
+            this.m_basket_container_pre.y = this._right_basket_container_y;
+            this.m_basket_container_pre.scaleX = Math.abs(this.m_basket_container_back.scaleX) * -1;
+            this.m_basket_container_back.x = this._right_basket_container_x;
+            this.m_basket_container_back.y = this._right_basket_container_y;
+            this.m_basket_container_back.scaleX = Math.abs(this.m_basket_container_back.scaleX) * -1;
         }
         if (this._is_first_round) {
             var random_ball_x = this.stage.stageWidth / 2 - this.m_basket_ball.width / 2;
@@ -100,26 +101,18 @@ var MainScenePanel = (function (_super) {
             this.m_basket_ball.y = random_ball_y;
         }
         this._is_first_round = false;
-        if (this._isUsingMi) {
-            this._playerBallMi.EnterNextRound();
-        }
-        else {
-            this._playerBall.EnterNextRound();
-        }
+        this.validateNow();
+        this._hitManager.EnterNextRound();
+        this._playerBall.EnterNextRound();
     };
-    MainScenePanel.prototype.onEnterFrame = function (event) {
+    MainScenePanel.prototype._onEnterFrame = function (event) {
         if (this._auto_enter_next_round) {
-            this.NextRound();
+            this._nextRound();
             this._auto_enter_next_round = false;
         }
-        if (this._isUsingMi) {
-            this._playerBallMi.Update();
-        }
-        else {
-            this._playerBall.Update();
-        }
+        this._playerBall.Update();
     };
-    MainScenePanel.prototype.onTouchBegin = function (event) {
+    MainScenePanel.prototype._onTouchBegin = function (event) {
         if (!this._hasTouchBegin) {
             this._hasTouchBegin = true;
         }
@@ -127,29 +120,7 @@ var MainScenePanel = (function (_super) {
         if (this.m_basket_ball.y <= this.m_top.y) {
             return;
         }
-        if (this.basketball_speed_y > 0) {
-            this.basketball_speed_y = 0;
-        }
-        this._current_impluse.y = HitConst.PUSH_DOWN_IMPLUSE_Y;
-        this.basketball_speed_x = HitConst.Max_Speed_X * (this._is_face_left ? -1 : 1);
-    };
-    //和篮网的碰撞
-    // public checkHitNet():void
-    // {
-    // 	let temp_global_point:egret.Point = new egret.Point();
-    // 	this.m_basket_ball.localToGlobal(this.m_basket_ball.width / 2, this.m_basket_ball.width / 2, temp_global_point);
-    // 	let localPoint:egret.Point = new egret.Point();
-    // 	this.m_basket_container.globalToLocal(temp_global_point.x, temp_global_point.y, localPoint);
-    // 	if(localPoint.x <= this.m_net_scope.x + this.m_net_scope.width + this._ballCircleRadius && localPoint.x >= this.m_net_scope.x - this._ballCircleRadius)
-    // 	{
-    // 		if(localPoint.y <= this.m_net_scope.y + this.m_net_scope.height + this._ballCircleRadius && localPoint.y >= this.m_net_scope.y + this.m_net_scope.height / 2)
-    // 		{
-    // 			console.log("#####hit net#####")
-    // 		}
-    // 	}
-    // }
-    MainScenePanel.prototype.isLeft = function () {
-        return true;
+        this._playerBall.OnPushDown();
     };
     return MainScenePanel;
 }(eui.Component));

@@ -8,7 +8,7 @@ class HitConst {
 	public static basket_left_line_restitution = -0.5; //篮筐后沿反弹系数
 	public static basket_left_line_friction = 1.0 //篮筐后沿摩擦系数 
 
-	public static basket_board_restitution = -0.2; //篮框后方挡板反弹系数
+	public static basket_board_restitution = -0.26; //篮框后方挡板反弹系数
 	public static basket_board_friction = 1.0 //篮框后方挡板摩擦系数 
 
 	public static basket_board_top_down_restitution = -0.7 //篮框顶部挡板反弹系数

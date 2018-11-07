@@ -1,7 +1,8 @@
 class MainScenePanel extends eui.Component{
 
 	public m_floor : eui.Group;
-	public m_basket_container : eui.Group;
+	public m_basket_container_back : eui.Group;
+	public m_basket_container_pre : eui.Group;
 	public m_board_scope: eui.Group;
 	public m_net_scope: eui.Group;
 	public m_basket_ball: eui.Group;
@@ -11,6 +12,9 @@ class MainScenePanel extends eui.Component{
 	public m_right_line:eui.Group
 	public m_left_line:eui.Group
 	public m_circle_scope:eui.Group  //篮圈
+	public m_board_top_circle:eui.Group
+	public m_board_down_circle:eui.Group
+
 	private _isUsingMi:boolean = true;
 	private btn_debug:eui.Button
 	private _playerBall:PlayerBall
@@ -68,8 +72,8 @@ class MainScenePanel extends eui.Component{
 		this._hitManager = new HitManager(this);
 		this._playerBall = new PlayerBall(this.m_basket_ball, this);
 
-		this._left_basket_container_x = this.m_basket_container.x;
-		this._left_basket_container_y = this.m_basket_container.y;
+		this._left_basket_container_x = this.m_basket_container_back.x;
+		this._left_basket_container_y = this.m_basket_container_back.y;
 		this._right_basket_container_x = this.stage.stageWidth;
 		this._right_basket_container_y = this._left_basket_container_y;
 		this._nextRound();
@@ -116,13 +120,22 @@ class MainScenePanel extends eui.Component{
 
 		this._hasThisRoundTouch = false;
 		if(this._is_face_left){
-			this.m_basket_container.x = this._left_basket_container_x;
-			this.m_basket_container.y = this._left_basket_container_y;
-			this.m_basket_container.scaleX = Math.abs(this.m_basket_container.scaleX);
+			this.m_basket_container_pre.x = this._left_basket_container_x;
+			this.m_basket_container_pre.y = this._left_basket_container_y;
+			this.m_basket_container_pre.scaleX = Math.abs(this.m_basket_container_back.scaleX);
+
+			this.m_basket_container_back.x = this._left_basket_container_x;
+			this.m_basket_container_back.y = this._left_basket_container_y;
+			this.m_basket_container_back.scaleX = Math.abs(this.m_basket_container_back.scaleX);
 		}else{
-			this.m_basket_container.x = this._right_basket_container_x;
-			this.m_basket_container.y = this._right_basket_container_y;
-			this.m_basket_container.scaleX = Math.abs(this.m_basket_container.scaleX) * -1;
+
+			this.m_basket_container_pre.x = this._right_basket_container_x;
+			this.m_basket_container_pre.y = this._right_basket_container_y;
+			this.m_basket_container_pre.scaleX = Math.abs(this.m_basket_container_back.scaleX) * -1;
+
+			this.m_basket_container_back.x = this._right_basket_container_x;
+			this.m_basket_container_back.y = this._right_basket_container_y;
+			this.m_basket_container_back.scaleX = Math.abs(this.m_basket_container_back.scaleX) * -1;
 		}
 
 		if(this._is_first_round){
@@ -133,8 +146,11 @@ class MainScenePanel extends eui.Component{
 		}
 		
 		this._is_first_round = false;
-
+		
+		this.validateNow()
+		this._hitManager.EnterNextRound()
 		this._playerBall.EnterNextRound()
+		
 	}
 
 	private _onEnterFrame(event : egret.Event):void

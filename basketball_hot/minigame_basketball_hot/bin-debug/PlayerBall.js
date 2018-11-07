@@ -8,17 +8,19 @@ var PlayerBall = (function () {
         this._last_y = 0;
         this._rotate_time = 0.8;
         this._last_hit_type = HitType.None;
-        this._is_new_round = false;
+        this._push_acce_y = 0;
+        this.basketball_speed_x = 0.0;
+        this.basketball_speed_y = 0.0;
         this.m_basket_ball = _ball;
         this.mainPanel = _mainPanel;
-        this._hitManagerNew = _mainPanel.getHitManager();
+        this._hitManager = _mainPanel.GetHitManagerMi();
     }
     PlayerBall.prototype._updateRotationTween = function () {
         if (!this.mainPanel.HasTouchBegin()) {
             return;
         }
         if (this._tweenDir == 0) {
-            if (this.mainPanel.basketball_speed_x < 0) {
+            if (this.basketball_speed_x < 0) {
                 egret.Tween.get(this.mainPanel.m_image_ball, { loop: true }).to({ rotation: -180 }, this._rotate_time * 1000).to({ rotation: -360 }, this._rotate_time * 1000);
                 this._tweenDir = -1;
             }
@@ -28,13 +30,13 @@ var PlayerBall = (function () {
             }
             return;
         }
-        if (this.mainPanel.basketball_speed_x < 0 && this._tweenDir > 0) {
+        if (this.basketball_speed_x < 0 && this._tweenDir > 0) {
             this.mainPanel.m_image_ball.rotation = 0;
             this._tweenDir = -1;
             egret.Tween.removeTweens(this.mainPanel.m_image_ball);
             egret.Tween.get(this.mainPanel.m_image_ball, { loop: true }).to({ rotation: -180 }, this._rotate_time * 1000).to({ rotation: -360 }, this._rotate_time * 1000);
         }
-        else if (this.mainPanel.basketball_speed_x > 0 && this._tweenDir < 0) {
+        else if (this.basketball_speed_x > 0 && this._tweenDir < 0) {
             this._tweenDir = 1;
             this.mainPanel.m_image_ball.rotation = 0;
             egret.Tween.removeTweens(this.mainPanel.m_image_ball);
@@ -53,29 +55,28 @@ var PlayerBall = (function () {
             is_change_pos = true;
         }
         if (is_change_pos) {
+            this.mainPanel.m_basket_ball.x = target_x;
             if (this.mainPanel.HasGoal()) {
+                this.mainPanel.m_basket_ball.y = this.mainPanel.m_floor.y - this.mainPanel.m_basket_ball.height - 50 - Math.random() * 50; //将y降低到篮板一下，以免和刚出来的篮板挡板出现在同一个位置
                 this.mainPanel.AutoEnterNextRound();
-            }
-            else {
-                this.mainPanel.m_basket_ball.x = target_x;
             }
         }
     };
     PlayerBall.prototype._adjustSpeed = function () {
-        if (!this.mainPanel.HasTouchBegin()) {
+        if (!this.mainPanel.HasThisRoundTouch() || this.mainPanel.HasGoal()) {
             return;
         }
         if (this.mainPanel.IsFaceLeft()) {
-            if (this.mainPanel.basketball_speed_x > HitConst.Max_Speed_X * -1) {
-                this.mainPanel.basketball_speed_x -= HitConst.Frame_Speed_X;
+            if (this.basketball_speed_x > HitConst.Max_Speed_X * -1) {
+                this.basketball_speed_x -= HitConst.Frame_Speed_X;
             }
-            this.mainPanel.basketball_speed_x = Math.max(this.mainPanel.basketball_speed_x, HitConst.Max_Speed_X * -1);
+            this.basketball_speed_x = Math.max(this.basketball_speed_x, HitConst.Max_Speed_X * -1);
         }
         else {
-            if (this.mainPanel.basketball_speed_x < HitConst.Max_Speed_X) {
-                this.mainPanel.basketball_speed_x += HitConst.Frame_Speed_X;
+            if (this.basketball_speed_x < HitConst.Max_Speed_X) {
+                this.basketball_speed_x += HitConst.Frame_Speed_X;
             }
-            this.mainPanel.basketball_speed_x = Math.min(this.mainPanel.basketball_speed_x, HitConst.Max_Speed_X);
+            this.basketball_speed_x = Math.min(this.basketball_speed_x, HitConst.Max_Speed_X);
         }
     };
     //检测是否进球
@@ -120,43 +121,54 @@ var PlayerBall = (function () {
         return true;
     };
     PlayerBall.prototype.EnterNextRound = function () {
-        this._is_new_round = true;
+    };
+    PlayerBall.prototype.OnPushDown = function () {
+        if (this.basketball_speed_y > 0) {
+            this.basketball_speed_y = 0;
+        }
+        this._push_acce_y = HitConst.PUSH_DOWN_IMPLUSE_Y;
+        this.basketball_speed_x = HitConst.Max_Speed_X * (this.mainPanel.IsFaceLeft() ? -1 : 1);
     };
     PlayerBall.prototype.Update = function () {
         this._adjustSpeed();
         this._updateRotationTween();
-        if (this._is_new_round) {
-            if (this.mainPanel.m_basket_ball.x > 0 && this.mainPanel.m_basket_ball.x < this.mainPanel.stage.stageWidth) {
-                this._is_new_round = false;
-            }
-        }
-        if (!this._is_new_round && !this.mainPanel.IsInAutoEnterNextRound()) {
-            this._adjustBallPosition();
-        }
-        var delta_speed_y = HitConst.Gravity + this.mainPanel._current_impluse.y;
-        this.mainPanel.basketball_speed_y += delta_speed_y;
-        this.mainPanel.basketball_speed_y = Math.max(this.mainPanel.basketball_speed_y, -20);
-        this.mainPanel._current_impluse.y = 0;
-        var total_speed = Math.sqrt(Math.pow(this.mainPanel.basketball_speed_x, 2) + Math.pow(this.mainPanel.basketball_speed_y, 2));
+        this._adjustBallPosition();
+        var acce_speed_y = HitConst.Gravity + this._push_acce_y; //y方向的加速度
+        this.basketball_speed_y += acce_speed_y;
+        this.basketball_speed_y = Math.max(this.basketball_speed_y, HitConst.MIN_SPEED_Y);
+        this._push_acce_y = 0; //重置瞬间加速度
+        var total_speed = Math.sqrt(Math.pow(this.basketball_speed_x, 2) + Math.pow(this.basketball_speed_y, 2)) / HitConst.Factor;
         var step_speed = 2;
         var times = Math.ceil(total_speed / step_speed);
-        var step_speend_x = this.mainPanel.basketball_speed_x / times;
-        var step_speend_y = this.mainPanel.basketball_speed_y / times;
+        var step_speend_x = this.basketball_speed_x / times;
+        var step_speend_y = this.basketball_speed_y / times;
+        //篮球此刻是否在判断入网的x范围
         var is_current_in_circle_scope = this._isCurrentInCricleScope();
         var has_goal = this.mainPanel.HasGoal();
         for (var step_idx = 1; step_idx <= times; step_idx++) {
-            if (step_idx == times) {
-                step_speend_x = this.mainPanel.basketball_speed_x - this.mainPanel.basketball_speed_x / times * (times - 1);
-                step_speend_y = this.mainPanel.basketball_speed_y - this.mainPanel.basketball_speed_y / times * (times - 1);
-            }
             var temp_last_x = this.m_basket_ball.x;
             var temp_last_y = this.m_basket_ball.y;
-            this.m_basket_ball.x += step_speend_x;
-            this.m_basket_ball.y += step_speend_y;
-            this.m_basket_ball.y = Math.min(this.m_basket_ball.y, this.mainPanel.m_floor.y - this.m_basket_ball.height);
-            if (this._hitManagerNew.CheckHit()) {
+            this.m_basket_ball.x += step_speend_x / HitConst.Factor;
+            this.m_basket_ball.y += step_speend_y / HitConst.Factor;
+            var hit_result = this._hitManager.CheckHit();
+            if (hit_result) {
                 this.m_basket_ball.x = temp_last_x;
                 this.m_basket_ball.y = temp_last_y;
+                if (this._hitManager.GetHitType() != HitType.Floor) {
+                    var new_type = this._hitManager.GetHitType();
+                    var percent = (times - step_idx) / times;
+                    var new_total_speed = Math.sqrt(Math.pow(this.basketball_speed_x, 2) + Math.pow(this.basketball_speed_y, 2)) / HitConst.Factor;
+                    if (percent == 0) {
+                        percent = 1;
+                    }
+                    new_total_speed *= percent;
+                    var copy_new_total_speed = Math.min(new_total_speed, 5); //设置一个10个像素
+                    var delta_x = (this.basketball_speed_x * percent / HitConst.Factor) * copy_new_total_speed / new_total_speed;
+                    var delta_y = (this.basketball_speed_y * percent / HitConst.Factor) * copy_new_total_speed / new_total_speed;
+                    // console.log("##########", delta_x, delta_y, percent)
+                    this.m_basket_ball.x += delta_x;
+                    this.m_basket_ball.y += delta_y;
+                }
                 break;
             }
             if (is_current_in_circle_scope) {
@@ -168,27 +180,15 @@ var PlayerBall = (function () {
                 }
             }
         }
-        if (this._hitManagerNew.GetHitType() == HitType.Floor) {
-            this.m_basket_ball.x += this.mainPanel.basketball_speed_x;
+        // console.log("######", this.mainPanel.m_basket_ball.x, this.mainPanel.m_basket_ball.y, this.basketball_speed_x, this.basketball_speed_y)
+        //掉在地板上，因为和地板碰撞，上面的碰撞过程不会移动位置。但是x方向是需要移动位置的。所以在这里处理一下
+        if (this._hitManager.GetHitType() == HitType.Floor) {
+            this.m_basket_ball.x += this.basketball_speed_x / HitConst.Factor;
         }
-        else if (this._hitManagerNew.GetHitType() != HitType.None) {
-            if (this._hitManagerNew.GetHitType() == this._last_hit_type) {
-                if (Math.abs(this.mainPanel.basketball_speed_y) < 5) {
-                    this.mainPanel.basketball_speed_y = this.mainPanel.basketball_speed_y / Math.abs(this.mainPanel.basketball_speed_y) * 5 * -1;
-                }
-                else {
-                    if (Math.abs(this.mainPanel.basketball_speed_y) > 10) {
-                        this.mainPanel.basketball_speed_y = this.mainPanel.basketball_speed_y / Math.abs(this.mainPanel.basketball_speed_y) * 10 * -1;
-                    }
-                    else {
-                        this.mainPanel.basketball_speed_y = this.mainPanel.basketball_speed_y * -1;
-                    }
-                }
-                // this.mainPanel.basketball_speed_y *= -2;
-                console.log("####连续碰撞#####", this.mainPanel.basketball_speed_y);
-            }
-        }
-        this._last_hit_type = this._hitManagerNew.GetHitType();
+        this._last_hit_type = this._hitManager.GetHitType();
+    };
+    PlayerBall.prototype.getLastHitType = function () {
+        return this._last_hit_type;
     };
     return PlayerBall;
 }());
