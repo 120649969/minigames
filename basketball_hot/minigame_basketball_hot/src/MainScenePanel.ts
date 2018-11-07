@@ -39,11 +39,8 @@ class MainScenePanel extends eui.Component{
 		this.initGame();
 	}
 
-	private _playerBall:PlayerBall;
-	private _hitManager:HitManager
-
-	private _playerBallMi:PlayerBallMi
-	private _hitManagerMi:HitManagerMi
+	private _playerBallMi:PlayerBall
+	private _hitManagerMi:HitManager
 
 	private _auto_enter_next_round:boolean = false;
 	private _is_first_round:boolean = true;
@@ -61,12 +58,7 @@ class MainScenePanel extends eui.Component{
 		return this._hasTouchBegin
 	}
 
-	public getHitManager():HitManager
-	{
-		return this._hitManager
-	}
-
-	public getHitManagerMi():HitManagerMi
+	public getHitManagerMi():HitManager
 	{
 		return this._hitManagerMi
 	}
@@ -78,11 +70,9 @@ class MainScenePanel extends eui.Component{
 
 	private initGame():void
 	{
-		this._hitManager = new HitManager(this);
-		this._playerBall = new PlayerBall(this.m_basket_ball, this)
 
-		this._hitManagerMi = new HitManagerMi(this);
-		this._playerBallMi = new PlayerBallMi(this.m_basket_ball, this);
+		this._hitManagerMi = new HitManager(this);
+		this._playerBallMi = new PlayerBall(this.m_basket_ball, this);
 
 		this._left_basket_container_x = this.m_basket_container.x;
 		this._left_basket_container_y = this.m_basket_container.y;
@@ -116,7 +106,7 @@ class MainScenePanel extends eui.Component{
 		return this._auto_enter_next_round
 	}
 
-	public GetPlayerBall():PlayerBallMi
+	public GetPlayerBall():PlayerBall
 	{
 		return this._playerBallMi
 	}
@@ -150,12 +140,7 @@ class MainScenePanel extends eui.Component{
 		
 		this._is_first_round = false;
 
-		if(this._isUsingMi){
-			this._playerBallMi.EnterNextRound()
-		} else {
-			this._playerBall.EnterNextRound()
-		}
-		
+		this._playerBallMi.EnterNextRound()
 	}
 
 	private onEnterFrame(event : egret.Event):void
@@ -164,11 +149,7 @@ class MainScenePanel extends eui.Component{
 			this.NextRound();
 			this._auto_enter_next_round = false;
 		}
-		if(this._isUsingMi){
-			this._playerBallMi.Update()
-		} else {
-			this._playerBall.Update()
-		}
+		this._playerBallMi.Update()
 	}
 
 	private onTouchBegin(event : egret.TouchEvent):void
