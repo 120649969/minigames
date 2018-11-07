@@ -2,23 +2,24 @@ class HitConst {
 	public static floor_restitution = -0.7; //地面反弹系数，反弹会改变方向，所以要改成负数
 	public static floor_friction = 1.0; //地面摩擦系数
 
-	public static basket_right_line_restitution = -0.7; //篮筐前沿反弹系数
+	public static basket_right_line_restitution = -0.5; //篮筐前沿反弹系数
 	public static basket_right_line_friction = 1.0 //篮筐前沿摩擦系数
 
-	public static basket_left_line_restitution = -0.7; //篮筐后沿反弹系数
+	public static basket_left_line_restitution = -0.5; //篮筐后沿反弹系数
 	public static basket_left_line_friction = 1.0 //篮筐后沿摩擦系数 
 
-	public static basket_board_restitution = -0.7; //篮框后方挡板反弹系数
+	public static basket_board_restitution = -0.2; //篮框后方挡板反弹系数
 	public static basket_board_friction = 1.0 //篮框后方挡板摩擦系数 
 
+	public static basket_board_top_down_restitution = -0.7 //篮框顶部挡板反弹系数
 
 	public static Factor:number = 8 //米和像素的转换单位
 	public static Gravity:number = 9.8 //重力加速度
-	public static Max_Speed_X:number = 4 * HitConst.Factor; //x方向的速度
+	public static Max_Speed_X:number = 6 * HitConst.Factor; //x方向的速度
 	public static MIN_SPEED_Y:number = -20 * HitConst.Factor  //y在负方向最小的速度
 	public static PUSH_DOWN_IMPLUSE_Y:number = -20 * HitConst.Factor //按下y方向的瞬时加速度
-	public static Frame_Speed_X:number = 4  //每帧影响x方向速度的风速
-	// public static Frame_Speed_X:number = 0.05 * HitConst.Factor  //每帧影响x方向速度的风速
+	// public static Frame_Speed_X:number = 4  //每帧影响x方向速度的风速
+	public static Frame_Speed_X:number = 0 * HitConst.Factor  //每帧影响x方向速度的风速
 	
 	public static BACK_Gravity = HitConst.Gravity;
 	public static BACK_Max_Speed_X = HitConst.Max_Speed_X;
@@ -52,6 +53,10 @@ class HitConst {
 			return HitConst.basket_board_restitution
 		}
 
+		if(hitType == HitType.Board_Top){
+			return HitConst.basket_board_top_down_restitution
+		}
+
 		return 1
 	}
 
@@ -74,6 +79,10 @@ class HitConst {
 
 		if(hitType == HitType.Board)
 		{
+			return HitConst.basket_board_friction
+		}
+
+		if(hitType == HitType.Board_Top){
 			return HitConst.basket_board_friction
 		}
 
@@ -111,5 +120,6 @@ enum HitType {
 	Right_Line, //篮筐前沿
 	Left_Line, //篮筐后沿
 	Board, //后方的篮板
+	Board_Top, 
 	None
 }

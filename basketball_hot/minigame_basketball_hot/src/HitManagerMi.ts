@@ -17,21 +17,29 @@ class HitManagerMi {
 		return this._hitType
 	}
 
+	public _getLastHitType():HitType
+	{
+		return this.mainPanel.GetPlayerBall().getLastHitType()
+	}
+
 	public CheckHit():boolean
 	{
 		this._hitType = HitType.None
 		if(this.CheckHitFloor())
 		{
+			this._hitType = HitType.Floor
 			return true
 		}
 
 		if(this.CheckHitRightLine())
 		{
+			this._hitType = HitType.Right_Line
 			return true;
 		}
 
 		if(this.CheckLeftLine())
 		{
+			this._hitType = HitType.Left_Line
 			return true;
 		}
 
@@ -39,6 +47,7 @@ class HitManagerMi {
 		{
 			return true;
 		}
+		return false;
 	}
 
 	private HandleBallHit(localBallHitPoint:egret.Point, hitType:HitType)
@@ -59,6 +68,23 @@ class HitManagerMi {
 		let friction_vec = new egret.Point(friction * vertical_vec.x, friction * vertical_vec.y);
 
 		let target_speed = new egret.Point(restitution_dot_vec.x + friction_vec.x, restitution_dot_vec.y + friction_vec.y)
+
+
+		if(hitType != HitType.Floor){
+			if(Math.abs(target_speed.x) < 1 * HitConst.Factor){  //这类调整一下速度，避免x速度太小，不能移动
+				let rate = 1
+				if(target_speed.x != 0){
+					rate = target_speed.x / Math.abs(target_speed.x)
+				}
+				target_speed.x = 1 * HitConst.Factor * rate
+			}
+
+			if(target_speed.y < 0 && Math.abs(target_speed.y) < HitConst.Gravity){
+				let target_y = -1 * HitConst.Gravity - 2 * HitConst.Factor
+				target_speed.y = target_y
+			}
+		}
+		
 
 		this.mainPanel.basketball_speed_x = target_speed.x
 		this.mainPanel.basketball_speed_y = target_speed.y
@@ -166,19 +192,23 @@ class HitManagerMi {
 			}
 		}
 
-		this._hitType = HitType.Right_Line
+		if(this._getLastHitType() == HitType.Right_Line){
+			return true
+		}
 
 		let is_top = global_ball_center_point.y < right_line_right_point.y
-
 		if(is_top){
 			this.SetCurrentHitNeedCheck(true)  //上部分需要二次确认
 		}
+
 		//以下必定相交
 		if(global_ball_center_point.x > right_line_right_point.x){
+			
 			let global_hit_point = new egret.Point(global_ball_center_point.x - top_line_cirle_width, right_line_left_point.y)
 			let local_hit_point = new egret.Point()
 			this.mainPanel.m_basket_ball.globalToLocal(global_hit_point.x, global_hit_point.y, local_hit_point)
 			this.HandleBallHit(local_hit_point, HitType.Right_Line)
+
 			return true;
 		}
 
@@ -254,25 +284,35 @@ class HitManagerMi {
 			}
 		}
 
+		if(this._getLastHitType() == HitType.Left_Line){
+			return true
+		}
+
 		//以下必定相交
 		if(this.mainPanel.IsFaceLeft()){
 			if(global_ball_center_point.x > left_line_right_point.x){
+
+				if(this._getLastHitType() == HitType.Left_Line){
+					return true
+				}
+
 				let global_hit_point = new egret.Point(global_ball_center_point.x - top_line_cirle_width, left_line_right_point.y)
 				let local_hit_point = new egret.Point()
 				this.mainPanel.m_basket_ball.globalToLocal(global_hit_point.x, global_hit_point.y, local_hit_point)
 				this.HandleBallHit(local_hit_point, HitType.Left_Line)
-
-				this._hitType = HitType.Left_Line
 				return true;
 			}
 		} else { 
 			if(global_ball_center_point.x < left_line_left_point.x){
+
+				if(this._getLastHitType() == HitType.Left_Line){
+					return true
+				}
+
 				let global_hit_point = new egret.Point(global_ball_center_point.x + top_line_cirle_width, left_line_right_point.y)
 				let local_hit_point = new egret.Point()
 				this.mainPanel.m_basket_ball.globalToLocal(global_hit_point.x, global_hit_point.y, local_hit_point)
 				this.HandleBallHit(local_hit_point, HitType.Left_Line)
-
-				this._hitType = HitType.Left_Line
 				return true;
 			}
 		}
@@ -358,11 +398,15 @@ class HitManagerMi {
 		
 		//以下都满足碰撞
 
+		let is_top = global_ball_center_point.y < board_left_top_point.y
+		let is_down = global_ball_center_point.y > board_right_down_point.y
 		//左右两边的碰撞
 		if(global_ball_center_point.x < board_left_top_point.x || global_ball_center_point.x > board_right_down_point.x){
+			if(this._getLastHitType() == HitType.Board){
+				this._hitType = HitType.Board
+				return true
+			}
 			let is_right = global_ball_center_point.x > board_right_down_point.x
-			let is_top = global_ball_center_point.y < board_left_top_point.y
-			let is_down = global_ball_center_point.y > board_right_down_point.y
 			if(is_top || is_down){  //上下
 				let delta_y = 0
 				let target_y = 0
@@ -386,23 +430,36 @@ class HitManagerMi {
 					this.SetCurrentHitNeedCheck(true)  //上部分需要二次确认
 				}
 			} else{//中间
-				this.HandleBallHit(new egret.Point(this.mainPanel.m_basket_ball.width, this.mainPanel.m_basket_ball.height / 2), HitType.Board)
+				if(is_right){
+					this.HandleBallHit(new egret.Point(0, this.mainPanel.m_basket_ball.height / 2), HitType.Board)
+				}else{
+					this.HandleBallHit(new egret.Point(this.mainPanel.m_basket_ball.width, this.mainPanel.m_basket_ball.height / 2), HitType.Board)
+				}
 			}
+			this._hitType = HitType.Board
 		} else { //上下
-			let is_top = global_ball_center_point.y < board_left_top_point.y
-			let is_down = global_ball_center_point.y > board_right_down_point.y
 			if(is_top){
+				if(this._getLastHitType() == HitType.Board_Top){
+					this._hitType = HitType.Board_Top
+					return true
+				}
+				this._hitType = HitType.Board_Top
 				this.SetCurrentHitNeedCheck(true) //上部分需要二次确认
-				this.HandleBallHit(new egret.Point(this.mainPanel.m_basket_ball.width / 2, this.mainPanel.m_basket_ball.height), HitType.Board)
+				this.HandleBallHit(new egret.Point(this.mainPanel.m_basket_ball.width / 2, this.mainPanel.m_basket_ball.height), HitType.Board_Top)
 			} else if(is_down){
-				this.HandleBallHit(new egret.Point(this.mainPanel.m_basket_ball.width / 2, 0), HitType.Board)
+				if(this._getLastHitType() == HitType.Board_Top){
+					this._hitType = HitType.Board_Top
+					return true
+				}
+				this._hitType = HitType.Board_Top
+				this.HandleBallHit(new egret.Point(this.mainPanel.m_basket_ball.width / 2, 0), HitType.Board_Top)
 			} else {
 				//解决切换回合篮板互换位置的瞬间，刚好球在篮板的新位置上，这里忽略碰撞
 				return false
 			}
 		}
 
-		this._hitType = HitType.Board
+		
 		return true;
 	}
 

@@ -116,11 +116,15 @@ class MainScenePanel extends eui.Component{
 		return this._auto_enter_next_round
 	}
 
+	public GetPlayerBall():PlayerBallMi
+	{
+		return this._playerBallMi
+	}
 
 	public NextRound():void
 	{
 		this.SetGoal(false);
-		this._is_face_left = Math.floor(Math.random() * 2) == 0
+		// this._is_face_left = Math.floor(Math.random() * 2) == 0
 		// this._is_face_left = !this._is_face_left
 		if(this._is_first_round){
 			this._is_face_left = true
@@ -142,6 +146,9 @@ class MainScenePanel extends eui.Component{
 			let random_ball_y = this.m_floor.y - 200
 			this.m_basket_ball.x = random_ball_x
 			this.m_basket_ball.y = random_ball_y
+
+			// this.m_basket_ball.x = global_left_line_right_top_point.x + 10
+			// this.m_basket_ball.y = global_left_line_right_top_point.y - this.m_basket_ball.height - 30
 		}
 		
 		this._is_first_round = false;
@@ -186,6 +193,23 @@ class MainScenePanel extends eui.Component{
 		this._current_impluse.y = HitConst.PUSH_DOWN_IMPLUSE_Y;
 
 		this.basketball_speed_x = HitConst.Max_Speed_X * (this._is_face_left ? -1 : 1);
+
+
+		// this.m_basket_ball.x = event.stageX
+		// this.m_basket_ball.y = event.stageY
+
+		//-48 104.6 104.908577531074 518.812871771205
+		//124 499
+		// this.m_basket_ball.x = 131
+		// this.m_basket_ball.y = 521
+		// this.basketball_speed_x = 20.8044878574266 
+		// this.basketball_speed_y = 10.111529095798
+
+		// this.m_basket_ball.x = 104.908577531074
+		// this.m_basket_ball.y = 518.812871771205
+		// this.basketball_speed_x = -48
+		// this.basketball_speed_y = 104.6
+		console.log("#####onTouchBegin######", event.stageX, event.stageY)
 	}
 
 	
