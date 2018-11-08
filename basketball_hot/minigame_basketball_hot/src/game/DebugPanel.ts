@@ -47,8 +47,6 @@ class DebugPanel extends eui.Component{
 			new_value = parseFloat( __this.label_wind.text)
 			if(new_value != null){
 				 HitConst.Frame_Speed_X = new_value
-			}else{
-				console.log("##new_value####is nil######", new_value)
 			}
 
 			new_value = parseFloat( __this.label_floor_restitution.text)

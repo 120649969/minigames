@@ -238,7 +238,7 @@ class MainScenePanel extends eui.Component{
 		return this._hasTouchBegin
 	}
 
-	public GetHitManagerMi():HitManager
+	public GetHitManager():HitManager
 	{
 		return this._hitManager
 	}

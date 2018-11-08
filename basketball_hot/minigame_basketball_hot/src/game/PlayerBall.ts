@@ -19,7 +19,7 @@ class PlayerBall {
 	public constructor(_ball:eui.Group, _mainPanel:MainScenePanel) {
 		this.m_basket_ball = _ball;
 		this.mainPanel = _mainPanel;
-		this._hitManager = _mainPanel.GetHitManagerMi();
+		this._hitManager = _mainPanel.GetHitManager();
 	}
 
 	public Restart():void
@@ -35,10 +35,38 @@ class PlayerBall {
 		this.mainPanel.m_image_ball.rotation = 0
 	}
 
+	private _cacheAfterImageSprites:Array<egret.Bitmap> = [];
+	private _usingAfterImageSprites:Array<egret.Bitmap> = [];
+	private _currentAfterImageType:AfterImageType = AfterImageType.None
+	private _afterImageDistance:number = 5
+
+	public SetUsingAfterImageType(type:AfterImageType):void
+	{
+		this._currentAfterImageType = type
+	}
+
+	private _has_create_after_images:boolean = false;
+	private _createAfterImageSprites():void
+	{
+		for(let index = 0; index < 60; index ++)
+		{
+			let new_bitmap = new egret.Bitmap();
+			new_bitmap.texture = RES.getRes("qiu1_png");
+			BasketUtils.SetColor(new_bitmap, 0x333333);
+			new_bitmap.visible = false;
+			this.m_basket_ball.parent.addChild(new_bitmap)
+			this.m_basket_ball.parent.setChildIndex(new_bitmap, 1)
+			this._cacheAfterImageSprites.push(new_bitmap)
+			// let random_scale =  Math.random() * 0.2 + 0.7
+			let random_scale = 1
+			new_bitmap.scaleX = this.m_basket_ball.width / new_bitmap.width * random_scale
+			new_bitmap.scaleY = this.m_basket_ball.height / new_bitmap.height * random_scale
+		}
+	}
+
 	private _restartHitTimer()
 	{
 		if(this._clear_hit_timer){
-			// this._clear_hit_timer.removeEventListener(egret.TimerEvent.TIMER,this._clearHitTick,this);
 			this._clear_hit_timer.stop()
 			this._clear_hit_timer.start()
 			return
@@ -47,9 +75,49 @@ class PlayerBall {
 		this._clear_hit_timer.addEventListener(egret.TimerEvent.TIMER,this._clearHitTick,this);
 	}
 
+	//2秒后自动清理碰撞信息
 	private _clearHitTick():void
 	{
 		this._recent_hit = false
+	}
+
+	private _last_after_image_point:egret.Point = new egret.Point()
+	private _updateAfterImage():void
+	{
+		for(let index = this._usingAfterImageSprites.length - 1; index >= 0; index --)
+		{
+			let bitmap = this._usingAfterImageSprites[index]
+			bitmap.alpha -= 0.01
+			if(bitmap.alpha <= 0)
+			{
+				this._usingAfterImageSprites.splice(index, 1);
+				this._cacheAfterImageSprites.push(bitmap)
+				bitmap.visible = false;
+			}
+		}
+
+		if(this._currentAfterImageType != AfterImageType.None && this._cacheAfterImageSprites.length > 0)
+		{
+			let distance = Math.sqrt(Math.pow(this.m_basket_ball.x - this._last_after_image_point.x, 2) + Math.pow(this.m_basket_ball.y - this._last_after_image_point.y, 2));
+			if(distance > this.m_basket_ball.height * 0.5)
+			{
+				let new_bitmap = this._cacheAfterImageSprites.shift()
+				new_bitmap.visible = true
+				
+				if(this._cacheAfterImageSprites.length % 5 == 0){
+					new_bitmap.alpha = 0.4
+				} else {
+					new_bitmap.alpha = 0.2
+				}
+				new_bitmap.x = this.m_basket_ball.x
+				new_bitmap.y = this.m_basket_ball.y
+				// new_bitmap.x = this.m_basket_ball.x + this.m_basket_ball.width / 2 - new_bitmap.width * new_bitmap.scaleX / 2
+				// new_bitmap.y = this.m_basket_ball.y + this.m_basket_ball.height / 2 - new_bitmap.height * new_bitmap.scaleY / 2
+				this._usingAfterImageSprites.push(new_bitmap)
+				this._last_after_image_point.x = this.m_basket_ball.x
+				this._last_after_image_point.y = this.m_basket_ball.y
+			}
+		}
 	}
 
 	private _updateRotationTween():void
@@ -176,6 +244,11 @@ class PlayerBall {
 
 	public EnterNextRound():void
 	{
+		if(!this._has_create_after_images)
+		{
+			this._createAfterImageSprites()
+			this._has_create_after_images = true;
+		}
 	}
 
 	public OnPushDown():void
@@ -190,6 +263,7 @@ class PlayerBall {
 
 	public Update():void
 	{
+		
 		this._adjustSpeed();
 		this._updateRotationTween()
 		this._adjustBallPosition()
@@ -198,7 +272,7 @@ class PlayerBall {
 		let acce_speed_y = HitConst.Gravity + this._push_acce_y;  //y方向的加速度
 		this.basketball_speed_y += acce_speed_y;
 		this.basketball_speed_y = Math.max(this.basketball_speed_y, HitConst.MIN_SPEED_Y);
-		this._push_acce_y = 0 //重置瞬间加速度
+		this._push_acce_y = 0 //重置瞬间加速度ddddddddddddddddddddddd
 
 		let total_speed = Math.sqrt(Math.pow(this.basketball_speed_x, 2) + Math.pow(this.basketball_speed_y, 2)) / HitConst.Factor;
 		let step_speed = 2
@@ -270,6 +344,9 @@ class PlayerBall {
 						this.mainPanel.SetGoal(true, Score.KONG_XING_GOAL);
 					}
 					
+					// if(Math.floor(Math.random() * 2) == 0){
+						this.SetUsingAfterImageType(AfterImageType.Smoke)
+					// }
 				}
 				if(has_goal){
 					if(this._recent_hit){
@@ -277,7 +354,6 @@ class PlayerBall {
 					} else {
 						this.mainPanel.PlayKongXingAnimation()
 					}
-					
 				}
 			}
 		}
@@ -308,6 +384,7 @@ class PlayerBall {
 			this.mainPanel.PlayNetAnimation(hitNetType)
 		}
 
+		this._updateAfterImage()
 	}
 
 	public getLastHitType():HitType

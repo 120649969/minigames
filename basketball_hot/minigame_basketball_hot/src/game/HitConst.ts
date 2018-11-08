@@ -149,3 +149,9 @@ enum Score{
 	GOAL = 2,
 	KONG_XING_GOAL = 3
 }
+
+enum AfterImageType{
+	Smoke,
+	Fire,
+	None
+}
