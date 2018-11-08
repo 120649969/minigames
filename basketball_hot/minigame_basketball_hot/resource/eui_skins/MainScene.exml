@@ -5,7 +5,7 @@
 		<e:Group id="m_floor" height="10" left="0" right="0" anchorOffsetX="320" bottom="150" locked="true">
 			<e:Rect scaleX="1" scaleY="1" left="0" top="0" right="0" bottom="0"/>
 		</e:Group>
-		<e:Group id="m_basket_container_back" anchorOffsetX="0" anchorOffsetY="569" scaleX="1" scaleY="1" bottom="0" top="0" right="0" left="0" locked="true">
+		<e:Group id="m_basket_container_back" anchorOffsetX="0" anchorOffsetY="640" scaleX="1" scaleY="1" width="720" x="0" height="1280" y="640">
 			<e:Image x="85.2" y="692.1" scaleX="1" scaleY="1" source="wang2_png"/>
 
 			<e:Image source="ban_png" x="0" y="504.64" scaleX="1" scaleY="1"/>
@@ -19,7 +19,7 @@
 
 
 
-			<e:Group id="m_left_line" width="5" height="1" x="80.1" y="700.31" scaleX="1" scaleY="1" visible="false"/>
+			<e:Group id="m_left_line" width="8" height="1" x="80.1" y="700.31" scaleX="1" scaleY="1"/>
 			<e:Group id="m_circle_scope" width="135" height="30" x="88.75" y="688.64" anchorOffsetX="0" anchorOffsetY="0" scaleX="1" scaleY="1"/>
 			<e:Group id="m_net_scope" width="97" height="91" x="109" y="722.64" scaleX="1" scaleY="1" anchorOffsetX="0" anchorOffsetY="0" visible="false"/>
 			<e:Group id="m_right_line" width="13" height="1" x="220.04000000000002" y="699.64" scaleX="1" scaleY="1" anchorOffsetX="0" anchorOffsetY="0" visible="false"/>
@@ -29,13 +29,13 @@
 		<e:Group id="m_top" height="10" left="0" right="0" anchorOffsetX="320" top="157" locked="true">
 			<e:Rect scaleX="1" scaleY="1" left="0" top="0" right="0" bottom="0"/>
 		</e:Group>
-		<e:Group id="m_basket_ball" width="86" height="86" x="404" y="417">
+		<e:Group id="m_basket_ball" width="86" height="86" x="404" y="417" locked="true">
 			<e:Image id="m_image_ball" source="qiu_png" scaleX="0.9" scaleY="0.9" anchorOffsetX="94" anchorOffsetY="94" horizontalCenter="0" verticalCenter="0"/>
 		</e:Group>
 
-		<e:Group id="m_basket_container_pre" anchorOffsetX="0" anchorOffsetY="0" scaleX="1" scaleY="1" bottom="0" left="0" top="0" right="0" locked="true">
-			<e:Image x="85.2" y="711.95" scaleX="1" scaleY="1" source="wang_png"/>
-			<e:Image source="kuang2_png" x="64.25" y="698.5"/>
+		<e:Group id="m_basket_container_pre" anchorOffsetX="0" anchorOffsetY="640" scaleX="1" scaleY="1" height="1280" width="720" x="0" y="640">
+			<e:Image x="85.2" y="713.31" scaleX="1" scaleY="1" source="wang_png"/>
+			<e:Image source="kuang2_png" x="64.25" y="680.54"/>
 		</e:Group>
 		<e:Group scaleX="1" scaleY="1" right="0" left="0" top="0" bottom="0" touchEnabled="false">
 			<e:Image source="jdt_png" horizontalCenter="0" top="20" anchorOffsetX="56" anchorOffsetY="56"/>

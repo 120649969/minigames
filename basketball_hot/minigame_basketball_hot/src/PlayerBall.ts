@@ -5,8 +5,6 @@ class PlayerBall {
 
 	private _hitManager:HitManager;
 	private _tweenDir:number = 0
-	private _last_x:number = 0;
-	private _last_y:number = 0;
 
 	private _rotate_time = 0.8
 	private _last_hit_type = HitType.None
@@ -19,6 +17,17 @@ class PlayerBall {
 		this.m_basket_ball = _ball;
 		this.mainPanel = _mainPanel;
 		this._hitManager = _mainPanel.GetHitManagerMi();
+	}
+
+	public Restart():void
+	{
+		this._last_hit_type = HitType.None
+		this.basketball_speed_x = 0
+		this.basketball_speed_y = 0
+		this._push_acce_y = 0
+		this._tweenDir = 0
+		egret.Tween.removeTweens(this.mainPanel.m_image_ball)
+		this.mainPanel.m_image_ball.rotation = 0
 	}
 
 	private _updateRotationTween():void
@@ -103,8 +112,6 @@ class PlayerBall {
 		let last_global_ball_left_top_point = this.mainPanel.m_basket_ball.parent.localToGlobal(firstPoint.x,firstPoint.y);
 		let last_global_ball_right_down_point = this.mainPanel.m_basket_ball.parent.localToGlobal(firstPoint.x + this.m_basket_ball.width, firstPoint.y + this.m_basket_ball.height)
 		let last_global_ball_center_point = new egret.Point((last_global_ball_left_top_point.x + last_global_ball_right_down_point.x) / 2, (last_global_ball_left_top_point.y + last_global_ball_right_down_point.y) / 2)
-		this._last_x = this.m_basket_ball.x
-		this._last_y = this.m_basket_ball.y
 		if(last_global_ball_left_top_point.x < global_circle_scope_left_top_point.x - 10 || last_global_ball_right_down_point.x > global_circle_scope_right_down_point.x + 10)
 		{
 			return false;

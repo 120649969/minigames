@@ -20,7 +20,6 @@ class MainScenePanel extends eui.Component{
 	public label_score_other:eui.Label
 	public label_left_time:eui.Label
 
-	private _isUsingMi:boolean = true;
 	private btn_debug:eui.Button
 	private _playerBall:PlayerBall
 	private _hitManager:HitManager
@@ -40,14 +39,50 @@ class MainScenePanel extends eui.Component{
 	private _timer:egret.Timer;
 	private _is_game_over:boolean = false;
 
+	private _hasInitGame:boolean = false;
 	public constructor() {
 		super();
 		this.skinName = "MainScene";
+		this._initBtnListener()
 		this.addEventListener(egret.Event.ADDED_TO_STAGE, this._onAddToStage, this);
 	}
 
-	private _onAddToStage(event:egret.Event):void
+	private _initBtnListener():void
 	{
+		this.m_container.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onTouchBegin, this);
+		let __this = this
+		this.btn_debug.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.Event){
+			let debugPanel = new DebugPanel()
+			__this.addChild(debugPanel)
+			event.stopPropagation();
+		}.bind(this), this)
+	}
+
+	public RestartGame():void
+	{
+		this._is_first_round = true;
+		this._hasTouchBegin = false;
+		this._hasThisRoundTouch = false;
+		this._has_goal = false;
+
+		if(!this._hasInitGame){
+			this._hitManager = new HitManager(this);
+			this._playerBall = new PlayerBall(this.m_basket_ball, this);
+
+			this._left_basket_container_x = this.m_basket_container_back.x;
+			this._left_basket_container_y = this.m_basket_container_back.y;
+			this._right_basket_container_x = this.stage.stageWidth;
+			this._right_basket_container_y = this._left_basket_container_y;
+
+			this._hasInitGame = true
+		} else {
+			this._playerBall.Restart()
+		}
+
+		this._is_game_over = false;
+		if(this._timer){
+			this._timer.stop();
+		}
 		var timer:egret.Timer = new egret.Timer(1000, this.serverModel.MAX_TIME);
         //注册事件侦听器
         timer.addEventListener(egret.TimerEvent.TIMER,this._on_timer_tick,this);
@@ -55,19 +90,21 @@ class MainScenePanel extends eui.Component{
         //开始计时
         timer.start();
 		this._timer = timer
-
+		this.removeEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this);
 		this.addEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this);
-		this.m_container.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onTouchBegin, this);
-
-		let __this = this
-		this.btn_debug.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.Event){
-			let debugPanel = new DebugPanel()
-			__this.addChild(debugPanel)
-			event.stopPropagation();
-		}.bind(this), this)
-		this._initGame();
 		this.serverModel.left_time = this.serverModel.MAX_TIME
+		this._nextRound();
 		this.UpdateScore()
+		this.m_basket_ball.visible = true
+	}
+
+	private _onAddToStage(event:egret.Event):void
+	{
+		this.RestartGame()
+	}
+
+	protected createChildren(): void {
+		super.createChildren();
 	}
 
 	private _on_timer_tick():void
@@ -80,6 +117,12 @@ class MainScenePanel extends eui.Component{
 	{
 		console.log("game is over")
 		this._is_game_over = true
+
+		let __this = this
+		setTimeout(function() {
+			console.log("game restart")
+			__this.RestartGame();
+		}.bind(this), 2* 1000);
 	}
 
 	public HasTouchBegin():boolean
@@ -95,20 +138,6 @@ class MainScenePanel extends eui.Component{
 	public HasThisRoundTouch():boolean
 	{
 		return this._hasThisRoundTouch
-	}
-
-	private _initGame():void
-	{
-
-		this._hitManager = new HitManager(this);
-		this._playerBall = new PlayerBall(this.m_basket_ball, this);
-
-		this._left_basket_container_x = this.m_basket_container_back.x;
-		this._left_basket_container_y = this.m_basket_container_back.y;
-		this._right_basket_container_x = this.stage.stageWidth;
-		this._right_basket_container_y = this._left_basket_container_y;
-		this._nextRound();
-		this.UpdateScore()
 	}
 
 	public IsFaceLeft()
@@ -153,30 +182,39 @@ class MainScenePanel extends eui.Component{
 	public _nextRound():void
 	{
 		this.SetGoal(false);
-		this._is_face_left = Math.floor(Math.random() * 2) == 0
-		// this._is_face_left = !this._is_face_left
+		let is_left = Math.floor(Math.random() * 2) == 0
+		let old_left = this._is_face_left
+		let has_change = is_left != this._is_face_left
+		this._is_face_left = is_left
 		if(this._is_first_round){
 			this._is_face_left = true
+			has_change = true
 		}
 
 		this._hasThisRoundTouch = false;
-		if(this._is_face_left){
-			this.m_basket_container_pre.x = this._left_basket_container_x;
-			this.m_basket_container_pre.y = this._left_basket_container_y;
-			this.m_basket_container_pre.scaleX = Math.abs(this.m_basket_container_back.scaleX);
+		if(has_change){
+			if(this._is_face_left){
+				let random_y = this.stage.stageHeight / 2 - Math.random() * 200
+				this.m_basket_container_pre.x = 0
+				this.m_basket_container_pre.y = random_y
+				this.m_basket_container_pre.scaleX = Math.abs(this.m_basket_container_back.scaleX);
 
-			this.m_basket_container_back.x = this._left_basket_container_x;
-			this.m_basket_container_back.y = this._left_basket_container_y;
-			this.m_basket_container_back.scaleX = Math.abs(this.m_basket_container_back.scaleX);
-		}else{
-			this.m_basket_container_pre.x = this._right_basket_container_x;
-			this.m_basket_container_pre.y = this._right_basket_container_y;
-			this.m_basket_container_pre.scaleX = Math.abs(this.m_basket_container_back.scaleX) * -1;
+				this.m_basket_container_back.x = 0
+				this.m_basket_container_back.y = random_y
+				this.m_basket_container_back.scaleX = Math.abs(this.m_basket_container_back.scaleX);
 
-			this.m_basket_container_back.x = this._right_basket_container_x;
-			this.m_basket_container_back.y = this._right_basket_container_y;
-			this.m_basket_container_back.scaleX = Math.abs(this.m_basket_container_back.scaleX) * -1;
+			}else{
+				let random_y = this.stage.stageHeight / 2 - Math.random() * 200
+				this.m_basket_container_pre.x = this.stage.stageWidth
+				this.m_basket_container_pre.y = random_y
+				this.m_basket_container_pre.scaleX = Math.abs(this.m_basket_container_back.scaleX) * -1;
+
+				this.m_basket_container_back.x = this.stage.stageWidth
+				this.m_basket_container_back.y = random_y
+				this.m_basket_container_back.scaleX = Math.abs(this.m_basket_container_back.scaleX) * -1;
+			}
 		}
+		
 
 		this.validateNow()
 
@@ -233,6 +271,8 @@ class MainScenePanel extends eui.Component{
 		let down_height = percent * this.img_time_progress.height
 		this.img_time_progress.mask = new egret.Rectangle(0, this.img_time_progress.height - down_height, this.img_time_progress.width, down_height)
 	}
+
+	
 	
 
 	//和篮网的碰撞

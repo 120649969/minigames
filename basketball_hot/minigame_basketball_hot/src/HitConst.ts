@@ -31,6 +31,10 @@ class HitConst {
 	public static BACK_basket_left_line_restitution = HitConst.basket_left_line_restitution
 	public static BACK_basket_board_restitution = HitConst.basket_board_restitution
 
+	public static MIN_WIDTH = 1280;//1136;
+	public static MIN_HEIGHT = 720;//640;
+	public static MIN_RESOLUTION = 720;//640;
+
 	public static getHitRestitution(hitType:HitType):number
 	{
 		if(hitType == HitType.Floor)
