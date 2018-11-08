@@ -141,6 +141,7 @@ var HitManager = (function () {
         }
         return false;
     };
+    /**********************新的圆形判定框  begin******************************* */
     HitManager.prototype.CheckHitBoardLines = function () {
         var global_ball_left_top_point = new egret.Point();
         this.mainPanel.m_basket_ball.localToGlobal(0, 0, global_ball_left_top_point);
@@ -286,6 +287,7 @@ var HitManager = (function () {
         this.HandleBallHit(local_hit_point, HitType.Left_Line);
         return true;
     };
+    /**********************新的圆形判定框  end******************************* */
     HitManager.prototype.CheckHitRightLine = function () {
         var global_ball_left_top_point = new egret.Point();
         this.mainPanel.m_basket_ball.localToGlobal(0, 0, global_ball_left_top_point);

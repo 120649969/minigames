@@ -15,6 +15,11 @@ class MainScenePanel extends eui.Component{
 	public m_board_top_circle:eui.Group
 	public m_board_down_circle:eui.Group
 
+	public img_time_progress:eui.Image
+	public label_score_me:eui.Label
+	public label_score_other:eui.Label
+	public label_left_time:eui.Label
+
 	private _isUsingMi:boolean = true;
 	private btn_debug:eui.Button
 	private _playerBall:PlayerBall
@@ -31,6 +36,10 @@ class MainScenePanel extends eui.Component{
 	private _right_basket_container_x:number;
 	private _right_basket_container_y:number;
 
+	public serverModel:ServerModel = new ServerModel()
+	private _timer:egret.Timer;
+	private _is_game_over:boolean = false;
+
 	public constructor() {
 		super();
 		this.skinName = "MainScene";
@@ -39,6 +48,14 @@ class MainScenePanel extends eui.Component{
 
 	private _onAddToStage(event:egret.Event):void
 	{
+		var timer:egret.Timer = new egret.Timer(1000, this.serverModel.MAX_TIME);
+        //注册事件侦听器
+        timer.addEventListener(egret.TimerEvent.TIMER,this._on_timer_tick,this);
+        timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE,this._on_timer_compelete,this);
+        //开始计时
+        timer.start();
+		this._timer = timer
+
 		this.addEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this);
 		this.m_container.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onTouchBegin, this);
 
@@ -49,6 +66,20 @@ class MainScenePanel extends eui.Component{
 			event.stopPropagation();
 		}.bind(this), this)
 		this._initGame();
+		this.serverModel.left_time = this.serverModel.MAX_TIME
+		this.UpdateScore()
+	}
+
+	private _on_timer_tick():void
+	{
+		this.serverModel.left_time -= 1
+		this.UpdateScore()
+	}
+
+	private _on_timer_compelete():void
+	{
+		console.log("game is over")
+		this._is_game_over = true
 	}
 
 	public HasTouchBegin():boolean
@@ -77,6 +108,7 @@ class MainScenePanel extends eui.Component{
 		this._right_basket_container_x = this.stage.stageWidth;
 		this._right_basket_container_y = this._left_basket_container_y;
 		this._nextRound();
+		this.UpdateScore()
 	}
 
 	public IsFaceLeft()
@@ -92,6 +124,15 @@ class MainScenePanel extends eui.Component{
 	public SetGoal(has_global):void
 	{
 		this._has_goal = has_global;
+		if(has_global){
+			this.AddScore(2)
+		}
+	}
+
+	public AddScore(score:number):void
+	{
+		this.serverModel.my_score += score
+		this.UpdateScore()
 	}
 
 	public AutoEnterNextRound():void
@@ -128,7 +169,6 @@ class MainScenePanel extends eui.Component{
 			this.m_basket_container_back.y = this._left_basket_container_y;
 			this.m_basket_container_back.scaleX = Math.abs(this.m_basket_container_back.scaleX);
 		}else{
-
 			this.m_basket_container_pre.x = this._right_basket_container_x;
 			this.m_basket_container_pre.y = this._right_basket_container_y;
 			this.m_basket_container_pre.scaleX = Math.abs(this.m_basket_container_back.scaleX) * -1;
@@ -137,6 +177,8 @@ class MainScenePanel extends eui.Component{
 			this.m_basket_container_back.y = this._right_basket_container_y;
 			this.m_basket_container_back.scaleX = Math.abs(this.m_basket_container_back.scaleX) * -1;
 		}
+
+		this.validateNow()
 
 		if(this._is_first_round){
 			let random_ball_x = this.stage.stageWidth / 2 - this.m_basket_ball.width / 2;
@@ -147,14 +189,18 @@ class MainScenePanel extends eui.Component{
 		
 		this._is_first_round = false;
 		
-		this.validateNow()
+		
 		this._hitManager.EnterNextRound()
 		this._playerBall.EnterNextRound()
-		
 	}
 
 	private _onEnterFrame(event : egret.Event):void
 	{
+		if(this._is_game_over){
+			this.removeEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this)
+			this.m_basket_ball.visible = false;
+			return
+		}
 		if(this._auto_enter_next_round){
 			this._nextRound();
 			this._auto_enter_next_round = false;
@@ -178,6 +224,15 @@ class MainScenePanel extends eui.Component{
 		this._playerBall.OnPushDown();
 	}
 
+	public UpdateScore():void
+	{
+		this.label_score_me.text = this.serverModel.my_score.toString();
+		this.label_score_other.text = this.serverModel.other_score.toString();
+		this.label_left_time.text = this.serverModel.left_time.toString();
+		let percent = this.serverModel.left_time / this.serverModel.MAX_TIME
+		let down_height = percent * this.img_time_progress.height
+		this.img_time_progress.mask = new egret.Rectangle(0, this.img_time_progress.height - down_height, this.img_time_progress.width, down_height)
+	}
 	
 
 	//和篮网的碰撞

@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,bg_jpg,description_json,ban_png,kuang_png,qiu_png,qiu1_png,wang_png,wang2_png,Qiand_close_png,Button_yellow03_png,kuang2_png,bj2_jpg,egret_icon_png",
+			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,bg_jpg,description_json,ban_png,kuang_png,qiu_png,qiu1_png,wang_png,wang2_png,Qiand_close_png,Button_yellow03_png,kuang2_png,bj2_jpg,egret_icon_png,z_png,hongtou_png,hongtou2_png,jdt_png,jdt2_png,lvtou_png,lvtou2_png",
 			"name": "preload"
 		}
 	],
@@ -185,6 +185,41 @@
 			"name": "egret_icon_png",
 			"type": "image",
 			"url": "assets/egret_icon.png"
+		},
+		{
+			"name": "z_png",
+			"type": "image",
+			"url": "assets/z.png"
+		},
+		{
+			"name": "hongtou_png",
+			"type": "image",
+			"url": "assets/hongtou.png"
+		},
+		{
+			"name": "hongtou2_png",
+			"type": "image",
+			"url": "assets/hongtou2.png"
+		},
+		{
+			"name": "jdt_png",
+			"type": "image",
+			"url": "assets/jdt.png"
+		},
+		{
+			"name": "jdt2_png",
+			"type": "image",
+			"url": "assets/jdt2.png"
+		},
+		{
+			"name": "lvtou_png",
+			"type": "image",
+			"url": "assets/lvtou.png"
+		},
+		{
+			"name": "lvtou2_png",
+			"type": "image",
+			"url": "assets/lvtou2.png"
 		}
 	]
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="Setting" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
 	<e:Group id="m_container" left="0" right="0" top="0" bottom="0" width="640" height="1136" touchEnabled="true" touchThrough="false">
-		<e:Image id="m_bg0" source="bg2_jpg" left="0" top="0" right="0" bottom="0" fillMode="scale" width="640" height="1136"/>
+		<e:Image id="m_bg0" left="0" top="0" right="0" bottom="0" fillMode="scale" width="640" height="1136" source="bj2_jpg"/>
 		<e:Button id="btn_close" label="" x="566" y="0" width="74" height="74">
 			<e:skinName>
 				<e:Skin states="up,down,disabled">

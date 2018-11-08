@@ -19,11 +19,20 @@ var MainScenePanel = (function (_super) {
         _this._hasThisRoundTouch = false;
         _this._is_face_left = true;
         _this._has_goal = false;
+        _this.serverModel = new ServerModel();
+        _this._is_game_over = false;
         _this.skinName = "MainScene";
         _this.addEventListener(egret.Event.ADDED_TO_STAGE, _this._onAddToStage, _this);
         return _this;
     }
     MainScenePanel.prototype._onAddToStage = function (event) {
+        var timer = new egret.Timer(1000, this.serverModel.MAX_TIME);
+        //注册事件侦听器
+        timer.addEventListener(egret.TimerEvent.TIMER, this._on_timer_tick, this);
+        timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE, this._on_timer_compelete, this);
+        //开始计时
+        timer.start();
+        this._timer = timer;
         this.addEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this);
         this.m_container.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onTouchBegin, this);
         var __this = this;
@@ -33,6 +42,16 @@ var MainScenePanel = (function (_super) {
             event.stopPropagation();
         }.bind(this), this);
         this._initGame();
+        this.serverModel.left_time = this.serverModel.MAX_TIME;
+        this.UpdateScore();
+    };
+    MainScenePanel.prototype._on_timer_tick = function () {
+        this.serverModel.left_time -= 1;
+        this.UpdateScore();
+    };
+    MainScenePanel.prototype._on_timer_compelete = function () {
+        console.log("game is over");
+        this._is_game_over = true;
     };
     MainScenePanel.prototype.HasTouchBegin = function () {
         return this._hasTouchBegin;
@@ -51,6 +70,7 @@ var MainScenePanel = (function (_super) {
         this._right_basket_container_x = this.stage.stageWidth;
         this._right_basket_container_y = this._left_basket_container_y;
         this._nextRound();
+        this.UpdateScore();
     };
     MainScenePanel.prototype.IsFaceLeft = function () {
         return this._is_face_left;
@@ -60,6 +80,13 @@ var MainScenePanel = (function (_super) {
     };
     MainScenePanel.prototype.SetGoal = function (has_global) {
         this._has_goal = has_global;
+        if (has_global) {
+            this.AddScore(2);
+        }
+    };
+    MainScenePanel.prototype.AddScore = function (score) {
+        this.serverModel.my_score += score;
+        this.UpdateScore();
     };
     MainScenePanel.prototype.AutoEnterNextRound = function () {
         this._auto_enter_next_round = true;
@@ -94,6 +121,7 @@ var MainScenePanel = (function (_super) {
             this.m_basket_container_back.y = this._right_basket_container_y;
             this.m_basket_container_back.scaleX = Math.abs(this.m_basket_container_back.scaleX) * -1;
         }
+        this.validateNow();
         if (this._is_first_round) {
             var random_ball_x = this.stage.stageWidth / 2 - this.m_basket_ball.width / 2;
             var random_ball_y = this.m_floor.y - 200;
@@ -101,11 +129,15 @@ var MainScenePanel = (function (_super) {
             this.m_basket_ball.y = random_ball_y;
         }
         this._is_first_round = false;
-        this.validateNow();
         this._hitManager.EnterNextRound();
         this._playerBall.EnterNextRound();
     };
     MainScenePanel.prototype._onEnterFrame = function (event) {
+        if (this._is_game_over) {
+            this.removeEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this);
+            this.m_basket_ball.visible = false;
+            return;
+        }
         if (this._auto_enter_next_round) {
             this._nextRound();
             this._auto_enter_next_round = false;
@@ -121,6 +153,14 @@ var MainScenePanel = (function (_super) {
             return;
         }
         this._playerBall.OnPushDown();
+    };
+    MainScenePanel.prototype.UpdateScore = function () {
+        this.label_score_me.text = this.serverModel.my_score.toString();
+        this.label_score_other.text = this.serverModel.other_score.toString();
+        this.label_left_time.text = this.serverModel.left_time.toString();
+        var percent = this.serverModel.left_time / this.serverModel.MAX_TIME;
+        var down_height = percent * this.img_time_progress.height;
+        this.img_time_progress.mask = new egret.Rectangle(0, this.img_time_progress.height - down_height, this.img_time_progress.width, down_height);
     };
     return MainScenePanel;
 }(eui.Component));
