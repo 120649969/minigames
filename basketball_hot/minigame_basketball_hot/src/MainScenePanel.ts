@@ -14,6 +14,10 @@ class MainScenePanel extends eui.Component{
 	public m_circle_scope:eui.Group  //篮圈
 	public m_board_top_circle:eui.Group
 	public m_board_down_circle:eui.Group
+	public img_board_back:eui.Image
+	public img_board_pre:eui.Image
+	public img_net_pre:eui.Image
+	public img_net_back:eui.Image
 
 	public img_time_progress:eui.Image
 	public label_score_me:eui.Label
@@ -30,10 +34,6 @@ class MainScenePanel extends eui.Component{
 	private _hasThisRoundTouch:boolean = false;
 	private _is_face_left:boolean = true;
 	private _has_goal:boolean = false;
-	private _left_basket_container_x:number;
-	private _left_basket_container_y:number;
-	private _right_basket_container_x:number;
-	private _right_basket_container_y:number;
 
 	public serverModel:ServerModel = new ServerModel()
 	private _timer:egret.Timer;
@@ -68,19 +68,16 @@ class MainScenePanel extends eui.Component{
 		if(!this._hasInitGame){
 			this._hitManager = new HitManager(this);
 			this._playerBall = new PlayerBall(this.m_basket_ball, this);
-
-			this._left_basket_container_x = this.m_basket_container_back.x;
-			this._left_basket_container_y = this.m_basket_container_back.y;
-			this._right_basket_container_x = this.stage.stageWidth;
-			this._right_basket_container_y = this._left_basket_container_y;
-
 			this._hasInitGame = true
+
+			
 		} else {
 			this._playerBall.Restart()
 		}
 
 		this._is_game_over = false;
 		if(this._timer){
+			this._timer.removeEventListener(egret.TimerEvent.TIMER,this._on_timer_tick,this);
 			this._timer.stop();
 		}
 		var timer:egret.Timer = new egret.Timer(1000, this.serverModel.MAX_TIME);
@@ -105,6 +102,117 @@ class MainScenePanel extends eui.Component{
 
 	protected createChildren(): void {
 		super.createChildren();
+		this._addAnimation()
+	}
+
+	private _board_pre_display:dragonBones.EgretArmatureDisplay
+	private _board_back_display:dragonBones.EgretArmatureDisplay
+	private _net_pre_display:dragonBones.EgretArmatureDisplay
+	private _net_back_display:dragonBones.EgretArmatureDisplay
+
+	private _addAnimation():void
+	{
+		let armatureDisplay = BasketUtils.createDragonBones("board_pre_ske_json", "board_pre_tex_json", "board_pre_tex_png", "boad_pre_armature")
+		this.img_board_pre.parent.addChild(armatureDisplay)
+		armatureDisplay.x = this.img_board_pre.x
+		armatureDisplay.y = this.img_board_pre.y
+		this._board_pre_display = armatureDisplay
+
+		let armatureDisplay2 = BasketUtils.createDragonBones("board_back_ske_json", "board_back_tex_json", "board_back_tex_png", "boad_back_armature")
+		this.img_board_back.parent.addChild(armatureDisplay2)
+		armatureDisplay2.x = this.img_board_back.x
+		armatureDisplay2.y = this.img_board_back.y
+		this._board_back_display = armatureDisplay2
+
+		let armatureDisplay3 = BasketUtils.createDragonBones("net_back_ske_json", "net_back_tex_json", "net_back_tex_png", "net_back_armature")
+		this.img_net_back.parent.addChild(armatureDisplay3)
+		armatureDisplay3.x = this.img_net_back.x
+		armatureDisplay3.y = this.img_net_back.y
+		this.img_net_back.parent.setChildIndex(armatureDisplay3, 1)
+		this._net_back_display = armatureDisplay3
+
+		let armatureDisplay4 = BasketUtils.createDragonBones("net_pre_ske_json", "net_pre_tex_json", "net_pre_tex_png", "net_pre_armature")
+		this.img_net_pre.parent.addChild(armatureDisplay4)
+		armatureDisplay4.x = this.img_net_pre.x
+		armatureDisplay4.y = this.img_net_pre.y
+		this.img_net_pre.parent.setChildIndex(armatureDisplay4, 1)
+		this._net_pre_display = armatureDisplay4
+
+		this.img_board_pre.visible = false
+		this.img_board_back.visible = false
+		this.img_net_back.visible = false
+		this.img_net_pre.visible = false
+
+		// let __this = this
+		// setTimeout(function() {
+		// 	console.log("#####animation#####")
+		// 	__this._board_pre_display.animation.play('lanban', 1)
+		// 	__this._board_post_display.animation.play('lanban', 1)
+		// }, 2 * 1000);
+
+		// egret.ticker.$startTick(function(advancedTime:number):boolean{
+		// 	dragonBones.WorldClock.clock.advanceTime(advancedTime/1000);
+		// 	return true
+		// },this)
+	}
+
+	//篮筐抖动
+	public PlayShakeAnimation()
+	{
+		if(this._board_pre_display.animation.isPlaying){
+			return
+		}
+		this._board_pre_display.animation.play('lanban', 1)
+		this._board_back_display.animation.play('lanban', 1)
+		this._net_pre_display.animation.play('lanban', 1)
+		this._net_back_display.animation.play('lanban', 1)
+	}
+
+	public PlayGoalAnimation()
+	{
+		this._net_pre_display.animation.stop();
+		this._net_pre_display.animation.play('jinqu', 1)
+		this._net_back_display.animation.stop();
+		this._net_back_display.animation.play('jinqu', 1)
+	}
+
+	public PlayKongXingAnimation()
+	{
+		this._net_pre_display.animation.stop();
+		this._net_pre_display.animation.play('kongxinqiu', 1)
+		this._net_back_display.animation.stop();
+		this._net_back_display.animation.play('kongxinqiu', 1)
+	}
+
+	public PlayNetAnimation(hitNetType:HitNetType)
+	{
+		if(this._net_pre_display.animation.isPlaying){
+			return
+		}
+
+		if(hitNetType == HitNetType.CENTER){
+			this._net_pre_display.animation.play('up', 1)
+			this._net_back_display.animation.play('up', 1)
+			return
+		}
+
+		if(hitNetType == HitNetType.LEFT){
+			if(this.IsFaceLeft()){
+				this._net_pre_display.animation.play('R', 1)
+				this._net_back_display.animation.play('R', 1)
+			} else {
+				this._net_pre_display.animation.play('L', 1)
+				this._net_back_display.animation.play('L', 1)
+			}
+		} else {
+			if(this.IsFaceLeft()){
+				this._net_pre_display.animation.play('L', 1)
+				this._net_back_display.animation.play('L', 1)
+			} else {
+				this._net_pre_display.animation.play('R', 1)
+				this._net_back_display.animation.play('R', 1)
+			}
+		}
 	}
 
 	private _on_timer_tick():void
@@ -150,11 +258,11 @@ class MainScenePanel extends eui.Component{
 		return this._has_goal
 	}
 
-	public SetGoal(has_global):void
+	public SetGoal(has_global, score:number):void
 	{
 		this._has_goal = has_global;
 		if(has_global){
-			this.AddScore(2)
+			this.AddScore(score)
 		}
 	}
 
@@ -181,7 +289,7 @@ class MainScenePanel extends eui.Component{
 
 	public _nextRound():void
 	{
-		this.SetGoal(false);
+		this.SetGoal(false, 0);
 		let is_left = Math.floor(Math.random() * 2) == 0
 		let old_left = this._is_face_left
 		let has_change = is_left != this._is_face_left
@@ -272,24 +380,4 @@ class MainScenePanel extends eui.Component{
 		this.img_time_progress.mask = new egret.Rectangle(0, this.img_time_progress.height - down_height, this.img_time_progress.width, down_height)
 	}
 
-	
-	
-
-	//和篮网的碰撞
-	// public checkHitNet():void
-	// {
-	// 	let temp_global_point:egret.Point = new egret.Point();
-	// 	this.m_basket_ball.localToGlobal(this.m_basket_ball.width / 2, this.m_basket_ball.width / 2, temp_global_point);
-
-	// 	let localPoint:egret.Point = new egret.Point();
-	// 	this.m_basket_container.globalToLocal(temp_global_point.x, temp_global_point.y, localPoint);
-
-	// 	if(localPoint.x <= this.m_net_scope.x + this.m_net_scope.width + this._ballCircleRadius && localPoint.x >= this.m_net_scope.x - this._ballCircleRadius)
-	// 	{
-	// 		if(localPoint.y <= this.m_net_scope.y + this.m_net_scope.height + this._ballCircleRadius && localPoint.y >= this.m_net_scope.y + this.m_net_scope.height / 2)
-	// 		{
-	// 			console.log("#####hit net#####")
-	// 		}
-	// 	}
-	// }
 }

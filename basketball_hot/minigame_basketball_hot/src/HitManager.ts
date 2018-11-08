@@ -34,6 +34,9 @@ class HitManager {
 	private _global_board_down_circle_point:egret.Point = new egret.Point()
 	private _global_borad_down_radius:number = 0;
 
+	private _global_left_top_net_scope_point:egret.Point = new egret.Point()
+	private _global_right_down_net_scope_point:egret.Point = new egret.Point()
+
 	public EnterNextRound():void
 	{
 		let right_line_right_point:egret.Point = new egret.Point();
@@ -77,6 +80,9 @@ class HitManager {
 			let left_circle = Math.abs(this._global_board_down_circle_point.x - left_top_point.x)
 			this._global_borad_down_radius = left_circle
 		}
+
+		this.mainPanel.m_net_scope.localToGlobal(0, 0, this._global_left_top_net_scope_point)
+		this.mainPanel.m_net_scope.localToGlobal(this.mainPanel.m_net_scope.width, this.mainPanel.m_net_scope.height, this._global_right_down_net_scope_point)
 	}
 
 	public CheckHit():boolean
@@ -542,7 +548,6 @@ class HitManager {
 		}
 
 		//不打算处理在左边和中间的情况，因为这不可能发生，就算发生了也不正常，让篮框的挡板去碰撞。
-
 		return false;
 	}
 
@@ -666,5 +671,57 @@ class HitManager {
 			}
 		}
 		return true;
+	}
+
+
+	public CheckHitNet():HitNetType
+	{
+		let hitNetType = HitNetType.NONE
+
+		let global_ball_left_top_point:egret.Point = new egret.Point();
+		this.mainPanel.m_basket_ball.localToGlobal(0, 0, global_ball_left_top_point);
+		let global_ball_right_down_point:egret.Point = new egret.Point();
+		this.mainPanel.m_basket_ball.localToGlobal(this.mainPanel.m_basket_ball.width, this.mainPanel.m_basket_ball.width, global_ball_right_down_point);
+
+		let global_ball_center_point:egret.Point = new egret.Point();
+		this.mainPanel.m_basket_ball.localToGlobal(this.mainPanel.m_basket_ball.width / 2, this.mainPanel.m_basket_ball.width / 2, global_ball_center_point);
+
+		if(!this.mainPanel.IsFaceLeft())
+		{
+			HitConst.SwapPointXY(this._global_left_top_net_scope_point, this._global_right_down_net_scope_point)
+		}
+
+		//is right ok
+		if(global_ball_left_top_point.x > this._global_right_down_net_scope_point.x)
+		{
+			return hitNetType;
+		}
+		//is left ok
+		if(global_ball_right_down_point.x < this._global_left_top_net_scope_point.x)
+		{
+			return hitNetType;
+		}
+
+		//is top ok
+		if(global_ball_right_down_point.y < this._global_left_top_net_scope_point.y)
+		{
+			return hitNetType;
+		}
+
+		//is down ok
+		if(global_ball_left_top_point.y > this._global_right_down_net_scope_point.y)
+		{
+			return hitNetType;
+		}
+
+		if(global_ball_center_point.x < this._global_left_top_net_scope_point.x){
+			return HitNetType.LEFT
+		}
+
+		if(global_ball_center_point.x > this._global_right_down_net_scope_point.x){
+			return HitNetType.RIGHT
+		}
+
+		return HitNetType.CENTER
 	}
 }

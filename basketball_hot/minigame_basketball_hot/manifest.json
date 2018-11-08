@@ -5,15 +5,17 @@
 		"libs/modules/eui/eui.js",
 		"libs/modules/assetsmanager/assetsmanager.js",
 		"libs/modules/tween/tween.js",
-		"libs/modules/promise/promise.js"
+		"libs/modules/promise/promise.js",
+		"libs/modules/dragonBones/dragonBones.js"
 	],
 	"game": [
 		"bin-debug/Main.js",
 		"bin-debug/AssetAdapter.js",
+		"bin-debug/DebugPanel.js",
 		"bin-debug/HitConst.js",
 		"bin-debug/HitManager.js",
 		"bin-debug/LoadingUI.js",
-		"bin-debug/DebugPanel.js",
+		"bin-debug/BasketUtils.js",
 		"bin-debug/MainScenePanel.js",
 		"bin-debug/Platform.js",
 		"bin-debug/PlayerBall.js",

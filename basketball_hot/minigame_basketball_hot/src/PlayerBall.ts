@@ -13,6 +13,9 @@ class PlayerBall {
 	public basketball_speed_x:number = 0.0;
 	public basketball_speed_y:number = 0.0;
 
+	public _clear_hit_timer:egret.Timer
+	public _recent_hit:boolean = false
+
 	public constructor(_ball:eui.Group, _mainPanel:MainScenePanel) {
 		this.m_basket_ball = _ball;
 		this.mainPanel = _mainPanel;
@@ -21,6 +24,8 @@ class PlayerBall {
 
 	public Restart():void
 	{
+		this._restartHitTimer()
+		
 		this._last_hit_type = HitType.None
 		this.basketball_speed_x = 0
 		this.basketball_speed_y = 0
@@ -28,6 +33,23 @@ class PlayerBall {
 		this._tweenDir = 0
 		egret.Tween.removeTweens(this.mainPanel.m_image_ball)
 		this.mainPanel.m_image_ball.rotation = 0
+	}
+
+	private _restartHitTimer()
+	{
+		if(this._clear_hit_timer){
+			// this._clear_hit_timer.removeEventListener(egret.TimerEvent.TIMER,this._clearHitTick,this);
+			this._clear_hit_timer.stop()
+			this._clear_hit_timer.start()
+			return
+		}
+		this._clear_hit_timer = new egret.Timer(2000)
+		this._clear_hit_timer.addEventListener(egret.TimerEvent.TIMER,this._clearHitTick,this);
+	}
+
+	private _clearHitTick():void
+	{
+		this._recent_hit = false
 	}
 
 	private _updateRotationTween():void
@@ -172,6 +194,7 @@ class PlayerBall {
 		this._updateRotationTween()
 		this._adjustBallPosition()
 		
+		let start_speed_y = this.basketball_speed_y
 		let acce_speed_y = HitConst.Gravity + this._push_acce_y;  //y方向的加速度
 		this.basketball_speed_y += acce_speed_y;
 		this.basketball_speed_y = Math.max(this.basketball_speed_y, HitConst.MIN_SPEED_Y);
@@ -186,17 +209,27 @@ class PlayerBall {
 		
 		//篮球此刻是否在判断入网的x范围
 		let is_current_in_circle_scope = this._isCurrentInCricleScope();
-		let has_goal = this.mainPanel.HasGoal();
 		for(let step_idx = 1; step_idx <= times; step_idx++)
 		{
 			let temp_last_x = this.m_basket_ball.x
 			let temp_last_y = this.m_basket_ball.y
 			this.m_basket_ball.x += step_speend_x / HitConst.Factor;
-			this.m_basket_ball.y += step_speend_y / HitConst.Factor;
+
+			if(this.m_basket_ball.y < this.mainPanel.m_floor.y - this.m_basket_ball.height - 30){
+				let start_y = start_speed_y + (step_idx - 1) * step_speend_y
+				let end_y = start_speed_y + (step_idx) * step_speend_y
+				this.m_basket_ball.y += (start_y + end_y) / 2 / HitConst.Factor / times;
+				if(Math.abs((start_y + end_y) / 2 / HitConst.Factor / times) > 4){
+					console.log("###这次的速度#########", (start_y + end_y) / 2 / HitConst.Factor / times)
+				}
+			} else {
+				this.m_basket_ball.y += step_speend_y / HitConst.Factor;
+			}
+			
 			let hit_result = this._hitManager.CheckHit()
 			if(hit_result){
-				this.m_basket_ball.x = temp_last_x
-				this.m_basket_ball.y = temp_last_y
+				// this.m_basket_ball.x = temp_last_x
+				// this.m_basket_ball.y = temp_last_y
 				
 				if(this._hitManager.GetHitType() !=  HitType.Floor){
 					let new_type = this._hitManager.GetHitType()
@@ -206,25 +239,45 @@ class PlayerBall {
 						percent = 1
 					}
 					new_total_speed *= percent
-					let copy_new_total_speed = Math.min(new_total_speed, 5) //设置一个10个像素
+					let copy_new_total_speed = new_total_speed
+					if(copy_new_total_speed < 5){
+						copy_new_total_speed = 5
+					}
 					let delta_x = (this.basketball_speed_x * percent / HitConst.Factor)  * copy_new_total_speed / new_total_speed
-					let delta_y = (this.basketball_speed_y * percent / HitConst.Factor) * copy_new_total_speed / new_total_speed 
-					// console.log("##########", delta_x, delta_y, percent)
-					this.m_basket_ball.x += delta_x
+					let delta_y = (this.basketball_speed_y * percent / HitConst.Factor) * copy_new_total_speed / new_total_speed
+					if(Math.abs(delta_x) < 2 && delta_x!= 0){
+						delta_x = delta_x / Math.abs(delta_x) * 2
+					}
+					if(Math.abs(delta_y) < 2 && delta_y!= 0){
+						delta_y = delta_y / Math.abs(delta_y) * 2
+					}
+					this.m_basket_ball.x += delta_x  //如果不是和地面碰撞，沿着球的新速度方向移动至少5个像素，而且x，y两个方向最少移动2个像素
 					this.m_basket_ball.y += delta_y
+				} else {  //地面碰撞  还原原来位置
+					this.m_basket_ball.x = temp_last_x
+					this.m_basket_ball.y = temp_last_y
 				}
 				break
 			}
 
 			if(is_current_in_circle_scope)
 			{
-				if(!has_goal)
-				{
-					has_goal = this._checkGoal(new egret.Point(temp_last_x, temp_last_y), new egret.Point(this.m_basket_ball.x, this.m_basket_ball.y))
-					if(has_goal)
-					{
-						this.mainPanel.SetGoal(true);
+				let has_goal = this._checkGoal(new egret.Point(temp_last_x, temp_last_y), new egret.Point(this.m_basket_ball.x, this.m_basket_ball.y))
+				if(!this.mainPanel.HasGoal() && has_goal){
+					if(this._recent_hit){
+						this.mainPanel.SetGoal(true, Score.GOAL);
+					} else {
+						this.mainPanel.SetGoal(true, Score.KONG_XING_GOAL);
 					}
+					
+				}
+				if(has_goal){
+					if(this._recent_hit){
+						this.mainPanel.PlayGoalAnimation()
+					} else {
+						this.mainPanel.PlayKongXingAnimation()
+					}
+					
 				}
 			}
 		}
@@ -235,6 +288,26 @@ class PlayerBall {
 			this.m_basket_ball.x += this.basketball_speed_x / HitConst.Factor
 		}
 		this._last_hit_type = this._hitManager.GetHitType()
+
+		let thisHitType = this._hitManager.GetHitType()
+
+		if(thisHitType != HitType.None)
+		{
+			this._recent_hit = true
+			this._restartHitTimer()
+		}
+
+		if(thisHitType == HitType.Left_Line || thisHitType == HitType.Right_Line)
+		{
+			this.mainPanel.PlayShakeAnimation()
+		}
+
+		let hitNetType = this._hitManager.CheckHitNet()
+		if(hitNetType != HitNetType.NONE)
+		{
+			this.mainPanel.PlayNetAnimation(hitNetType)
+		}
+
 	}
 
 	public getLastHitType():HitType

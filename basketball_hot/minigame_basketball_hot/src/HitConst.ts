@@ -136,3 +136,16 @@ enum HitType {
 	Board_Top, 
 	None
 }
+
+enum HitNetType {
+	LEFT,
+	CENTER,
+	RIGHT,
+	NONE
+}
+
+
+enum Score{
+	GOAL = 2,
+	KONG_XING_GOAL = 3
+}

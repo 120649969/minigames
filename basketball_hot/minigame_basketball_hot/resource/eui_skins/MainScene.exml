@@ -2,16 +2,16 @@
 <e:Skin class="MainScene" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
 	<e:Group id="m_container" left="0" right="0" top="0" bottom="0" width="720" height="1280" touchEnabled="true" touchThrough="false">
 		<e:Image id="m_bg" left="0" top="0" right="0" bottom="0" fillMode="scale" width="640" height="1136" source="bj2_jpg" locked="true"/>
-		<e:Group id="m_floor" height="10" left="0" right="0" anchorOffsetX="320" bottom="150" locked="true">
+		<e:Group id="m_floor" height="10" left="0" right="0" anchorOffsetX="320" bottom="150">
 			<e:Rect scaleX="1" scaleY="1" left="0" top="0" right="0" bottom="0"/>
 		</e:Group>
 		<e:Group id="m_basket_container_back" anchorOffsetX="0" anchorOffsetY="640" scaleX="1" scaleY="1" width="720" x="0" height="1280" y="640">
-			<e:Image x="85.2" y="692.1" scaleX="1" scaleY="1" source="wang2_png"/>
+			<e:Image id="img_net_back" x="85.2" y="692.1" scaleX="1" scaleY="1" source="wang2_png"/>
 
 			<e:Image source="ban_png" x="0" y="504.64" scaleX="1" scaleY="1"/>
 
-			<e:Image source="kuang_png" x="64.25" y="681.64" scaleX="1" scaleY="1"/>
-			<e:Group id="m_board_scope" width="24" height="281" x="38.93" y="502.98" scaleX="1" scaleY="1" anchorOffsetY="0" anchorOffsetX="0" visible="false"/>
+			<e:Image id="img_board_back" source="kuang_png" x="64.25" y="681.64" scaleX="1" scaleY="1"/>
+			<e:Group id="m_board_scope" width="24" height="281" x="38.93" y="502.98" scaleX="1" scaleY="1" anchorOffsetY="0" anchorOffsetX="0"/>
 
 
 
@@ -21,7 +21,7 @@
 
 			<e:Group id="m_left_line" width="8" height="1" x="80.1" y="700.31" scaleX="1" scaleY="1"/>
 			<e:Group id="m_circle_scope" width="135" height="30" x="88.75" y="688.64" anchorOffsetX="0" anchorOffsetY="0" scaleX="1" scaleY="1"/>
-			<e:Group id="m_net_scope" width="97" height="91" x="109" y="722.64" scaleX="1" scaleY="1" anchorOffsetX="0" anchorOffsetY="0" visible="false"/>
+			<e:Group id="m_net_scope" width="65" height="65" x="121" y="753.97" scaleX="1" scaleY="1" anchorOffsetX="0" anchorOffsetY="0"/>
 			<e:Group id="m_right_line" width="13" height="1" x="220.04000000000002" y="699.64" scaleX="1" scaleY="1" anchorOffsetX="0" anchorOffsetY="0" visible="false"/>
 			<e:Group id="m_board_top_circle" width="20" height="20" x="41.43" y="504.64" visible="false"/>
 			<e:Group id="m_board_down_circle" width="20" height="20" x="41.43" y="762.64" visible="false"/>
@@ -33,9 +33,9 @@
 			<e:Image id="m_image_ball" source="qiu_png" scaleX="0.9" scaleY="0.9" anchorOffsetX="94" anchorOffsetY="94" horizontalCenter="0" verticalCenter="0"/>
 		</e:Group>
 
-		<e:Group id="m_basket_container_pre" anchorOffsetX="0" anchorOffsetY="640" scaleX="1" scaleY="1" height="1280" width="720" x="0" y="640">
-			<e:Image x="85.2" y="713.31" scaleX="1" scaleY="1" source="wang_png"/>
-			<e:Image source="kuang2_png" x="64.25" y="680.54"/>
+		<e:Group id="m_basket_container_pre" anchorOffsetX="0" anchorOffsetY="640" scaleX="1" scaleY="1" height="1280" width="720" x="0" y="640" locked="true">
+			<e:Image id="img_net_pre" x="85.2" y="713.31" scaleX="1" scaleY="1" source="wang_png"/>
+			<e:Image id="img_board_pre" source="kuang2_png" x="64.25" y="680.54"/>
 		</e:Group>
 		<e:Group scaleX="1" scaleY="1" right="0" left="0" top="0" bottom="0" touchEnabled="false">
 			<e:Image source="jdt_png" horizontalCenter="0" top="20" anchorOffsetX="56" anchorOffsetY="56"/>
