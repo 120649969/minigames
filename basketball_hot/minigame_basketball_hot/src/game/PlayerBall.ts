@@ -273,6 +273,30 @@ class PlayerBall {
 		this.basketball_speed_x = HitConst.Max_Speed_X * (this.mainPanel.IsFaceLeft() ? -1 : 1)
 	}
 
+	private _check_this_move_goal(last_x:number, last_y:number):boolean
+	{
+		let has_goal = this._checkGoal(new egret.Point(last_x, last_y), new egret.Point(this.m_basket_ball.x, this.m_basket_ball.y))
+		if(!this.mainPanel.HasGoal() && has_goal){
+			if(this._recent_hit){
+				this.mainPanel.SetGoal(true, Score.GOAL)
+			} else {
+				this.mainPanel.SetGoal(true, Score.KONG_XING_GOAL)
+			}
+					
+			// if(Math.floor(Math.random() * 2) == 0){
+				this.SetUsingAfterImageType(AfterImageType.Smoke)
+			// }
+		}
+		if(has_goal){
+			if(this._recent_hit){
+				this.mainPanel.PlayGoalAnimation()
+			} else {
+				this.mainPanel.PlayKongXingAnimation()
+			}
+		}
+		return false;
+	}
+
 	public Update():void
 	{
 		
@@ -337,8 +361,14 @@ class PlayerBall {
 					if(Math.abs(delta_y) < 2 && delta_y!= 0){
 						delta_y = delta_y / Math.abs(delta_y) * 2
 					}
+					temp_last_x = this.m_basket_ball.x
+					temp_last_y = this.m_basket_ball.y
 					this.m_basket_ball.x += delta_x  //如果不是和地面碰撞，沿着球的新速度方向移动至少5个像素，而且x，y两个方向最少移动2个像素
 					this.m_basket_ball.y += delta_y
+					if(is_current_in_circle_scope)
+					{
+						this._check_this_move_goal(temp_last_x, temp_last_y)
+					}
 				} else {  //地面碰撞  还原原来位置
 					this.m_basket_ball.x = temp_last_x
 					this.m_basket_ball.y = temp_last_y
@@ -348,25 +378,7 @@ class PlayerBall {
 
 			if(is_current_in_circle_scope)
 			{
-				let has_goal = this._checkGoal(new egret.Point(temp_last_x, temp_last_y), new egret.Point(this.m_basket_ball.x, this.m_basket_ball.y))
-				if(!this.mainPanel.HasGoal() && has_goal){
-					if(this._recent_hit){
-						this.mainPanel.SetGoal(true, Score.GOAL)
-					} else {
-						this.mainPanel.SetGoal(true, Score.KONG_XING_GOAL)
-					}
-					
-					// if(Math.floor(Math.random() * 2) == 0){
-						this.SetUsingAfterImageType(AfterImageType.Smoke)
-					// }
-				}
-				if(has_goal){
-					if(this._recent_hit){
-						this.mainPanel.PlayGoalAnimation()
-					} else {
-						this.mainPanel.PlayKongXingAnimation()
-					}
-				}
+				this._check_this_move_goal(temp_last_x, temp_last_y)
 			}
 		}
 
