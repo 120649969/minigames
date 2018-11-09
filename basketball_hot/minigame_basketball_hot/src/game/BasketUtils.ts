@@ -47,4 +47,17 @@ class BasketUtils {
 	{
 		return Math.random() * (maxScope - minScope) + minScope
 	}
+
+	public static performDelay(callback:Function, delay_time:number, callbackThisObject:Object):egret.Timer
+	{
+		let timer = new egret.Timer(delay_time, 1);
+		timer.addEventListener(egret.TimerEvent.TIMER, function():void{
+			if(callback)
+			{
+				callback.apply(callbackThisObject);
+			}
+		}.bind(this), this)
+		timer.start()
+		return timer
+	}
 }

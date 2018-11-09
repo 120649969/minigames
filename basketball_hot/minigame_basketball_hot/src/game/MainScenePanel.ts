@@ -69,8 +69,6 @@ class MainScenePanel extends eui.Component{
 			this._hitManager = new HitManager(this);
 			this._playerBall = new PlayerBall(this.m_basket_ball, this);
 			this._hasInitGame = true
-
-			
 		} else {
 			this._playerBall.Restart()
 		}
@@ -264,6 +262,10 @@ class MainScenePanel extends eui.Component{
 		this._has_goal = has_global;
 		if(has_global){
 			this.AddScore(score)
+			let __this = this
+			BasketUtils.performDelay(function(){
+				__this.AutoEnterNextRound()
+			}, 2 * 1000, this)
 		}
 	}
 

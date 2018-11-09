@@ -121,10 +121,10 @@ class PlayerBall {
 		
 		if(is_change_pos){ //超过了边界才开始下一轮
 			this.mainPanel.m_basket_ball.x = target_x
-			if(this.mainPanel.HasGoal()){
-				this.mainPanel.m_basket_ball.y = this.mainPanel.m_floor.y - this.mainPanel.m_basket_ball.height - 50 - Math.random() * 50 //将y降低到篮板一下，以免和刚出来的篮板挡板出现在同一个位置
-				this.mainPanel.AutoEnterNextRound();
-			}
+			// if(this.mainPanel.HasGoal()){
+			// 	this.mainPanel.m_basket_ball.y = this.mainPanel.m_floor.y - this.mainPanel.m_basket_ball.height - 50 - Math.random() * 50 //将y降低到篮板一下，以免和刚出来的篮板挡板出现在同一个位置
+			// 	this.mainPanel.AutoEnterNextRound();
+			// }
 		}
 	}
 
