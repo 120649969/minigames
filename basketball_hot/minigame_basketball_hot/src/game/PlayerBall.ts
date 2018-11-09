@@ -1,25 +1,25 @@
 class PlayerBall {
 
-	public m_basket_ball : eui.Group;
-	public mainPanel : MainScenePanel;
+	public m_basket_ball : eui.Group
+	public mainPanel : MainScenePanel
 
-	private _hitManager:HitManager;
+	private _hitManager:HitManager
 	private _tweenDir:number = 0
 
 	private _rotate_time = 0.8
 	private _last_hit_type = HitType.None
 	private _push_acce_y:number = 0
 
-	public basketball_speed_x:number = 0.0;
-	public basketball_speed_y:number = 0.0;
+	public basketball_speed_x:number = 0.0
+	public basketball_speed_y:number = 0.0
 
 	public _clear_hit_timer:egret.Timer
 	public _recent_hit:boolean = false
 
 	public constructor(_ball:eui.Group, _mainPanel:MainScenePanel) {
-		this.m_basket_ball = _ball;
-		this.mainPanel = _mainPanel;
-		this._hitManager = _mainPanel.GetHitManager();
+		this.m_basket_ball = _ball
+		this.mainPanel = _mainPanel
+		this._hitManager = _mainPanel.GetHitManager()
 	}
 
 	public Restart():void
@@ -35,8 +35,8 @@ class PlayerBall {
 		this.mainPanel.m_image_ball.rotation = 0
 	}
 
-	private _cacheAfterImageSprites:Array<egret.Bitmap> = [];
-	private _usingAfterImageSprites:Array<egret.Bitmap> = [];
+	private _cacheAfterImageSprites:Array<egret.Bitmap> = []
+	private _usingAfterImageSprites:Array<egret.Bitmap> = []
 	private _currentAfterImageType:AfterImageType = AfterImageType.None
 	private _afterImageDistance:number = 5
 
@@ -45,18 +45,17 @@ class PlayerBall {
 		this._currentAfterImageType = type
 	}
 
-	private _has_create_after_images:boolean = false;
+	private _has_create_after_images:boolean = false
 	private _createAfterImageSprites():void
 	{
-		for(let index = 0; index < 60; index ++)
+		for(let index = 0; index < 30; index ++)
 		{
-			let new_bitmap = new egret.Bitmap();
-			new_bitmap.texture = RES.getRes("qiu1_png");
-			new_bitmap.visible = false;
+			let new_bitmap = new egret.Bitmap()
+			// new_bitmap.texture = RES.getRes("qiu1_png")
+			new_bitmap.visible = false
 			this.m_basket_ball.parent.addChild(new_bitmap)
 			this.m_basket_ball.parent.setChildIndex(new_bitmap, 1)
 			this._cacheAfterImageSprites.push(new_bitmap)
-			let random_scale = 1
 			new_bitmap.scaleX = new_bitmap.scaleY = 0.8
 		}
 	}
@@ -84,23 +83,41 @@ class PlayerBall {
 		for(let index = this._usingAfterImageSprites.length - 1; index >= 0; index --)
 		{
 			let bitmap = this._usingAfterImageSprites[index]
-			bitmap.alpha -= 0.005
+			if(bitmap['img_type'] == AfterImageType.Smoke){
+				bitmap.alpha -= 0.005
+			} else if(bitmap['img_type'] == AfterImageType.Fire){
+				bitmap.alpha -= 0.002
+			}
+			
 			if(bitmap.alpha <= 0)
 			{
-				this._usingAfterImageSprites.splice(index, 1);
+				this._usingAfterImageSprites.splice(index, 1)
 				this._cacheAfterImageSprites.push(bitmap)
-				bitmap.visible = false;
+				bitmap.visible = false
 			}
 		}
 
 		if(this._currentAfterImageType != AfterImageType.None && this._cacheAfterImageSprites.length > 0)
 		{
 			let distance = Math.sqrt(Math.pow(this.m_basket_ball.x - this._last_after_image_point.x, 2) + Math.pow(this.m_basket_ball.y - this._last_after_image_point.y, 2));
-			if(distance > (this.m_basket_ball.height * 0.35) + BasketUtils.GetRandomScope(-5, 5))
+			let compare_distance = (this.m_basket_ball.height * 0.35) + BasketUtils.GetRandomScope(-5, 5)
+			if(this._currentAfterImageType == AfterImageType.Fire){
+				compare_distance = this.m_basket_ball.height * 0.2
+			}
+			if(distance > compare_distance)
 			{
 				let new_bitmap = this._cacheAfterImageSprites.shift()
+				if(this._currentAfterImageType == AfterImageType.Smoke){
+					new_bitmap.texture = RES.getRes("qiu1_png")
+					new_bitmap.alpha = Math.random() * 0.6
+					new_bitmap['img_type'] = AfterImageType.Smoke
+				} else if(this._currentAfterImageType == AfterImageType.Fire){
+					new_bitmap.texture = RES.getRes("qiu2_png")
+					new_bitmap.alpha = Math.random() * 0.3 + 0.1
+					new_bitmap['img_type'] = AfterImageType.Fire
+				}
+
 				new_bitmap.visible = true
-				new_bitmap.alpha = Math.random() * 0.3 + 0.1
 				new_bitmap.y = this.m_basket_ball.y
 				let move_x = Math.random() * 4 + 2
 				let move_y = Math.random() * 4 + 2
@@ -242,7 +259,7 @@ class PlayerBall {
 		if(!this._has_create_after_images)
 		{
 			this._createAfterImageSprites()
-			this._has_create_after_images = true;
+			this._has_create_after_images = true
 		}
 	}
 
@@ -252,8 +269,8 @@ class PlayerBall {
 		{
 			this.basketball_speed_y = 0;
 		}
-		this._push_acce_y = HitConst.PUSH_DOWN_IMPLUSE_Y;
-		this.basketball_speed_x = HitConst.Max_Speed_X * (this.mainPanel.IsFaceLeft() ? -1 : 1);
+		this._push_acce_y = HitConst.PUSH_DOWN_IMPLUSE_Y
+		this.basketball_speed_x = HitConst.Max_Speed_X * (this.mainPanel.IsFaceLeft() ? -1 : 1)
 	}
 
 	public Update():void
@@ -264,12 +281,12 @@ class PlayerBall {
 		this._adjustBallPosition()
 		
 		let start_speed_y = this.basketball_speed_y
-		let acce_speed_y = HitConst.Gravity + this._push_acce_y;  //y方向的加速度
+		let acce_speed_y = HitConst.Gravity + this._push_acce_y  //y方向的加速度
 		this.basketball_speed_y += acce_speed_y;
-		this.basketball_speed_y = Math.max(this.basketball_speed_y, HitConst.MIN_SPEED_Y);
+		this.basketball_speed_y = Math.max(this.basketball_speed_y, HitConst.MIN_SPEED_Y)
 		this._push_acce_y = 0 //重置瞬间加速度
 
-		let total_speed = Math.sqrt(Math.pow(this.basketball_speed_x, 2) + Math.pow(this.basketball_speed_y, 2)) / HitConst.Factor;
+		let total_speed = Math.sqrt(Math.pow(this.basketball_speed_x, 2) + Math.pow(this.basketball_speed_y, 2)) / HitConst.Factor
 		let step_speed = 2
 		
 		let times = Math.ceil(total_speed / step_speed)
@@ -277,12 +294,12 @@ class PlayerBall {
 		let step_speend_y = this.basketball_speed_y / times
 		
 		//篮球此刻是否在判断入网的x范围
-		let is_current_in_circle_scope = this._isCurrentInCricleScope();
+		let is_current_in_circle_scope = this._isCurrentInCricleScope()
 		for(let step_idx = 1; step_idx <= times; step_idx++)
 		{
 			let temp_last_x = this.m_basket_ball.x
 			let temp_last_y = this.m_basket_ball.y
-			this.m_basket_ball.x += step_speend_x / HitConst.Factor;
+			this.m_basket_ball.x += step_speend_x / HitConst.Factor
 
 			if(this.m_basket_ball.y < this.mainPanel.m_floor.y - this.m_basket_ball.height - 30){
 				let start_y = start_speed_y + (step_idx - 1) * step_speend_y
@@ -292,7 +309,7 @@ class PlayerBall {
 					console.log("###这次的速度#########", (start_y + end_y) / 2 / HitConst.Factor / times)
 				}
 			} else {
-				this.m_basket_ball.y += step_speend_y / HitConst.Factor;
+				this.m_basket_ball.y += step_speend_y / HitConst.Factor
 			}
 			
 			let hit_result = this._hitManager.CheckHit()
@@ -334,9 +351,9 @@ class PlayerBall {
 				let has_goal = this._checkGoal(new egret.Point(temp_last_x, temp_last_y), new egret.Point(this.m_basket_ball.x, this.m_basket_ball.y))
 				if(!this.mainPanel.HasGoal() && has_goal){
 					if(this._recent_hit){
-						this.mainPanel.SetGoal(true, Score.GOAL);
+						this.mainPanel.SetGoal(true, Score.GOAL)
 					} else {
-						this.mainPanel.SetGoal(true, Score.KONG_XING_GOAL);
+						this.mainPanel.SetGoal(true, Score.KONG_XING_GOAL)
 					}
 					
 					// if(Math.floor(Math.random() * 2) == 0){

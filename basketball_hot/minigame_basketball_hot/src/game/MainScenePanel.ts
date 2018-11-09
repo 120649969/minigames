@@ -172,6 +172,19 @@ class MainScenePanel extends eui.Component{
 		this._net_back_display.animation.play('kongxinqiu', 1)
 	}
 
+	public PlayBlackNetAnimation()
+	{
+		BasketUtils.SetColor(this._net_back_display, 0x000000)
+		BasketUtils.SetColor(this._net_pre_display, 0x000000)
+		let _timer = new egret.Timer(1000 *0.8, 1)
+		let __this = this
+		_timer.addEventListener(egret.TimerEvent.TIMER,function(){
+			__this._net_back_display.filters = []
+			__this._net_pre_display.filters = []
+		}.bind(this),this);
+		_timer.start()
+	}
+
 	public PlayNetAnimation(hitNetType:HitNetType)
 	{
 		if(this._net_pre_display.animation.isPlaying){
