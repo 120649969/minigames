@@ -142,18 +142,6 @@ class MainScenePanel extends eui.Component{
 		this.img_board_back.visible = false
 		this.img_net_back.visible = false
 		this.img_net_pre.visible = false
-
-		// let __this = this
-		// setTimeout(function() {
-		// 	console.log("#####animation#####")
-		// 	__this._board_pre_display.animation.play('lanban', 1)
-		// 	__this._board_post_display.animation.play('lanban', 1)
-		// }, 2 * 1000);
-
-		// egret.ticker.$startTick(function(advancedTime:number):boolean{
-		// 	dragonBones.WorldClock.clock.advanceTime(advancedTime/1000);
-		// 	return true
-		// },this)
 	}
 
 	//篮筐抖动

@@ -38,4 +38,13 @@ class BasketUtils {
 		image.filters = [colorFilter];
 	}
 
+	public static GetRandomPositive():number
+	{
+		return (Math.floor(Math.random() * 2) == 0) ? 1 : -1
+	}
+
+	public static GetRandomScope(minScope:number, maxScope:number):number
+	{
+		return Math.random() * (maxScope - minScope) + minScope
+	}
 }

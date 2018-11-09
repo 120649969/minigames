@@ -164,6 +164,13 @@ class HitManager {
 		let vertical_vec_x = speed_vec.x - dot_vec.x
 		let vertical_vec_y = speed_vec.y - dot_vec.y
 
+		//按理来说这种情况不应该存在
+		if(dot_vallue < 0){
+			dot_vec.x = Math.abs(dot_vallue) * hit_vec.x
+			dot_vec.y = Math.abs(dot_vallue) * hit_vec.y
+			console.error("#########出现了奇怪的情况#")
+		}
+		
 		let restitution_dot_vec_x = restition * dot_vec.x
 		let restitution_dot_vec_y = restition * dot_vec.y
 

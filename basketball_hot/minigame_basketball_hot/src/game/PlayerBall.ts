@@ -52,15 +52,12 @@ class PlayerBall {
 		{
 			let new_bitmap = new egret.Bitmap();
 			new_bitmap.texture = RES.getRes("qiu1_png");
-			BasketUtils.SetColor(new_bitmap, 0x333333);
 			new_bitmap.visible = false;
 			this.m_basket_ball.parent.addChild(new_bitmap)
 			this.m_basket_ball.parent.setChildIndex(new_bitmap, 1)
 			this._cacheAfterImageSprites.push(new_bitmap)
-			// let random_scale =  Math.random() * 0.2 + 0.7
 			let random_scale = 1
-			new_bitmap.scaleX = this.m_basket_ball.width / new_bitmap.width * random_scale
-			new_bitmap.scaleY = this.m_basket_ball.height / new_bitmap.height * random_scale
+			new_bitmap.scaleX = new_bitmap.scaleY = 0.8
 		}
 	}
 
@@ -87,7 +84,7 @@ class PlayerBall {
 		for(let index = this._usingAfterImageSprites.length - 1; index >= 0; index --)
 		{
 			let bitmap = this._usingAfterImageSprites[index]
-			bitmap.alpha -= 0.01
+			bitmap.alpha -= 0.005
 			if(bitmap.alpha <= 0)
 			{
 				this._usingAfterImageSprites.splice(index, 1);
@@ -99,20 +96,18 @@ class PlayerBall {
 		if(this._currentAfterImageType != AfterImageType.None && this._cacheAfterImageSprites.length > 0)
 		{
 			let distance = Math.sqrt(Math.pow(this.m_basket_ball.x - this._last_after_image_point.x, 2) + Math.pow(this.m_basket_ball.y - this._last_after_image_point.y, 2));
-			if(distance > this.m_basket_ball.height * 0.5)
+			if(distance > (this.m_basket_ball.height * 0.35) + BasketUtils.GetRandomScope(-5, 5))
 			{
 				let new_bitmap = this._cacheAfterImageSprites.shift()
 				new_bitmap.visible = true
-				
-				if(this._cacheAfterImageSprites.length % 5 == 0){
-					new_bitmap.alpha = 0.4
-				} else {
-					new_bitmap.alpha = 0.2
-				}
-				new_bitmap.x = this.m_basket_ball.x
+				new_bitmap.alpha = Math.random() * 0.3 + 0.1
 				new_bitmap.y = this.m_basket_ball.y
-				// new_bitmap.x = this.m_basket_ball.x + this.m_basket_ball.width / 2 - new_bitmap.width * new_bitmap.scaleX / 2
-				// new_bitmap.y = this.m_basket_ball.y + this.m_basket_ball.height / 2 - new_bitmap.height * new_bitmap.scaleY / 2
+				let move_x = Math.random() * 4 + 2
+				let move_y = Math.random() * 4 + 2
+				move_x *= BasketUtils.GetRandomPositive()
+				move_y *= BasketUtils.GetRandomPositive()
+				new_bitmap.x = this.m_basket_ball.x + move_x
+				new_bitmap.y = this.m_basket_ball.y + move_y
 				this._usingAfterImageSprites.push(new_bitmap)
 				this._last_after_image_point.x = this.m_basket_ball.x
 				this._last_after_image_point.y = this.m_basket_ball.y
@@ -272,7 +267,7 @@ class PlayerBall {
 		let acce_speed_y = HitConst.Gravity + this._push_acce_y;  //y方向的加速度
 		this.basketball_speed_y += acce_speed_y;
 		this.basketball_speed_y = Math.max(this.basketball_speed_y, HitConst.MIN_SPEED_Y);
-		this._push_acce_y = 0 //重置瞬间加速度ddddddddddddddddddddddd
+		this._push_acce_y = 0 //重置瞬间加速度
 
 		let total_speed = Math.sqrt(Math.pow(this.basketball_speed_x, 2) + Math.pow(this.basketball_speed_y, 2)) / HitConst.Factor;
 		let step_speed = 2
@@ -302,8 +297,8 @@ class PlayerBall {
 			
 			let hit_result = this._hitManager.CheckHit()
 			if(hit_result){
-				// this.m_basket_ball.x = temp_last_x
-				// this.m_basket_ball.y = temp_last_y
+				this.m_basket_ball.x = temp_last_x
+				this.m_basket_ball.y = temp_last_y
 				
 				if(this._hitManager.GetHitType() !=  HitType.Floor){
 					let new_type = this._hitManager.GetHitType()
