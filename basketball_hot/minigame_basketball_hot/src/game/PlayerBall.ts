@@ -16,10 +16,15 @@ class PlayerBall {
 	public _clear_hit_timer:egret.Timer
 	public _recent_hit:boolean = false
 
+	private _smokeEffect:SmokeEffect
+	private _fireEffect:FireEffect
+
 	public constructor(_ball:eui.Group, _mainPanel:MainScenePanel) {
 		this.m_basket_ball = _ball
 		this.mainPanel = _mainPanel
 		this._hitManager = _mainPanel.GetHitManager()
+		this._smokeEffect = new SmokeEffect(this)
+		this._fireEffect = new FireEffect(this)
 	}
 
 	public Restart():void
@@ -35,29 +40,10 @@ class PlayerBall {
 		this.mainPanel.m_image_ball.rotation = 0
 	}
 
-	private _cacheAfterImageSprites:Array<egret.Bitmap> = []
-	private _usingAfterImageSprites:Array<egret.Bitmap> = []
 	private _currentAfterImageType:AfterImageType = AfterImageType.None
-	private _afterImageDistance:number = 5
-
 	public SetUsingAfterImageType(type:AfterImageType):void
 	{
 		this._currentAfterImageType = type
-	}
-
-	private _has_create_after_images:boolean = false
-	private _createAfterImageSprites():void
-	{
-		for(let index = 0; index < 30; index ++)
-		{
-			let new_bitmap = new egret.Bitmap()
-			// new_bitmap.texture = RES.getRes("qiu1_png")
-			new_bitmap.visible = false
-			this.m_basket_ball.parent.addChild(new_bitmap)
-			this.m_basket_ball.parent.setChildIndex(new_bitmap, 1)
-			this._cacheAfterImageSprites.push(new_bitmap)
-			new_bitmap.scaleX = new_bitmap.scaleY = 0.8
-		}
 	}
 
 	private _restartHitTimer()
@@ -77,58 +63,18 @@ class PlayerBall {
 		this._recent_hit = false
 	}
 
-	private _last_after_image_point:egret.Point = new egret.Point()
 	private _updateAfterImage():void
 	{
-		for(let index = this._usingAfterImageSprites.length - 1; index >= 0; index --)
-		{
-			let bitmap = this._usingAfterImageSprites[index]
-			if(bitmap['img_type'] == AfterImageType.Smoke){
-				bitmap.alpha -= 0.005
-			} else if(bitmap['img_type'] == AfterImageType.Fire){
-				bitmap.alpha -= 0.002
-			}
-			
-			if(bitmap.alpha <= 0)
-			{
-				this._usingAfterImageSprites.splice(index, 1)
-				this._cacheAfterImageSprites.push(bitmap)
-				bitmap.visible = false
-			}
+		if(this._currentAfterImageType == AfterImageType.Smoke){
+			this._smokeEffect.Update(true)
+		} else {
+			this._smokeEffect.Update(false)
 		}
-
-		if(this._currentAfterImageType != AfterImageType.None && this._cacheAfterImageSprites.length > 0)
-		{
-			let distance = Math.sqrt(Math.pow(this.m_basket_ball.x - this._last_after_image_point.x, 2) + Math.pow(this.m_basket_ball.y - this._last_after_image_point.y, 2));
-			let compare_distance = (this.m_basket_ball.height * 0.35) + BasketUtils.GetRandomScope(-5, 5)
-			if(this._currentAfterImageType == AfterImageType.Fire){
-				compare_distance = this.m_basket_ball.height * 0.2
-			}
-			if(distance > compare_distance)
-			{
-				let new_bitmap = this._cacheAfterImageSprites.shift()
-				if(this._currentAfterImageType == AfterImageType.Smoke){
-					new_bitmap.texture = RES.getRes("qiu1_png")
-					new_bitmap.alpha = Math.random() * 0.6
-					new_bitmap['img_type'] = AfterImageType.Smoke
-				} else if(this._currentAfterImageType == AfterImageType.Fire){
-					new_bitmap.texture = RES.getRes("qiu2_png")
-					new_bitmap.alpha = Math.random() * 0.3 + 0.1
-					new_bitmap['img_type'] = AfterImageType.Fire
-				}
-
-				new_bitmap.visible = true
-				new_bitmap.y = this.m_basket_ball.y
-				let move_x = Math.random() * 4 + 2
-				let move_y = Math.random() * 4 + 2
-				move_x *= BasketUtils.GetRandomPositive()
-				move_y *= BasketUtils.GetRandomPositive()
-				new_bitmap.x = this.m_basket_ball.x + move_x
-				new_bitmap.y = this.m_basket_ball.y + move_y
-				this._usingAfterImageSprites.push(new_bitmap)
-				this._last_after_image_point.x = this.m_basket_ball.x
-				this._last_after_image_point.y = this.m_basket_ball.y
-			}
+		
+		if(this._currentAfterImageType == AfterImageType.Fire){
+			this._fireEffect.Update(true)
+		} else {
+			this._fireEffect.Update(false)
 		}
 	}
 
@@ -256,11 +202,6 @@ class PlayerBall {
 
 	public EnterNextRound():void
 	{
-		if(!this._has_create_after_images)
-		{
-			this._createAfterImageSprites()
-			this._has_create_after_images = true
-		}
 	}
 
 	public OnPushDown():void
@@ -284,7 +225,7 @@ class PlayerBall {
 			}
 					
 			// if(Math.floor(Math.random() * 2) == 0){
-				this.SetUsingAfterImageType(AfterImageType.Smoke)
+				this.SetUsingAfterImageType(AfterImageType.Fire)
 			// }
 		}
 		if(has_goal){
@@ -329,9 +270,9 @@ class PlayerBall {
 				let start_y = start_speed_y + (step_idx - 1) * step_speend_y
 				let end_y = start_speed_y + (step_idx) * step_speend_y
 				this.m_basket_ball.y += (start_y + end_y) / 2 / HitConst.Factor / times;
-				if(Math.abs((start_y + end_y) / 2 / HitConst.Factor / times) > 4){
-					console.log("###这次的速度#########", (start_y + end_y) / 2 / HitConst.Factor / times)
-				}
+				// if(Math.abs((start_y + end_y) / 2 / HitConst.Factor / times) > 4){
+				// 	console.log("###这次的速度#########", (start_y + end_y) / 2 / HitConst.Factor / times)
+				// }
 			} else {
 				this.m_basket_ball.y += step_speend_y / HitConst.Factor
 			}
@@ -342,7 +283,7 @@ class PlayerBall {
 				this.m_basket_ball.y = temp_last_y
 				
 				if(this._hitManager.GetHitType() !=  HitType.Floor){
-					let new_type = this._hitManager.GetHitType()
+					//如果不是和地面碰撞，沿着球的新速度方向移动至少5个像素，而且x，y两个方向最少移动2个像素，保证分离
 					let percent = (times - step_idx) / times
 					let new_total_speed = Math.sqrt(Math.pow(this.basketball_speed_x, 2) + Math.pow(this.basketball_speed_y, 2)) / HitConst.Factor;
 					if(percent == 0){
@@ -363,15 +304,12 @@ class PlayerBall {
 					}
 					temp_last_x = this.m_basket_ball.x
 					temp_last_y = this.m_basket_ball.y
-					this.m_basket_ball.x += delta_x  //如果不是和地面碰撞，沿着球的新速度方向移动至少5个像素，而且x，y两个方向最少移动2个像素
+					this.m_basket_ball.x += delta_x  
 					this.m_basket_ball.y += delta_y
 					if(is_current_in_circle_scope)
 					{
 						this._check_this_move_goal(temp_last_x, temp_last_y)
 					}
-				} else {  //地面碰撞  还原原来位置
-					this.m_basket_ball.x = temp_last_x
-					this.m_basket_ball.y = temp_last_y
 				}
 				break
 			}

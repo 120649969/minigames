@@ -9,17 +9,19 @@
 		"libs/modules/dragonBones/dragonBones.js"
 	],
 	"game": [
-		"bin-debug/game/DebugPanel.js",
+		"bin-debug/game/FireEffect.js",
 		"bin-debug/AssetAdapter.js",
 		"bin-debug/Main.js",
 		"bin-debug/Platform.js",
 		"bin-debug/ThemeAdapter.js",
 		"bin-debug/game/BasketUtils.js",
+		"bin-debug/game/DebugPanel.js",
 		"bin-debug/LoadingUI.js",
 		"bin-debug/game/HitConst.js",
 		"bin-debug/game/HitManager.js",
 		"bin-debug/game/MainScenePanel.js",
 		"bin-debug/game/PlayerBall.js",
-		"bin-debug/game/ServerModel.js"
+		"bin-debug/game/ServerModel.js",
+		"bin-debug/game/SmokeEffect.js"
 	]
 }
