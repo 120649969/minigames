@@ -137,15 +137,14 @@ class FireEffectDisplayObject extends egret.DisplayObjectContainer{
 	}
 }
 
-class FireEffect extends egret.DisplayObjectContainer{
+class FireEffect extends BaseEffect{
 	private _playerBall:PlayerBall
 	private _cacheFires:Array<FireEffectDisplayObject> = []
 	private _usingFires:Array<FireEffectDisplayObject> = []
 	private _last_point:egret.Point = new egret.Point()
 
 	public constructor(playerBall:PlayerBall) {
-		super()
-		super()
+		super(playerBall)
 		this._playerBall = playerBall
 		this._createFires()
 	}
@@ -226,6 +225,14 @@ class FireEffect extends egret.DisplayObjectContainer{
 					return
 				}
 			}
+		}
+	}
+
+	public SetGoal(score:number):void
+	{
+		if(score == BasketScore.KONG_XING_GOAL)
+		{
+			this._playerBall.GetMainScenePanel().PlayBlackNetAnimation()
 		}
 	}
 

@@ -27,6 +27,11 @@ class PlayerBall {
 		this._fireEffect = new FireEffect(this)
 	}
 
+	public GetMainScenePanel():MainScenePanel
+	{
+		return this.mainPanel
+	}
+
 	public Restart():void
 	{
 		this._restartHitTimer()
@@ -49,6 +54,11 @@ class PlayerBall {
 		}
 
 		this._currentAfterImageType = type
+	}
+
+	public GetUsingAfterImageType():AfterImageType
+	{
+		return this._currentAfterImageType
 	}
 
 	private _restartHitTimer()
@@ -220,10 +230,17 @@ class PlayerBall {
 		let has_goal = this._checkGoal(new egret.Point(last_x, last_y), new egret.Point(this.m_basket_ball.x, this.m_basket_ball.y))
 		if(!this.mainPanel.HasGoal() && has_goal){
 			if(this._recent_hit){
+				if(this._currentAfterImageType == AfterImageType.Smoke){
+					this._smokeEffect.SetGoal(BasketScore.NORMAL_GOAL)
+				}
 				this.mainPanel.SetGoal(true, BasketScore.NORMAL_GOAL)
 			} else {
+				if(this._currentAfterImageType == AfterImageType.Fire){
+					this._fireEffect.SetGoal(BasketScore.KONG_XING_GOAL)
+				}
 				this.mainPanel.SetGoal(true, BasketScore.KONG_XING_GOAL)
 			}
+			this.UpdateCurrentAfterImage()
 					
 			// if(Math.floor(Math.random() * 2) == 0){
 				// this.SetUsingAfterImageType(AfterImageType.Fire)

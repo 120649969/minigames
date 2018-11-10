@@ -19,6 +19,7 @@ class MainScenePanel extends eui.Component{
 	public img_net_pre:eui.Image
 	public img_net_back:eui.Image
 	public m_decision_container:eui.Group
+	public img_board_body:eui.Image
 
 	public img_time_progress:eui.Image
 	public label_score_me:eui.Label
@@ -53,6 +54,7 @@ class MainScenePanel extends eui.Component{
 		this.m_container.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onTouchBegin, this);
 		let __this = this
 		this.btn_debug.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.Event){
+			//将例子系统添加到舞台
 			let debugPanel = new DebugPanel()
 			__this.addChild(debugPanel)
 			event.stopPropagation();
@@ -175,13 +177,17 @@ class MainScenePanel extends eui.Component{
 	{
 		BasketUtils.SetColor(this._net_back_display, 0x000000)
 		BasketUtils.SetColor(this._net_pre_display, 0x000000)
-		let _timer = new egret.Timer(1000 *0.8, 1)
+		BasketUtils.SetColor(this.img_board_body, 0x000000)
+		BasketUtils.SetColor(this._board_pre_display, 0x000000)
+		BasketUtils.SetColor(this._board_back_display, 0x000000)
 		let __this = this
-		_timer.addEventListener(egret.TimerEvent.TIMER,function(){
+		BasketUtils.performDelay(function(){
 			__this._net_back_display.filters = []
 			__this._net_pre_display.filters = []
-		}.bind(this),this);
-		_timer.start()
+			__this.img_board_body.filters = []
+			__this._board_pre_display.filters = []
+			__this._board_back_display.filters = []
+		}.bind(this), 1000 *0.5, this)
 	}
 
 	public PlayNetAnimation(hitNetType:HitNetType)
@@ -271,7 +277,6 @@ class MainScenePanel extends eui.Component{
 		if(has_global){
 			this.AddScore(score)
 			this._allScores.push(score)
-			this._playerBall.UpdateCurrentAfterImage()
 			this.NextRound()
 		}
 	}

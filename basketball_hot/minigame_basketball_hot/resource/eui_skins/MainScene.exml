@@ -8,7 +8,7 @@
 		<e:Group id="m_basket_container_back" anchorOffsetX="0" anchorOffsetY="640" scaleX="1" scaleY="1" width="720" x="0" height="1280" y="640">
 			<e:Image id="img_net_back" x="85.2" y="692.1" scaleX="1" scaleY="1" source="wang2_png"/>
 
-			<e:Image source="ban_png" x="0" y="504.64" scaleX="1" scaleY="1"/>
+			<e:Image id="img_board_body" source="ban_png" x="0" y="504.64" scaleX="1" scaleY="1"/>
 
 			<e:Image id="img_board_back" source="kuang_png" x="64.25" y="681.64" scaleX="1" scaleY="1"/>
 

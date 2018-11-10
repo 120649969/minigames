@@ -37,7 +37,7 @@ class SmokeDisplayObject extends egret.DisplayObjectContainer{
 
 }
 
-class SmokeEffect extends egret.DisplayObjectContainer{
+class SmokeEffect extends BaseEffect{
 
 	private _playerBall:PlayerBall
 	private _cacheSmokes:Array<SmokeDisplayObject> = []
@@ -45,7 +45,7 @@ class SmokeEffect extends egret.DisplayObjectContainer{
 	private _last_point:egret.Point = new egret.Point()
 	
 	public constructor(playerBall:PlayerBall) {
-		super()
+		super(playerBall)
 		this._playerBall = playerBall
 		this._createSmokes()
 	}
