@@ -18,6 +18,7 @@ class MainScenePanel extends eui.Component{
 	public img_board_pre:eui.Image
 	public img_net_pre:eui.Image
 	public img_net_back:eui.Image
+	public m_decision_container:eui.Group
 
 	public img_time_progress:eui.Image
 	public label_score_me:eui.Label
@@ -88,7 +89,7 @@ class MainScenePanel extends eui.Component{
 		this.removeEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this);
 		this.addEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this);
 		this.serverModel.left_time = this.serverModel.MAX_TIME
-		this._nextRound();
+		this.NextRound();
 		this.UpdateScore()
 		this.m_basket_ball.visible = true
 	}
@@ -257,15 +258,21 @@ class MainScenePanel extends eui.Component{
 		return this._has_goal
 	}
 
+	private _allScores:Array<number> = new Array()
+
+	public GetAllScores():Array<number>
+	{
+		return this._allScores
+	}
+
 	public SetGoal(has_global, score:number):void
 	{
-		this._has_goal = has_global;
+		this._has_goal = has_global
 		if(has_global){
 			this.AddScore(score)
-			let __this = this
-			BasketUtils.performDelay(function(){
-				__this.AutoEnterNextRound()
-			}, 2 * 1000, this)
+			this._allScores.push(score)
+			this._playerBall.UpdateCurrentAfterImage()
+			this.NextRound()
 		}
 	}
 
@@ -290,43 +297,62 @@ class MainScenePanel extends eui.Component{
 		return this._playerBall
 	}
 
-	public _nextRound():void
+	private _random_container_y:number = 0
+	private _updateDecisionPosition():void
+	{
+		let scale_rate = 1
+		if(this._is_face_left){
+			this.m_decision_container.x = 0
+			scale_rate = 1
+		}else{
+			this.m_decision_container.x = this.stage.stageWidth
+			scale_rate = -1
+		}
+		
+		this.m_decision_container.y = this._random_container_y
+		this.m_decision_container.scaleX = Math.abs(this.m_decision_container.scaleX) * scale_rate;
+	}
+
+	private _updateBasketContainerPosition():void
+	{
+		let scale_rate = 1
+		if(this._is_face_left){
+			this.m_basket_container_pre.x = 0
+			this.m_basket_container_back.x = 0
+			scale_rate = 1
+		}else{
+			this.m_basket_container_pre.x = this.stage.stageWidth
+			this.m_basket_container_back.x = this.stage.stageWidth
+			scale_rate = -1
+		}
+		
+		this.m_basket_container_pre.y = this._random_container_y
+		this.m_basket_container_pre.scaleX = Math.abs(this.m_basket_container_pre.scaleX) * scale_rate;
+
+		this.m_basket_container_back.y = this._random_container_y
+		this.m_basket_container_back.scaleX = Math.abs(this.m_basket_container_back.scaleX) * scale_rate;
+	}
+
+	public NextRound():void
 	{
 		this.SetGoal(false, 0);
-		let is_left = Math.floor(Math.random() * 2) == 0
-		let old_left = this._is_face_left
-		let has_change = is_left != this._is_face_left
-		this._is_face_left = is_left
+		this._is_face_left = !this._is_face_left
 		if(this._is_first_round){
 			this._is_face_left = true
-			has_change = true
 		}
 
 		this._hasThisRoundTouch = false;
-		if(has_change){
-			if(this._is_face_left){
-				let random_y = this.stage.stageHeight / 2 - Math.random() * 200
-				this.m_basket_container_pre.x = 0
-				this.m_basket_container_pre.y = random_y
-				this.m_basket_container_pre.scaleX = Math.abs(this.m_basket_container_back.scaleX);
+		this._random_container_y = this.stage.stageHeight / 2 - Math.random() * 200
 
-				this.m_basket_container_back.x = 0
-				this.m_basket_container_back.y = random_y
-				this.m_basket_container_back.scaleX = Math.abs(this.m_basket_container_back.scaleX);
-
-			}else{
-				let random_y = this.stage.stageHeight / 2 - Math.random() * 200
-				this.m_basket_container_pre.x = this.stage.stageWidth
-				this.m_basket_container_pre.y = random_y
-				this.m_basket_container_pre.scaleX = Math.abs(this.m_basket_container_back.scaleX) * -1;
-
-				this.m_basket_container_back.x = this.stage.stageWidth
-				this.m_basket_container_back.y = random_y
-				this.m_basket_container_back.scaleX = Math.abs(this.m_basket_container_back.scaleX) * -1;
-			}
+		if(!this._is_first_round)
+		{
+			this._updateDecisionPosition()
+			let __this = this
+			BasketUtils.performDelay(function(){
+				__this._updateBasketContainerPosition()
+			}.bind(this), 0.5 * 1000, this);
 		}
 		
-
 		this.validateNow()
 
 		if(this._is_first_round){
@@ -341,6 +367,7 @@ class MainScenePanel extends eui.Component{
 		
 		this._hitManager.EnterNextRound()
 		this._playerBall.EnterNextRound()
+
 	}
 
 	private _onEnterFrame(event : egret.Event):void
@@ -349,10 +376,6 @@ class MainScenePanel extends eui.Component{
 			this.removeEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this)
 			this.m_basket_ball.visible = false;
 			return
-		}
-		if(this._auto_enter_next_round){
-			this._nextRound();
-			this._auto_enter_next_round = false;
 		}
 		this._playerBall.Update()
 	}

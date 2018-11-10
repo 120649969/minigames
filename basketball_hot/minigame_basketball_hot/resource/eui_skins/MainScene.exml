@@ -11,7 +11,6 @@
 			<e:Image source="ban_png" x="0" y="504.64" scaleX="1" scaleY="1"/>
 
 			<e:Image id="img_board_back" source="kuang_png" x="64.25" y="681.64" scaleX="1" scaleY="1"/>
-			<e:Group id="m_board_scope" width="24" height="281" x="38.93" y="502.98" scaleX="1" scaleY="1" anchorOffsetY="0" anchorOffsetX="0"/>
 
 
 
@@ -19,12 +18,13 @@
 
 
 
-			<e:Group id="m_left_line" width="8" height="1" x="80.1" y="700.31" scaleX="1" scaleY="1"/>
-			<e:Group id="m_circle_scope" width="135" height="30" x="88.75" y="688.64" anchorOffsetX="0" anchorOffsetY="0" scaleX="1" scaleY="1"/>
-			<e:Group id="m_net_scope" width="65" height="65" x="121" y="753.97" scaleX="1" scaleY="1" anchorOffsetX="0" anchorOffsetY="0"/>
-			<e:Group id="m_right_line" width="13" height="1" x="220.04000000000002" y="699.64" scaleX="1" scaleY="1" anchorOffsetX="0" anchorOffsetY="0" visible="false"/>
-			<e:Group id="m_board_top_circle" width="20" height="20" x="41.43" y="504.64" visible="false"/>
-			<e:Group id="m_board_down_circle" width="20" height="20" x="41.43" y="762.64" visible="false"/>
+
+
+
+
+
+
+
 		</e:Group>
 		<e:Group id="m_top" height="10" left="0" right="0" anchorOffsetX="320" top="157" locked="true">
 			<e:Rect scaleX="1" scaleY="1" left="0" top="0" right="0" bottom="0"/>
@@ -57,5 +57,14 @@
 			</e:Skin>
 			</e:skinName>
 		</e:Button>
+		<e:Group id="m_decision_container" width="720" height="1280" x="0" y="640" scaleX="1" scaleY="1" anchorOffsetY="640">
+			<e:Group id="m_board_scope" width="24" height="281" x="38.93" y="502.9800000000001" scaleX="1" scaleY="1" anchorOffsetY="0" anchorOffsetX="0"/>
+			<e:Group id="m_left_line" width="8" height="1" x="80.1" y="700.31" scaleX="1" scaleY="1"/>
+			<e:Group id="m_circle_scope" width="135" height="30" x="88.75" y="688.64" anchorOffsetX="0" anchorOffsetY="0" scaleX="1" scaleY="1"/>
+			<e:Group id="m_net_scope" width="65" height="65" x="121" y="753.9700000000001" scaleX="1" scaleY="1" anchorOffsetX="0" anchorOffsetY="0"/>
+			<e:Group id="m_right_line" width="13" height="1" x="220.04000000000002" y="699.64" scaleX="1" scaleY="1" anchorOffsetX="0" anchorOffsetY="0"/>
+			<e:Group id="m_board_top_circle" width="20" height="20" x="41.43" y="504.64000000000004" scaleX="1" scaleY="1"/>
+			<e:Group id="m_board_down_circle" width="20" height="20" x="41.43" y="762.64" scaleX="1" scaleY="1"/>
+		</e:Group>
 	</e:Group>
 </e:Skin>

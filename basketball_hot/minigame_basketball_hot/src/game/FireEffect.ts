@@ -14,6 +14,10 @@ class FireEffectDisplayObject extends egret.DisplayObjectContainer{
 	public wait_play_total_time:number = 5
 	private wait_play_curr_time:number = 0
 
+	private _in_yellow_orange_step:boolean = false
+	private _in_orange_black_step:boolean = false
+	private _step_id:number = 0
+
 	public constructor() {
 		super()
 
@@ -61,23 +65,55 @@ class FireEffectDisplayObject extends egret.DisplayObjectContainer{
 
 		this.wait_play_curr_time = 0
 		this.visible = true
+
+		this._in_yellow_orange_step = true
+		this._in_orange_black_step = false
 	}
 
-	private _random_black_alpha = 0
+	
+	public SetFireStep(step_id:number):void
+	{
+		this._step_id = step_id
+		if(this._step_id == FireStep.Step_1){
+			this.origin_scale = 0.6
+			this.target_scale = 0.8
+		} else if(this._step_id == FireStep.Step_2){
+			this.origin_scale = 1
+			this.target_scale = 1.2
+		}
+	}
+
 	public Update():boolean
 	{
 		this.wait_play_curr_time += 1
 		if(this.wait_play_curr_time < this.wait_play_total_time){
 			return true
 		}
-		this._yellowBitmap.alpha -= 0.08
-		this._yellowBitmap.scaleX += 0.008
-		this._yellowBitmap.scaleX = Math.min(this._yellowBitmap.scaleX, this.target_scale)
-		this._yellowBitmap.scaleY = this._yellowBitmap.scaleX
-
-		if(this._yellowBitmap.alpha <= 0)
+		
+		if(this._in_yellow_orange_step)
 		{
-			this._yellowBitmap.visible = false
+			this._yellowBitmap.alpha -= 0.08
+			this._yellowBitmap.scaleX += 0.008
+			this._yellowBitmap.scaleX = Math.min(this._yellowBitmap.scaleX, this.target_scale)
+			this._yellowBitmap.scaleY = this._yellowBitmap.scaleX
+
+			this._originBitmap.alpha += 0.08
+			this._originBitmap.scaleX += 0.008
+			this._originBitmap.scaleX = Math.min(this._originBitmap.scaleX, this.target_scale)
+			this._originBitmap.scaleY = this._originBitmap.scaleX
+
+			this._blackBitmap.scaleX = this._blackBitmap.scaleY = this._originBitmap.scaleX
+
+			if(this._yellowBitmap.alpha <= 0)
+			{
+				this._yellowBitmap.visible = false
+				this._in_yellow_orange_step = false
+				this._in_orange_black_step = true	
+			}
+		}
+
+		if(this._in_orange_black_step)
+		{
 			this._originBitmap.alpha -= 0.1
 			this._blackBitmap.alpha += 0.05
 			this._blackBitmap.alpha = Math.min(this._blackBitmap.alpha, 1)
@@ -95,14 +131,8 @@ class FireEffectDisplayObject extends egret.DisplayObjectContainer{
 					return false;
 				}
 			}
-		} else {
-			this._originBitmap.alpha += 0.08
-			this._originBitmap.scaleX += 0.008
-			this._originBitmap.scaleX = Math.min(this._originBitmap.scaleX, this.target_scale)
-			this._originBitmap.scaleY = this._originBitmap.scaleX
-
-			this._blackBitmap.scaleX = this._blackBitmap.scaleY = this._originBitmap.scaleX
 		}
+
 		return true
 	}
 }
@@ -131,7 +161,13 @@ class FireEffect extends egret.DisplayObjectContainer{
 		this._playerBall.m_basket_ball.parent.addChild(this)
 		this._playerBall.m_basket_ball.parent.setChildIndex(this, 1)
 	}
-	
+
+	private _step_id:number = 0
+	public SetFireStep(step_id:number):void
+	{
+		this._step_id = step_id
+	}
+
 	public Update(need_create:boolean):void
 	{
 		for(let index = this._usingFires.length - 1; index >= 0; index --)
@@ -162,11 +198,12 @@ class FireEffect extends egret.DisplayObjectContainer{
 			speed_vertical_vec.normalize(1)
 			let speed_vec = new egret.Point(this._playerBall.basketball_speed_x, this._playerBall.basketball_speed_y)
 			speed_vec.normalize(1)
-			let random_count = Math.ceil(Math.random() * 2) + 2
+			let random_count = this._getRandomFireCount()
 			for(let index = 0; index < random_count; index ++)
 			{
 				let new_fire = this._cacheFires.shift()
 				new_fire.ReCreate()
+				new_fire.SetFireStep(this._step_id)
 				let range = this._playerBall.m_basket_ball.width / 10
 				let vectical_random_range = BasketUtils.GetRandomScope(-range, range)
 				let vectical_move_x = vectical_random_range * speed_vertical_vec.x
@@ -190,5 +227,16 @@ class FireEffect extends egret.DisplayObjectContainer{
 				}
 			}
 		}
+	}
+
+	private _getRandomFireCount():number
+	{
+		let random_count = 0
+		if(this._step_id == FireStep.Step_1){
+			random_count = Math.ceil(Math.random() * 2) + 2
+		} else if(this._step_id == FireStep.Step_2){
+			random_count = Math.ceil(Math.random() * 2) + 2
+		}
+		return random_count
 	}
 }

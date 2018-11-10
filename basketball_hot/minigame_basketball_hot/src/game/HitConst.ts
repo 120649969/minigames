@@ -145,8 +145,8 @@ enum HitNetType {
 }
 
 
-enum Score{
-	GOAL = 2,
+enum BasketScore{
+	NORMAL_GOAL = 2,
 	KONG_XING_GOAL = 3
 }
 
@@ -154,4 +154,9 @@ enum AfterImageType{
 	Smoke,
 	Fire,
 	None
+}
+
+enum FireStep{
+	Step_1,  //小火
+	Step_2	//大火
 }

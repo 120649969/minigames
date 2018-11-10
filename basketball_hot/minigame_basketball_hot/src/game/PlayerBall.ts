@@ -43,6 +43,11 @@ class PlayerBall {
 	private _currentAfterImageType:AfterImageType = AfterImageType.None
 	public SetUsingAfterImageType(type:AfterImageType):void
 	{
+		if(this._currentAfterImageType == type)
+		{
+			return
+		}
+
 		this._currentAfterImageType = type
 	}
 
@@ -121,10 +126,6 @@ class PlayerBall {
 		
 		if(is_change_pos){ //超过了边界才开始下一轮
 			this.mainPanel.m_basket_ball.x = target_x
-			// if(this.mainPanel.HasGoal()){
-			// 	this.mainPanel.m_basket_ball.y = this.mainPanel.m_floor.y - this.mainPanel.m_basket_ball.height - 50 - Math.random() * 50 //将y降低到篮板一下，以免和刚出来的篮板挡板出现在同一个位置
-			// 	this.mainPanel.AutoEnterNextRound();
-			// }
 		}
 	}
 
@@ -219,13 +220,13 @@ class PlayerBall {
 		let has_goal = this._checkGoal(new egret.Point(last_x, last_y), new egret.Point(this.m_basket_ball.x, this.m_basket_ball.y))
 		if(!this.mainPanel.HasGoal() && has_goal){
 			if(this._recent_hit){
-				this.mainPanel.SetGoal(true, Score.GOAL)
+				this.mainPanel.SetGoal(true, BasketScore.NORMAL_GOAL)
 			} else {
-				this.mainPanel.SetGoal(true, Score.KONG_XING_GOAL)
+				this.mainPanel.SetGoal(true, BasketScore.KONG_XING_GOAL)
 			}
 					
 			// if(Math.floor(Math.random() * 2) == 0){
-				this.SetUsingAfterImageType(AfterImageType.Fire)
+				// this.SetUsingAfterImageType(AfterImageType.Fire)
 			// }
 		}
 		if(has_goal){
@@ -352,5 +353,42 @@ class PlayerBall {
 	public getLastHitType():HitType
 	{
 		return this._last_hit_type
+	}
+
+	//更新当前的残影类型
+	public UpdateCurrentAfterImage():void
+	{
+		let allScores = this.mainPanel.GetAllScores()
+		let last_score = allScores[allScores.length - 1]
+		if(last_score == BasketScore.NORMAL_GOAL){
+			if(this._currentAfterImageType != AfterImageType.None){
+				this.SetUsingAfterImageType(AfterImageType.None)
+			}else{
+				if(Math.floor(Math.random() * 3) == 0){
+					this.SetUsingAfterImageType(AfterImageType.Smoke)
+				}
+			}
+		} else {
+			if(this._currentAfterImageType == AfterImageType.None){
+				this.SetUsingAfterImageType(AfterImageType.Smoke)
+			}else{
+				let kongxing_count = 0
+				for(let index = allScores.length - 2; index >= 0; index--)
+				{
+					if(allScores[index] == BasketScore.KONG_XING_GOAL){
+						kongxing_count++
+					} else {
+						break
+					}
+				}
+				if(kongxing_count >= 2){
+					this.SetUsingAfterImageType(AfterImageType.Fire)
+					this._fireEffect.SetFireStep(FireStep.Step_2)
+				} else {
+					this.SetUsingAfterImageType(AfterImageType.Fire)
+					this._fireEffect.SetFireStep(FireStep.Step_1)
+				}
+			}
+		}
 	}
 }

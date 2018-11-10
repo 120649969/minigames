@@ -168,7 +168,6 @@ class HitManager {
 		if(dot_vallue < 0){
 			dot_vec.x = Math.abs(dot_vallue) * hit_vec.x
 			dot_vec.y = Math.abs(dot_vallue) * hit_vec.y
-			console.error("#####角度很刁钻#####")
 		}
 		
 		let restitution_dot_vec_x = restition * dot_vec.x

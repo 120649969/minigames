@@ -48,7 +48,7 @@ class BasketUtils {
 		return Math.random() * (maxScope - minScope) + minScope
 	}
 
-	public static performDelay(callback:Function, delay_time:number, callbackThisObject:Object):egret.Timer
+	public static performDelay2(callback:Function, delay_time:number, callbackThisObject:Object):egret.Timer
 	{
 		let timer = new egret.Timer(delay_time, 1);
 		timer.addEventListener(egret.TimerEvent.TIMER, function():void{
@@ -59,5 +59,15 @@ class BasketUtils {
 		}.bind(this), this)
 		timer.start()
 		return timer
+	}
+
+	public static performDelay(callback:Function, timeout:number, callbackThisObject:Object):void
+	{
+		setTimeout(function() {
+			if(callback)
+			{
+				callback.apply(callbackThisObject)
+			}
+		}, timeout);
 	}
 }
