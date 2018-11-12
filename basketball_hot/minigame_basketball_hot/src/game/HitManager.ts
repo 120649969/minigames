@@ -140,6 +140,7 @@ class HitManager {
 
 	private _Temp_Hit_Vec:egret.Point = new egret.Point()
 	private _Temp_Dot_Vec:egret.Point = new egret.Point()
+	private _Temp_Speed_Vec:egret.Point = new egret.Point()
 
 	private HandleBallHit(localBallHitPoint:egret.Point, hitType:HitType)
 	{
@@ -176,7 +177,9 @@ class HitManager {
 		let friction_vec_x = friction * vertical_vec_x
 		let friction_vec_y = friction * vertical_vec_y
 
-		let target_speed = new egret.Point(restitution_dot_vec_x + friction_vec_x, restitution_dot_vec_y + friction_vec_y)
+		let target_speed = this._Temp_Speed_Vec
+		target_speed.x = restitution_dot_vec_x + friction_vec_x
+		target_speed.y = restitution_dot_vec_y + friction_vec_y
 
 
 		if(hitType != HitType.Floor){
@@ -199,12 +202,15 @@ class HitManager {
 		this.mainPanel.GetPlayerBall().basketball_speed_y = target_speed.y
 	}
 
+	private _Temp_Ball_Local_Point:egret.Point = new egret.Point()
 	private CheckHitFloor():boolean
 	{
 		let curr_y = this.mainPanel.m_basket_ball.y;
 		if(curr_y >= this.mainPanel.m_floor.y - this.mainPanel.m_basket_ball.height)
 		{
-			this.HandleBallHit(new egret.Point(this.mainPanel.m_basket_ball.width / 2, this.mainPanel.m_basket_ball.height), HitType.Floor);
+			this._Temp_Ball_Local_Point.x = this.mainPanel.m_basket_ball.width / 2
+			this._Temp_Ball_Local_Point.y = this.mainPanel.m_basket_ball.height
+			this.HandleBallHit(this._Temp_Ball_Local_Point, HitType.Floor);
 
 			//掉到地上，解决x速度太快的问题。
 			this.mainPanel.GetPlayerBall().basketball_speed_x = Math.max(this.mainPanel.GetPlayerBall().basketball_speed_x, -1 * HitConst.Max_Speed_X)
@@ -286,9 +292,13 @@ class HitManager {
 		if(this._global_ball_center_point.x < this._global_board_line_left_top_point.x || this._global_ball_center_point.x > this._global_board_line_right_down_point.x){
 			let is_right = this._global_ball_center_point.x > this._global_board_line_right_down_point.x
 			if(is_right){
-				this.HandleBallHit(new egret.Point(0, this.mainPanel.m_basket_ball.height / 2), HitType.Board_Left_Right)
+				this._Temp_Ball_Local_Point.x = 0
+				this._Temp_Ball_Local_Point.y = this.mainPanel.m_basket_ball.height / 2
+				this.HandleBallHit(this._Temp_Ball_Local_Point, HitType.Board_Left_Right)
 			}else{
-				this.HandleBallHit(new egret.Point(this.mainPanel.m_basket_ball.width, this.mainPanel.m_basket_ball.height / 2), HitType.Board_Left_Right)
+				this._Temp_Ball_Local_Point.x = this.mainPanel.m_basket_ball.width
+				this._Temp_Ball_Local_Point.y = this.mainPanel.m_basket_ball.height / 2
+				this.HandleBallHit(this._Temp_Ball_Local_Point, HitType.Board_Left_Right)
 			}
 			return true;
 		}
@@ -303,7 +313,7 @@ class HitManager {
 			hit_vec.normalize(1)
 
 			let global_hit_point = new egret.Point(this._global_ball_center_point.x + hit_vec.x * this._global_ball_circle_radius, this._global_ball_center_point.y + hit_vec.y * this._global_ball_circle_radius)
-			let local_hit_point = new egret.Point()
+			let local_hit_point = this._Temp_Ball_Local_Point
 			this.mainPanel.m_basket_ball.globalToLocal(global_hit_point.x, global_hit_point.y, local_hit_point)
 
 			this.HandleBallHit(local_hit_point, HitType.Board_Top);
@@ -316,7 +326,7 @@ class HitManager {
 			hit_vec.normalize(1)
 
 			let global_hit_point = new egret.Point(this._global_ball_center_point.x + hit_vec.x *  this._global_ball_circle_radius, this._global_ball_center_point.y + hit_vec.y *  this._global_ball_circle_radius)
-			let local_hit_point = new egret.Point()
+			let local_hit_point = this._Temp_Ball_Local_Point
 			this.mainPanel.m_basket_ball.globalToLocal(global_hit_point.x, global_hit_point.y, local_hit_point)
 
 			this.HandleBallHit(local_hit_point, HitType.Board_Top);

@@ -1,170 +1,175 @@
 {
 	"groups": [
 		{
-			"keys": "description_json,ban_png,kuang_png,qiu_png,qiu1_png,wang_png,wang2_png,Qiand_close_png,kuang2_png,bj2_jpg,z_png,hongtou_png,hongtou2_png,jdt_png,jdt2_png,lvtou_png,lvtou2_png,board_pre_tex_json,board_pre_tex_png,board_pre_ske_json,board_back_tex_png,board_back_ske_json,board_back_tex_json,net_back_tex_png,net_back_ske_json,net_back_tex_json,net_pre_tex_png,net_pre_ske_json,net_pre_tex_json,qiu2_png,qiu12_png,qiu13_png",
+			"keys": "description_json,ban_png,kuang_png,qiu_png,qiu1_png,wang_png,wang2_png,Qiand_close_png,kuang2_png,bj2_jpg,z_png,hongtou_png,hongtou2_png,jdt_png,jdt2_png,lvtou_png,lvtou2_png,board_pre_tex_json,board_pre_tex_png,board_pre_ske_json,board_back_tex_png,board_back_ske_json,board_back_tex_json,net_back_tex_png,net_back_ske_json,net_back_tex_json,net_pre_tex_png,net_pre_ske_json,net_pre_tex_json,qiu2_png,qiu12_png,qiu13_png,Button_yellow03_png",
 			"name": "preload"
 		}
 	],
 	"resources": [
 		{
-			"name": "description_json",
+			"url": "config/description.json",
 			"type": "json",
-			"url": "config/description.json"
+			"name": "description_json"
 		},
 		{
-			"name": "ban_png",
+			"url": "assets/ban.png",
 			"type": "image",
-			"url": "assets/ban.png"
+			"name": "ban_png"
 		},
 		{
-			"name": "kuang_png",
+			"url": "assets/kuang.png",
 			"type": "image",
-			"url": "assets/kuang.png"
+			"name": "kuang_png"
 		},
 		{
-			"name": "qiu_png",
+			"url": "assets/qiu.png",
 			"type": "image",
-			"url": "assets/qiu.png"
+			"name": "qiu_png"
 		},
 		{
-			"name": "qiu1_png",
+			"url": "assets/qiu1.png",
 			"type": "image",
-			"url": "assets/qiu1.png"
+			"name": "qiu1_png"
 		},
 		{
-			"name": "wang_png",
+			"url": "assets/wang.png",
 			"type": "image",
-			"url": "assets/wang.png"
+			"name": "wang_png"
 		},
 		{
-			"name": "wang2_png",
+			"url": "assets/wang2.png",
 			"type": "image",
-			"url": "assets/wang2.png"
+			"name": "wang2_png"
 		},
 		{
-			"name": "Qiand_close_png",
+			"url": "assets/Qiand_close.png",
 			"type": "image",
-			"url": "assets/Qiand_close.png"
+			"name": "Qiand_close_png"
 		},
 		{
-			"name": "kuang2_png",
+			"url": "assets/kuang2.png",
 			"type": "image",
-			"url": "assets/kuang2.png"
+			"name": "kuang2_png"
 		},
 		{
-			"name": "bj2_jpg",
+			"url": "assets/bj2.jpg",
 			"type": "image",
-			"url": "assets/bj2.jpg"
+			"name": "bj2_jpg"
 		},
 		{
-			"name": "z_png",
+			"url": "assets/z.png",
 			"type": "image",
-			"url": "assets/z.png"
+			"name": "z_png"
 		},
 		{
-			"name": "hongtou_png",
+			"url": "assets/hongtou.png",
 			"type": "image",
-			"url": "assets/hongtou.png"
+			"name": "hongtou_png"
 		},
 		{
-			"name": "hongtou2_png",
+			"url": "assets/hongtou2.png",
 			"type": "image",
-			"url": "assets/hongtou2.png"
+			"name": "hongtou2_png"
 		},
 		{
-			"name": "jdt_png",
+			"url": "assets/jdt.png",
 			"type": "image",
-			"url": "assets/jdt.png"
+			"name": "jdt_png"
 		},
 		{
-			"name": "jdt2_png",
+			"url": "assets/jdt2.png",
 			"type": "image",
-			"url": "assets/jdt2.png"
+			"name": "jdt2_png"
 		},
 		{
-			"name": "lvtou_png",
+			"url": "assets/lvtou.png",
 			"type": "image",
-			"url": "assets/lvtou.png"
+			"name": "lvtou_png"
 		},
 		{
-			"name": "lvtou2_png",
+			"url": "assets/lvtou2.png",
 			"type": "image",
-			"url": "assets/lvtou2.png"
+			"name": "lvtou2_png"
 		},
 		{
-			"name": "board_pre_tex_json",
+			"url": "assets/db_animation/board_pre/board_pre_tex.json",
 			"type": "json",
-			"url": "assets/db_animation/board_pre/board_pre_tex.json"
+			"name": "board_pre_tex_json"
 		},
 		{
-			"name": "board_pre_tex_png",
+			"url": "assets/db_animation/board_pre/board_pre_tex.png",
 			"type": "image",
-			"url": "assets/db_animation/board_pre/board_pre_tex.png"
+			"name": "board_pre_tex_png"
 		},
 		{
-			"name": "board_pre_ske_json",
+			"url": "assets/db_animation/board_pre/board_pre_ske.json",
 			"type": "json",
-			"url": "assets/db_animation/board_pre/board_pre_ske.json"
+			"name": "board_pre_ske_json"
 		},
 		{
-			"name": "board_back_tex_png",
+			"url": "assets/db_animation/board_back/board_back_tex.png",
 			"type": "image",
-			"url": "assets/db_animation/board_back/board_back_tex.png"
+			"name": "board_back_tex_png"
 		},
 		{
-			"name": "board_back_ske_json",
+			"url": "assets/db_animation/board_back/board_back_ske.json",
 			"type": "json",
-			"url": "assets/db_animation/board_back/board_back_ske.json"
+			"name": "board_back_ske_json"
 		},
 		{
-			"name": "board_back_tex_json",
+			"url": "assets/db_animation/board_back/board_back_tex.json",
 			"type": "json",
-			"url": "assets/db_animation/board_back/board_back_tex.json"
+			"name": "board_back_tex_json"
 		},
 		{
-			"name": "net_back_tex_png",
+			"url": "assets/db_animation/net_back/net_back_tex.png",
 			"type": "image",
-			"url": "assets/db_animation/net_back/net_back_tex.png"
+			"name": "net_back_tex_png"
 		},
 		{
-			"name": "net_back_ske_json",
+			"url": "assets/db_animation/net_back/net_back_ske.json",
 			"type": "json",
-			"url": "assets/db_animation/net_back/net_back_ske.json"
+			"name": "net_back_ske_json"
 		},
 		{
-			"name": "net_back_tex_json",
+			"url": "assets/db_animation/net_back/net_back_tex.json",
 			"type": "json",
-			"url": "assets/db_animation/net_back/net_back_tex.json"
+			"name": "net_back_tex_json"
 		},
 		{
-			"name": "net_pre_tex_png",
+			"url": "assets/db_animation/net_pre/net_pre_tex.png",
 			"type": "image",
-			"url": "assets/db_animation/net_pre/net_pre_tex.png"
+			"name": "net_pre_tex_png"
 		},
 		{
-			"name": "net_pre_ske_json",
+			"url": "assets/db_animation/net_pre/net_pre_ske.json",
 			"type": "json",
-			"url": "assets/db_animation/net_pre/net_pre_ske.json"
+			"name": "net_pre_ske_json"
 		},
 		{
-			"name": "net_pre_tex_json",
+			"url": "assets/db_animation/net_pre/net_pre_tex.json",
 			"type": "json",
-			"url": "assets/db_animation/net_pre/net_pre_tex.json"
+			"name": "net_pre_tex_json"
 		},
 		{
-			"name": "qiu2_png",
+			"url": "assets/qiu2.png",
 			"type": "image",
-			"url": "assets/qiu2.png"
+			"name": "qiu2_png"
 		},
 		{
-			"name": "qiu12_png",
+			"url": "assets/qiu12.png",
 			"type": "image",
-			"url": "assets/qiu12.png"
+			"name": "qiu12_png"
 		},
 		{
-			"name": "qiu13_png",
+			"url": "assets/qiu13.png",
 			"type": "image",
-			"url": "assets/qiu13.png"
+			"name": "qiu13_png"
+		},
+		{
+			"url": "assets/Button_yellow03.png",
+			"type": "image",
+			"name": "Button_yellow03_png"
 		}
 	]
 }
