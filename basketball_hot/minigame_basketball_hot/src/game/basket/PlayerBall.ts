@@ -1,7 +1,7 @@
 class PlayerBall {
 
 	public m_basket_ball : eui.Group
-	public mainPanel : MainScenePanel
+	public mainPanel : ui.MainScenePanel
 
 	private _hitManager:HitManager
 	private _tweenDir:number = 0
@@ -19,7 +19,7 @@ class PlayerBall {
 	private _smokeEffect:SmokeEffect
 	private _fireEffect:FireEffect
 
-	public constructor(_ball:eui.Group, _mainPanel:MainScenePanel) {
+	public constructor(_ball:eui.Group, _mainPanel:ui.MainScenePanel) {
 		this.m_basket_ball = _ball
 		this.mainPanel = _mainPanel
 		this._hitManager = _mainPanel.GetHitManager()
@@ -27,15 +27,13 @@ class PlayerBall {
 		this._fireEffect = new FireEffect(this)
 	}
 
-	public GetMainScenePanel():MainScenePanel
+	public GetMainScenePanel():ui.MainScenePanel
 	{
 		return this.mainPanel
 	}
 
 	public Restart():void
 	{
-		this._restartHitTimer()
-		
 		this._last_hit_type = HitType.None
 		this.basketball_speed_x = 0
 		this.basketball_speed_y = 0
@@ -59,24 +57,6 @@ class PlayerBall {
 	public GetUsingAfterImageType():AfterImageType
 	{
 		return this._currentAfterImageType
-	}
-
-	private _restartHitTimer()
-	{
-		if(this._clear_hit_timer){
-			this._clear_hit_timer.stop()
-			this._clear_hit_timer.start()
-			return
-		}
-		this._clear_hit_timer = new egret.Timer(2000)
-		this._clear_hit_timer.addEventListener(egret.TimerEvent.TIMER,this._clearHitTick,this);
-		this._clear_hit_timer.start()
-	}
-
-	//2秒后自动清理碰撞信息
-	private _clearHitTick():void
-	{
-		this._recent_hit = false
 	}
 
 	private _updateAfterImage():void
@@ -141,6 +121,16 @@ class PlayerBall {
 		if(is_change_pos){
 			this.mainPanel.m_basket_ball.x = target_x
 		}
+	}
+
+	private _adjustShadowPosition():void
+	{
+		let delta_y = Math.abs(this.mainPanel.m_basket_ball.y - this.mainPanel.m_floor.y)
+		let max_delta_y = Math.abs(this.mainPanel.m_top.y - this.mainPanel.m_floor.y)
+		let percent = (max_delta_y - delta_y + 1500) / (max_delta_y + 1500)
+		this.mainPanel.img_shadow.scaleX = this.mainPanel.img_shadow.scaleY = percent
+		this.mainPanel.img_shadow.x = this.mainPanel.m_basket_ball.x + this.mainPanel.m_basket_ball.width / 2
+		this.mainPanel.img_shadow.y = this.mainPanel.m_floor.y
 	}
 
 	//现在风速为0
@@ -226,6 +216,7 @@ class PlayerBall {
 		}
 		this._push_acce_y = HitConst.PUSH_DOWN_IMPLUSE_Y
 		this.basketball_speed_x = HitConst.Max_Speed_X * (this.mainPanel.IsFaceLeft() ? -1 : 1)
+		this._recent_hit = false
 	}
 
 	private _check_this_move_goal(last_x:number, last_y:number):boolean
@@ -261,7 +252,8 @@ class PlayerBall {
 		this._adjustSpeed();
 		this._updateRotationTween()
 		this._adjustBallPosition()
-		
+		this._adjustShadowPosition()
+
 		let start_speed_y = this.basketball_speed_y
 		let acce_speed_y = HitConst.Gravity + this._push_acce_y  //y方向的加速度
 		this.basketball_speed_y += acce_speed_y;
@@ -349,7 +341,6 @@ class PlayerBall {
 		if(thisHitType != HitType.None)
 		{
 			this._recent_hit = true
-			this._restartHitTimer()
 		}
 
 		if(thisHitType == HitType.Left_Line || thisHitType == HitType.Right_Line)

@@ -35,6 +35,7 @@
          data-show-fps="false" data-show-log="false"
          data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
     </div>
+<script egret="lib" src="http://assets.sdk-doc.badambiz.com/badamsdk_pk_dist_1_0_1.js"></script>
 <script>
     var loadScript = function (list, callback) {
         var loaded = 0;
@@ -69,6 +70,8 @@
     xhr.addEventListener("load", function () {
         var manifest = JSON.parse(xhr.response);
         var list = manifest.initial.concat(manifest.game);
+        list = list.unshift("http://assets.sdk-doc.badambiz.com/badamsdk_pk_dist_1_0_0.js")
+        console.log(list)
         loadScript(list, function () {
             /**
              * {

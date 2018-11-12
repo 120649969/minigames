@@ -27,6 +27,10 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
+declare var bdm; // 发行嵌入的SDK对象
+declare var WindowManager:ui.WindowManager;
+declare var GameNet:io.GameNet;
+
 class Main extends eui.UILayer {
 
 
@@ -50,8 +54,27 @@ class Main extends eui.UILayer {
         let assetAdapter = new AssetAdapter();
         egret.registerImplementation("eui.IAssetAdapter", assetAdapter);
         egret.registerImplementation("eui.IThemeAdapter", new ThemeAdapter());
+        
+        WindowManager = ui.WindowManager.getInstance();
+        GameNet = io.GameNet.getInstance();
+        
+        // this.openId = egret.localStorage.getItem('openId');
+        let url_params =  Util.getAllUrlParam()
+        
+        if(typeof(url_params['openid']) != 'undefined'){
+            User.openId = url_params['openid']
+        }
 
+        if(typeof(url_params['roomId']) != 'undefined'){
+            User.roomId = url_params['roomId']
+        }
 
+        if (!User.openId || User.openId.length == 0) {
+            User.openId = new Date().getTime().toString() + Math.floor(Math.random() * 10000).toString();
+            egret.localStorage.setItem('openId', User.openId);
+            User.roomId = 0
+        }      
+        
         this.runGame().catch(e => {
             console.log(e);
         })
@@ -60,20 +83,18 @@ class Main extends eui.UILayer {
     private async runGame() {
         await this.loadResource()
         this.createGameScene();
-        await platform.login();
-        const userInfo = await platform.getUserInfo();
-        console.log(userInfo);
-
+        ui.WindowManager.getInstance().open('MainScenePanel')
     }
 
     private async loadResource() {
         try {
-            const loadingView = new LoadingUI();
-            this.stage.addChild(loadingView);
+            // const loadingView = new LoadingUI();
+            // this.stage.addChild(loadingView);
             await RES.loadConfig("resource/default.res.json", "resource/");
             await this.loadTheme();
-            await RES.loadGroup("preload", 0, loadingView);
-            this.stage.removeChild(loadingView);
+            await RES.loadGroup("preload", 0);
+            // await RES.loadGroup("preload", 0, loadingView);
+            // this.stage.removeChild(loadingView);
         }
         catch (e) {
             console.error(e);
@@ -97,10 +118,28 @@ class Main extends eui.UILayer {
      * 创建场景界面
      * Create scene interface
      */
+    // protected createGameScene(): void {
+
+        
+    //     let mainScene = new MainScenePanel();
+    //     this.addChild(mainScene);
+    // }
+    private uiLayer:egret.DisplayObjectContainer
+    private coverLayer:egret.DisplayObjectContainer
+    private topLayer:egret.DisplayObjectContainer
+
     protected createGameScene(): void {
-        let mainScene = new MainScenePanel();
-        this.addChild(mainScene);
+        this.uiLayer = new egret.DisplayObjectContainer();
+        this.coverLayer = new egret.DisplayObjectContainer();
+        this.topLayer = new egret.DisplayObjectContainer();
+
+        this.addChild(this.uiLayer);
+        this.addChild(this.coverLayer);
+        this.addChild(this.topLayer);   
+        ui.WindowManager.getInstance().initialize(this);
+        // WindowManager.initialize(this);
     }
+
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
      * Create a Bitmap object according to name keyword.As for the property of name please refer to the configuration file of resources/resource.json.

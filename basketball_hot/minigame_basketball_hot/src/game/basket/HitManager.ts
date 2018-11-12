@@ -1,9 +1,9 @@
 class HitManager {
 
-	private mainPanel:MainScenePanel
+	private mainPanel:ui.MainScenePanel
 	private _isOnFloor:boolean = false;
 	private _hitType:HitType = HitType.None
-	public constructor(_mainPanel:MainScenePanel) {
+	public constructor(_mainPanel:ui.MainScenePanel) {
 		this.mainPanel = _mainPanel
 	}
 

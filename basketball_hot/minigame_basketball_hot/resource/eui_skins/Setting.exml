@@ -44,5 +44,6 @@
 			</e:Skin>
 			</e:skinName>
 		</e:Button>
+		<e:BitmapLabel width="20" height="20" x="564" y="883"/>
 	</e:Group>
 </e:Skin>

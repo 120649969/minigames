@@ -75,8 +75,8 @@ class FireEffectDisplayObject extends egret.DisplayObjectContainer{
 	{
 		this._step_id = step_id
 		if(this._step_id == FireStep.Step_1){
-			this.origin_scale = 0.6
-			this.target_scale = 0.8
+			this.origin_scale = 0.8
+			this.target_scale = 1
 		} else if(this._step_id == FireStep.Step_2){
 			this.origin_scale = 1
 			this.target_scale = 1.2
