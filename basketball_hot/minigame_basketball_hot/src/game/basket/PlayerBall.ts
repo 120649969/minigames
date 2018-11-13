@@ -375,7 +375,7 @@ class PlayerBall {
 
 		this._playHitSound(thisHitType)
 
-		if(thisHitType != HitType.None && thisHitType != HitType.Board)
+		if(thisHitType != HitType.None && thisHitType != HitType.Board_Left_Right && thisHitType != HitType.Board_Top)
 		{
 			this._recent_hit = true
 		}

@@ -1,10 +1,10 @@
 
 class RoleInfo {
-	public icon:string
-	public nickname:string
-	public openid:string
-	public level:number
-	public score:number
+	public icon:string = ""
+	public nickname:string = ""
+	public openid:string = ""
+	public level:number = 0
+	public score:number = 0
 }
 
 class ServerModel {

@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "description_json,ban_png,kuang_png,qiu_png,qiu1_png,wang_png,wang2_png,Qiand_close_png,kuang2_png,bj2_jpg,z_png,hongtou_png,hongtou2_png,jdt_png,jdt2_png,lvtou_png,lvtou2_png,board_pre_tex_json,board_pre_tex_png,board_pre_ske_json,board_back_tex_png,board_back_ske_json,board_back_tex_json,net_back_tex_png,net_back_ske_json,net_back_tex_json,net_pre_tex_png,net_pre_ske_json,net_pre_tex_json,qiu2_png,qiu12_png,qiu13_png,Button_yellow03_png,touying_png,ready_png,du_png,go_png,shuzi_png,shuzi_fnt,yashao_png,baifabaizhong_png,bucuo_png,chaofantuosu_png,danwuxufa_png,defen_png,haoqiu_png,huoreshougan_png,jingcai_png,juesha_png,kongxinruqiu_png,lihai_png,piaoliang_png,qiji_png,hit_board_mp3,hit_board_join_mp3,kongxing_join_mp3,hit_floor_mp3,touch_down_mp3,dead_line_tips_mp3,last_one_second_mp3",
+			"keys": "description_json,ban_png,kuang_png,qiu_png,qiu1_png,wang_png,wang2_png,Qiand_close_png,kuang2_png,bj2_jpg,z_png,hongtou_png,hongtou2_png,jdt_png,jdt2_png,lvtou_png,lvtou2_png,board_pre_tex_json,board_pre_tex_png,board_pre_ske_json,board_back_tex_png,board_back_ske_json,board_back_tex_json,net_back_tex_png,net_back_ske_json,net_back_tex_json,net_pre_tex_png,net_pre_ske_json,net_pre_tex_json,qiu2_png,qiu12_png,qiu13_png,Button_yellow03_png,touying_png,ready_png,du_png,go_png,shuzi_png,shuzi_fnt,yashao_png,baifabaizhong_png,bucuo_png,chaofantuosu_png,danwuxufa_png,defen_png,haoqiu_png,huoreshougan_png,jingcai_png,juesha_png,kongxinruqiu_png,lihai_png,piaoliang_png,qiji_png,hit_board_mp3,hit_board_join_mp3,kongxing_join_mp3,hit_floor_mp3,touch_down_mp3,dead_line_tips_mp3,last_one_second_mp3,yashao_mp3",
 			"name": "preload"
 		}
 	],
@@ -305,6 +305,11 @@
 			"name": "last_one_second_mp3",
 			"type": "sound",
 			"url": "assets/music/last_one_second.mp3"
+		},
+		{
+			"name": "yashao_mp3",
+			"type": "sound",
+			"url": "assets/music/yashao.mp3"
 		}
 	]
 }

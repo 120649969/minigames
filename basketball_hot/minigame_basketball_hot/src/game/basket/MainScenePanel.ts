@@ -77,6 +77,10 @@ module ui {
 			let design_height = Const.MIN_HEIGHT
 			let target_y = (design_height - this.height) / 2
 			this.m_top_ui.y = target_y
+			if(this._hasGameStarted){
+				this.validateNow()
+				this._hitManager.EnterNextRound()
+			}
 		}
 
 		private _initBtnListener():void
@@ -85,9 +89,8 @@ module ui {
 			let __this = this
 			this.btn_debug.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.Event){
 				//将例子系统添加到舞台
-				// let debugPanel = new DebugPanel()
-				// __this.addChild(debugPanel)
-				SoundManager.getInstance().playSound("hit_floor_mp3")
+				let debugPanel = new DebugPanel()
+				__this.addChild(debugPanel)
 				event.stopPropagation();
 			}.bind(this), this)
 		}
@@ -146,8 +149,12 @@ module ui {
 
 			if(this.serverModel.myRole.icon.indexOf("baidu") > 0){
 			} else {
-				this.img_icon_me.source = this.serverModel.myRole.icon
-				this.img_icon_other.source = this.serverModel.otherRole.icon
+				if(this.serverModel.myRole.icon){
+					this.img_icon_me.source = this.serverModel.myRole.icon
+				}
+				if(this.serverModel.otherRole.icon){
+					this.img_icon_other.source = this.serverModel.otherRole.icon
+				}
 			}
 
 			this.NextRound()
@@ -173,7 +180,7 @@ module ui {
 			{
 				this._on_game_over()
 			}
-			if(this.serverModel.left_time  == 0){
+			if(this.serverModel.left_time == 0){
 				SoundManager.getInstance().playSound("last_one_second_mp3")
 			} else if(this.serverModel.left_time <= 5){
 				SoundManager.getInstance().playSound("dead_line_tips_mp3")
@@ -525,6 +532,7 @@ module ui {
 				if(last_score < other_score && curr_score > other_score){
 					img_path = BasketUtils.JUE_SHA_Png
 				}
+				SoundManager.getInstance().playSound("yashao_mp3")
 			}
 			this.img_score_type.source = img_path
 			this.img_score_type.anchorOffsetX = this.img_score_type.width / 2
@@ -626,6 +634,10 @@ module ui {
 		{
 			super.onOpen()
 
+			if(Config.debug){
+				this._createDebug()
+				return
+			}
 			let protocol = io.GameNet.GAME_PROTOCOL;
 			GameNet.on(protocol.CMD_H5_SHOOT_JOIN_PUSH, this.onShootJoinPush.bind(this));
 			GameNet.on(protocol.CMD_H5_SHOOT_GAME_START_PUSH, this.onShootGameStartPush.bind(this));  //游戏开始推送
@@ -647,6 +659,23 @@ module ui {
 			let __this = this
 			await GameNet.reqJoin(function(body){
 			});
+		}
+
+		private _createDebug():void
+		{
+			let role_info_me = {}
+			role_info_me['Id'] = User.openId
+			role_info_me['level'] = 1
+			role_info_me['nickname'] = "User1"
+			role_info_me['icon'] = ""
+			this.serverModel.AddRole(role_info_me)
+			let role_info_other = {}
+			role_info_me['Id'] = User.openId + 1
+			role_info_me['level'] = 2
+			role_info_me['nickname'] = "User2"
+			role_info_me['icon'] = ""
+			this.serverModel.AddRole(role_info_other)
+			this.PlayReadyAnimation()
 		}
 
 		public onClose():void {
