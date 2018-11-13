@@ -31,6 +31,7 @@ module ui {
 		public label_combo:eui.BitmapLabel
 		public img_score_type:eui.Image
 		public label_add_score:eui.Label
+		public m_top_ui:eui.Group
 
 		public img_time_progress:eui.Image
 		public label_score_me:eui.Label
@@ -70,14 +71,23 @@ module ui {
 			this.img_score_type.visible = false
 		}
 
+		public resizeStage():void
+		{
+			super.resizeStage()
+			let design_height = Const.MIN_HEIGHT
+			let target_y = (design_height - this.height) / 2
+			this.m_top_ui.y = target_y
+		}
+
 		private _initBtnListener():void
 		{
 			this.m_container.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onTouchBegin, this);
 			let __this = this
 			this.btn_debug.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.Event){
 				//将例子系统添加到舞台
-				let debugPanel = new DebugPanel()
-				__this.addChild(debugPanel)
+				// let debugPanel = new DebugPanel()
+				// __this.addChild(debugPanel)
+				SoundManager.getInstance().playSound("hit_floor_mp3")
 				event.stopPropagation();
 			}.bind(this), this)
 		}
@@ -162,6 +172,11 @@ module ui {
 			if(this.serverModel.left_time <= 0 && !this._is_game_over)
 			{
 				this._on_game_over()
+			}
+			if(this.serverModel.left_time  == 0){
+				SoundManager.getInstance().playSound("last_one_second_mp3")
+			} else if(this.serverModel.left_time <= 5){
+				SoundManager.getInstance().playSound("dead_line_tips_mp3")
 			}
 		}
 
@@ -356,6 +371,7 @@ module ui {
 				return;
 			}
 			
+			SoundManager.getInstance().playSound("touch_down_mp3")
 			this._playerBall.OnPushDown();
 		}
 

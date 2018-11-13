@@ -1,72 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="MainScene" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Group id="m_container" left="0" right="0" top="0" bottom="0" width="720" height="1280" touchEnabled="true" touchThrough="false">
-		<e:Image id="m_bg" left="0" top="0" right="0" bottom="0" fillMode="scale" width="640" height="1136" source="bj2_jpg" locked="true"/>
-
-
-
-
-
-
-
-
-		<e:Group id="m_content_container" width="720" height="1280" x="0" y="0" scaleX="1" scaleY="1">
-			<e:Image id="img_shadow" source="touying_png" x="372" y="1092" anchorOffsetX="76" anchorOffsetY="32" visible="false"/>
-			<e:Group id="m_floor" height="10" left="0" right="0" anchorOffsetX="320" bottom="150" x="0" y="1120" scaleX="1" scaleY="1" visible="false">
-				<e:Rect scaleX="1" scaleY="1" left="0" top="0" right="0" bottom="0"/>
-			</e:Group>
-			<e:Group id="m_basket_container_back" anchorOffsetX="0" anchorOffsetY="640" scaleX="1" scaleY="1" width="720" x="0" height="1280" y="640" locked="true">
-				<e:Image id="img_net_back" x="85.2" y="692.1" scaleX="1" scaleY="1" source="wang2_png"/>
-				<e:Image id="img_board_body" source="ban_png" x="0" y="504.64" scaleX="1" scaleY="1"/>
-				<e:Image id="img_board_back" source="kuang_png" x="64.25" y="681.64" scaleX="1" scaleY="1"/>
-			</e:Group>
-			<e:Group id="m_top" height="10" left="0" right="0" anchorOffsetX="320" top="157" x="0" y="157" scaleX="1" scaleY="1" visible="false">
-				<e:Rect scaleX="1" scaleY="1" left="0" top="0" right="0" bottom="0"/>
-			</e:Group>
-			<e:Group id="m_basket_ball" width="86" height="86" x="404" y="417.00000000000006" scaleX="1" scaleY="1" locked="true">
-				<e:Image id="m_image_ball" source="qiu_png" scaleX="0.9" scaleY="0.9" anchorOffsetX="94" anchorOffsetY="94" horizontalCenter="0" verticalCenter="0"/>
-			</e:Group>
-			<e:Group id="m_basket_container_pre" anchorOffsetX="0" anchorOffsetY="640" scaleX="1" scaleY="1" height="1280" width="720" x="0" y="640" locked="true">
-				<e:Image id="img_net_pre" x="85.2" y="713.31" scaleX="1" scaleY="1" source="wang_png"/>
-				<e:Image id="img_board_pre" source="kuang2_png" x="64.25" y="680.54"/>
-			</e:Group>
-			<e:Group scaleX="1" scaleY="1" right="0" left="0" top="0" bottom="0" touchEnabled="false" x="0" y="0">
-				<e:Image source="jdt_png" horizontalCenter="0" top="20" anchorOffsetX="56" anchorOffsetY="56"/>
-				<e:Image id="img_time_progress" source="jdt2_png" anchorOffsetX="56" anchorOffsetY="56" horizontalCenter="0" top="20"/>
-				<e:Image source="hongtou2_png" anchorOffsetX="268" anchorOffsetY="68" top="7" horizontalCenter="-195" scaleX="1" scaleY="1"/>
-				<e:Image source="lvtou2_png" anchorOffsetY="68" scaleX="1" scaleY="1" top="9" horizontalCenter="200"/>
-				<e:Label id="label_score_me" text="0" size="70" textColor="0xf4b9c8" borderColor="0xb4274c" strokeColor="0xb4274c" stroke="2" anchorOffsetY="35" anchorOffsetX="39" horizontalCenter="-154" top="43"/>
-				<e:Label id="label_score_other" text="0" size="70" borderColor="0xB4274C" strokeColor="0x80a12d" stroke="2" anchorOffsetY="35" anchorOffsetX="39" horizontalCenter="141" top="43" textColor="0xdef1ad"/>
-				<e:Label id="label_left_time" text="60" size="50" borderColor="0xB4274C" strokeColor="0x000000" anchorOffsetY="25" anchorOffsetX="28" horizontalCenter="0" top="53" x="437" y="53" scaleX="1" scaleY="1" textColor="0xaeffeb"/>
-				<e:Image source="hongtou_png" x="43.44" y="26.65" scaleX="1" scaleY="1"/>
-				<e:Image source="lvtou_png" x="574.88" y="29.24" scaleX="1" scaleY="1"/>
-				<e:Image source="z_png" horizontalCenter="41.5" top="27"/>
-				<e:Image id="img_icon_me" width="96" height="96" x="44" y="26" scaleX="1" scaleY="1"/>
-				<e:Image id="img_icon_other" width="96" height="96" x="575" y="26" scaleX="1" scaleY="1"/>
-				<e:Image id="img_ready_go_bg" source="du_png" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="0"/>
-				<e:Image id="img_go" source="go_png" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="0" visible="false"/>
-				<e:Image id="img_ready" source="ready_png" horizontalCenter="0" verticalCenter="0" visible="false"/>
-				<e:Image id="img_score_type" source="chaofantuosu_png" x="108.33" y="601.66"/>
-				<e:Label id="label_add_score" text="+ 2" x="181.83" y="556.5" stroke="2" size="40" visible="false"/>
-			</e:Group>
-			<e:Button id="btn_debug" label="测试面板" width="228" height="74" scaleX="1" scaleY="1" anchorOffsetX="114" anchorOffsetY="36" touchEnabled="true" enabled="true" horizontalCenter="0" bottom="50" x="246.00000000000003" y="1156">
-				<e:skinName>
-				<e:Skin states="up,down,disabled">
-					<e:Image width="100%" height="100%" source="Button_yellow03_png" source.down="Button_yellow03_png" source.disabled="Button_yellow03_png"/>
-					<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
-				</e:Skin>
-				</e:skinName>
-			</e:Button>
-			<e:Group id="m_decision_container" width="720" height="1280" x="0" y="640" scaleX="1" scaleY="1" anchorOffsetY="640">
-				<e:Group id="m_board_scope" width="24" height="281" x="38.93" y="502.9800000000001" scaleX="1" scaleY="1" anchorOffsetY="0" anchorOffsetX="0"/>
-				<e:Group id="m_left_line" width="8" height="1" x="80.1" y="700.31" scaleX="1" scaleY="1"/>
-				<e:Group id="m_circle_scope" width="135" height="30" x="88.75" y="688.64" anchorOffsetX="0" anchorOffsetY="0" scaleX="1" scaleY="1"/>
-				<e:Group id="m_net_scope" width="65" height="65" x="121" y="753.9700000000001" scaleX="1" scaleY="1" anchorOffsetX="0" anchorOffsetY="0"/>
-				<e:Group id="m_right_line" width="13" height="1" x="220.04000000000002" y="699.64" scaleX="1" scaleY="1" anchorOffsetX="0" anchorOffsetY="0"/>
-				<e:Group id="m_board_top_circle" width="20" height="20" x="41.43" y="504.64000000000004" scaleX="1" scaleY="1"/>
-				<e:Group id="m_board_down_circle" width="20" height="20" x="41.43" y="762.64" scaleX="1" scaleY="1"/>
-			</e:Group>
+	<e:Image id="m_bg" fillMode="scale" source="bj2_jpg" scaleX="1.5" scaleY="1.5" width="720" height="1280" horizontalCenter="0" verticalCenter="0"/>
+	<e:Group id="m_container" touchEnabled="true" touchThrough="false" left="0" top="0" right="0" bottom="0">
+		<e:Group id="m_content_container" width="720" height="1280" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="0">
+		<e:Image id="img_shadow" source="touying_png" x="372" y="1092" anchorOffsetX="76" anchorOffsetY="32"/>
+		<e:Group id="m_floor" height="10" left="0" right="0" anchorOffsetX="320" x="0" scaleX="1" scaleY="1" verticalCenter="485" visible="false">
+			<e:Rect scaleX="1" scaleY="1" left="0" top="0" right="0" bottom="0"/>
 		</e:Group>
-		<e:BitmapLabel id="label_combo" width="400" height="80" text="cx2" font="shuzi_fnt" anchorOffsetX="200" verticalAlign="center" y="385.34" textAlign="center" anchorOffsetY="80" horizontalCenter="-1" x="210" scaleX="1" scaleY="1" locked="true"/>
+		<e:Group id="m_basket_container_back" anchorOffsetX="0" anchorOffsetY="640" scaleX="1" scaleY="1" width="720" height="1280" horizontalCenter="0" verticalCenter="0">
+			<e:Image id="img_net_back" x="85.2" y="692.1" scaleX="1" scaleY="1" source="wang2_png"/>
+			<e:Image id="img_board_body" source="ban_png" x="0" y="504.64" scaleX="1" scaleY="1"/>
+			<e:Image id="img_board_back" source="kuang_png" x="64.25" y="681.64" scaleX="1" scaleY="1"/>
+		</e:Group>
+		<e:Group id="m_top" height="10" left="0" right="0" anchorOffsetX="320" x="0" scaleX="1" scaleY="1" verticalCenter="-478" visible="false">
+			<e:Rect scaleX="1" scaleY="1" left="0" top="0" right="0" bottom="0"/>
+		</e:Group>
+		<e:Group id="m_basket_ball" width="86" height="86" x="404" y="417.00000000000006" scaleX="1" scaleY="1">
+			<e:Image id="m_image_ball" source="qiu_png" scaleX="0.9" scaleY="0.9" anchorOffsetX="94" anchorOffsetY="94" horizontalCenter="0" verticalCenter="0"/>
+		</e:Group>
+		<e:Group id="m_basket_container_pre" anchorOffsetX="0" anchorOffsetY="640" scaleX="1" scaleY="1" height="1280" width="720" horizontalCenter="0" verticalCenter="0">
+			<e:Image id="img_net_pre" x="85.2" y="713.31" scaleX="1" scaleY="1" source="wang_png"/>
+			<e:Image id="img_board_pre" source="kuang2_png" x="64.25" y="680.54"/>
+		</e:Group>
+		<e:Group scaleX="1" scaleY="1" right="0" left="0" top="0" bottom="0" touchEnabled="false" x="0" y="0">
+			<e:Image id="img_ready_go_bg" source="du_png" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="0" visible="false"/>
+			<e:Image id="img_go" source="go_png" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="0" visible="false"/>
+			<e:Image id="img_ready" source="ready_png" horizontalCenter="0" verticalCenter="0" visible="false"/>
+			<e:Image id="img_score_type" source="chaofantuosu_png" x="108.33" y="601.66" visible="false"/>
+			<e:Label id="label_add_score" text="+ 2" x="181.83" y="556.5" stroke="2" size="40" visible="false"/>
+			<e:BitmapLabel id="label_combo" width="400" height="80" text="cx2" font="shuzi_fnt" anchorOffsetX="200" verticalAlign="center" textAlign="center" anchorOffsetY="80" horizontalCenter="0" x="159" scaleX="1" scaleY="1" verticalCenter="-375" visible="false"/>
+		</e:Group>
+		<e:Group id="m_decision_container" scaleX="1" scaleY="1" anchorOffsetY="640" horizontalCenter="0" verticalCenter="0" height="1280" width="720">
+			<e:Group id="m_board_scope" width="24" height="281" x="38.93" y="502.9800000000001" scaleX="1" scaleY="1" anchorOffsetY="0" anchorOffsetX="0"/>
+			<e:Group id="m_left_line" width="8" height="1" x="80.1" y="700.31" scaleX="1" scaleY="1"/>
+			<e:Group id="m_circle_scope" width="135" height="30" x="88.75" y="688.64" anchorOffsetX="0" anchorOffsetY="0" scaleX="1" scaleY="1"/>
+			<e:Group id="m_net_scope" width="65" height="65" x="121" y="753.9700000000001" scaleX="1" scaleY="1" anchorOffsetX="0" anchorOffsetY="0"/>
+			<e:Group id="m_right_line" width="13" height="1" x="220.04000000000002" y="699.64" scaleX="1" scaleY="1" anchorOffsetX="0" anchorOffsetY="0"/>
+			<e:Group id="m_board_top_circle" width="20" height="20" x="41.43" y="504.64000000000004" scaleX="1" scaleY="1"/>
+			<e:Group id="m_board_down_circle" width="20" height="20" x="41.43" y="762.64" scaleX="1" scaleY="1"/>
+		</e:Group>
+		<e:Group id="m_top_ui" height="200" scaleX="1" scaleY="1" horizontalCenter="0" left="0" right="0">
+			<e:Image source="jdt_png" horizontalCenter="0" top="20" anchorOffsetX="56" anchorOffsetY="56" x="-88" y="-878" scaleX="1" scaleY="1"/>
+			<e:Image id="img_time_progress" source="jdt2_png" anchorOffsetX="56" anchorOffsetY="56" horizontalCenter="0" top="20" x="-88" y="-878" scaleX="1" scaleY="1"/>
+			<e:Image source="hongtou2_png" anchorOffsetX="268" anchorOffsetY="68" top="7" horizontalCenter="-195" scaleX="1" scaleY="1" x="-361" y="-891"/>
+			<e:Image source="lvtou2_png" anchorOffsetY="68" scaleX="1" scaleY="1" top="9" horizontalCenter="200" x="34" y="-889"/>
+			<e:Label id="label_score_me" text="0" size="70" textColor="0xf4b9c8" borderColor="0xb4274c" strokeColor="0xb4274c" stroke="2" anchorOffsetY="35" anchorOffsetX="39" horizontalCenter="-154" top="43" x="-205" y="-855" scaleX="1" scaleY="1"/>
+			<e:Label id="label_score_other" text="0" size="70" borderColor="0xB4274C" strokeColor="0x80a12d" stroke="2" anchorOffsetY="35" anchorOffsetX="39" horizontalCenter="141" top="43" textColor="0xdef1ad" x="90" y="-855" scaleX="1" scaleY="1"/>
+			<e:Label id="label_left_time" text="60" size="50" borderColor="0xB4274C" strokeColor="0x000000" anchorOffsetY="25" anchorOffsetX="28" horizontalCenter="0" top="53" x="-60" y="-845" scaleX="1" scaleY="1" textColor="0xaeffeb"/>
+			<e:Image source="hongtou_png" x="-348.56" y="-871.35" scaleX="1" scaleY="1"/>
+			<e:Image source="lvtou_png" x="182.88" y="-868.76" scaleX="1" scaleY="1"/>
+			<e:Image source="z_png" horizontalCenter="41.5" top="27" x="-5" y="-871" scaleX="1" scaleY="1"/>
+			<e:Image id="img_icon_me" width="96" height="96" x="-348" y="-872" scaleX="1" scaleY="1"/>
+			<e:Image id="img_icon_other" width="96" height="96" x="183" y="-872" scaleX="1" scaleY="1"/>
+		</e:Group>
+		</e:Group>
 	</e:Group>
+	<e:Button id="btn_debug" label="测试面板" width="228" height="74" scaleX="1" scaleY="1" anchorOffsetX="114" anchorOffsetY="36" touchEnabled="true" enabled="true" horizontalCenter="0" bottom="50" x="246.00000000000003" y="1156">
+		<e:skinName>
+		<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="Button_yellow03_png" source.down="Button_yellow03_png" source.disabled="Button_yellow03_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+		</e:Skin>
+		</e:skinName>
+	</e:Button>
+
 </e:Skin>

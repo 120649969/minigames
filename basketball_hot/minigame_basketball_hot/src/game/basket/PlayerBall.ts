@@ -274,10 +274,12 @@ class PlayerBall {
 			} else {
 				this.mainPanel.PlayKongXingAnimation()
 			}
+			this._playJoinSound()
 		}
 		return false;
 	}
 
+	private last_speed_y = 0
 	public Update():void
 	{
 		
@@ -286,6 +288,7 @@ class PlayerBall {
 		this._adjustBallPosition()
 		this._adjustShadowPosition()
 
+		this.last_speed_y = this.basketball_speed_y
 		let start_speed_y = this.basketball_speed_y
 		let acce_speed_y = HitConst.Gravity + this._push_acce_y  //y方向的加速度
 		this.basketball_speed_y += acce_speed_y;
@@ -366,9 +369,11 @@ class PlayerBall {
 		if(this._hitManager.GetHitType() == HitType.Floor){  
 			this.m_basket_ball.x += this.basketball_speed_x / HitConst.Factor
 		}
-		this._last_hit_type = this._hitManager.GetHitType()
+		
 
 		let thisHitType = this._hitManager.GetHitType()
+
+		this._playHitSound(thisHitType)
 
 		if(thisHitType != HitType.None && thisHitType != HitType.Board)
 		{
@@ -387,6 +392,36 @@ class PlayerBall {
 		}
 
 		this._updateAfterImage()
+		this._last_hit_type = thisHitType
+	}
+
+	//碰撞的声音
+	public _playHitSound(hitType:HitType):void
+	{
+		if(hitType == HitType.None){
+			return
+		}
+		if(hitType == HitType.Right_Line || hitType == HitType.Left_Line)
+		{
+			SoundManager.getInstance().playSound("hit_board_mp3")
+			return
+		}
+
+		if(hitType == HitType.Floor && this._last_hit_type == HitType.None && this.last_speed_y > 0 && Math.abs(this.last_speed_y) > 2 * HitConst.Factor)
+		{
+			SoundManager.getInstance().playSound("hit_floor_mp3")
+			return
+		}
+
+	}
+
+	public _playJoinSound():void
+	{
+		if(this._recent_hit){
+			SoundManager.getInstance().playSound("hit_board_join_mp3")
+		} else {
+			SoundManager.getInstance().playSound("kongxing_join_mp3")
+		}
 	}
 
 	public getLastHitType():HitType

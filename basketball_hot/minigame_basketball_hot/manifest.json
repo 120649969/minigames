@@ -13,7 +13,7 @@
 		"bin-debug/game/basket/BaseEffect.js",
 		"bin-debug/game/common/io/Net.js",
 		"bin-debug/game/common/ui/Window.js",
-		"bin-debug/game/basket/MainScenePanel.js",
+		"bin-debug/game/basket/PlayerBall.js",
 		"bin-debug/ThemeAdapter.js",
 		"bin-debug/AssetAdapter.js",
 		"bin-debug/game/basket/BasketUtils.js",
@@ -22,8 +22,8 @@
 		"bin-debug/game/basket/GamePlatform.js",
 		"bin-debug/game/basket/HitConst.js",
 		"bin-debug/game/basket/HitManager.js",
+		"bin-debug/game/basket/MainScenePanel.js",
 		"bin-debug/LoadingUI.js",
-		"bin-debug/game/basket/PlayerBall.js",
 		"bin-debug/game/basket/ServerModel.js",
 		"bin-debug/game/basket/SmokeEffect.js",
 		"bin-debug/game/common/Config.js",
@@ -33,6 +33,7 @@
 		"bin-debug/game/common/Util.js",
 		"bin-debug/game/common/io/GameNet.js",
 		"bin-debug/Main.js",
+		"bin-debug/game/common/sound/SoundManager.js",
 		"bin-debug/Platform.js",
 		"bin-debug/game/common/ui/WindowManager.js"
 	]
