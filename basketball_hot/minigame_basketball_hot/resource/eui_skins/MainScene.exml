@@ -11,7 +11,8 @@
 
 
 		<e:Group id="m_content_container" width="720" height="1280" x="0" y="0" scaleX="1" scaleY="1">
-			<e:Group id="m_floor" height="10" left="0" right="0" anchorOffsetX="320" bottom="150" x="0" y="1120" scaleX="1" scaleY="1" locked="true">
+			<e:Image id="img_shadow" source="touying_png" x="372" y="1092" anchorOffsetX="76" anchorOffsetY="32" visible="false"/>
+			<e:Group id="m_floor" height="10" left="0" right="0" anchorOffsetX="320" bottom="150" x="0" y="1120" scaleX="1" scaleY="1" visible="false">
 				<e:Rect scaleX="1" scaleY="1" left="0" top="0" right="0" bottom="0"/>
 			</e:Group>
 			<e:Group id="m_basket_container_back" anchorOffsetX="0" anchorOffsetY="640" scaleX="1" scaleY="1" width="720" x="0" height="1280" y="640" locked="true">
@@ -19,7 +20,7 @@
 				<e:Image id="img_board_body" source="ban_png" x="0" y="504.64" scaleX="1" scaleY="1"/>
 				<e:Image id="img_board_back" source="kuang_png" x="64.25" y="681.64" scaleX="1" scaleY="1"/>
 			</e:Group>
-			<e:Group id="m_top" height="10" left="0" right="0" anchorOffsetX="320" top="157" x="0" y="157" scaleX="1" scaleY="1">
+			<e:Group id="m_top" height="10" left="0" right="0" anchorOffsetX="320" top="157" x="0" y="157" scaleX="1" scaleY="1" visible="false">
 				<e:Rect scaleX="1" scaleY="1" left="0" top="0" right="0" bottom="0"/>
 			</e:Group>
 			<e:Group id="m_basket_ball" width="86" height="86" x="404" y="417.00000000000006" scaleX="1" scaleY="1" locked="true">
@@ -45,6 +46,8 @@
 				<e:Image id="img_ready_go_bg" source="du_png" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="0"/>
 				<e:Image id="img_go" source="go_png" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="0" visible="false"/>
 				<e:Image id="img_ready" source="ready_png" horizontalCenter="0" verticalCenter="0" visible="false"/>
+				<e:Image id="img_score_type" source="chaofantuosu_png" x="108.33" y="601.66"/>
+				<e:Label id="label_add_score" text="+ 2" x="181.83" y="556.5" stroke="2" size="40" visible="false"/>
 			</e:Group>
 			<e:Button id="btn_debug" label="测试面板" width="228" height="74" scaleX="1" scaleY="1" anchorOffsetX="114" anchorOffsetY="36" touchEnabled="true" enabled="true" horizontalCenter="0" bottom="50" x="246.00000000000003" y="1156">
 				<e:skinName>
@@ -54,7 +57,7 @@
 				</e:Skin>
 				</e:skinName>
 			</e:Button>
-			<e:Group id="m_decision_container" width="720" height="1280" x="0" y="640" scaleX="1" scaleY="1" anchorOffsetY="640" locked="true">
+			<e:Group id="m_decision_container" width="720" height="1280" x="0" y="640" scaleX="1" scaleY="1" anchorOffsetY="640">
 				<e:Group id="m_board_scope" width="24" height="281" x="38.93" y="502.9800000000001" scaleX="1" scaleY="1" anchorOffsetY="0" anchorOffsetX="0"/>
 				<e:Group id="m_left_line" width="8" height="1" x="80.1" y="700.31" scaleX="1" scaleY="1"/>
 				<e:Group id="m_circle_scope" width="135" height="30" x="88.75" y="688.64" anchorOffsetX="0" anchorOffsetY="0" scaleX="1" scaleY="1"/>
@@ -63,7 +66,7 @@
 				<e:Group id="m_board_top_circle" width="20" height="20" x="41.43" y="504.64000000000004" scaleX="1" scaleY="1"/>
 				<e:Group id="m_board_down_circle" width="20" height="20" x="41.43" y="762.64" scaleX="1" scaleY="1"/>
 			</e:Group>
-			<e:Image id="img_shadow" source="touying_png" x="372" y="1092" anchorOffsetX="76" anchorOffsetY="32" visible="false"/>
 		</e:Group>
+		<e:BitmapLabel id="label_combo" width="400" height="80" text="cx2" font="shuzi_fnt" anchorOffsetX="200" verticalAlign="center" y="385.34" textAlign="center" anchorOffsetY="80" horizontalCenter="-1" x="210" scaleX="1" scaleY="1" locked="true"/>
 	</e:Group>
 </e:Skin>

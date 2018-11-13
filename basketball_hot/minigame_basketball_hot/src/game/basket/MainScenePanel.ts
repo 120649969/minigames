@@ -28,6 +28,9 @@ module ui {
 		public img_ready_go_bg:eui.Image
 		public img_go:eui.Image
 		public img_ready:eui.Image
+		public label_combo:eui.BitmapLabel
+		public img_score_type:eui.Image
+		public label_add_score:eui.Label
 
 		public img_time_progress:eui.Image
 		public label_score_me:eui.Label
@@ -47,14 +50,24 @@ module ui {
 		public serverModel:ServerModel = new ServerModel()
 		private _timer:egret.Timer;
 		private _is_game_over:boolean = false;
-
+		private _allScores:Array<number> = new Array()
 		private _hasInitGame:boolean = false;
+
+		private _board_pre_display:dragonBones.EgretArmatureDisplay
+		private _board_back_display:dragonBones.EgretArmatureDisplay
+		private _net_pre_display:dragonBones.EgretArmatureDisplay
+		private _net_back_display:dragonBones.EgretArmatureDisplay
+		private _random_container_y:number = 0
+
 		public constructor() {
 			super();
 			this.skinName = "MainScene";
 			this._initBtnListener()
 			this.m_content_container.visible = false
 			this.img_shadow.visible = false
+			this.label_combo.visible = false
+			this.label_add_score.visible = false
+			this.img_score_type.visible = false
 		}
 
 		private _initBtnListener():void
@@ -69,6 +82,7 @@ module ui {
 			}.bind(this), this)
 		}
 
+		//播放准备动画
 		public PlayReadyAnimation():void
 		{
 			this.m_content_container.visible = true
@@ -76,33 +90,35 @@ module ui {
 			this.img_ready_go_bg.visible = true
 			this.img_ready.visible = true
 			let __this = this
-			this.img_ready_go_bg.scaleY = 0.8
+			this.img_ready_go_bg.scaleY = 0.9
 			egret.Tween.get(this.img_ready_go_bg).to({scaleY:1.0}, 0.5 * 1000).call(function(){
-				egret.Tween.get(this.img_ready_go_bg).to({alpha : 0}, 0.5 * 1000).call(function(){
-					__this.img_ready_go_bg.visible = false
-					__this.img_ready.visible = false
 
+				egret.Tween.get(this.img_ready_go_bg).to({alpha : 0.5}, 1 * 1000).call(function(){
 					__this.img_go.visible = true
-					__this.img_go.scaleX = __this.img_go.scaleY = 10.0
-				egret.Tween.get(this.img_go).to({scaleX:1, scaleY:1}, 0.5 * 1000)
-				.to({alpha:0}, 1 * 1000).call(function(){
+					__this.img_go.scaleX = __this.img_go.scaleY = 6.0
+					egret.Tween.get(this.img_go).to({scaleX:1, scaleY:1}, 0.5 * 1000)
+					.to({alpha:0}, 2 * 1000).call(function(){
 						__this.img_go.visible = false
-						__this.RestartGame()
+						__this.StartGame()
 					}.bind(this), this)
-				}.bind(this), this)
+				}.bind(this), this).to({alpha:0}, 1 * 1000)
 
-				egret.Tween.get(this.img_ready).to({alpha : 0}, 2 * 1000)
+				egret.Tween.get(this.img_ready).to({alpha : 0}, 1 * 1000)
 			}.bind(this), this)
 		}
 
-		public RestartGame():void
+		//真正开始游戏
+		public StartGame():void
 		{
 			this._hasGameStarted = true;
-			this.img_shadow.visible = true
 			this._is_first_round = true;
-			this._hasTouchBegin = false;
-			this._hasThisRoundTouch = false;
-			this._has_goal = false;
+			this._hasTouchBegin = false; //整个游戏是否点击
+			this._hasThisRoundTouch = false; //每个回合是否点击
+			this._has_goal = false; //是否进球
+			this._is_game_over = false;
+
+			this.img_shadow.visible = true
+			this.m_basket_ball.visible = true
 
 			if(!this._hasInitGame){
 				this._hitManager = new HitManager(this);
@@ -111,20 +127,11 @@ module ui {
 			} else {
 				this._playerBall.Restart()
 			}
-
-			this._is_game_over = false;
-			if(this._timer){
-				this._timer.removeEventListener(egret.TimerEvent.TIMER,this._on_timer_tick,this);
-				this._timer.stop();
-			}
-			var timer:egret.Timer = new egret.Timer(1000, this.serverModel.MAX_TIME);
-			//注册事件侦听器
-			timer.addEventListener(egret.TimerEvent.TIMER,this._on_timer_tick,this);
-			//开始计时
-			timer.start();
-			this._timer = timer
-			this.removeEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this);
-			this.addEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this);
+			
+			this._clearTimer()
+			this._startTimer()
+			this.removeEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this)
+			this.addEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this)
 			this.serverModel.left_time = this.serverModel.MAX_TIME
 
 			if(this.serverModel.myRole.icon.indexOf("baidu") > 0){
@@ -132,9 +139,30 @@ module ui {
 				this.img_icon_me.source = this.serverModel.myRole.icon
 				this.img_icon_other.source = this.serverModel.otherRole.icon
 			}
+
 			this.NextRound();
 			this.UpdateScore()
-			this.m_basket_ball.visible = true
+			
+		}
+
+		private _startTimer():void
+		{
+			var timer:egret.Timer = new egret.Timer(1000, this.serverModel.MAX_TIME);
+			//注册事件侦听器
+			timer.addEventListener(egret.TimerEvent.TIMER,this._on_timer_tick,this);
+			//开始计时
+			timer.start();
+			this._timer = timer
+		}
+
+		private _on_timer_tick():void
+		{
+			this.serverModel.left_time -= 1
+			this.UpdateScore()
+			if(this.serverModel.left_time <= 0 && !this._is_game_over)
+			{
+				this._on_game_over()
+			}
 		}
 
 		private _clearTimer():void
@@ -150,11 +178,188 @@ module ui {
 			this._addAnimation()
 		}
 
-		private _board_pre_display:dragonBones.EgretArmatureDisplay
-		private _board_back_display:dragonBones.EgretArmatureDisplay
-		private _net_pre_display:dragonBones.EgretArmatureDisplay
-		private _net_back_display:dragonBones.EgretArmatureDisplay
+		private _on_game_over():void
+		{
+			if(this._is_game_over)
+			{
+				return
+			}
+			this._is_game_over = true
+			this.m_basket_ball.visible = false;
+			this.img_shadow.visible = false;
+			this._playerBall.OnGameOver()
+			this._clearTimer()
+			this.removeEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this)
+			GamePlatform.onFinished(this.serverModel.myRole.score, function(){}.bind(this))
+		}
 
+		public HasTouchBegin():boolean
+		{
+			return this._hasTouchBegin
+		}
+
+		public GetHitManager():HitManager
+		{
+			return this._hitManager
+		}
+
+		public HasThisRoundTouch():boolean
+		{
+			return this._hasThisRoundTouch
+		}
+
+		public IsFaceLeft()
+		{
+			return this._is_face_left
+		}
+
+		public HasGoal():boolean
+		{
+			return this._has_goal
+		}
+
+		public GetAllScores():Array<number>
+		{
+			return this._allScores
+		}
+
+		public SetGoal(has_global, score:number):void
+		{
+			this._has_goal = has_global
+			if(has_global){
+				this.AddScore(score)
+				this._allScores.push(score)
+				GameNet.reqShoot(score)
+				this._playerBall.UpdateCurrentAfterImage()
+				this.NextRound()
+			}
+		}
+
+		public AddScore(score:number):void
+		{
+			this.serverModel.myRole.score += score
+			this.UpdateScore()
+		}
+
+		public UpdateScore():void
+		{
+			this.label_score_me.text = this.serverModel.myRole.score.toString();
+			this.label_score_other.text = this.serverModel.otherRole.score.toString();
+			this.label_left_time.text = this.serverModel.left_time.toString();
+			let percent = this.serverModel.left_time / this.serverModel.MAX_TIME
+			let down_height = percent * this.img_time_progress.height
+			this.img_time_progress.mask = new egret.Rectangle(0, this.img_time_progress.height - down_height, this.img_time_progress.width, down_height)
+		}
+
+		public GetPlayerBall():PlayerBall
+		{
+			return this._playerBall
+		}
+
+		
+		private _updateDecisionPosition():void
+		{
+			let scale_rate = 1
+			if(this._is_face_left){
+				this.m_decision_container.x = 0
+				scale_rate = 1
+			}else{
+				this.m_decision_container.x = this.stage.stageWidth
+				scale_rate = -1
+			}
+			
+			this.m_decision_container.y = this._random_container_y
+			this.m_decision_container.scaleX = Math.abs(this.m_decision_container.scaleX) * scale_rate;
+		}
+
+		private _updateBasketContainerPosition():void
+		{
+			let scale_rate = 1
+			if(this._is_face_left){
+				this.m_basket_container_pre.x = 0
+				this.m_basket_container_back.x = 0
+				scale_rate = 1
+			}else{
+				this.m_basket_container_pre.x = this.stage.stageWidth
+				this.m_basket_container_back.x = this.stage.stageWidth
+				scale_rate = -1
+			}
+			
+			this.m_basket_container_pre.y = this._random_container_y
+			this.m_basket_container_pre.scaleX = Math.abs(this.m_basket_container_pre.scaleX) * scale_rate;
+
+			this.m_basket_container_back.y = this._random_container_y
+			this.m_basket_container_back.scaleX = Math.abs(this.m_basket_container_back.scaleX) * scale_rate;
+		}
+
+		public NextRound():void
+		{
+			this.SetGoal(false, 0);
+			this._is_face_left = !this._is_face_left
+			this._random_container_y = this.stage.stageHeight / 2 - Math.random() * 200
+			if(this._is_first_round){
+				this._is_face_left = true
+			}
+
+			this._hasThisRoundTouch = false;
+			if(!this._is_first_round)
+			{
+				this._updateDecisionPosition()
+				let __this = this
+				BasketUtils.performDelay(function(){
+					__this._updateBasketContainerPosition()
+				}.bind(this), 0.5 * 1000, this);
+			}
+			
+			this.validateNow()
+
+			if(this._is_first_round){
+				let random_ball_x = this.stage.stageWidth / 2 - this.m_basket_ball.width / 2;
+				let random_ball_y = this.m_floor.y - 300
+				this.m_basket_ball.x = random_ball_x
+				this.m_basket_ball.y = random_ball_y
+			}
+			
+			this._is_first_round = false;
+			
+			
+			this._hitManager.EnterNextRound()
+			this._playerBall.EnterNextRound()
+
+		}
+
+		private _onEnterFrame(event : egret.Event):void
+		{
+			if(!this._hasGameStarted){
+				return
+			}
+			if(this._is_game_over){
+				this.removeEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this)
+				return
+			}
+			this._playerBall.Update()
+		}
+
+		private _onTouchBegin(event : egret.TouchEvent):void
+		{
+			if(!this._hasGameStarted){
+				return
+			}
+			if(!this._hasTouchBegin)
+			{
+				this._hasTouchBegin = true;
+			}
+
+			this._hasThisRoundTouch = true
+			if(this.m_basket_ball.y <= this.m_top.y)
+			{
+				return;
+			}
+			
+			this._playerBall.OnPushDown();
+		}
+
+		/********************以下是各种动画******************* */
 		private _addAnimation():void
 		{
 			let armatureDisplay = BasketUtils.createDragonBones("board_pre_ske_json", "board_pre_tex_json", "board_pre_tex_png", "boad_pre_armature")
@@ -265,201 +470,63 @@ module ui {
 			}
 		}
 
-		private _on_timer_tick():void
+		public ShowComboAnimation(combo_count:number):void
 		{
-			this.serverModel.left_time -= 1
-			this.UpdateScore()
-			if(this.serverModel.left_time <= 0 && !this._is_game_over)
-			{
-				this._on_game_over()
-			}
-		}
-
-
-		private _on_game_over():void
-		{
-			this._is_game_over = true
-			this._clearTimer()
-			GamePlatform.onFinished(this.serverModel.myRole.score, function(){}.bind(this))
-		}
-
-		public HasTouchBegin():boolean
-		{
-			return this._hasTouchBegin
-		}
-
-		public GetHitManager():HitManager
-		{
-			return this._hitManager
-		}
-
-		public HasThisRoundTouch():boolean
-		{
-			return this._hasThisRoundTouch
-		}
-
-		public IsFaceLeft()
-		{
-			return this._is_face_left
-		}
-
-		public HasGoal():boolean
-		{
-			return this._has_goal
-		}
-
-		private _allScores:Array<number> = new Array()
-
-		public GetAllScores():Array<number>
-		{
-			return this._allScores
-		}
-
-		public SetGoal(has_global, score:number):void
-		{
-			this._has_goal = has_global
-			if(has_global){
-				this.AddScore(score)
-				this._allScores.push(score)
-				GameNet.reqShoot(score)
-				this.NextRound()
-			}
-		}
-
-		public AddScore(score:number):void
-		{
-			this.serverModel.myRole.score += score
-			this.UpdateScore()
-		}
-
-		public GetPlayerBall():PlayerBall
-		{
-			return this._playerBall
-		}
-
-		private _random_container_y:number = 0
-		private _updateDecisionPosition():void
-		{
-			let scale_rate = 1
-			if(this._is_face_left){
-				this.m_decision_container.x = 0
-				scale_rate = 1
-			}else{
-				this.m_decision_container.x = this.stage.stageWidth
-				scale_rate = -1
-			}
-			
-			this.m_decision_container.y = this._random_container_y
-			this.m_decision_container.scaleX = Math.abs(this.m_decision_container.scaleX) * scale_rate;
-		}
-
-		private _updateBasketContainerPosition():void
-		{
-			let scale_rate = 1
-			if(this._is_face_left){
-				this.m_basket_container_pre.x = 0
-				this.m_basket_container_back.x = 0
-				scale_rate = 1
-			}else{
-				this.m_basket_container_pre.x = this.stage.stageWidth
-				this.m_basket_container_back.x = this.stage.stageWidth
-				scale_rate = -1
-			}
-			
-			this.m_basket_container_pre.y = this._random_container_y
-			this.m_basket_container_pre.scaleX = Math.abs(this.m_basket_container_pre.scaleX) * scale_rate;
-
-			this.m_basket_container_back.y = this._random_container_y
-			this.m_basket_container_back.scaleX = Math.abs(this.m_basket_container_back.scaleX) * scale_rate;
-		}
-
-		public NextRound():void
-		{
-			this.SetGoal(false, 0);
-			this._is_face_left = !this._is_face_left
-			if(this._is_first_round){
-				this._is_face_left = true
-			}
-
-			this._hasThisRoundTouch = false;
-			this._random_container_y = this.stage.stageHeight / 2 - Math.random() * 200
-
-			if(!this._is_first_round)
-			{
-				this._updateDecisionPosition()
-				let __this = this
+			this.label_combo.text = 'cx' + combo_count.toString();
+			this.label_combo.scaleX = this.label_combo.scaleY = 0.2
+			let __this = this
+			this.label_combo.visible = true
+			egret.Tween.get(this.label_combo).to({scaleX:0.6, scaleY:0.6}, 0.15 * 1000, egret.Ease.sineInOut).call(function(){
 				BasketUtils.performDelay(function(){
-					__this._updateBasketContainerPosition()
-				}.bind(this), 0.5 * 1000, this);
-			}
-			
-			this.validateNow()
-
-			if(this._is_first_round){
-				let random_ball_x = this.stage.stageWidth / 2 - this.m_basket_ball.width / 2;
-				let random_ball_y = this.m_floor.y - 200
-				this.m_basket_ball.x = random_ball_x
-				this.m_basket_ball.y = random_ball_y
-			}
-			
-			this._is_first_round = false;
-			
-			
-			this._hitManager.EnterNextRound()
-			this._playerBall.EnterNextRound()
-
+					__this.label_combo.visible = false
+				}.bind(this), 0.6 * 1000, this)
+			}.bind(this), this)
 		}
 
-		private _onEnterFrame(event : egret.Event):void
+		public ShowScoreAnimation(score:number, lianxu_count:number):void
 		{
-			if(!this._hasGameStarted){
-				return
-			}
-			if(this._is_game_over){
-				this.removeEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this)
-				this.m_basket_ball.visible = false;
-				return
-			}
-			this._playerBall.Update()
+			this.label_add_score.text = '+ ' + score.toString()
+			this.label_add_score.scaleX = this.label_add_score.scaleY = 0.2
+			this.label_add_score.visible = true
+			this.label_add_score.anchorOffsetX = this.label_add_score.width / 2
+			this.label_add_score.anchorOffsetY = this.label_add_score.height
+
+			let img_path = BasketUtils.GetScorePng(score, lianxu_count);
+			this.img_score_type.source = img_path
+			this.img_score_type.anchorOffsetX = this.img_score_type.width / 2
+			this.img_score_type.anchorOffsetY = this.img_score_type.height
+			this.img_score_type.visible = true
+			this.img_score_type.scaleX = this.label_add_score.scaleY = 0.2
+
+			let global_right_line_point = this.m_right_line.localToGlobal(-50, 0)
+			let local_point = this.img_score_type.parent.globalToLocal(global_right_line_point.x, global_right_line_point.y)
+
+			this.img_score_type.x = local_point.x
+			this.img_score_type.y = local_point.y - 20
+
+			this.label_add_score.x = this.img_score_type.x
+			this.label_add_score.y = this.img_score_type.y - 70
+
+			let __this = this
+			egret.Tween.get(this.label_add_score).to({scaleX:1, scaleY:1}, 0.15 * 1000, egret.Ease.sineInOut).call(function(){
+				BasketUtils.performDelay(function(){
+					__this.label_add_score.visible = false
+				}.bind(this), 0.6 * 1000, this)
+			}.bind(this), this)
+
+			egret.Tween.get(this.img_score_type).to({scaleX:1, scaleY:1}, 0.15 * 1000, egret.Ease.sineInOut).call(function(){
+				BasketUtils.performDelay(function(){
+					__this.img_score_type.visible = false
+				}.bind(this), 0.6 * 1000, this)
+			}.bind(this), this)
+
 		}
 
-		private _onTouchBegin(event : egret.TouchEvent):void
-		{
-			if(!this._hasGameStarted){
-				return
-			}
-			if(!this._hasTouchBegin)
-			{
-				this._hasTouchBegin = true;
-			}
-
-			this._hasThisRoundTouch = true
-			if(this.m_basket_ball.y <= this.m_top.y)
-			{
-				return;
-			}
-			
-			this._playerBall.OnPushDown();
-		}
-
-		public UpdateScore():void
-		{
-			this.label_score_me.text = this.serverModel.myRole.score.toString();
-			this.label_score_other.text = this.serverModel.otherRole.score.toString();
-			this.label_left_time.text = this.serverModel.left_time.toString();
-			let percent = this.serverModel.left_time / this.serverModel.MAX_TIME
-			let down_height = percent * this.img_time_progress.height
-			this.img_time_progress.mask = new egret.Rectangle(0, this.img_time_progress.height - down_height, this.img_time_progress.width, down_height)
-		}
-
-		private _hasMeLogin:boolean = false;
-		private _hasOtherLogin:boolean = false;
+		/**************************以下的网络交互************************** */
 		private _hasGameStarted:boolean = false;
 
 		private onShootJoinPush(msgId, body):void
 		{
-			this._hasOtherLogin = true
-			this._updateAllJoin()
 		}
 
 		private onShootGameStartPush(msgId, body):void
@@ -506,32 +573,21 @@ module ui {
 			this.UpdateScore()
 		}
 
-
-		private _updateAllJoin():void
-		{
-			// if(this._hasMeLogin && this._hasOtherLogin)
-			// {
-			// 	GamePlatform.onStarted(function(){}.bind(this)); //onStarted
-			// }
-		}
-
 		public onOpen():void
 		{
 			super.onOpen()
 
 			let protocol = io.GameNet.GAME_PROTOCOL;
 			GameNet.on(protocol.CMD_H5_SHOOT_JOIN_PUSH, this.onShootJoinPush.bind(this));
-			GameNet.on(protocol.CMD_H5_SHOOT_GAME_START_PUSH, this.onShootGameStartPush.bind(this));
-			GameNet.on(protocol.CMD_H5_SHOOT_GAME_STATUS_PUSH, this.onShootGameStatusPush.bind(this));
-			GameNet.on(protocol.CMD_H5_SHOOT_SECOND_PUSH, this.onShootSecondush.bind(this));
-			GameNet.on(protocol.CMD_H5_SHOOT_GAME_OVER_PUSH, this.onGameOverPush.bind(this));
-			GameNet.on(protocol.CMD_H5_SHOOT_SCORE_PUSH, this.onShootScorePush.bind(this));
+			GameNet.on(protocol.CMD_H5_SHOOT_GAME_START_PUSH, this.onShootGameStartPush.bind(this));  //游戏开始推送
+			GameNet.on(protocol.CMD_H5_SHOOT_GAME_STATUS_PUSH, this.onShootGameStatusPush.bind(this)); //游戏状态推送
+			GameNet.on(protocol.CMD_H5_SHOOT_SECOND_PUSH, this.onShootSecondush.bind(this)); //游戏时间推送
+			GameNet.on(protocol.CMD_H5_SHOOT_GAME_OVER_PUSH, this.onGameOverPush.bind(this)); // 游戏结束推送
+			GameNet.on(protocol.CMD_H5_SHOOT_SCORE_PUSH, this.onShootScorePush.bind(this)); //游戏分数推送
 
 			GamePlatform.onInit(function(){}.bind(this)); //onInit
 			this.run();
-			this._hasMeLogin = true;
 			GamePlatform.onWaiting(function(){}.bind(this)); //onWaiting
-			this._updateAllJoin()
 		}
 
 		private async run() {

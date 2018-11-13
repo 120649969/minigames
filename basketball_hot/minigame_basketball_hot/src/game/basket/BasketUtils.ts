@@ -70,4 +70,22 @@ class BasketUtils {
 			}
 		}, timeout);
 	}
+
+	private static Two_Score_Pngs = ["bucuo_png", "haoqiu_png", "defen_png"]
+	private static Three_Score_Pngs = ["piaoliang_png", "lihai_png", "kongxinruqiu_png"]
+	private static Six_Score_Pngs = ["jingcai_png", "huoreshougan_png", "danwuxufa_png", "baifabaizhong_png", "chaofantuosu_png", "qiji_png"]
+	public static GetScorePng(score:number, count:number):string
+	{
+		if(score == BasketScore.NORMAL_GOAL) { //2分球
+			let index = Math.floor(Math.random() * BasketUtils.Two_Score_Pngs.length)
+			return BasketUtils.Two_Score_Pngs[index]
+		} else if(score == BasketScore.KONG_XING_GOAL && count == 1) {
+			let index = Math.floor(Math.random() * BasketUtils.Three_Score_Pngs.length)
+			return BasketUtils.Three_Score_Pngs[index]
+		} else {
+			let index = count - 1
+			index = Math.min(index, BasketUtils.Six_Score_Pngs.length - 1)
+			return BasketUtils.Six_Score_Pngs[index]
+		}
+	}
 }

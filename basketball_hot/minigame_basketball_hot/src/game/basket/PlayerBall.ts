@@ -208,6 +208,18 @@ class PlayerBall {
 		this._global_circle_scope_center_point.y = (this._global_circle_scope_left_top_point.y + this._global_circle_scope_right_down_point.y) / 2
 	}
 
+	public OnGameOver():void
+	{
+		if(this._smokeEffect)
+		{
+			this._smokeEffect.visible = false
+		}
+		if(this._fireEffect)
+		{
+			this._fireEffect.visible = false
+		}
+	}
+
 	public OnPushDown():void
 	{
 		if(this.basketball_speed_y > 0)
@@ -234,7 +246,6 @@ class PlayerBall {
 				}
 				this.mainPanel.SetGoal(true, BasketScore.KONG_XING_GOAL)
 			}
-			this.UpdateCurrentAfterImage()
 		}
 		if(has_goal){
 			if(this._recent_hit){
@@ -338,7 +349,7 @@ class PlayerBall {
 
 		let thisHitType = this._hitManager.GetHitType()
 
-		if(thisHitType != HitType.None)
+		if(thisHitType != HitType.None && thisHitType != HitType.Board)
 		{
 			this._recent_hit = true
 		}
@@ -363,6 +374,7 @@ class PlayerBall {
 	}
 
 	//更新当前的残影类型
+	//显示分数和combo
 	public UpdateCurrentAfterImage():void
 	{
 		let allScores = this.mainPanel.GetAllScores()
@@ -371,13 +383,15 @@ class PlayerBall {
 			if(this._currentAfterImageType != AfterImageType.None){
 				this.SetUsingAfterImageType(AfterImageType.None)
 			}else{
-				if(Math.floor(Math.random() * 3) == 0){
-					this.SetUsingAfterImageType(AfterImageType.Smoke)
-				}
+				// if(Math.floor(Math.random() * 3) == 0){
+				// 	this.SetUsingAfterImageType(AfterImageType.Smoke)
+				// }
 			}
+			this.mainPanel.ShowScoreAnimation(BasketScore.NORMAL_GOAL, 1)
 		} else {
 			if(this._currentAfterImageType == AfterImageType.None){
 				this.SetUsingAfterImageType(AfterImageType.Smoke)
+				this.mainPanel.ShowScoreAnimation(BasketScore.KONG_XING_GOAL, 1)
 			}else{
 				let kongxing_count = 0
 				for(let index = allScores.length - 2; index >= 0; index--)
@@ -394,6 +408,13 @@ class PlayerBall {
 				} else {
 					this.SetUsingAfterImageType(AfterImageType.Fire)
 					this._fireEffect.SetFireStep(FireStep.Step_1)
+				}
+
+				if(kongxing_count > 1){
+					this.mainPanel.ShowComboAnimation(kongxing_count)
+					this.mainPanel.ShowScoreAnimation(BasketScore.KONG_XING_GOAL, kongxing_count)
+				} else {
+					this.mainPanel.ShowScoreAnimation(BasketScore.KONG_XING_GOAL, 1)
 				}
 			}
 		}
