@@ -204,11 +204,11 @@ module io {
 
 			let str = '[' + Util.formatDateTimeFull(new Date()) + ']';
 
-			if (!!this.protocolReverse[msgId]) {
-				console.log(str, 'protocol', this.protocolReverse[msgId], msgId, 'body', body);
-			} else {
-				console.log(str, 'protocol', msgId, 'body', body);
-			}
+			// if (!!this.protocolReverse[msgId]) {
+			// 	console.log(str, 'protocol', this.protocolReverse[msgId], msgId, 'body', body);
+			// } else {
+			// 	console.log(str, 'protocol', msgId, 'body', body);
+			// }
 		}
 
 		public send(msgId, body) {

@@ -74,6 +74,9 @@ class BasketUtils {
 	private static Two_Score_Pngs = ["bucuo_png", "haoqiu_png", "defen_png"]
 	private static Three_Score_Pngs = ["piaoliang_png", "lihai_png", "kongxinruqiu_png"]
 	private static Six_Score_Pngs = ["jingcai_png", "huoreshougan_png", "danwuxufa_png", "baifabaizhong_png", "chaofantuosu_png", "qiji_png"]
+	public static YA_SHAO_Png = "yashao_png"
+	public static JUE_SHA_Png = "juesha_png"
+	
 	public static GetScorePng(score:number, count:number):string
 	{
 		if(score == BasketScore.NORMAL_GOAL) { //2分球

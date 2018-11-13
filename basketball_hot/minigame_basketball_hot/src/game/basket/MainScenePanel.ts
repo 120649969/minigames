@@ -92,7 +92,6 @@ module ui {
 			let __this = this
 			this.img_ready_go_bg.scaleY = 0.9
 			egret.Tween.get(this.img_ready_go_bg).to({scaleY:1.0}, 0.5 * 1000).call(function(){
-
 				egret.Tween.get(this.img_ready_go_bg).to({alpha : 0.5}, 1 * 1000).call(function(){
 					__this.img_go.visible = true
 					__this.img_go.scaleX = __this.img_go.scaleY = 6.0
@@ -110,19 +109,20 @@ module ui {
 		//真正开始游戏
 		public StartGame():void
 		{
-			this._hasGameStarted = true;
-			this._is_first_round = true;
-			this._hasTouchBegin = false; //整个游戏是否点击
-			this._hasThisRoundTouch = false; //每个回合是否点击
-			this._has_goal = false; //是否进球
-			this._is_game_over = false;
+			GamePlatform.GetIcon()
+			this._hasGameStarted = true
+			this._is_first_round = true
+			this._hasTouchBegin = false //整个游戏是否点击
+			this._hasThisRoundTouch = false //每个回合是否点击
+			this._has_goal = false //是否进球
+			this._is_game_over = false
 
 			this.img_shadow.visible = true
 			this.m_basket_ball.visible = true
 
 			if(!this._hasInitGame){
-				this._hitManager = new HitManager(this);
-				this._playerBall = new PlayerBall(this.m_basket_ball, this);
+				this._hitManager = new HitManager(this)
+				this._playerBall = new PlayerBall(this.m_basket_ball, this)
 				this._hasInitGame = true
 			} else {
 				this._playerBall.Restart()
@@ -140,7 +140,7 @@ module ui {
 				this.img_icon_other.source = this.serverModel.otherRole.icon
 			}
 
-			this.NextRound();
+			this.NextRound()
 			this.UpdateScore()
 			
 		}
@@ -308,7 +308,7 @@ module ui {
 				let __this = this
 				BasketUtils.performDelay(function(){
 					__this._updateBasketContainerPosition()
-				}.bind(this), 0.5 * 1000, this);
+				}.bind(this), 1 * 1000, this);
 			}
 			
 			this.validateNow()
@@ -476,27 +476,46 @@ module ui {
 			this.label_combo.scaleX = this.label_combo.scaleY = 0.2
 			let __this = this
 			this.label_combo.visible = true
-			egret.Tween.get(this.label_combo).to({scaleX:0.6, scaleY:0.6}, 0.15 * 1000, egret.Ease.sineInOut).call(function(){
+
+			egret.Tween.get(this.label_combo)
+			.to({scaleX:1.5, scaleY:1.5}, 0.2 * 1000, egret.Ease.sineInOut)
+			.to({scaleX:1, scaleY:1}, 0.1 * 1000)
+			.call(function(){
 				BasketUtils.performDelay(function(){
 					__this.label_combo.visible = false
-				}.bind(this), 0.6 * 1000, this)
+				}.bind(this), 0.7 * 1000, this)
 			}.bind(this), this)
 		}
 
 		public ShowScoreAnimation(score:number, lianxu_count:number):void
 		{
 			this.label_add_score.text = '+ ' + score.toString()
-			this.label_add_score.scaleX = this.label_add_score.scaleY = 0.2
+			this.label_add_score.scaleX = this.label_add_score.scaleY = 0.5
 			this.label_add_score.visible = true
+			this.label_add_score.alpha = 1
 			this.label_add_score.anchorOffsetX = this.label_add_score.width / 2
 			this.label_add_score.anchorOffsetY = this.label_add_score.height
 
 			let img_path = BasketUtils.GetScorePng(score, lianxu_count);
+			if(this.serverModel.left_time <= 1){
+				img_path = BasketUtils.YA_SHAO_Png
+				let add_score = score
+				if(lianxu_count > 1){
+					add_score = BasketScore.LIANXU_KONG_XING_GOAL
+				}
+				let curr_score = this.serverModel.myRole.score
+				let last_score = curr_score - add_score
+				let other_score = this.serverModel.otherRole.score
+				if(last_score < other_score && curr_score > other_score){
+					img_path = BasketUtils.JUE_SHA_Png
+				}
+			}
 			this.img_score_type.source = img_path
 			this.img_score_type.anchorOffsetX = this.img_score_type.width / 2
 			this.img_score_type.anchorOffsetY = this.img_score_type.height
 			this.img_score_type.visible = true
-			this.img_score_type.scaleX = this.label_add_score.scaleY = 0.2
+			this.img_score_type.alpha = 1
+			this.img_score_type.scaleX = this.label_add_score.scaleY = 0.5
 
 			let global_right_line_point = this.m_right_line.localToGlobal(-50, 0)
 			let local_point = this.img_score_type.parent.globalToLocal(global_right_line_point.x, global_right_line_point.y)
@@ -508,18 +527,32 @@ module ui {
 			this.label_add_score.y = this.img_score_type.y - 70
 
 			let __this = this
-			egret.Tween.get(this.label_add_score).to({scaleX:1, scaleY:1}, 0.15 * 1000, egret.Ease.sineInOut).call(function(){
+			egret.Tween.get(this.label_add_score)
+			.to({scaleX:1.5, scaleY:1.5},0.2 * 1000, egret.Ease.sineInOut)
+			.to({scaleX:1, scaleY:1}, 0.1 * 1000)
+			.call(function(){
 				BasketUtils.performDelay(function(){
-					__this.label_add_score.visible = false
-				}.bind(this), 0.6 * 1000, this)
+					let cur_x = __this.label_add_score.x
+					let cur_y = __this.label_add_score.y
+					egret.Tween.get(this.label_add_score).to({x:cur_x, y:cur_y - 100, alpha:0}, 0.4 * 1000).call(function(){
+						__this.label_add_score.visible = false
+					}.bind(this))
+				}.bind(this), 0.7 * 1000, this)
 			}.bind(this), this)
 
-			egret.Tween.get(this.img_score_type).to({scaleX:1, scaleY:1}, 0.15 * 1000, egret.Ease.sineInOut).call(function(){
-				BasketUtils.performDelay(function(){
-					__this.img_score_type.visible = false
-				}.bind(this), 0.6 * 1000, this)
-			}.bind(this), this)
 
+			egret.Tween.get(this.img_score_type)
+			.to({scaleX:1.5, scaleY:1.5}, 0.2 * 1000, egret.Ease.sineInOut)
+			.to({scaleX:1, scaleY:1}, 0.1 * 1000)
+			.call(function(){
+				BasketUtils.performDelay(function(){
+					let cur_x = __this.img_score_type.x
+					let cur_y = __this.img_score_type.y
+					egret.Tween.get(this.img_score_type).to({x:cur_x, y:cur_y - 100, alpha:0}, 0.4 * 1000).call(function(){
+						__this.img_score_type.visible = false
+					}.bind(this))
+				}.bind(this), 0.7 * 1000, this)
+			}.bind(this), this)
 		}
 
 		/**************************以下的网络交互************************** */

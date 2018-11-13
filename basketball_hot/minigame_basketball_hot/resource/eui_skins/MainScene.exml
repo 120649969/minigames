@@ -35,9 +35,9 @@
 				<e:Image id="img_time_progress" source="jdt2_png" anchorOffsetX="56" anchorOffsetY="56" horizontalCenter="0" top="20"/>
 				<e:Image source="hongtou2_png" anchorOffsetX="268" anchorOffsetY="68" top="7" horizontalCenter="-195" scaleX="1" scaleY="1"/>
 				<e:Image source="lvtou2_png" anchorOffsetY="68" scaleX="1" scaleY="1" top="9" horizontalCenter="200"/>
-				<e:Label id="label_score_me" text="58" size="70" textColor="0xf4b9c8" borderColor="0xb4274c" strokeColor="0xb4274c" stroke="2" anchorOffsetY="35" anchorOffsetX="39" horizontalCenter="-154" top="43"/>
-				<e:Label id="label_score_other" text="58" size="70" borderColor="0xB4274C" strokeColor="0x80a12d" stroke="2" anchorOffsetY="35" anchorOffsetX="39" horizontalCenter="141" top="43" textColor="0xdef1ad"/>
-				<e:Label id="label_left_time" text="20" size="50" borderColor="0xB4274C" strokeColor="0x000000" anchorOffsetY="25" anchorOffsetX="28" horizontalCenter="0" top="53" x="437" y="53" scaleX="1" scaleY="1" textColor="0xaeffeb"/>
+				<e:Label id="label_score_me" text="0" size="70" textColor="0xf4b9c8" borderColor="0xb4274c" strokeColor="0xb4274c" stroke="2" anchorOffsetY="35" anchorOffsetX="39" horizontalCenter="-154" top="43"/>
+				<e:Label id="label_score_other" text="0" size="70" borderColor="0xB4274C" strokeColor="0x80a12d" stroke="2" anchorOffsetY="35" anchorOffsetX="39" horizontalCenter="141" top="43" textColor="0xdef1ad"/>
+				<e:Label id="label_left_time" text="60" size="50" borderColor="0xB4274C" strokeColor="0x000000" anchorOffsetY="25" anchorOffsetX="28" horizontalCenter="0" top="53" x="437" y="53" scaleX="1" scaleY="1" textColor="0xaeffeb"/>
 				<e:Image source="hongtou_png" x="43.44" y="26.65" scaleX="1" scaleY="1"/>
 				<e:Image source="lvtou_png" x="574.88" y="29.24" scaleX="1" scaleY="1"/>
 				<e:Image source="z_png" horizontalCenter="41.5" top="27"/>

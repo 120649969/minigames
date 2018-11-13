@@ -231,20 +231,41 @@ class PlayerBall {
 		this._recent_hit = false
 	}
 
+	//计算分数
+	private _calcuteScore():number
+	{
+		if(this._recent_hit)
+		{
+			return BasketScore.NORMAL_GOAL
+		}
+
+		let last_score = 0
+		let all_scores = this.mainPanel.GetAllScores()
+		if(all_scores.length > 0){
+			last_score = all_scores[all_scores.length - 1]
+		}
+		if(last_score == BasketScore.KONG_XING_GOAL || last_score == BasketScore.LIANXU_KONG_XING_GOAL)
+		{
+			return BasketScore.LIANXU_KONG_XING_GOAL
+		}
+		return BasketScore.KONG_XING_GOAL
+	}
+
 	private _check_this_move_goal(last_x:number, last_y:number):boolean
 	{
 		let has_goal = this._checkGoal(new egret.Point(last_x, last_y), new egret.Point(this.m_basket_ball.x, this.m_basket_ball.y))
 		if(!this.mainPanel.HasGoal() && has_goal){
+			let get_score = this._calcuteScore()
 			if(this._recent_hit){
 				if(this._currentAfterImageType == AfterImageType.Smoke){
-					this._smokeEffect.SetGoal(BasketScore.NORMAL_GOAL)
+					this._smokeEffect.SetGoal(get_score)
 				}
-				this.mainPanel.SetGoal(true, BasketScore.NORMAL_GOAL)
+				this.mainPanel.SetGoal(true, get_score)
 			} else {
 				if(this._currentAfterImageType == AfterImageType.Fire){
-					this._fireEffect.SetGoal(BasketScore.KONG_XING_GOAL)
+					this._fireEffect.SetGoal(get_score)
 				}
-				this.mainPanel.SetGoal(true, BasketScore.KONG_XING_GOAL)
+				this.mainPanel.SetGoal(true, get_score)
 			}
 		}
 		if(has_goal){
@@ -380,29 +401,23 @@ class PlayerBall {
 		let allScores = this.mainPanel.GetAllScores()
 		let last_score = allScores[allScores.length - 1]
 		if(last_score == BasketScore.NORMAL_GOAL){
-			if(this._currentAfterImageType != AfterImageType.None){
-				this.SetUsingAfterImageType(AfterImageType.None)
-			}else{
-				// if(Math.floor(Math.random() * 3) == 0){
-				// 	this.SetUsingAfterImageType(AfterImageType.Smoke)
-				// }
-			}
+			this.SetUsingAfterImageType(AfterImageType.None)
 			this.mainPanel.ShowScoreAnimation(BasketScore.NORMAL_GOAL, 1)
 		} else {
 			if(this._currentAfterImageType == AfterImageType.None){
 				this.SetUsingAfterImageType(AfterImageType.Smoke)
 				this.mainPanel.ShowScoreAnimation(BasketScore.KONG_XING_GOAL, 1)
 			}else{
-				let kongxing_count = 0
+				let kongxing_count = 1
 				for(let index = allScores.length - 2; index >= 0; index--)
 				{
-					if(allScores[index] == BasketScore.KONG_XING_GOAL){
+					if(allScores[index] == BasketScore.KONG_XING_GOAL || allScores[index] == BasketScore.LIANXU_KONG_XING_GOAL){
 						kongxing_count++
 					} else {
 						break
 					}
 				}
-				if(kongxing_count >= 2){
+				if(kongxing_count > 1){
 					this.SetUsingAfterImageType(AfterImageType.Fire)
 					this._fireEffect.SetFireStep(FireStep.Step_2)
 				} else {
@@ -412,7 +427,7 @@ class PlayerBall {
 
 				if(kongxing_count > 1){
 					this.mainPanel.ShowComboAnimation(kongxing_count)
-					this.mainPanel.ShowScoreAnimation(BasketScore.KONG_XING_GOAL, kongxing_count)
+					this.mainPanel.ShowScoreAnimation(BasketScore.LIANXU_KONG_XING_GOAL, kongxing_count)
 				} else {
 					this.mainPanel.ShowScoreAnimation(BasketScore.KONG_XING_GOAL, 1)
 				}

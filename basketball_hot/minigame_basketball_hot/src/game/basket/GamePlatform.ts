@@ -34,4 +34,12 @@ class GamePlatform {
 		}
 	}
 
+	public static GetIcon():void
+	{
+		if(typeof(bdm) != "undefined")
+		{
+			console.log("#########GetIcon#######")
+			console.log(bdm.pk.args)
+		}
+	}
 }

@@ -230,10 +230,7 @@ class FireEffect extends BaseEffect{
 
 	public SetGoal(score:number):void
 	{
-		if(score == BasketScore.KONG_XING_GOAL)
-		{
-			this._playerBall.GetMainScenePanel().PlayBlackNetAnimation()
-		}
+		this._playerBall.GetMainScenePanel().PlayBlackNetAnimation()
 	}
 
 	private _getRandomFireCount():number
