@@ -20,6 +20,7 @@ class PlayerBall {
 	private _smokeEffect:SmokeEffect
 	private _fireEffect:FireEffect
 	private _scoreSmokeEffect:ScoreFireEffect
+	private _currentAfterImageType:AfterImageType = AfterImageType.None
 
 	public constructor(_ball:eui.Group, _mainPanel:ui.MainScenePanel) {
 		this.m_basket_ball = _ball
@@ -50,7 +51,7 @@ class PlayerBall {
 		this._scoreSmokeEffect.FirstGenerate()
 	}
 
-	private _currentAfterImageType:AfterImageType = AfterImageType.None
+	
 	public SetUsingAfterImageType(type:AfterImageType):void
 	{
 		if(this._currentAfterImageType == type)
@@ -142,25 +143,6 @@ class PlayerBall {
 		this.mainPanel.img_shadow.y = this.mainPanel.m_floor.y
 	}
 
-	//现在风速为0
-	private _adjustSpeed():void
-	{
-		if(!this.mainPanel.HasThisRoundTouch() || this.mainPanel.HasGoal()){
-			return
-		}
-		if(this.mainPanel.IsFaceLeft()){
-			if(this.basketball_speed_x > HitConst.Max_Speed_X * -1){
-				this.basketball_speed_x -= HitConst.Frame_Speed_X
-			}
-			this.basketball_speed_x = Math.max(this.basketball_speed_x, HitConst.Max_Speed_X * -1)
-		} else {
-			if(this.basketball_speed_x < HitConst.Max_Speed_X){
-				this.basketball_speed_x += HitConst.Frame_Speed_X
-			}
-			this.basketball_speed_x = Math.min(this.basketball_speed_x, HitConst.Max_Speed_X)
-		}
-	}
-
 	//检测是否进球
 	private _checkGoal(firstPoint:egret.Point, secondPoint:egret.Point):boolean
 	{
@@ -182,7 +164,7 @@ class PlayerBall {
 		}
 		if(last_global_ball_center_point.y <= this._global_circle_scope_center_point.y && current_global_ball_center_point.y >= this._global_circle_scope_center_point.y)
 		{
-			console.log("#########进球了###")
+			// console.log("#########进球了###")
 			return true;
 		}
 		return false;
@@ -227,6 +209,11 @@ class PlayerBall {
 		{
 			this._fireEffect.visible = false
 		}
+
+		if(this._scoreSmokeEffect)
+		{
+			this._scoreSmokeEffect.visible = false
+		}
 	}
 
 	public OnPushDown():void
@@ -260,29 +247,19 @@ class PlayerBall {
 		return BasketScore.KONG_XING_GOAL
 	}
 
+	//判断这次移动是否命中球及命中后的效果
 	private _check_this_move_goal(last_x:number, last_y:number):boolean
 	{
 		let has_goal = this._checkGoal(new egret.Point(last_x, last_y), new egret.Point(this.m_basket_ball.x, this.m_basket_ball.y))
 		if(!this.mainPanel.HasGoal() && has_goal){
 			let get_score = this._calcuteScore()
-			if(this._recent_hit){
-				if(this._currentAfterImageType == AfterImageType.Smoke){
-					this._smokeEffect.SetGoal(get_score)
-				}
-				this.mainPanel.SetGoal(true, get_score)
-			} else {
-				if(this._currentAfterImageType == AfterImageType.Fire){
-					this._fireEffect.SetGoal(get_score)
-				}
-				this.mainPanel.SetGoal(true, get_score)
+			if(this._currentAfterImageType == AfterImageType.Fire && !this._recent_hit){
+				this._fireEffect.SetGoal(get_score)
 			}
+			this.mainPanel.SetGoal(true, get_score)
 		}
 		if(has_goal){
-			if(this._recent_hit){
-				this.mainPanel.PlayGoalAnimation()
-			} else {
-				this.mainPanel.PlayKongXingAnimation()
-			}
+			this.mainPanel.PlayGoalAnimation()
 			this._playJoinSound()
 		}
 		return false;
@@ -305,8 +282,6 @@ class PlayerBall {
 	
 	public Update():void
 	{
-		
-		this._adjustSpeed();
 		this._updateRotationTween()
 		this._adjustBallPosition()
 		this._adjustShadowPosition()
@@ -392,10 +367,8 @@ class PlayerBall {
 		if(this._hitManager.GetHitType() == HitType.Floor){  
 			this.m_basket_ball.x += this.basketball_speed_x / HitConst.Factor
 		}
-		
 
 		let thisHitType = this._hitManager.GetHitType()
-
 		this._playHitSound(thisHitType)
 
 		if(thisHitType != HitType.None && thisHitType != HitType.Board_Left_Right && thisHitType != HitType.Board_Top)
@@ -475,7 +448,7 @@ class PlayerBall {
 						break
 					}
 				}
-				if(kongxing_count > 1){
+				if(kongxing_count > 2){
 					this.SetUsingAfterImageType(AfterImageType.Fire)
 					this._fireEffect.SetFireStep(FireStep.Step_2)
 				} else {

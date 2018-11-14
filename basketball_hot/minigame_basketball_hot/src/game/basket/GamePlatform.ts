@@ -2,11 +2,11 @@ class GamePlatform {
 	public constructor() {
 	}
 
-	public static onInit(errorCallback):void
+	public static onInit():void
 	{
 		if(typeof(bdm) != "undefined")
 		{
-			bdm.pk.onInit(errorCallback)
+			bdm.pk.onInit()
 		}
 	}
 

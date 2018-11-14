@@ -169,7 +169,7 @@ module io {
 
 		protected onSocketClose(event:egret.Event):void {			
 			console.log(this.name, 'disconnected');
-
+			log('disconnected onSocketClose')
 			if (!this.closeFlag) {
 				// ui.WindowManager.getInstance().open('WaitingWindow', 1000606);
 				setTimeout(this.reconnect.bind(this), 3000);
@@ -185,8 +185,9 @@ module io {
 			// this.protocolCallback = {};
 
 			if (typeof this.onDisconnected == 'function') {
-				this.onDisconnected();
+				let temp_callback = this.onDisconnected
 				this.onDisconnected = null;
+				temp_callback();
 			}			
 		}
 
@@ -204,16 +205,18 @@ module io {
 
 			let str = '[' + Util.formatDateTimeFull(new Date()) + ']';
 
-			// if (!!this.protocolReverse[msgId]) {
-			// 	console.log(str, 'protocol', this.protocolReverse[msgId], msgId, 'body', body);
-			// } else {
-			// 	console.log(str, 'protocol', msgId, 'body', body);
-			// }
+			if (!!this.protocolReverse[msgId]) {
+				console.log(str, 'protocol', this.protocolReverse[msgId], msgId, 'body', body);
+				// log(str, 'protocol', this.protocolReverse[msgId], msgId, 'body', body);
+			} else {
+				console.log(str, 'protocol', msgId, 'body', body);
+				// log(str, 'protocol', msgId, 'body', body);
+			}
 		}
 
 		public send(msgId, body) {
 			if (!this.socket.connected) {
-				console.error('send: socket not connected');
+				console.log('send: socket not connected');
 				return;
 			}
 

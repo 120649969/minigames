@@ -1,3 +1,4 @@
+//火球特效
 class FireEffectDisplayObject extends egret.DisplayObjectContainer{
 
 	private _yellowBitmap:egret.Bitmap
@@ -85,6 +86,26 @@ class FireEffectDisplayObject extends egret.DisplayObjectContainer{
 		}
 	}
 
+	private _getYellowDeltaAlphaInYellowOrangeStep():number
+	{
+		if(this._step_id == FireStep.Step_1){
+			return 0.2
+		} else if(this._step_id == FireStep.Step_2){
+			return 0.08
+		}
+		return 0.08
+	}
+
+	private _getOrangeDeltaAlphaInYellowOrangeStep():number
+	{
+		if(this._step_id == FireStep.Step_1){
+			return 0.1
+		} else if(this._step_id == FireStep.Step_2){
+			return 0.08
+		}
+		return 0.08
+	}
+
 	public Update():boolean
 	{
 		this.wait_play_curr_time += 1
@@ -94,14 +115,14 @@ class FireEffectDisplayObject extends egret.DisplayObjectContainer{
 		
 		if(this._in_yellow_orange_step)
 		{
-			this._yellowBitmap.alpha -= 0.08
+			this._yellowBitmap.alpha -= this._getYellowDeltaAlphaInYellowOrangeStep()
 			this._yellowBitmap.scaleX += 0.008
-			this._yellowBitmap.scaleX = Math.min(this._yellowBitmap.scaleX, this.target_scale)
+			this._yellowBitmap.scaleX = Math.min(this._yellowBitmap.scaleX, this.target_scale) 
 			this._yellowBitmap.scaleY = this._yellowBitmap.scaleX
 
-			this._originBitmap.alpha += 0.08
+			this._originBitmap.alpha += this._getOrangeDeltaAlphaInYellowOrangeStep()
 			this._originBitmap.scaleX += 0.008
-			this._originBitmap.scaleX = Math.min(this._originBitmap.scaleX, this.target_scale)
+			this._originBitmap.scaleX = Math.min(this._originBitmap.scaleX, this.target_scale) 
 			this._originBitmap.scaleY = this._originBitmap.scaleX
 
 			this._blackBitmap.scaleX = this._blackBitmap.scaleY = this._originBitmap.scaleX

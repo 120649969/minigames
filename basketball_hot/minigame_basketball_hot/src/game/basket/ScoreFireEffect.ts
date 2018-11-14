@@ -1,3 +1,4 @@
+//得分上的火特效
 class ScoreFireEffectDisplayObject extends egret.DisplayObjectContainer{
 
 	private _bitmap:egret.Bitmap

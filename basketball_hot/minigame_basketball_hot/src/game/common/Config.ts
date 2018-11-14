@@ -16,12 +16,4 @@ class Config {
 	public static getConfig(key) {
 		return Config[key];
 	}
-
-	// public static load():void {
-	// 	this.lang = egret.localStorage.getItem('lang') || 'wy';
-	// }
-
-	// public static save():void {
-	// 	egret.localStorage.setItem('lang', this.lang || 'wy');
-	// }
 }

@@ -1,14 +1,14 @@
 module ui {
 	export class MainScenePanel extends ui.Window{
 
-		public m_floor : eui.Group;
-		public m_basket_container_back : eui.Group;
-		public m_basket_container_pre : eui.Group;
-		public m_board_scope: eui.Group;
-		public m_net_scope: eui.Group;
-		public m_basket_ball: eui.Group;
-		public m_top: eui.Group;
-		public m_container : eui.Group;
+		public m_floor:eui.Group
+		public m_basket_container_back:eui.Group
+		public m_basket_container_pre:eui.Group
+		public m_board_scope:eui.Group
+		public m_net_scope:eui.Group
+		public m_basket_ball:eui.Group
+		public m_top:eui.Group
+		public m_container:eui.Group
 		public m_image_ball:eui.Image
 		public m_right_line:eui.Group
 		public m_left_line:eui.Group
@@ -34,34 +34,35 @@ module ui {
 		public m_top_ui:eui.Group
 		public btn_help:eui.Button
 		public score_fire_container:eui.Group
-
 		public img_time_progress:eui.Image
 		public label_score_me:eui.Label
 		public label_score_other:eui.Label
 		public label_left_time:eui.Label
 
-		private btn_debug:eui.Button
 		private _playerBall:PlayerBall
 		private _hitManager:HitManager
 
-		private _is_first_round:boolean = true;
-		private _hasTouchBegin:boolean = false;
-		private _hasThisRoundTouch:boolean = false;
-		private _is_face_left:boolean = true;
-		private _has_goal:boolean = false;
+		private _is_first_round:boolean = true
+		private _hasTouchBegin:boolean = false
+		private _hasThisRoundTouch:boolean = false
+		private _is_face_left:boolean = true
+		private _has_goal:boolean = false
 
 		public serverModel:ServerModel = new ServerModel()
-		private _timer:egret.Timer;
-		private _is_game_over:boolean = false;
+		private _timer:egret.Timer
+		private _is_game_over:boolean = false
 		private _allScores:Array<number> = new Array()
-		private _hasInitGame:boolean = false;
+		private _hasInitGame:boolean = false
+		private _random_container_y:number = 0
+		private _hasGameStarted:boolean = false;
+		private _waiting_join:boolean = false  //等待匹配进入有一个1秒的停留时间
+		private is_connecting:boolean = false
 
 		private _board_pre_display:dragonBones.EgretArmatureDisplay
 		private _board_back_display:dragonBones.EgretArmatureDisplay
 		private _net_pre_display:dragonBones.EgretArmatureDisplay
 		private _net_back_display:dragonBones.EgretArmatureDisplay
-		private _random_container_y:number = 0
-
+		
 		public constructor() {
 			super();
 			this.skinName = "MainScene";
@@ -81,7 +82,7 @@ module ui {
 			this.m_top_ui.y = target_y
 			if(this._hasGameStarted){
 				this.validateNow()
-				this._hitManager.EnterNextRound()
+				this._hitManager.UpateHitData()
 			}
 		}
 
@@ -89,43 +90,11 @@ module ui {
 		{
 			this.m_container.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onTouchBegin, this);
 			let __this = this
-			this.btn_debug.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.Event){
-				//将例子系统添加到舞台
-				let debugPanel = new DebugPanel()
-				__this.addChild(debugPanel)
-				event.stopPropagation()
-			}.bind(this), this)
-			
 			this.btn_help.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.Event){
 				event.stopPropagation()
 			}.bind(this), this)
 			this.btn_help.addEventListener(egret.TouchEvent.TOUCH_TAP, function(event:egret.Event){
 			}.bind(this), this)
-		}
-
-		//播放准备动画
-		public PlayReadyAnimation():void
-		{
-			this.m_content_container.visible = true
-			this.m_basket_ball.visible = false
-			this.img_ready_go_bg.visible = true
-			this.img_ready.visible = true
-			let __this = this
-			this.img_ready_go_bg.scaleY = 0.9
-			egret.Tween.get(this.img_ready_go_bg).to({scaleY:1.0}, 0.5 * 1000).call(function(){
-				egret.Tween.get(this.img_ready_go_bg).to({alpha : 0.5}, 0.5 * 1000).call(function(){
-					__this.img_go.visible = true
-					__this.img_go.scaleX = __this.img_go.scaleY = 6.0
-					egret.Tween.get(this.img_go).to({scaleX:1, scaleY:1}, 0.5 * 1000)
-					.to({alpha:0}, 1 * 1000).call(function(){
-						__this.img_go.visible = false
-						__this.StartGame()
-					}.bind(this), this)
-				}.bind(this), this).to({alpha:0}, 1 * 1000)
-
-				egret.Tween.get(this.img_ready).to({alpha : 0}, 1 * 1000)
-			}.bind(this), this)
-			SoundManager.getInstance().playSound("ready_go_mp3")
 		}
 
 		//真正开始游戏
@@ -206,6 +175,7 @@ module ui {
 			this._addAnimation()
 		}
 
+		//游戏结束
 		private _on_game_over():void
 		{
 			if(this._is_game_over)
@@ -217,37 +187,8 @@ module ui {
 			this.img_shadow.visible = false;
 			this._playerBall.OnGameOver()
 			this._clearTimer()
+			GamePlatform.onFinished()
 			this.removeEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this)
-		}
-
-		public HasTouchBegin():boolean
-		{
-			return this._hasTouchBegin
-		}
-
-		public GetHitManager():HitManager
-		{
-			return this._hitManager
-		}
-
-		public HasThisRoundTouch():boolean
-		{
-			return this._hasThisRoundTouch
-		}
-
-		public IsFaceLeft()
-		{
-			return this._is_face_left
-		}
-
-		public HasGoal():boolean
-		{
-			return this._has_goal
-		}
-
-		public GetAllScores():Array<number>
-		{
-			return this._allScores
 		}
 
 		public SetGoal(has_global, score:number):void
@@ -274,7 +215,7 @@ module ui {
 			this.label_score_other.text = this.serverModel.otherRole.score.toString();
 			this.label_left_time.text = this.serverModel.left_time.toString();
 			let percent = this.serverModel.left_time / this.serverModel.MAX_TIME
-			let start_y = 5
+			let start_y = 10
 			let down_height = percent * (this.img_time_progress.height - 2 * start_y)
 			this.img_time_progress.mask = new egret.Rectangle(0, this.img_time_progress.height - start_y - down_height, this.img_time_progress.width, down_height)
 
@@ -285,12 +226,7 @@ module ui {
 			}
 		}
 
-		public GetPlayerBall():PlayerBall
-		{
-			return this._playerBall
-		}
-
-		
+		//进球后马上修改判定框位置
 		private _updateDecisionPosition():void
 		{
 			let scale_rate = 1
@@ -306,6 +242,7 @@ module ui {
 			this.m_decision_container.scaleX = Math.abs(this.m_decision_container.scaleX) * scale_rate;
 		}
 
+		//进球后，延迟一定时间调整篮筐篮架位置
 		private _updateBasketContainerPosition():void
 		{
 			let scale_rate = 1
@@ -342,10 +279,10 @@ module ui {
 				let __this = this
 				BasketUtils.performDelay(function(){
 					__this._updateBasketContainerPosition()
-				}.bind(this), 1 * 1000, this);
+				}.bind(this), 0.4 * 1000, this)
 			}
 			
-			this.validateNow()
+			this.validateNow() //立马刷新，要不然当前帧计算判定框信息会出现问题
 
 			if(this._is_first_round){
 				let random_ball_x = this.stage.stageWidth / 2 - this.m_basket_ball.width / 2;
@@ -354,10 +291,8 @@ module ui {
 				this.m_basket_ball.y = random_ball_y
 			}
 			
-			this._is_first_round = false;
-			
-			
-			this._hitManager.EnterNextRound()
+			this._is_first_round = false
+			this._hitManager.UpateHitData()
 			this._playerBall.EnterNextRound()
 
 		}
@@ -386,13 +321,13 @@ module ui {
 			}
 
 			this._hasThisRoundTouch = true
-			if(this.m_basket_ball.y <= this.m_top.y)
+			if(this.m_basket_ball.y <= this.m_top.y)  //超过了一定的位置后，点击无效
 			{
 				return;
 			}
 			
 			SoundManager.getInstance().playSound("touch_down_mp3")
-			this._playerBall.OnPushDown();
+			this._playerBall.OnPushDown()
 		}
 
 		/********************以下是各种动画******************* */
@@ -442,6 +377,7 @@ module ui {
 			this._net_back_display.animation.play('lanban', 1)
 		}
 
+		//进球动画
 		public PlayGoalAnimation()
 		{
 			this._net_pre_display.animation.stop()
@@ -450,14 +386,7 @@ module ui {
 			this._net_back_display.animation.play('jinqu', 1)
 		}
 
-		public PlayKongXingAnimation()
-		{
-			this._net_pre_display.animation.stop()
-			this._net_pre_display.animation.play('jinqu', 1)
-			this._net_back_display.animation.stop()
-			this._net_back_display.animation.play('jinqu', 1)
-		}
-
+		//篮筐变黑
 		public PlayBlackNetAnimation()
 		{
 			BasketUtils.SetColor(this._net_back_display, 0x000000)
@@ -500,6 +429,7 @@ module ui {
 			}
 		}
 
+		//连击
 		public ShowComboAnimation(combo_count:number):void
 		{
 			this.label_combo.text = 'cx' + combo_count.toString();
@@ -517,6 +447,7 @@ module ui {
 			}.bind(this), this)
 		}
 
+		//得分特效
 		public ShowScoreAnimation(score:number, lianxu_count:number):void
 		{
 			this.label_add_score.text = '+ ' + score.toString()
@@ -586,10 +517,32 @@ module ui {
 			}.bind(this), this)
 		}
 
-		/**************************以下的网络交互************************** */
-		private _hasGameStarted:boolean = false;
-		private _waiting_join:boolean = false  //等待匹配进入有一个1秒的停留时间
+		//播放准备动画
+		public PlayReadyAnimation():void
+		{
+			this.m_content_container.visible = true
+			this.m_basket_ball.visible = false
+			this.img_ready_go_bg.visible = true
+			this.img_ready.visible = true
+			let __this = this
+			this.img_ready_go_bg.scaleY = 0.9
+			egret.Tween.get(this.img_ready_go_bg).to({scaleY:1.0}, 0.5 * 1000).call(function(){
+				egret.Tween.get(this.img_ready_go_bg).to({alpha : 0.5}, 0.5 * 1000).call(function(){
+					__this.img_go.visible = true
+					__this.img_go.scaleX = __this.img_go.scaleY = 6.0
+					egret.Tween.get(this.img_go).to({scaleX:1, scaleY:1}, 0.5 * 1000)
+					.to({alpha:0}, 1 * 1000).call(function(){
+						__this.img_go.visible = false
+						__this.StartGame()
+					}.bind(this), this)
+				}.bind(this), this).to({alpha:0}, 1 * 1000)
 
+				egret.Tween.get(this.img_ready).to({alpha : 0}, 1 * 1000)
+			}.bind(this), this)
+			SoundManager.getInstance().playSound("ready_go_mp3")
+		}
+
+		/**************************以下的网络交互************************** */
 		private onShootJoinPush(msgId, body):void
 		{
 		}
@@ -599,7 +552,7 @@ module ui {
 			GamePlatform.onStarted(function(){}.bind(this)); //onStarted
 			if(body['player_list'])
 			{
-				log("####", body)
+				// log("####", body)
 				let player_list:Array<Object> = body['player_list'] as Array<Object>
 				if(player_list && player_list.length > 0)
 				{
@@ -634,7 +587,6 @@ module ui {
 		{
 			let second = body['second']
 			let left_time = Const.GAME_TIME - second
-			// this.serverModel.left_time = left_time
 			if(Math.abs(left_time - this.serverModel.left_time) > 2){
 				this.serverModel.left_time = left_time
 			}
@@ -642,7 +594,6 @@ module ui {
 
 		private onGameOverPush(msgId, body):void
 		{
-			GamePlatform.onFinished()
 			this._on_game_over()
 		}
 
@@ -652,22 +603,44 @@ module ui {
 			this.UpdateScore()
 		}
 
-		private is_dis_connected = false
-		private _re_connected_times = 0
+		
 		private onDisconnected():void
 		{
-			if(!this.is_dis_connected){
+			if(this._is_game_over){
 				return
 			}
-			this.is_dis_connected = true
-			this._re_connected_times = 0
-			
+			GameNet.onDisconnected = this.onDisconnected.bind(this)
+			if(this.is_connecting){
+				let __this = this
+				BasketUtils.performDelay(function(){
+					if(this._is_game_over){
+						return
+					}
+					if(GameNet.isConnected()){
+						return
+					}
+					__this.is_connecting = true
+					__this.reconnect()
+				}.bind(this), 3 * 1000, this)
+				return
+			}
+			this.is_connecting = true
+			this.reconnect()
 		}
 
 		private async reconnect()
 		{
 			await GameNet.connectServer();
 			await GameNet.reqLogin(User.roomId);
+			await GameNet.reqReEnter()
+			this.is_connecting = false
+		}
+
+		private onReEnterPush(msgId, body)
+		{
+			// log("onReEnterPush", body)
+			this.serverModel.ReEnterUpdateRoleInfo(body.player_list, body.score)
+			this.UpdateScore()
 		}
 
 		public onOpen():void
@@ -685,9 +658,10 @@ module ui {
 			GameNet.on(protocol.CMD_H5_SHOOT_SECOND_PUSH, this.onShootSecondush.bind(this)); //游戏时间推送
 			GameNet.on(protocol.CMD_H5_SHOOT_GAME_OVER_PUSH, this.onGameOverPush.bind(this)); // 游戏结束推送
 			GameNet.on(protocol.CMD_H5_SHOOT_SCORE_PUSH, this.onShootScorePush.bind(this)); //游戏分数推送
+			GameNet.on(protocol.CMD_H5_SHOOT_REENTER_PUSH, this.onReEnterPush.bind(this))
 			GameNet.onDisconnected = this.onDisconnected.bind(this)
 
-			GamePlatform.onInit(function(){}.bind(this)); //onInit
+			GamePlatform.onInit(); //onInit
 			this.run();
 			this._waiting_join = true
 			let __this = this
@@ -700,8 +674,7 @@ module ui {
 		private async run() {
 			await GameNet.connectServer();
 			await GameNet.reqLogin(User.roomId);
-			await GameNet.reqJoin(function(body){
-			});
+			await GameNet.reqJoin();
 		}
 
 		private _createDebug():void
@@ -723,8 +696,49 @@ module ui {
 
 		public onClose():void {
 			let protocol = io.GameNet.GAME_PROTOCOL;
-
+			GameNet.off(protocol.CMD_H5_SHOOT_JOIN_PUSH);
+			GameNet.off(protocol.CMD_H5_SHOOT_GAME_START_PUSH);  //游戏开始推送
+			GameNet.off(protocol.CMD_H5_SHOOT_GAME_STATUS_PUSH); //游戏状态推送
+			GameNet.off(protocol.CMD_H5_SHOOT_SECOND_PUSH); //游戏时间推送
+			GameNet.off(protocol.CMD_H5_SHOOT_GAME_OVER_PUSH); // 游戏结束推送
+			GameNet.off(protocol.CMD_H5_SHOOT_SCORE_PUSH); //游戏分数推送
+			GameNet.off(protocol.CMD_H5_SHOOT_REENTER_PUSH)
 			super.onClose();
+		}
+
+		public HasTouchBegin():boolean
+		{
+			return this._hasTouchBegin
+		}
+
+		public GetHitManager():HitManager
+		{
+			return this._hitManager
+		}
+
+		public HasThisRoundTouch():boolean
+		{
+			return this._hasThisRoundTouch
+		}
+
+		public IsFaceLeft()
+		{
+			return this._is_face_left
+		}
+
+		public HasGoal():boolean
+		{
+			return this._has_goal
+		}
+
+		public GetAllScores():Array<number>
+		{
+			return this._allScores
+		}
+
+		public GetPlayerBall():PlayerBall
+		{
+			return this._playerBall
 		}
 	}
 }

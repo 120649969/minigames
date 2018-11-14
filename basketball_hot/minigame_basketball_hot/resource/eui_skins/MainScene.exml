@@ -42,19 +42,19 @@
 			<e:Group id="m_board_down_circle" width="20" height="20" x="41.43" y="762.64" scaleX="1" scaleY="1"/>
 		</e:Group>
 		<e:Group id="m_top_ui" height="250" scaleX="1" scaleY="1" horizontalCenter="0" left="0" right="0">
-			<e:Image source="jdt_png" horizontalCenter="0" top="20" anchorOffsetX="56" anchorOffsetY="56" x="-88" y="-878" scaleX="1" scaleY="1"/>
-			<e:Image id="img_time_progress" source="jdt2_png" anchorOffsetX="56" anchorOffsetY="56" horizontalCenter="0" top="20" x="-88" y="-878" scaleX="1" scaleY="1"/>
-			<e:Image source="hongtou2_png" anchorOffsetX="268" anchorOffsetY="68" top="7" horizontalCenter="-195" scaleX="1" scaleY="1" x="-361" y="-891"/>
-			<e:Image source="lvtou2_png" anchorOffsetY="68" scaleX="1" scaleY="1" top="9" horizontalCenter="200" x="34" y="-889"/>
-			<e:Group id="score_fire_container" width="96" height="96" x="456" y="18.5" scaleX="1" scaleY="1"/>
-			<e:Label id="label_score_me" text="0" size="70" textColor="0xf4b9c8" borderColor="0xb4274c" strokeColor="0xb4274c" stroke="2" anchorOffsetY="35" anchorOffsetX="20" horizontalCenter="-154" top="43" x="-205" y="-855" scaleX="1" scaleY="1" textAlign="center"/>
-			<e:Label id="label_score_other" text="0" size="70" borderColor="0xB4274C" strokeColor="0x80a12d" stroke="2" anchorOffsetY="35" anchorOffsetX="20" horizontalCenter="141" top="43" textColor="0xdef1ad" x="90" y="-855" scaleX="1" scaleY="1" textAlign="center"/>
-			<e:Label id="label_left_time" text="60" size="50" borderColor="0xB4274C" strokeColor="0x000000" anchorOffsetY="25" anchorOffsetX="28" horizontalCenter="0" top="53" x="-60" y="-845" scaleX="1" scaleY="1" textColor="0xb1fef6"/>
-			<e:Image source="hongtou_png" x="-348.56" y="-871.35" scaleX="1" scaleY="1"/>
-			<e:Image source="lvtou_png" x="182.88" y="-868.76" scaleX="1" scaleY="1"/>
-			<e:Image source="z_png" horizontalCenter="41.5" top="27" x="-5" y="-871" scaleX="1" scaleY="1"/>
-			<e:Image id="img_icon_me" width="96" height="96" x="54" y="28" scaleX="1" scaleY="1"/>
-			<e:Image id="img_icon_other" width="96" height="96" x="561" y="28" scaleX="1" scaleY="1"/>
+			<e:Image source="jdt_png" horizontalCenter="0" top="35" anchorOffsetX="56" anchorOffsetY="56" x="-88" y="-878" scaleX="1" scaleY="1"/>
+			<e:Image id="img_time_progress" source="jdt2_png" anchorOffsetX="56" anchorOffsetY="56" horizontalCenter="0" top="35" x="-88" y="-878" scaleX="1" scaleY="1"/>
+			<e:Image source="hongtou2_png" anchorOffsetX="268" anchorOffsetY="68" top="22" horizontalCenter="-195" scaleX="1" scaleY="1" x="-361" y="-891"/>
+			<e:Image source="lvtou2_png" anchorOffsetY="68" scaleX="1" scaleY="1" top="24" horizontalCenter="200" x="34" y="-889"/>
+			<e:Group id="score_fire_container" width="96" height="96" x="456" y="38.45" scaleX="1" scaleY="1"/>
+			<e:Label id="label_score_me" text="0" size="70" textColor="0xf4b9c8" borderColor="0xb4274c" strokeColor="0xb4274c" stroke="2" anchorOffsetY="35" anchorOffsetX="20" horizontalCenter="-153.5" top="58" x="-205" y="-855" scaleX="1" scaleY="1" textAlign="center"/>
+			<e:Label id="label_score_other" text="0" size="70" borderColor="0xB4274C" strokeColor="0x80a12d" stroke="2" anchorOffsetY="35" anchorOffsetX="20" horizontalCenter="141.5" top="58" textColor="0xdef1ad" x="90" y="-855" scaleX="1" scaleY="1" textAlign="center"/>
+			<e:Label id="label_left_time" text="60" size="50" borderColor="0xB4274C" strokeColor="0x000000" anchorOffsetY="25" anchorOffsetX="28" horizontalCenter="0" top="68" x="-60" y="-845" scaleX="1" scaleY="1" textColor="0xb1fef6"/>
+			<e:Image source="hongtou_png" x="-348.56" y="-851.4" scaleX="1" scaleY="1"/>
+			<e:Image source="lvtou_png" x="182.88" y="-848.81" scaleX="1" scaleY="1"/>
+			<e:Image source="z_png" horizontalCenter="41.5" top="42" x="-5" y="-871" scaleX="1" scaleY="1"/>
+			<e:Image id="img_icon_me" width="96" height="96" x="54" y="47.95" scaleX="1" scaleY="1"/>
+			<e:Image id="img_icon_other" width="96" height="96" x="561" y="47.95" scaleX="1" scaleY="1"/>
 			<e:Button id="btn_help" label="" y="159.48" scaleX="1" scaleY="1" left="15" touchEnabled="true">
 				<e:skinName>
 					<e:Skin states="up,down,disabled">
@@ -65,14 +65,7 @@
 			</e:Button>
 		</e:Group>
 		</e:Group>
-		<e:Button id="btn_debug" label="测试面板" width="228" height="74" scaleX="1" scaleY="1" anchorOffsetX="114" anchorOffsetY="36" touchEnabled="true" enabled="true" horizontalCenter="0" bottom="50" x="246" y="1156" visible="false">
-			<e:skinName>
-			<e:Skin states="up,down,disabled">
-				<e:Image width="100%" height="100%" source="Button_yellow03_png" source.down="Button_yellow03_png" source.disabled="Button_yellow03_png"/>
-				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
-			</e:Skin>
-			</e:skinName>
-		</e:Button>
+
 	</e:Group>
 
 

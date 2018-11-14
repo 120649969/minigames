@@ -59,4 +59,20 @@ class ServerModel {
 			this.otherRole.score = new_role_info['total']
 		}
 	}
+
+	public ReEnterUpdateRoleInfo(player_list:Array<Object>, scores:Array<number>):void
+	{
+		if(typeof(player_list) != "undefined" && typeof(scores) != "undefined" && scores.length == 2 && player_list.length == 2)
+		{
+			let first_player_info:any = player_list[0]
+			let is_first = first_player_info.openid == User.openId
+			if(is_first){
+				this.myRole.score = scores[0]
+				this.otherRole.score = scores[1]
+			} else {
+				this.myRole.score = scores[1]
+				this.otherRole.score = scores[0]
+			}
+		}
+	}
 }

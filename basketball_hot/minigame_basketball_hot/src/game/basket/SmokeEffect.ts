@@ -1,3 +1,4 @@
+//烟雾特效
 class SmokeDisplayObject extends egret.DisplayObjectContainer{
 
 	private _bitmap:egret.Bitmap;

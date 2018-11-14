@@ -25,7 +25,8 @@ module io {
 			CMD_H5_SHOOT_GAME_STATUS_PUSH: 1004, //房间状态改变推送
 			CMD_H5_SHOOT_SECOND_PUSH:1006, //已经游戏秒数推送
 			CMD_H5_SHOOT_GAME_OVER_PUSH:1008, //游戏结束推送
-			CMD_H5_SHOOT_SCORE_PUSH:1010 //分数变化推送
+			CMD_H5_SHOOT_SCORE_PUSH:1010, //分数变化推送
+			CMD_H5_SHOOT_REENTER_PUSH:1012   //重进推送
 
 		};
 
@@ -66,7 +67,7 @@ module io {
 			})
 		}
 
-		public async reqJoin(callback) {
+		public async reqJoin(callback ?:any) {
 			let self = this;
 			return new Promise((resolve, reject) => {
 				self.on(GameNet.GAME_PROTOCOL.CMD_H5_SHOOT_JOIN_RSP, function (msgId, body) {
@@ -78,6 +79,23 @@ module io {
 					}
 				});
 				self.send(GameNet.GAME_PROTOCOL.CMD_H5_SHOOT_JOIN_REQ, {
+					openid: User.openId
+				});
+			});				
+		}
+
+		public async reqReEnter(callback ?:any) {
+			let self = this;
+			return new Promise((resolve, reject) => {
+				self.on(GameNet.GAME_PROTOCOL.CMD_H5_SHOOT_REENTER_RSP, function (msgId, body) {
+					self.off(GameNet.GAME_PROTOCOL.CMD_H5_SHOOT_REENTER_RSP);
+					resolve(body);
+					if(callback)
+					{
+						callback(body);
+					}
+				});
+				self.send(GameNet.GAME_PROTOCOL.CMD_H5_SHOOT_REENTER_REQ, {
 					openid: User.openId
 				});
 			});				

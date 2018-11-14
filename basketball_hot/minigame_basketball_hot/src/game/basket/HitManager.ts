@@ -40,7 +40,7 @@ class HitManager {
 	private _global_left_top_net_scope_point:egret.Point = new egret.Point()
 	private _global_right_down_net_scope_point:egret.Point = new egret.Point()
 
-	public EnterNextRound():void
+	public UpateHitData():void
 	{
 		let right_line_right_point:egret.Point = new egret.Point();
 		this.mainPanel.m_right_line.parent.localToGlobal(this.mainPanel.m_right_line.x + this.mainPanel.m_right_line.width, this.mainPanel.m_right_line.y , right_line_right_point);
@@ -87,8 +87,18 @@ class HitManager {
 		this.mainPanel.m_net_scope.localToGlobal(0, 0, this._global_left_top_net_scope_point)
 		this.mainPanel.m_net_scope.localToGlobal(this.mainPanel.m_net_scope.width, this.mainPanel.m_net_scope.height, this._global_right_down_net_scope_point)
 		
+		if(!this.mainPanel.IsFaceLeft())
+		{
+			HitConst.SwapPointXY(this._global_left_top_net_scope_point, this._global_right_down_net_scope_point)
+		}
+
 		this.mainPanel.m_board_scope.parent.localToGlobal(this.mainPanel.m_board_scope.x, this.mainPanel.m_board_scope.y + 20, this._global_board_line_left_top_point);
 		this.mainPanel.m_board_scope.parent.localToGlobal(this.mainPanel.m_board_scope.x + this.mainPanel.m_board_scope.width, this.mainPanel.m_board_scope.y + this.mainPanel.m_board_scope.height - 20, this._global_board_line_right_down_point);
+
+		if(!this.mainPanel.IsFaceLeft())
+		{
+			HitConst.SwapPointXY(this._global_board_line_left_top_point, this._global_board_line_right_down_point)
+		}
 	}
 
 	private _global_ball_circle_radius:number = 0;
@@ -255,10 +265,6 @@ class HitManager {
 	private _Temp_Point:egret.Point = new egret.Point()
 	private CheckHitBoardLines():boolean
 	{
-		if(!this.mainPanel.IsFaceLeft())
-		{
-			HitConst.SwapPointXY(this._global_board_line_left_top_point, this._global_board_line_right_down_point)
-		}
 
 		if(!this._check_ball_in_rect(this._global_board_line_left_top_point, this._global_board_line_right_down_point))
 		{
@@ -397,10 +403,6 @@ class HitManager {
 
 	public CheckHitNet():HitNetType
 	{
-		if(!this.mainPanel.IsFaceLeft())
-		{
-			HitConst.SwapPointXY(this._global_left_top_net_scope_point, this._global_right_down_net_scope_point)
-		}
 
 		if(!this._check_ball_in_rect(this._global_left_top_net_scope_point, this._global_right_down_net_scope_point))
 		{
