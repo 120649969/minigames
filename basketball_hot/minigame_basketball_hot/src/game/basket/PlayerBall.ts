@@ -15,9 +15,11 @@ class PlayerBall {
 
 	public _clear_hit_timer:egret.Timer
 	public _recent_hit:boolean = false
+	private last_speed_y = 0
 
 	private _smokeEffect:SmokeEffect
 	private _fireEffect:FireEffect
+	private _scoreSmokeEffect:ScoreFireEffect
 
 	public constructor(_ball:eui.Group, _mainPanel:ui.MainScenePanel) {
 		this.m_basket_ball = _ball
@@ -25,6 +27,9 @@ class PlayerBall {
 		this._hitManager = _mainPanel.GetHitManager()
 		this._smokeEffect = new SmokeEffect(this)
 		this._fireEffect = new FireEffect(this)
+		this._scoreSmokeEffect = new ScoreFireEffect(this)
+		this._scoreSmokeEffect.SetContainer(this.mainPanel.score_fire_container)
+		this._scoreSmokeEffect.visible = false
 	}
 
 	public GetMainScenePanel():ui.MainScenePanel
@@ -41,6 +46,8 @@ class PlayerBall {
 		this._tweenDir = 0
 		egret.Tween.removeTweens(this.mainPanel.m_image_ball)
 		this.mainPanel.m_image_ball.rotation = 0
+
+		this._scoreSmokeEffect.FirstGenerate()
 	}
 
 	private _currentAfterImageType:AfterImageType = AfterImageType.None
@@ -72,6 +79,8 @@ class PlayerBall {
 		} else {
 			this._fireEffect.Update(false)
 		}
+
+		this._scoreSmokeEffect.Update(true)
 	}
 
 	private _updateRotationTween():void
@@ -279,7 +288,21 @@ class PlayerBall {
 		return false;
 	}
 
-	private last_speed_y = 0
+	public UpdateScoreFire():void
+	{
+		let myScore = this.mainPanel.serverModel.myRole.score
+		let otherScore = this.mainPanel.serverModel.otherRole.score
+		if(myScore > otherScore){
+			this._scoreSmokeEffect.visible = true
+			this.mainPanel.score_fire_container.x = this.mainPanel.label_score_me.x - this.mainPanel.score_fire_container.width / 2
+		} else if(myScore < otherScore){
+			this._scoreSmokeEffect.visible = true
+			this.mainPanel.score_fire_container.x = this.mainPanel.label_score_other.x - this.mainPanel.score_fire_container.width / 2
+		} else {
+			this._scoreSmokeEffect.visible = false
+		}
+	}
+	
 	public Update():void
 	{
 		

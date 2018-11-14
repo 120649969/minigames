@@ -24,6 +24,7 @@
 		"bin-debug/game/basket/HitManager.js",
 		"bin-debug/game/basket/MainScenePanel.js",
 		"bin-debug/LoadingUI.js",
+		"bin-debug/game/basket/ScoreFireEffect.js",
 		"bin-debug/game/basket/ServerModel.js",
 		"bin-debug/game/basket/SmokeEffect.js",
 		"bin-debug/game/common/Config.js",

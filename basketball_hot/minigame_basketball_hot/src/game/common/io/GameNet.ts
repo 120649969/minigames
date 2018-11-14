@@ -16,6 +16,9 @@ module io {
 			CMD_H5_SHOOT_JOIN_RSP:4, //加入房间
 			CMD_H5_SHOOT_SHOOT_REQ :5, //投篮
 			CMD_H5_SHOOT_SHOOT_RSP: 6, //投篮
+			CMD_H5_SHOOT_REENTER_REQ: 9,  //重进
+			CMD_H5_SHOOT_REENTER_RSP: 10, //重进
+
 			
 			CMD_H5_SHOOT_JOIN_PUSH: 1000, //加入房间推送
 			CMD_H5_SHOOT_GAME_START_PUSH:1002, //游戏开始推送
@@ -39,18 +42,18 @@ module io {
 		}
 
 		public async connectServer() {
-			let self = this;
+			let self = this
 			return new Promise((resolve, reject) => {
 				self.onConnected = function () {
-					resolve();
+					resolve()
 				}
 
-				self.connect(Const.SERVER_URL);
-			});
+				self.connect(Const.SERVER_URL)
+			})
 		}
 
 		public async reqLogin(roomId) {
-			let self = this;
+			let self = this
 			return new Promise((resolve, reject) => {
 				self.on(GameNet.GAME_PROTOCOL.CMD_H5_LOGIN_RSP, function (msgId, body) {
 					self.off(GameNet.GAME_PROTOCOL.CMD_H5_LOGIN_RSP);
@@ -59,8 +62,8 @@ module io {
 				self.send(GameNet.GAME_PROTOCOL.CMD_H5_LOGIN_REQ, {
 					openid: User.openId,
 					roomid: roomId.toString()
-				});
-			});				
+				})
+			})
 		}
 
 		public async reqJoin(callback) {

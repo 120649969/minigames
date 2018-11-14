@@ -30,7 +30,7 @@
 declare var bdm; // 发行嵌入的SDK对象
 declare var WindowManager:ui.WindowManager;
 declare var GameNet:io.GameNet;
-
+declare function log(...args: any[]): void
 class Main extends eui.UILayer {
 
 
@@ -62,22 +62,25 @@ class Main extends eui.UILayer {
         WindowManager = ui.WindowManager.getInstance();
         GameNet = io.GameNet.getInstance();
         
-        // this.openId = egret.localStorage.getItem('openId');
-        let url_params =  Util.getAllUrlParam()
-        
-        if(typeof(url_params['openid']) != 'undefined'){
-            User.openId = url_params['openid']
+        if(User.openId == "")
+        {
+            User.openId = GamePlatform.GetMyOpenId()
         }
 
-        if(typeof(url_params['roomId']) != 'undefined'){
-            User.roomId = url_params['roomId']
+        // log("##11##", User.roomId, User.roomId == "")
+
+        if(User.roomId == "")
+        {
+            User.roomId = GamePlatform.GetRoomId()
         }
+        // log("##22##", User.roomId, User.roomId == "", User.openId, User.openId == "")
+        log("##3#", bdm.args)
 
         if (!User.openId || User.openId.length == 0) {
             User.openId = new Date().getTime().toString() + Math.floor(Math.random() * 10000).toString();
             egret.localStorage.setItem('openId', User.openId);
-            User.roomId = 0
-        }      
+            User.roomId = "0"
+        }
         
         this.runGame().catch(e => {
             console.log(e);
@@ -85,8 +88,6 @@ class Main extends eui.UILayer {
     }
 
     protected setStageSize(emit:boolean) {
-
-
         /************test1 begin*************** */
         let width = egret.Capabilities.boundingClientWidth;
         let height = egret.Capabilities.boundingClientHeight;

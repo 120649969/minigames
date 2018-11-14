@@ -1,1 +1,1 @@
-{"width":256,"height":128,"name":"net_pre","imagePath":"net_pre_tex.png","SubTexture":[{"width":139,"y":1,"height":108,"name":"wang","x":1}]}
+{"SubTexture":[{"width":139,"y":1,"height":108,"name":"wang","x":1}],"width":256,"imagePath":"net_pre_tex.png","name":"net_pre","height":128}

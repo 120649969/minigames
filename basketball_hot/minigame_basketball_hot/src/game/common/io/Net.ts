@@ -171,7 +171,7 @@ module io {
 			console.log(this.name, 'disconnected');
 
 			if (!this.closeFlag) {
-				ui.WindowManager.getInstance().open('WaitingWindow', 1000606);
+				// ui.WindowManager.getInstance().open('WaitingWindow', 1000606);
 				setTimeout(this.reconnect.bind(this), 3000);
 			}
 

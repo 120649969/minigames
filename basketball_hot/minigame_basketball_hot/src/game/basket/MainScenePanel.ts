@@ -32,6 +32,8 @@ module ui {
 		public img_score_type:eui.Image
 		public label_add_score:eui.Label
 		public m_top_ui:eui.Group
+		public btn_help:eui.Button
+		public score_fire_container:eui.Group
 
 		public img_time_progress:eui.Image
 		public label_score_me:eui.Label
@@ -91,7 +93,13 @@ module ui {
 				//将例子系统添加到舞台
 				let debugPanel = new DebugPanel()
 				__this.addChild(debugPanel)
-				event.stopPropagation();
+				event.stopPropagation()
+			}.bind(this), this)
+			
+			this.btn_help.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.Event){
+				event.stopPropagation()
+			}.bind(this), this)
+			this.btn_help.addEventListener(egret.TouchEvent.TOUCH_TAP, function(event:egret.Event){
 			}.bind(this), this)
 		}
 
@@ -105,11 +113,11 @@ module ui {
 			let __this = this
 			this.img_ready_go_bg.scaleY = 0.9
 			egret.Tween.get(this.img_ready_go_bg).to({scaleY:1.0}, 0.5 * 1000).call(function(){
-				egret.Tween.get(this.img_ready_go_bg).to({alpha : 0.5}, 1 * 1000).call(function(){
+				egret.Tween.get(this.img_ready_go_bg).to({alpha : 0.5}, 0.5 * 1000).call(function(){
 					__this.img_go.visible = true
 					__this.img_go.scaleX = __this.img_go.scaleY = 6.0
 					egret.Tween.get(this.img_go).to({scaleX:1, scaleY:1}, 0.5 * 1000)
-					.to({alpha:0}, 2 * 1000).call(function(){
+					.to({alpha:0}, 1 * 1000).call(function(){
 						__this.img_go.visible = false
 						__this.StartGame()
 					}.bind(this), this)
@@ -117,12 +125,12 @@ module ui {
 
 				egret.Tween.get(this.img_ready).to({alpha : 0}, 1 * 1000)
 			}.bind(this), this)
+			SoundManager.getInstance().playSound("ready_go_mp3")
 		}
 
 		//真正开始游戏
 		public StartGame():void
 		{
-			GamePlatform.GetIcon()
 			this._hasGameStarted = true
 			this._is_first_round = true
 			this._hasTouchBegin = false //整个游戏是否点击
@@ -143,23 +151,21 @@ module ui {
 			
 			this._clearTimer()
 			this._startTimer()
-			this.removeEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this)
 			this.addEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this)
 			this.serverModel.left_time = this.serverModel.MAX_TIME
 
 			if(this.serverModel.myRole.icon.indexOf("baidu") > 0){
 			} else {
-				if(this.serverModel.myRole.icon){
-					this.img_icon_me.source = this.serverModel.myRole.icon
-				}
-				if(this.serverModel.otherRole.icon){
-					this.img_icon_other.source = this.serverModel.otherRole.icon
-				}
+				// if(this.serverModel.myRole.icon){
+				// 	this.img_icon_me.source = this.serverModel.myRole.icon
+				// }
+				// if(this.serverModel.otherRole.icon){
+				// 	this.img_icon_other.source = this.serverModel.otherRole.icon
+				// }
 			}
 
 			this.NextRound()
 			this.UpdateScore()
-			
 		}
 
 		private _startTimer():void
@@ -212,7 +218,6 @@ module ui {
 			this._playerBall.OnGameOver()
 			this._clearTimer()
 			this.removeEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this)
-			GamePlatform.onFinished(this.serverModel.myRole.score, function(){}.bind(this))
 		}
 
 		public HasTouchBegin():boolean
@@ -269,8 +274,15 @@ module ui {
 			this.label_score_other.text = this.serverModel.otherRole.score.toString();
 			this.label_left_time.text = this.serverModel.left_time.toString();
 			let percent = this.serverModel.left_time / this.serverModel.MAX_TIME
-			let down_height = percent * this.img_time_progress.height
-			this.img_time_progress.mask = new egret.Rectangle(0, this.img_time_progress.height - down_height, this.img_time_progress.width, down_height)
+			let start_y = 5
+			let down_height = percent * (this.img_time_progress.height - 2 * start_y)
+			this.img_time_progress.mask = new egret.Rectangle(0, this.img_time_progress.height - start_y - down_height, this.img_time_progress.width, down_height)
+
+			if(this._hasGameStarted){
+				this.label_score_me.anchorOffsetX = this.label_score_me.width / 2
+				this.label_score_other.anchorOffsetX = this.label_score_other.width / 2
+				this._playerBall.UpdateScoreFire()
+			}
 		}
 
 		public GetPlayerBall():PlayerBall
@@ -359,6 +371,7 @@ module ui {
 				this.removeEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this)
 				return
 			}
+			
 			this._playerBall.Update()
 		}
 
@@ -388,7 +401,7 @@ module ui {
 			let armatureDisplay = BasketUtils.createDragonBones("board_pre_ske_json", "board_pre_tex_json", "board_pre_tex_png", "boad_pre_armature")
 			this.img_board_pre.parent.addChild(armatureDisplay)
 			armatureDisplay.x = this.img_board_pre.x
-			armatureDisplay.y = this.img_board_pre.y
+			armatureDisplay.y = this.img_board_pre.y + 20
 			this._board_pre_display = armatureDisplay
 
 			let armatureDisplay2 = BasketUtils.createDragonBones("board_back_ske_json", "board_back_tex_json", "board_back_tex_png", "boad_back_armature")
@@ -431,18 +444,18 @@ module ui {
 
 		public PlayGoalAnimation()
 		{
-			this._net_pre_display.animation.stop();
+			this._net_pre_display.animation.stop()
 			this._net_pre_display.animation.play('jinqu', 1)
-			this._net_back_display.animation.stop();
+			this._net_back_display.animation.stop()
 			this._net_back_display.animation.play('jinqu', 1)
 		}
 
 		public PlayKongXingAnimation()
 		{
-			this._net_pre_display.animation.stop();
-			this._net_pre_display.animation.play('kongxinqiu', 1)
-			this._net_back_display.animation.stop();
-			this._net_back_display.animation.play('kongxinqiu', 1)
+			this._net_pre_display.animation.stop()
+			this._net_pre_display.animation.play('jinqu', 1)
+			this._net_back_display.animation.stop()
+			this._net_back_display.animation.play('jinqu', 1)
 		}
 
 		public PlayBlackNetAnimation()
@@ -468,27 +481,21 @@ module ui {
 				return
 			}
 
-			if(hitNetType == HitNetType.CENTER){
-				this._net_pre_display.animation.play('up', 1)
-				this._net_back_display.animation.play('up', 1)
-				return
-			}
-
 			if(hitNetType == HitNetType.LEFT){
 				if(this.IsFaceLeft()){
-					this._net_pre_display.animation.play('R', 1)
-					this._net_back_display.animation.play('R', 1)
+					this._net_pre_display.animation.play('right', 1)
+					this._net_back_display.animation.play('right', 1)
 				} else {
-					this._net_pre_display.animation.play('L', 1)
-					this._net_back_display.animation.play('L', 1)
+					this._net_pre_display.animation.play('left', 1)
+					this._net_back_display.animation.play('left', 1)
 				}
 			} else {
 				if(this.IsFaceLeft()){
-					this._net_pre_display.animation.play('L', 1)
-					this._net_back_display.animation.play('L', 1)
+					this._net_pre_display.animation.play('left', 1)
+					this._net_back_display.animation.play('left', 1)
 				} else {
-					this._net_pre_display.animation.play('R', 1)
-					this._net_back_display.animation.play('R', 1)
+					this._net_pre_display.animation.play('right', 1)
+					this._net_back_display.animation.play('right', 1)
 				}
 			}
 		}
@@ -581,16 +588,18 @@ module ui {
 
 		/**************************以下的网络交互************************** */
 		private _hasGameStarted:boolean = false;
+		private _waiting_join:boolean = false  //等待匹配进入有一个1秒的停留时间
 
 		private onShootJoinPush(msgId, body):void
 		{
 		}
 
-		private onShootGameStartPush(msgId, body):void
+		private _real_join(body):void
 		{
 			GamePlatform.onStarted(function(){}.bind(this)); //onStarted
 			if(body['player_list'])
 			{
+				log("####", body)
 				let player_list:Array<Object> = body['player_list'] as Array<Object>
 				if(player_list && player_list.length > 0)
 				{
@@ -602,6 +611,18 @@ module ui {
 					this.PlayReadyAnimation()
 				}
 			}
+		}
+
+		private onShootGameStartPush(msgId, body):void
+		{
+			if(!this._waiting_join){
+				this._real_join(body)
+				return	
+			}
+			let __this = this
+			BasketUtils.performDelay(function(){
+				__this._real_join(body)
+			}.bind(this), 1 * 1000, this)
 		}
 
 		private onShootGameStatusPush(msgId, body):void
@@ -621,6 +642,7 @@ module ui {
 
 		private onGameOverPush(msgId, body):void
 		{
+			GamePlatform.onFinished()
 			this._on_game_over()
 		}
 
@@ -628,6 +650,24 @@ module ui {
 		{
 			this.serverModel.UpdateRoleScore(body)
 			this.UpdateScore()
+		}
+
+		private is_dis_connected = false
+		private _re_connected_times = 0
+		private onDisconnected():void
+		{
+			if(!this.is_dis_connected){
+				return
+			}
+			this.is_dis_connected = true
+			this._re_connected_times = 0
+			
+		}
+
+		private async reconnect()
+		{
+			await GameNet.connectServer();
+			await GameNet.reqLogin(User.roomId);
 		}
 
 		public onOpen():void
@@ -645,18 +685,21 @@ module ui {
 			GameNet.on(protocol.CMD_H5_SHOOT_SECOND_PUSH, this.onShootSecondush.bind(this)); //游戏时间推送
 			GameNet.on(protocol.CMD_H5_SHOOT_GAME_OVER_PUSH, this.onGameOverPush.bind(this)); // 游戏结束推送
 			GameNet.on(protocol.CMD_H5_SHOOT_SCORE_PUSH, this.onShootScorePush.bind(this)); //游戏分数推送
+			GameNet.onDisconnected = this.onDisconnected.bind(this)
 
 			GamePlatform.onInit(function(){}.bind(this)); //onInit
 			this.run();
+			this._waiting_join = true
+			let __this = this
+			BasketUtils.performDelay(function(){
+				__this._waiting_join = false
+			}.bind(this), 1 * 1000, this)
 			GamePlatform.onWaiting(function(){}.bind(this)); //onWaiting
 		}
 
 		private async run() {
 			await GameNet.connectServer();
-
 			await GameNet.reqLogin(User.roomId);
-
-			let __this = this
 			await GameNet.reqJoin(function(body){
 			});
 		}

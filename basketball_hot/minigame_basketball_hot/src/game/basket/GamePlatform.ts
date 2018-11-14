@@ -26,20 +26,42 @@ class GamePlatform {
 		}
 	}
 
-	public static onFinished(scores, errorCallback):void
+	public static onFinished():void
 	{
 		if(typeof(bdm) != "undefined")
 		{
-			bdm.pk.onFinished(scores, errorCallback)
+			bdm.pk.onFinished()
 		}
 	}
 
 	public static GetIcon():void
 	{
-		if(typeof(bdm) != "undefined")
+		if(typeof(bdm) != "undefined" && typeof(bdm.args) != "undefined")
 		{
-			console.log("#########GetIcon#######")
-			console.log(bdm.pk.args)
+			console.log(bdm.args)
 		}
+	}
+
+	public static GetMyOpenId():string
+	{
+		if(typeof(bdm) != "undefined" && typeof(bdm.args) != "undefined")
+		{
+			console.log(bdm.args.openid)
+			return bdm.args.openid
+		}
+		log(bdm.args)
+		log(window.location)
+		return ""
+	}
+
+	public static GetRoomId():string
+	{
+		if(typeof(bdm) != "undefined" && typeof(bdm.args) != "undefined")
+		{
+			console.log(bdm.args.roomid)
+			return bdm.args.roomid
+		}
+
+		return ""
 	}
 }

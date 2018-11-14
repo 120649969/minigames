@@ -407,11 +407,12 @@ class HitManager {
 			return  HitNetType.NONE
 		}
 
-		if(this._global_ball_center_point.x < this._global_left_top_net_scope_point.x){
+		let center_x = (this._global_left_top_net_scope_point.x + this._global_right_down_net_scope_point.x) / 2
+		if(this._global_ball_center_point.x <= center_x){
 			return HitNetType.LEFT
 		}
 
-		if(this._global_ball_center_point.x > this._global_right_down_net_scope_point.x){
+		if(this._global_ball_center_point.x > center_x){
 			return HitNetType.RIGHT
 		}
 
