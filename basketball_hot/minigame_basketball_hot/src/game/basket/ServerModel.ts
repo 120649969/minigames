@@ -15,7 +15,7 @@ class ServerModel {
 
 	public myRole:RoleInfo
 	public otherRole:RoleInfo
-	public MAX_TIME:number = 6000
+	public MAX_TIME:number = 60
 	public constructor() {
 	}
 

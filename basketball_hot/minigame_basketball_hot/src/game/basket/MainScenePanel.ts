@@ -106,13 +106,13 @@ module ui {
 			}.bind(this), this)
 
 			this.btn_help.addEventListener(egret.TouchEvent.TOUCH_END, function(event:egret.Event){
-			egret.Tween.get(__this.img_help).to({"scaleX": 1, "scaleY": 1}, 0.1 *1000).call(function(){
+			egret.Tween.get(__this.img_help).to({"scaleX": 0, "scaleY": 0}, 0.1 *1000).call(function(){
 					__this.img_help.visible = false
 				})
 			}.bind(this), this)
 
-			this.btn_help.addEventListener(egret.TouchEvent.TOUCH_CANCEL, function(event:egret.Event){
-				egret.Tween.get(__this.img_help).to({"scaleX": 1, "scaleY": 1}, 0.1 *1000).call(function(){
+			this.btn_help.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, function(event:egret.Event){
+				egret.Tween.get(__this.img_help).to({"scaleX": 0, "scaleY": 0}, 0.1 *1000).call(function(){
 					__this.img_help.visible = false
 				})
 			}.bind(this), this)
@@ -244,10 +244,7 @@ module ui {
 			this._clearTimer()
 
 			//延迟一点时间弹出去
-			let platform_finish_delay_time = 1
-			if(this._is_ya_shao){
-				platform_finish_delay_time = 2
-			}
+			let platform_finish_delay_time = 2
 			BasketUtils.performDelay(function(){
 				GamePlatform.onFinished()
 			}.bind(this), platform_finish_delay_time * 1000, this)
