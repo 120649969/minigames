@@ -136,7 +136,8 @@ enum HitNetType {
 enum BasketScore{
 	NORMAL_GOAL = 2,
 	KONG_XING_GOAL = 3,
-	LIANXU_KONG_XING_GOAL = 6
+	LIANXU_KONG_XING_GOAL = 6,
+	YA_SHAO_GOAL = 10 //压哨得分
 }
 
 enum AfterImageType{

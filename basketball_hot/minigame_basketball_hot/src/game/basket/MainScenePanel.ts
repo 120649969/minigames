@@ -38,6 +38,7 @@ module ui {
 		public label_score_me:eui.Label
 		public label_score_other:eui.Label
 		public label_left_time:eui.Label
+		public img_juesha:eui.Image
 
 		private _playerBall:PlayerBall
 		private _hitManager:HitManager
@@ -57,6 +58,7 @@ module ui {
 		private _hasGameStarted:boolean = false;
 		private _waiting_join:boolean = false  //等待匹配进入有一个1秒的停留时间
 		private is_connecting:boolean = false
+		private _is_ya_shao:boolean = false
 
 		private _board_pre_display:dragonBones.EgretArmatureDisplay
 		private _board_back_display:dragonBones.EgretArmatureDisplay
@@ -187,7 +189,15 @@ module ui {
 			this.img_shadow.visible = false;
 			this._playerBall.OnGameOver()
 			this._clearTimer()
-			GamePlatform.onFinished()
+
+			let platform_finish_delay_time = 1
+			if(this._is_ya_shao){
+				platform_finish_delay_time = 2
+			}
+			BasketUtils.performDelay(function(){
+				GamePlatform.onFinished()
+			}.bind(this), platform_finish_delay_time * 1000, this)
+			
 			this.removeEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this)
 		}
 
@@ -436,13 +446,32 @@ module ui {
 			this.label_combo.scaleX = this.label_combo.scaleY = 0.2
 			let __this = this
 			this.label_combo.visible = true
+			this._playComboEffect(this.label_combo)
+		}
 
-			egret.Tween.get(this.label_combo)
+		private _playComboEffect(displayObject:egret.DisplayObject):void
+		{
+			egret.Tween.get(displayObject)
 			.to({scaleX:1.5, scaleY:1.5}, 0.2 * 1000, egret.Ease.sineInOut)
 			.to({scaleX:1, scaleY:1}, 0.1 * 1000)
 			.call(function(){
 				BasketUtils.performDelay(function(){
-					__this.label_combo.visible = false
+					displayObject.visible = false
+				}.bind(this), 0.7 * 1000, this)
+			}.bind(this), this)
+		}
+		private _playFlyEffect(displayObject:egret.DisplayObject):void
+		{
+			egret.Tween.get(displayObject)
+			.to({scaleX:1.5, scaleY:1.5}, 0.2 * 1000, egret.Ease.sineInOut)
+			.to({scaleX:1, scaleY:1}, 0.1 * 1000)
+			.call(function(){
+				BasketUtils.performDelay(function(){
+					let cur_x = displayObject.x
+					let cur_y = displayObject.y
+					egret.Tween.get(displayObject).to({x:cur_x, y:cur_y - 100, alpha:0}, 0.4 * 1000).call(function(){
+						displayObject.visible = false
+					}.bind(this))
 				}.bind(this), 0.7 * 1000, this)
 			}.bind(this), this)
 		}
@@ -450,15 +479,9 @@ module ui {
 		//得分特效
 		public ShowScoreAnimation(score:number, lianxu_count:number):void
 		{
-			this.label_add_score.text = '+ ' + score.toString()
-			this.label_add_score.scaleX = this.label_add_score.scaleY = 0.5
-			this.label_add_score.visible = true
-			this.label_add_score.alpha = 1
-			this.label_add_score.anchorOffsetX = this.label_add_score.width / 2
-			this.label_add_score.anchorOffsetY = this.label_add_score.height
-
+			let is_juesha = true
 			let img_path = BasketUtils.GetScorePng(score, lianxu_count);
-			if(this.serverModel.left_time <= 1){
+			if(score == BasketScore.YA_SHAO_GOAL){
 				img_path = BasketUtils.YA_SHAO_Png
 				let add_score = score
 				if(lianxu_count > 1){
@@ -468,53 +491,61 @@ module ui {
 				let last_score = curr_score - add_score
 				let other_score = this.serverModel.otherRole.score
 				if(last_score < other_score && curr_score > other_score){
-					img_path = BasketUtils.JUE_SHA_Png
+					// img_path = BasketUtils.JUE_SHA_Png
+					is_juesha = true
 				}
 				SoundManager.getInstance().playSound("yashao_mp3")
+
+				this._is_ya_shao = true
 			}
+
 			this.img_score_type.source = img_path
 			this.img_score_type.anchorOffsetX = this.img_score_type.width / 2
 			this.img_score_type.anchorOffsetY = this.img_score_type.height
 			this.img_score_type.visible = true
 			this.img_score_type.alpha = 1
-			this.img_score_type.scaleX = this.label_add_score.scaleY = 0.5
+			this.img_score_type.scaleX = this.img_score_type.scaleY = 0.5
 
-			let global_right_line_point = this.m_right_line.localToGlobal(-50, 0)
-			let local_point = this.img_score_type.parent.globalToLocal(global_right_line_point.x, global_right_line_point.y)
+			if(score == BasketScore.YA_SHAO_GOAL){
+				if(is_juesha){
+					this.img_juesha.visible = true
+				}
+				
+				let global_point = this.img_juesha.localToGlobal(this.img_juesha.width / 2, 0)
+				let local_point = this.img_score_type.parent.globalToLocal(global_point.x, global_point.y)
+				
+				this.img_score_type.x = local_point.x
+				this.img_score_type.y = local_point.y - 20
+				this._playComboEffect(this.img_score_type)
+			} else {
+				let global_right_line_point = this.m_right_line.localToGlobal(-50, 0)
+				let local_point = this.img_score_type.parent.globalToLocal(global_right_line_point.x, global_right_line_point.y)
 
-			this.img_score_type.x = local_point.x
-			this.img_score_type.y = local_point.y - 20
+				this.img_score_type.x = local_point.x
+				this.img_score_type.y = local_point.y - 20
+				this.img_juesha.visible = false
+				this._playFlyEffect(this.img_score_type)
+			}
 
-			this.label_add_score.x = this.img_score_type.x
-			this.label_add_score.y = this.img_score_type.y - 70
+			
 
-			let __this = this
-			egret.Tween.get(this.label_add_score)
-			.to({scaleX:1.5, scaleY:1.5},0.2 * 1000, egret.Ease.sineInOut)
-			.to({scaleX:1, scaleY:1}, 0.1 * 1000)
-			.call(function(){
-				BasketUtils.performDelay(function(){
-					let cur_x = __this.label_add_score.x
-					let cur_y = __this.label_add_score.y
-					egret.Tween.get(this.label_add_score).to({x:cur_x, y:cur_y - 100, alpha:0}, 0.4 * 1000).call(function(){
-						__this.label_add_score.visible = false
-					}.bind(this))
-				}.bind(this), 0.7 * 1000, this)
-			}.bind(this), this)
+			if(is_juesha){
+				this.img_juesha.scaleX = this.img_juesha.scaleY = 0.5
+				this._playComboEffect(this.img_juesha)
+			}
+			
+			if(score != BasketScore.YA_SHAO_GOAL){
+				this.label_add_score.text = '+ ' + score.toString()
+				this.label_add_score.scaleX = this.label_add_score.scaleY = 0.5
+				this.label_add_score.visible = true
+				this.label_add_score.alpha = 1
+				this.label_add_score.anchorOffsetX = this.label_add_score.width / 2
+				this.label_add_score.anchorOffsetY = this.label_add_score.height
+				this.label_add_score.x = this.img_score_type.x
+				this.label_add_score.y = this.img_score_type.y - 70
 
-
-			egret.Tween.get(this.img_score_type)
-			.to({scaleX:1.5, scaleY:1.5}, 0.2 * 1000, egret.Ease.sineInOut)
-			.to({scaleX:1, scaleY:1}, 0.1 * 1000)
-			.call(function(){
-				BasketUtils.performDelay(function(){
-					let cur_x = __this.img_score_type.x
-					let cur_y = __this.img_score_type.y
-					egret.Tween.get(this.img_score_type).to({x:cur_x, y:cur_y - 100, alpha:0}, 0.4 * 1000).call(function(){
-						__this.img_score_type.visible = false
-					}.bind(this))
-				}.bind(this), 0.7 * 1000, this)
-			}.bind(this), this)
+				this._playFlyEffect(this.label_add_score)
+			}
 		}
 
 		//播放准备动画

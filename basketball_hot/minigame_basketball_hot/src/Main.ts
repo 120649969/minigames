@@ -67,15 +67,11 @@ class Main extends eui.UILayer {
             User.openId = GamePlatform.GetMyOpenId()
         }
 
-        // log("##11##", User.roomId, User.roomId == "")
-
         if(User.roomId == "")
         {
             User.roomId = GamePlatform.GetRoomId()
         }
-        // log("##22##", User.roomId, User.roomId == "", User.openId, User.openId == "")
-        log("##3#", bdm.args)
-
+        
         if (!User.openId || User.openId.length == 0) {
             User.openId = new Date().getTime().toString() + Math.floor(Math.random() * 10000).toString();
             egret.localStorage.setItem('openId', User.openId);

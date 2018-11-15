@@ -230,6 +230,11 @@ class PlayerBall {
 	//计算分数
 	private _calcuteScore():number
 	{
+
+		if(this.mainPanel.serverModel.left_time <= 1){
+			return BasketScore.YA_SHAO_GOAL
+		}
+
 		if(this._recent_hit)
 		{
 			return BasketScore.NORMAL_GOAL
@@ -434,6 +439,8 @@ class PlayerBall {
 		if(last_score == BasketScore.NORMAL_GOAL){
 			this.SetUsingAfterImageType(AfterImageType.None)
 			this.mainPanel.ShowScoreAnimation(BasketScore.NORMAL_GOAL, 1)
+		} else if(last_score == BasketScore.YA_SHAO_GOAL){
+			this.mainPanel.ShowScoreAnimation(BasketScore.YA_SHAO_GOAL, 1)
 		} else {
 			if(this._currentAfterImageType == AfterImageType.None){
 				this.SetUsingAfterImageType(AfterImageType.Smoke)
