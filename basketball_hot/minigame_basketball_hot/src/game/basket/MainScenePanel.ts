@@ -39,6 +39,12 @@ module ui {
 		public label_score_other:eui.Label
 		public label_left_time:eui.Label
 		public img_juesha:eui.Image
+		public img_guide_circle:eui.Image
+		public img_guide_hand:eui.Image
+		public m_guide_group:eui.Group
+		public img_help:eui.Image
+		public btn_debug:eui.Button
+		public m_offline_tips:eui.Group
 
 		private _playerBall:PlayerBall
 		private _hitManager:HitManager
@@ -93,15 +99,35 @@ module ui {
 			this.m_container.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onTouchBegin, this);
 			let __this = this
 			this.btn_help.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.Event){
+				__this.img_help.visible = true
+				__this.img_help.scaleX = __this.img_help.scaleY = 0
+				egret.Tween.get(__this.img_help).to({"scaleX": 1, "scaleY": 1}, 0.2 *1000)
 				event.stopPropagation()
 			}.bind(this), this)
-			this.btn_help.addEventListener(egret.TouchEvent.TOUCH_TAP, function(event:egret.Event){
+
+			this.btn_help.addEventListener(egret.TouchEvent.TOUCH_END, function(event:egret.Event){
+			egret.Tween.get(__this.img_help).to({"scaleX": 1, "scaleY": 1}, 0.1 *1000).call(function(){
+					__this.img_help.visible = false
+				})
+			}.bind(this), this)
+
+			this.btn_help.addEventListener(egret.TouchEvent.TOUCH_CANCEL, function(event:egret.Event){
+				egret.Tween.get(__this.img_help).to({"scaleX": 1, "scaleY": 1}, 0.1 *1000).call(function(){
+					__this.img_help.visible = false
+				})
+			}.bind(this), this)
+
+			this.btn_debug.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.Event){
+				let debugPanel = new DebugPanel()
+				this.addChild(debugPanel)
+				event.stopPropagation()
 			}.bind(this), this)
 		}
 
 		//真正开始游戏
 		public StartGame():void
 		{
+			this._showGuide()
 			this._hasGameStarted = true
 			this._is_first_round = true
 			this._hasTouchBegin = false //整个游戏是否点击
@@ -139,6 +165,33 @@ module ui {
 			this.UpdateScore()
 		}
 
+		private _showGuide():void
+		{
+			let value = egret.localStorage.getItem("guide4")
+			if(value){
+				return
+			}
+
+			let __this = this
+			this.img_guide_circle.visible = true
+			this.img_guide_circle.scaleX = this.img_guide_circle.scaleY = 1
+			egret.Tween.get(this.img_guide_circle, {loop:true}).to({scaleX:2, scaleY:2}, 0.5 * 1000).call(function(){
+				__this.img_guide_circle.scaleX = __this.img_guide_circle.scaleY = 1
+			})
+
+			this.img_guide_hand.visible = true
+			this.img_guide_hand.scaleX = this.img_guide_hand.scaleY = 2
+			this.m_guide_group.scaleX = this.m_guide_group.scaleY = 1
+			this.m_guide_group.visible = true
+			egret.Tween.get(__this.img_guide_hand, {loop:true}).to({scaleX:1.6, scaleY:1.6}, 0.3 * 1000).call(function(){
+				egret.Tween.get(__this.m_guide_group).to({scaleX:0.98, scaleY:0.98}, 0.2 * 1000, egret.Ease.sineIn).to({scaleX:1, scaleY:1}, 0.2 * 1000)
+			}).to({scaleX:1, scaleY:1}, 0.2 * 1000).call(function(){
+				__this.img_guide_hand.scaleX = __this.img_guide_hand.scaleY = 2
+			})
+			
+			// egret.localStorage.setItem("guide4", "true")
+		}
+
 		private _startTimer():void
 		{
 			var timer:egret.Timer = new egret.Timer(1000, this.serverModel.MAX_TIME);
@@ -157,7 +210,7 @@ module ui {
 			{
 				this._on_game_over()
 			}
-			if(this.serverModel.left_time == 0){
+			if(this.serverModel.left_time == 0 && !this._is_ya_shao){
 				SoundManager.getInstance().playSound("last_one_second_mp3")
 			} else if(this.serverModel.left_time <= 5){
 				SoundManager.getInstance().playSound("dead_line_tips_mp3")
@@ -190,6 +243,7 @@ module ui {
 			this._playerBall.OnGameOver()
 			this._clearTimer()
 
+			//延迟一点时间弹出去
 			let platform_finish_delay_time = 1
 			if(this._is_ya_shao){
 				platform_finish_delay_time = 2
@@ -205,9 +259,11 @@ module ui {
 		{
 			this._has_goal = has_global
 			if(has_global){
-				this.AddScore(score)
 				this._allScores.push(score)
-				GameNet.reqShoot(score)
+				if(GameNet.isConnected() || Config.debug){
+					this.AddScore(score)
+					GameNet.reqShoot(score)
+				}
 				this._playerBall.UpdateCurrentAfterImage()
 				this.NextRound()
 			}
@@ -322,6 +378,9 @@ module ui {
 
 		private _onTouchBegin(event : egret.TouchEvent):void
 		{
+			this.img_guide_circle.visible = false
+			this.img_guide_hand.visible = false
+			this.m_guide_group.visible = false
 			if(!this._hasGameStarted){
 				return
 			}
@@ -411,7 +470,7 @@ module ui {
 				__this.img_board_body.filters = []
 				__this._board_pre_display.filters = []
 				__this._board_back_display.filters = []
-			}.bind(this), 1000 *0.5, this)
+			}.bind(this), 1000 *0.3, this)
 		}
 
 		public PlayNetAnimation(hitNetType:HitNetType)
@@ -442,7 +501,7 @@ module ui {
 		//连击
 		public ShowComboAnimation(combo_count:number):void
 		{
-			this.label_combo.text = 'cx' + combo_count.toString();
+			this.label_combo.text = combo_count.toString() + 'xc'
 			this.label_combo.scaleX = this.label_combo.scaleY = 0.2
 			let __this = this
 			this.label_combo.visible = true
@@ -479,7 +538,7 @@ module ui {
 		//得分特效
 		public ShowScoreAnimation(score:number, lianxu_count:number):void
 		{
-			let is_juesha = true
+			let is_juesha = false
 			let img_path = BasketUtils.GetScorePng(score, lianxu_count);
 			if(score == BasketScore.YA_SHAO_GOAL){
 				img_path = BasketUtils.YA_SHAO_Png
@@ -637,6 +696,7 @@ module ui {
 		
 		private onDisconnected():void
 		{
+			this.m_offline_tips.visible = true
 			if(this._is_game_over){
 				return
 			}
@@ -661,15 +721,21 @@ module ui {
 
 		private async reconnect()
 		{
-			await GameNet.connectServer();
-			await GameNet.reqLogin(User.roomId);
-			await GameNet.reqReEnter()
+			await GameNet.connectServer()
+			await GameNet.reqLogin(User.roomId)
+			//断线重连 同步我的分数给服务器
+			let total = 0
+			for(let index = 0; index < this._allScores.length; index++)
+			{
+				total += this._allScores[index]
+			}
+			await GameNet.reqReEnter(total)
 			this.is_connecting = false
+			this.m_offline_tips.visible = false
 		}
 
 		private onReEnterPush(msgId, body)
 		{
-			// log("onReEnterPush", body)
 			this.serverModel.ReEnterUpdateRoleInfo(body.player_list, body.score)
 			this.UpdateScore()
 		}

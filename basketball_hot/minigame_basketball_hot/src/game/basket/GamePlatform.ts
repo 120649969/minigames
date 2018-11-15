@@ -46,11 +46,11 @@ class GamePlatform {
 	{
 		if(typeof(bdm) != "undefined" && typeof(bdm.args) != "undefined")
 		{
-			console.log(bdm.args.openid)
+			// console.log(bdm.args.openid)
 			return bdm.args.openid
 		}
-		log(bdm.args)
-		log(window.location)
+		// log(bdm.args)
+		// log(window.location)
 		return ""
 	}
 

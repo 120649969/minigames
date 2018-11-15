@@ -110,6 +110,8 @@ class ScoreFireEffect extends BaseEffect{
 		}
 		this._container.addChild(this)
 		this._container.setChildIndex(this, 1)
+		this.scaleX = this.scaleY = 1.1
+		this.y -= 20
 	}
 
 	public FirstGenerate():void

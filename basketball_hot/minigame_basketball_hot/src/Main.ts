@@ -64,7 +64,7 @@ class Main extends eui.UILayer {
         
         if(User.openId == "")
         {
-            User.openId = GamePlatform.GetMyOpenId()
+            User.openId = GamePlatform.GetMyOpenId().toString()
         }
 
         if(User.roomId == "")

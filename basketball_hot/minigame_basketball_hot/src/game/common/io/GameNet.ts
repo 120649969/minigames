@@ -84,7 +84,7 @@ module io {
 			});				
 		}
 
-		public async reqReEnter(callback ?:any) {
+		public async reqReEnter(totalScore, callback ?:any) {
 			let self = this;
 			return new Promise((resolve, reject) => {
 				self.on(GameNet.GAME_PROTOCOL.CMD_H5_SHOOT_REENTER_RSP, function (msgId, body) {
@@ -96,7 +96,8 @@ module io {
 					}
 				});
 				self.send(GameNet.GAME_PROTOCOL.CMD_H5_SHOOT_REENTER_REQ, {
-					openid: User.openId
+					openid: User.openId,
+					total:totalScore
 				});
 			});				
 		}

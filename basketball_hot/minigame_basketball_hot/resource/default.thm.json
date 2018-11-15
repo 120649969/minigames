@@ -17,7 +17,8 @@
 	"autoGenerateExmlsList": true,
 	"exmls": [
 		"resource/eui_skins/MainScene.exml",
-		"resource/eui_skins/Setting.exml"
+		"resource/eui_skins/Setting.exml",
+		"resource/eui_skins/TextInputSkin.exml"
 	],
 	"path": "resource/default.thm.json"
 }

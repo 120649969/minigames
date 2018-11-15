@@ -169,7 +169,7 @@ module io {
 
 		protected onSocketClose(event:egret.Event):void {			
 			console.log(this.name, 'disconnected');
-			log('disconnected onSocketClose')
+			// log('disconnected onSocketClose')
 			if (!this.closeFlag) {
 				// ui.WindowManager.getInstance().open('WaitingWindow', 1000606);
 				setTimeout(this.reconnect.bind(this), 3000);
