@@ -80,6 +80,7 @@ module ui {
 			this.label_combo.visible = false
 			this.label_add_score.visible = false
 			this.img_score_type.visible = false
+			this.label_left_time.visible = false
 		}
 
 		public resizeStage():void
@@ -137,6 +138,7 @@ module ui {
 
 			this.img_shadow.visible = true
 			this.m_basket_ball.visible = true
+			this.label_left_time.visible = true
 
 			if(!this._hasInitGame){
 				this._hitManager = new HitManager(this)
@@ -149,7 +151,7 @@ module ui {
 			this._clearTimer()
 			this._startTimer()
 			this.addEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this)
-			this.serverModel.left_time = this.serverModel.MAX_TIME
+			this.serverModel.left_time = Const.GAME_TIME
 
 			if(this.serverModel.myRole.icon.indexOf("baidu") > 0){
 			} else {
@@ -194,7 +196,7 @@ module ui {
 
 		private _startTimer():void
 		{
-			var timer:egret.Timer = new egret.Timer(1000, this.serverModel.MAX_TIME);
+			var timer:egret.Timer = new egret.Timer(1000, Const.GAME_TIME);
 			//注册事件侦听器
 			timer.addEventListener(egret.TimerEvent.TIMER,this._on_timer_tick,this);
 			//开始计时
@@ -277,7 +279,7 @@ module ui {
 			this.label_score_me.text = this.serverModel.myRole.score.toString();
 			this.label_score_other.text = this.serverModel.otherRole.score.toString();
 			this.label_left_time.text = this.serverModel.left_time.toString();
-			let percent = this.serverModel.left_time / this.serverModel.MAX_TIME
+			let percent = this.serverModel.left_time / Const.GAME_TIME
 			let start_y = 10
 			let down_height = percent * (this.img_time_progress.height - 2 * start_y)
 			this.img_time_progress.mask = new egret.Rectangle(0, this.img_time_progress.height - start_y - down_height, this.img_time_progress.width, down_height)
@@ -670,7 +672,7 @@ module ui {
 
 		}
 
-		private onShootSecondush(msgId, body):void
+		private onShootSecondPush(msgId, body):void
 		{
 			let second = body['second']
 			let left_time = Const.GAME_TIME - second
@@ -749,7 +751,7 @@ module ui {
 			GameNet.on(protocol.CMD_H5_SHOOT_JOIN_PUSH, this.onShootJoinPush.bind(this));
 			GameNet.on(protocol.CMD_H5_SHOOT_GAME_START_PUSH, this.onShootGameStartPush.bind(this));  //游戏开始推送
 			GameNet.on(protocol.CMD_H5_SHOOT_GAME_STATUS_PUSH, this.onShootGameStatusPush.bind(this)); //游戏状态推送
-			GameNet.on(protocol.CMD_H5_SHOOT_SECOND_PUSH, this.onShootSecondush.bind(this)); //游戏时间推送
+			GameNet.on(protocol.CMD_H5_SHOOT_SECOND_PUSH, this.onShootSecondPush.bind(this)); //游戏时间推送
 			GameNet.on(protocol.CMD_H5_SHOOT_GAME_OVER_PUSH, this.onGameOverPush.bind(this)); // 游戏结束推送
 			GameNet.on(protocol.CMD_H5_SHOOT_SCORE_PUSH, this.onShootScorePush.bind(this)); //游戏分数推送
 			GameNet.on(protocol.CMD_H5_SHOOT_REENTER_PUSH, this.onReEnterPush.bind(this))

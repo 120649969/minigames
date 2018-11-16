@@ -8,7 +8,7 @@ class Const {
 
 	public static HEARTBEAT_DUR = 6000;
 
-	public static GAME_TIME = 60;
+	public static GAME_TIME = 60000;
 
 	public static SERVER_URL = '192.168.20.232:50002';
 
