@@ -119,10 +119,21 @@ module ui {
 			}.bind(this), this)
 
 			this.btn_debug.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.Event){
-				let debugPanel = new DebugPanel()
-				this.addChild(debugPanel)
+				// let debugPanel = new DebugPanel()
+				// this.addChild(debugPanel)
 				event.stopPropagation()
 			}.bind(this), this)
+		}
+
+		private _addParticle():void
+		{
+			var texture=RES.getRes("newParticleY_png");
+			var config=RES.getRes("newParticleY_json");
+			let  lizi_item=new particle.GravityParticleSystem(texture,config);
+			this.addChild(lizi_item);
+			lizi_item.start();
+			lizi_item.x = this.width / 2 - Math.random() * 50
+			lizi_item.y = this.height / 2 - Math.random() * 50
 		}
 
 		//真正开始游戏
