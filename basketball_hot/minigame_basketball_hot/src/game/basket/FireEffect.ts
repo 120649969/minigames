@@ -25,25 +25,21 @@ class FireEffectDisplayObject extends egret.DisplayObjectContainer{
 		new_bitmap.anchorOffsetX = new_bitmap.width / 2
 		new_bitmap.anchorOffsetY = new_bitmap.height / 2
 		this._orangeBitmap = new_bitmap
+		new_bitmap.visible = false
 
 		new_bitmap = new egret.Bitmap()
 		new_bitmap.texture = RES.getRes("qiu12_png")
 		new_bitmap.anchorOffsetX = new_bitmap.width / 2
 		new_bitmap.anchorOffsetY = new_bitmap.height / 2
 		this._yellowBitmap = new_bitmap
+		new_bitmap.visible = false
 
 		new_bitmap = new egret.Bitmap()
 		new_bitmap.texture = RES.getRes("qiu1_png")
 		new_bitmap.anchorOffsetX = new_bitmap.width / 2
 		new_bitmap.anchorOffsetY = new_bitmap.height / 2
 		this._blackBitmap = new_bitmap
-		
-		// this.addChild(new_bitmap)
-
-		
-		// this.addChild(new_bitmap)
-		
-		// this.visible = false
+		new_bitmap.visible = false
 	}
 
 	public GetYellow():egret.Bitmap

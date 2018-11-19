@@ -447,7 +447,7 @@ module ui {
 		//篮筐抖动
 		public PlayShakeAnimation()
 		{
-			if(this._board_pre_display.animation.isPlaying){
+			if(this._net_pre_display.animation.isPlaying){
 				return
 			}
 			this._board_pre_display.animation.play('lanban', 1)
@@ -459,6 +459,10 @@ module ui {
 		//进球动画
 		public PlayGoalAnimation()
 		{
+			this._board_pre_display.animation.stop()
+			this._board_back_display.animation.stop()
+			this._board_pre_display.animation.play('normal', -1)
+			this._board_back_display.animation.play('normal', -1)
 			this._net_pre_display.animation.stop()
 			this._net_pre_display.animation.play('jinqu', 1)
 			this._net_back_display.animation.stop()

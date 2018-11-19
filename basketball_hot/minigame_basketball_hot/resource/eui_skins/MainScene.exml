@@ -85,8 +85,8 @@
 		</e:Skin>
 		</e:skinName>
 	</e:Button>
-	<e:Image source="qiu13_png" x="86" y="347" alpha="1"/>
-	<e:Image source="qiu12_png" x="86" y="347" alpha="1"/>
+
+
 
 
 </e:Skin>

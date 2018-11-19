@@ -1,1 +1,1 @@
-{"SubTexture":[{"width":169,"y":1,"height":22,"name":"kuang","x":1}],"width":256,"imagePath":"board_back_tex.png","name":"board_back","height":32}
+{"width":256,"imagePath":"board_back_tex.png","height":32,"name":"board_back","SubTexture":[{"width":169,"y":1,"height":22,"name":"kuang","x":1}]}
