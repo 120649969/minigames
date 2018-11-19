@@ -123,6 +123,12 @@ module ui {
 				// this.addChild(debugPanel)
 				event.stopPropagation()
 			}.bind(this), this)
+
+			if(DEBUG){
+				this.btn_debug.visible = true
+			} else {
+				this.btn_debug.visible = false
+			}
 		}
 
 		private _addParticle():void
@@ -164,14 +170,14 @@ module ui {
 			this.addEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this)
 			this.serverModel.left_time = Const.GAME_TIME
 
-			if(this.serverModel.myRole.icon.indexOf("baidu") > 0){
-			} else {
-				// if(this.serverModel.myRole.icon){
-				// 	this.img_icon_me.source = this.serverModel.myRole.icon
-				// }
-				// if(this.serverModel.otherRole.icon){
-				// 	this.img_icon_other.source = this.serverModel.otherRole.icon
-				// }
+			if(!DEBUG){ 
+				egret.ImageLoader.crossOrigin = "anonymous" //支持跨域
+				if(this.serverModel.myRole.icon){
+					this.img_icon_me.source = this.serverModel.myRole.icon
+				}
+				if(this.serverModel.otherRole.icon){
+					this.img_icon_other.source = this.serverModel.otherRole.icon
+				}
 			}
 
 			this.NextRound()
@@ -180,7 +186,7 @@ module ui {
 
 		private _showGuide():void
 		{
-			let value = egret.localStorage.getItem("guide4")
+			let value = egret.localStorage.getItem("guide")
 			if(value){
 				return
 			}
@@ -202,7 +208,7 @@ module ui {
 				__this.img_guide_hand.scaleX = __this.img_guide_hand.scaleY = 2
 			})
 			
-			// egret.localStorage.setItem("guide4", "true")
+			egret.localStorage.setItem("guide", "true")
 		}
 
 		private _startTimer():void
