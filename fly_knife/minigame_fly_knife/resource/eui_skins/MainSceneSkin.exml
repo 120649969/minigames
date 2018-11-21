@@ -1,30 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="MainSceneSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:tween="egret.tween.*">
 	<w:Declarations>
-		<tween:TweenGroup id="ball_group">
-			<tween:TweenItem target="{m_ball}">
-				<tween:To duration="450" ease="sineOut">
-					<tween:props>
-						<e:Object rotation="{-90}"/>
-					</tween:props>
-				</tween:To>
-				<tween:To duration="700">
+		<tween:TweenGroup id="ball_rotate">
+			<tween:TweenItem target="{m_plate_container}">
+				<tween:Set/>
+				<tween:To duration="1000">
 					<tween:props>
 						<e:Object rotation="{180}"/>
 					</tween:props>
 				</tween:To>
-				<tween:To duration="750">
+				<tween:To duration="1000">
 					<tween:props>
 						<e:Object rotation="{360}"/>
+					</tween:props>
+				</tween:To>
+
+
+
+			</tween:TweenItem>
+		</tween:TweenGroup>
+		<tween:TweenGroup id="knife_start_move">
+			<tween:TweenItem target="{m_example_knife}">
+				<tween:Set>
+					<tween:props>
+						<e:Object y="{1422}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="100">
+					<tween:props>
+						<e:Object y="{922}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+		</tween:TweenGroup>
+		<tween:TweenGroup id="ball_up_down">
+			<tween:TweenItem target="{m_plate_container}">
+				<tween:Set>
+					<tween:props>
+						<e:Object y="{440}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="100">
+					<tween:props>
+						<e:Object y="{430}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="100">
+					<tween:props>
+						<e:Object y="{440}"/>
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>
 		</tween:TweenGroup>
 	</w:Declarations>
-	<e:Group id="m_container_layer" left="0" top="0" bottom="0" right="0"/>
 	<e:Image source="bj-fd_png" left="0" top="0" right="0" bottom="0"/>
-	<e:Image id="m_ball" source="ball_png" horizontalCenter="0" verticalCenter="-200" anchorOffsetX="180" anchorOffsetY="180"/>
-	<e:Image id="image" source="nife_png" y="922.24" anchorOffsetX="35" horizontalCenter="0"/>
+	<e:Group id="m_container_layer" left="0" top="0" right="0" bottom="0"/>
+	<e:Group id="m_plate_container" width="360" height="360" x="360" y="440" anchorOffsetX="180" anchorOffsetY="180" rotation="0">
+		<e:Image id="m_plate_image" source="ball_png" anchorOffsetX="180" anchorOffsetY="180" y="180" x="180" scaleX="1" scaleY="1" rotation="0"/>
+	</e:Group>
+	<e:Image id="m_example_knife" source="nife_png" y="920" anchorOffsetX="35" scaleX="1" scaleY="1" x="360" visible="false"/>
+	<e:Group width="40" height="190" x="360" y="920" anchorOffsetX="20" anchorOffsetY="0"/>
+
+
+
 	<e:Group id="m_touch_layer" left="0" top="0" right="0" bottom="0">
 	</e:Group>
 </e:Skin>
