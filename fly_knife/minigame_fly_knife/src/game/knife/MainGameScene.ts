@@ -9,6 +9,7 @@ class MainGameScene extends eui.Component{
 	public m_plate_object:PlateObject
 	private labelResult:eui.Label
 	private btn_test:eui.Button
+	private btn_debug:eui.Button
 
 	private _all_knife_imgs:Array<eui.Image> = []
 	private fly_up:egret.tween.TweenGroup
@@ -40,6 +41,12 @@ class MainGameScene extends eui.Component{
 			event.stopPropagation()
 		}.bind(this), this)
 
+		this.btn_debug.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.Event){
+			let debug_panel = new SettingPanel()
+			__this.addChild(debug_panel)
+			event.stopPropagation()
+		}.bind(this), this)
+
 		this.StartGame()
 	}
 
@@ -59,18 +66,8 @@ class MainGameScene extends eui.Component{
 	public NextBigRound():void
 	{
 		this.labelResult.visible = false
-		let new_configs = {}
-
-		let sub_configs = []
-		let new_config = {}
-		new_config['direction'] = 1
-		new_config['rotate_speed'] = 6
-		new_config['duration'] = 10000
-		sub_configs.push(new_config)
-
-
-		new_configs['sub_configs'] = sub_configs
-		new_configs['count'] = 3 + Math.ceil(Math.random() * 4)
+		
+		let new_configs = RoundPlateRotateStrategy.CurrentConfig
 
 		this.m_plate_object.EnterNextBigRound(new_configs)
 		this.NextRound()

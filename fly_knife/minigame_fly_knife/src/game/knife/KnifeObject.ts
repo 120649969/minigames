@@ -69,27 +69,6 @@ class KnifeObject extends eui.Component{
 				break
 			}
 		}
-
-		// let move_distance = (target_speed_y + this.speedY) / 2
-		// let step_move_distance = 10
-		
-		// let move_step_times = Math.ceil(Math.abs(move_distance / step_move_distance))
-		// for(let move_step_index = 0; move_step_index < move_step_times; move_step_index ++)
-		// {
-		// 	let this_move_distance = 1 / move_step_times * move_distance
-		// 	this.y += this_move_distance
-		// 	if(this._checkHitBall()){
-		// 		this._onHitBall()
-		// 		break
-		// 	}
-
-		// 	if(this.isMe && this._checkOtherKnife())
-		// 	{
-		// 		this._onHitOtherKnife()
-		// 		break
-		// 	}
-		// }
-		// this.speedY = target_speed_y
 	}
 
 	private _checkHitBall():boolean
@@ -164,7 +143,6 @@ class KnifeObject extends eui.Component{
 			degree = 360 - degree
 		}
 		this.degree_on_plate = degree //0--360范围，已右中间的点为起点，测试计算正确
-		console.log("当前的角度", this.degree_on_plate)
 
 		this._platObject.OnHit(this)
 	}

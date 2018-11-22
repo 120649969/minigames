@@ -45,7 +45,6 @@
 	<e:Group id="m_container_layer" left="0" top="0" right="0" bottom="0">
 	</e:Group>
 	<e:Group id="m_plate_container" width="360" height="360" x="360" y="440" anchorOffsetX="180" anchorOffsetY="180" rotation="0">
-		<e:Rect width="332.12" height="21.51" x="171.00000000000003" y="169" anchorOffsetX="0" anchorOffsetY="0" scaleX="1" scaleY="1" fillAlpha="0.2"/>
 		<e:Image id="m_plate_image" source="ball_png" anchorOffsetX="180" anchorOffsetY="180" y="180" x="180" scaleX="1" scaleY="1" rotation="0"/>
 	</e:Group>
 	<e:Image id="m_example_knife" source="nife_png" y="920" anchorOffsetX="35" scaleX="1" scaleY="1" x="360" visible="false"/>
@@ -57,4 +56,5 @@
 	</e:Group>
 	<e:Label id="labelResult" text="恭喜您 闯关成功" x="360.5" y="502.67" textColor="0xe01a1a" stroke="3" anchorOffsetX="110" anchorOffsetY="15" visible="false"/>
 	<e:Button id="btn_test" label="测试按钮" x="310" y="74.45"/>
+	<e:Button id="btn_debug" label="调试按钮" x="517" y="78"/>
 </e:Skin>

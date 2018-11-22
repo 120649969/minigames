@@ -4,14 +4,21 @@ enum PlateRotateDirection{
 	NEGATIVE = -1,
 }
 
+
+class DataConfig{
+	public duration:number
+	public direction:number
+	public speed:number
+}
+
 //盘子旋转配置
 class PlateRotateStrategy {
 
 	public direction:number
-	public rotate_speed:number
+	public speed:number
 	public duration:number  //秒
 
-	public curTime:number
+	public curTime:number = 0
 
 	public constructor(config) {
 		this.direction = PlateRotateDirection.POSITIVE
@@ -23,9 +30,9 @@ class PlateRotateStrategy {
 			}
 		}
 
-		this.rotate_speed = 1
-		if(config['rotate_speed'] != undefined){
-			this.rotate_speed = config['rotate_speed']
+		this.speed = 1
+		if(config['speed'] != undefined){
+			this.speed = config['speed']
 		}
 
 		this.duration = 1
@@ -80,7 +87,7 @@ class RoundPlateRotateStrategy {
 			if(is_finish){
 				this.strategyIndex = (this.strategyIndex + 1) % this.strategys.length
 			}
-			return cur_strategy.rotate_speed * cur_strategy.direction
+			return cur_strategy.speed * cur_strategy.direction
 		}
 		return 0
 	}
@@ -89,4 +96,30 @@ class RoundPlateRotateStrategy {
 	{
 		return this.strategys[this.strategyIndex]
 	}
+
+	public static GetConfig1():Object
+	{
+		let new_configs = {}
+
+		let sub_configs = []
+
+		let new_config = new DataConfig()
+		new_config.direction = 1
+		new_config.speed = 6
+		new_config.duration = 3
+		sub_configs.push(new_config)
+
+		new_config = new DataConfig()
+		new_config.direction = -1
+		new_config.speed = 6
+		new_config.duration = 3
+		sub_configs.push(new_config)
+
+		new_configs['sub_configs'] = sub_configs
+		new_configs['count'] = 3 + Math.ceil(Math.random() * 4)
+
+		return new_configs
+	}
+
+	public static CurrentConfig = RoundPlateRotateStrategy.GetConfig1()
 }

@@ -59,10 +59,7 @@ class PlateObject {
 			this._wait_time -= Math.abs(step_value)
 			if(this._wait_time < Math.abs(step_value) * 2){
 				this._wait_time = -1
-				console.log("#######可以插入了###")
 				this._mainPanel.GenerateOtherKnife()
-			} else {
-				console.log("####等待时间更改##", this._wait_time)
 			}
 		}
 	}
@@ -75,7 +72,6 @@ class PlateObject {
 		}
 		let wait_degree = this.CalculateNextEmptyPlace()
 		this._wait_time  = wait_degree
-		console.log("#######等待时间##", this._wait_time)
 	}
 
 	public EnterNextRound():void
@@ -135,12 +131,9 @@ class PlateObject {
 		}
 
 		this.all_sort_knife_objects.sort(function(knife_object_a:KnifeObject, knife_object_b:KnifeObject){
-			if(this._roundPlateRotateStrategy.GetCurrentStrategy().direction == PlateRotateDirection.POSITIVE){
-				return knife_object_a.degree_on_plate < knife_object_b.degree_on_plate
-			} else {
-				return knife_object_a.degree_on_plate > knife_object_b.degree_on_plate
-			}
+			return knife_object_a.degree_on_plate < knife_object_b.degree_on_plate
 		}.bind(this))
+		let index = 1;
 	}
 
 	//计算等待旋转多少才可以插入
@@ -168,13 +161,13 @@ class PlateObject {
 			let knife_object_a = this.all_sort_knife_objects[index]
 			let knife_object_b = this.all_sort_knife_objects[(index + 1) % this.all_sort_knife_objects.length]
 
-			let cur_delta_degree = (knife_object_a.degree_on_plate - knife_object_b.degree_on_plate + 360) % 360
-			// let cur_delta_degree = 0
-			// if(dir){
-			// 	cur_delta_degree = knife_object_a.degree_on_plate - knife_object_b.degree_on_plate
-			// } else {
-			// 	cur_delta_degree = knife_object_b.degree_on_plate - knife_object_a.degree_on_plate
-			// }
+			let cur_delta_degree = 0
+			if(dir > 0){
+				cur_delta_degree = (knife_object_a.degree_on_plate - knife_object_b.degree_on_plate + 360) % 360
+			} else {
+				cur_delta_degree = (knife_object_a.degree_on_plate - knife_object_b.degree_on_plate + 360) % 360
+			}
+			
 			if (cur_delta_degree > max_delta_degree){
 				max_delta_degree = cur_delta_degree
 				if(dir == PlateRotateDirection.POSITIVE){
@@ -195,7 +188,6 @@ class PlateObject {
 				return  (45 + current_knife_global_degree + 360) % 360
 			}
 		}
-
 		return 0
 	}
 }

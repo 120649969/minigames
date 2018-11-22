@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="SettingSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Group left="0" top="0" right="0" bottom="0" touchEnabled="true" touchChildren="true" touchThrough="false"/>
+	<e:Rect left="0" top="0" bottom="0" right="0" fillColor="0xafa3a3" locked="true"/>
+	<e:Button label="添加配置" x="241" y="116" anchorOffsetX="0" width="238" anchorOffsetY="0" height="76"/>
+	<e:Button id="btn_close" label="关闭" x="479" y="0" anchorOffsetX="0" width="238" anchorOffsetY="0" height="76"/>
+	<e:Scroller width="546" height="930" x="87" y="282" anchorOffsetX="0" anchorOffsetY="0" scrollPolicyV="on" scrollPolicyH="off">
+		<e:Group>
+			<e:List id="m_list" width="548" height="930" x="0" y="0" scaleX="1" scaleY="1" anchorOffsetX="0" anchorOffsetY="0"/>
+			<e:layout>
+				<e:VerticalLayout/>
+			</e:layout>
+		</e:Group>
+	</e:Scroller>
+</e:Skin>
