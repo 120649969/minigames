@@ -162,4 +162,9 @@ class KnifeObject extends eui.Component{
 			__this._mainPanel.ShowResult(false)
 		})
 	}
+
+	public Destory():void
+	{
+		this.parent.removeChild(this)
+	}
 }

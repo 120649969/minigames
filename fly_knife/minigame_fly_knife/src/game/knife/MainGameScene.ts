@@ -14,10 +14,15 @@ class MainGameScene extends eui.Component{
 	private _all_knife_imgs:Array<eui.Image> = []
 	private fly_up:egret.tween.TweenGroup
 
+	public current_round:number = 0
+	public all_round_configs:Array<RoundConfig> = []
+
 	public constructor() {
 		super()
 		this.skinName = "MainSceneSkin"
-		this.addEventListener(egret.Event.ADDED_TO_STAGE, this._onAddToStage, this);
+		this.addEventListener(egret.Event.ADDED_TO_STAGE, this._onAddToStage, this)
+
+		this.all_round_configs = RES.getRes("rounds_json")
 	}
 
 	private _onAddToStage(event:egret.Event):void
@@ -36,13 +41,11 @@ class MainGameScene extends eui.Component{
 		let __this = this
 		this.btn_test.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.Event){
 			__this.m_plate_object.WaitToInsertNewKnife()
-			// let wait = __this.m_plate_object.CalculateNextEmptyPlace()
-			// console.log("###等待时间#####", wait)
 			event.stopPropagation()
 		}.bind(this), this)
 
 		this.btn_debug.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.Event){
-			let debug_panel = new SettingPanel()
+			let debug_panel = new SettingPanel(__this)
 			__this.addChild(debug_panel)
 			event.stopPropagation()
 		}.bind(this), this)
@@ -63,13 +66,24 @@ class MainGameScene extends eui.Component{
 		this.NextBigRound()
 	}
 
+	public ReStartGame():void
+	{
+		if(this.m_knife_object){
+			this.m_knife_object.Destory()
+			this.m_knife_object = null
+		}
+		if(this._other_knife_object){
+			this._other_knife_object.Destory()
+			this._other_knife_object = null
+		}
+		this.NextBigRound()
+	}
+
 	public NextBigRound():void
 	{
 		this.labelResult.visible = false
-		
-		let new_configs = RoundPlateRotateStrategy.CurrentConfig
-
-		this.m_plate_object.EnterNextBigRound(new_configs)
+		let native_round_config = this.all_round_configs[this.current_round]
+		this.m_plate_object.EnterNextBigRound(native_round_config)
 		this.NextRound()
 		for(let index = 0; index < this._all_knife_imgs.length; index++)
 		{
@@ -146,6 +160,7 @@ class MainGameScene extends eui.Component{
 		this.GenerateNextKnife()
 	}
 
+	private _isWin:boolean = false
 	public ShowResult(isWin:boolean):void
 	{
 		if(isWin){
@@ -153,6 +168,7 @@ class MainGameScene extends eui.Component{
 		} else {
 			this.labelResult.text = "恭喜您 闯关失败"
 		}
+		this._isWin = isWin
 		this.labelResult.visible = true
 		this.fly_up.play(1)
 		this.fly_up.removeEventListener('complete', this._onPlayFlyUpCompelete, this);
@@ -161,6 +177,9 @@ class MainGameScene extends eui.Component{
 
 	private _onPlayFlyUpCompelete():void
 	{
+		if(this._isWin){
+			this.current_round = (this.current_round + 1) % this.all_round_configs.length
+		}
 		this.NextBigRound()
 	}
 }

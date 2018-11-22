@@ -3,11 +3,10 @@ class PlateObject {
 	public m_plate_container:egret.DisplayObjectContainer
 	private _mainPanel:MainGameScene
 	private _isReady:boolean
-	private _delta_degree:number = 0
 
 	public all_knife_objects:Array<KnifeObject> = []
 	public all_sort_knife_objects:Array<KnifeObject> = []
-	private _roundPlateRotateStrategy:RoundPlateRotateStrategy
+	public roundPlateRotateStrategy:RoundPlateRotateStrategy
 
 	public constructor(mainPanel:MainGameScene) {
 		this._mainPanel = mainPanel
@@ -21,11 +20,10 @@ class PlateObject {
 		return global_center_point
 	}
 
-	public EnterNextBigRound(strategyConfig:Object):void
+	public EnterNextBigRound(strategyConfig:RoundConfig):void
 	{
-		this._roundPlateRotateStrategy = new RoundPlateRotateStrategy(strategyConfig)
+		this.roundPlateRotateStrategy = new RoundPlateRotateStrategy(strategyConfig)
 		this._isReady = false
-		this._delta_degree = 6
 		let __this = this
 		this.m_plate_container.visible = true
 		this.m_plate_container.scaleX = this.m_plate_container.scaleY = 0
@@ -44,7 +42,7 @@ class PlateObject {
 
 	public GetMaxKnifeCount():number
 	{
-		return this._roundPlateRotateStrategy.maxKnifeCount
+		return this.roundPlateRotateStrategy.maxKnifeCount
 	}
 
 	public Update():void
@@ -52,7 +50,7 @@ class PlateObject {
 		if(!this._isReady){
 			return
 		}
-		let step_value = this._roundPlateRotateStrategy.Step(1 / 30)
+		let step_value = this.roundPlateRotateStrategy.Step(1 / 30)
 		this.m_plate_container.rotation += step_value
 
 		if(this._wait_time >= 0){  //有需要插入的
@@ -103,7 +101,7 @@ class PlateObject {
 			this._mainPanel.OnGetScore()
 		}
 
-		let isWin = this.GetAllMyKnifeCount() >= this._roundPlateRotateStrategy.maxKnifeCount
+		let isWin = this.GetAllMyKnifeCount() >= this.roundPlateRotateStrategy.maxKnifeCount
 
 		if(knifeObject.isMe){
 			let start_x = this.m_plate_container.x
@@ -155,7 +153,7 @@ class PlateObject {
 		let max_degree_knife_a:KnifeObject
 		let max_degree_knife_b:KnifeObject
 
-		let dir = this._roundPlateRotateStrategy.GetCurrentStrategy().direction
+		let dir = this.roundPlateRotateStrategy.GetCurrentStrategy().direction
 		for(let index = 0; index < this.all_sort_knife_objects.length ; index++)
 		{
 			let knife_object_a = this.all_sort_knife_objects[index]
@@ -170,7 +168,7 @@ class PlateObject {
 			
 			if (cur_delta_degree > max_delta_degree){
 				max_delta_degree = cur_delta_degree
-				if(dir == PlateRotateDirection.POSITIVE){
+				if(dir == RotateDirection.POSITIVE){
 					max_degree_knife_a = knife_object_a
 					max_degree_knife_b = knife_object_b
 				} else {

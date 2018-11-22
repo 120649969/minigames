@@ -2,43 +2,84 @@
 
 class SettingPanel extends eui.Component{
 
+	private _mainPanel:MainGameScene
 	private btn_close:eui.Button
+	private btn_yes:eui.Button
+	private btn_add:eui.Button
+
 	public m_list:eui.List
+	public m_scroller:eui.Scroller
 	private dataArray: eui.ArrayCollection = new eui.ArrayCollection()
-	public constructor() {
+
+	public constructor(mainPanel:MainGameScene) {
 		super()
+		this._mainPanel = mainPanel
 		this.skinName = "SettingSkin"
 	}
 
 	protected createChildren(): void {
 		super.createChildren()
+
+		this.m_scroller.viewport = this.m_list
 		this.m_list.dataProvider = this.dataArray
 		this.m_list.itemRenderer = SettingItem
 
+		let layerout:eui.VerticalLayout = this.m_list.layout as eui.VerticalLayout
+		layerout.gap = 10
 		let __this = this
 		this.btn_close.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.Event){
 			__this.parent.removeChild(__this)
 			event.stopPropagation()
 		}.bind(this), this)
 
+		this.btn_add.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.Event){
+
+			let tab = {
+				"direction":1,
+				"duration":0,
+				"speed":0
+			}
+			let new_config = new StrategyConfig(tab)
+			let dataArray:eui.ArrayCollection = __this.m_list.dataProvider as eui.ArrayCollection
+			dataArray.addItem(new_config)
+			event.stopPropagation()
+		}.bind(this), this)
+		
+
+		this.btn_yes.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.Event){
+			__this._reloadData()
+			__this._mainPanel.ReStartGame()
+
+			__this.parent.removeChild(__this)
+
+			event.stopPropagation()
+		}.bind(this), this)
 		this._loadData()
+	}
+
+	private _reloadData():void
+	{
+		let new_round_strategys = []
+		for(let index = 0; index < this.m_list.dataProvider.length; index++)
+		{
+			let item_render:SettingItem = this.m_list.getElementAt(index) as SettingItem
+			if(item_render){
+				item_render.ReloadData()
+			}
+			new_round_strategys.push(item_render.data)
+		}
+		let current_round_config = this._mainPanel.all_round_configs[this._mainPanel.current_round]
+		current_round_config.strategys = new_round_strategys
+		// this._mainPanel.m_plate_object.roundPlateRotateStrategy.strategys = new_round_strategys
 	}
 
 	private _loadData():void
 	{
-		let configs:Array<DataConfig> = RoundPlateRotateStrategy.CurrentConfig['sub_configs']
-		for(let index = 0; index < configs.length; index ++)
+		let current_round_strategys:Array<StrategyConfig> = this._mainPanel.m_plate_object.roundPlateRotateStrategy.strategys
+		for(let index = 0; index < current_round_strategys.length; index ++)
 		{
-			this.dataArray.addItem(configs[index])
+			this.dataArray.addItem(current_round_strategys[index])
 		}
-		// for(let index = 0; index < 3; index++)
-		// {
-		// 	let config = new DataConfig()
-		// 	config.duration = 3 + Math.floor(Math.random() * 5)
-		// 	config.direction = Math.floor(Math.random() * 2) == 0 ? 1 : -1
-		// 	config.speed = 5 + Math.floor(Math.random() * 4)
-		// 	this.dataArray.addItem(config)
-		// }
 	}
 }
 
@@ -47,7 +88,7 @@ class SettingItem extends eui.Component implements eui.IItemRenderer{
 	public edit_duration:eui.EditableText
 	public edit_direction:eui.EditableText
 	public edit_speed:eui.EditableText
-	private _data: DataConfig;
+	private _data: StrategyConfig;
 	public selected: boolean;
     public itemIndex: number;
 
@@ -73,11 +114,12 @@ class SettingItem extends eui.Component implements eui.IItemRenderer{
 	}
 
 	
-    public set data(data: DataConfig) {
+    public set data(data: StrategyConfig) {
         this._data = data;
 		this._updateView()
     }
-    public get data(): DataConfig {
+
+    public get data(): StrategyConfig {
         return this._data;
     }
 
@@ -90,4 +132,22 @@ class SettingItem extends eui.Component implements eui.IItemRenderer{
 		this.edit_duration.text = this._data.duration.toString()
 		this.edit_direction.text = this._data.direction.toString()
 	}
+
+	public ReloadData():void
+	{
+		let direction_value = parseFloat(this.edit_direction.text)
+		if(direction_value != null){
+			this._data.direction = direction_value
+		}
+		
+		let duration_value = parseFloat(this.edit_duration.text)
+		if(duration_value != null){
+			this._data.duration = duration_value
+		}
+
+		let speed_value = parseFloat(this.edit_speed.text)
+		if(speed_value != null){
+			this._data.speed = speed_value
+		}
+	} 
 }

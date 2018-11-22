@@ -202,6 +202,7 @@ class Main extends eui.UILayer {
      * Click the button
      */
     private onButtonClick(e: egret.TouchEvent) {
+
         let mainPanel = new MainGameScene()
         this.addChild(mainPanel)
     }
