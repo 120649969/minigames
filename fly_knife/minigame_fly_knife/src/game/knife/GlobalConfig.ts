@@ -20,11 +20,34 @@ class StrategyConfig{
 class MaterialConfig{
 	public type:number = 0
 	public name:string = ""
-	public degree:number = 0
+	public degrees:Array<number> = []
+	public count:number = 0
+	private backup_degrees:Array<number> = []
 	public constructor(material_native_config:Object){
 		this.type = material_native_config['type']
 		this.name = material_native_config['name']
-		this.degree = material_native_config['degree']
+		this.count = material_native_config['count']
+		this.degrees = material_native_config['degree']
+		this.Reset()
+	}
+
+	public getRandomDegree():number
+	{
+		let ret = 0
+		let index = Math.floor(Math.random() * this.backup_degrees.length)
+		ret = this.backup_degrees[index]
+		this.backup_degrees.splice(index, 1)
+		console.log(this.backup_degrees, ret)
+		return ret
+	}
+
+	public Reset():void
+	{
+		this.backup_degrees = []
+		for(let index = 0; index < this.degrees.length; index++)
+		{
+			this.backup_degrees.push(this.degrees[index])
+		}
 	}
 }
 
@@ -45,7 +68,9 @@ class RoundConfig{
 		for(let index = 0; index < material_native_configs.length; index++)
 		{
 			let material_config = new MaterialConfig(material_native_configs[index])
-			this.materialConfigs.push(material_config)
+			if(material_config.count > 0){
+				this.materialConfigs.push(material_config)
+			}
 		}
 
 		let strategy_native_configs:Array<Object> = []
@@ -55,7 +80,19 @@ class RoundConfig{
 		for(let index = 0; index < strategy_native_configs.length; index++)
 		{
 			let strategy_config = new StrategyConfig(strategy_native_configs[index])
-			this.strategys.push(strategy_config)
+			if (strategy_config.speed < KnifeConst.InValid_Config_Value){
+				this.strategys.push(strategy_config)
+			}
+			
+		}
+	}
+
+	public Reset():void
+	{
+		for(let index = 0; index < this.materialConfigs.length; index ++)
+		{
+			let material_config = this.materialConfigs[index]
+			material_config.Reset()
 		}
 	}
 }

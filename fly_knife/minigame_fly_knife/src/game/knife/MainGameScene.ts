@@ -9,8 +9,9 @@ module ui{
 		public m_plate_image:eui.Image
 		public m_plate_object:PlateObject
 		private labelResult:eui.Label
-
-		private btn_shake:eui.Button
+		private label_round:eui.Label
+		private m_top_ui:eui.Group
+	
 		private btn_prop_knife:eui.Button
 		private btn_debug:eui.Button
 
@@ -34,6 +35,19 @@ module ui{
 			}
 		}
 
+		public resizeStage():void
+		{
+			super.resizeStage()
+			let design_height = Const.MIN_HEIGHT
+			let target_y = (design_height - this.height) / 2
+			target_y = 0
+			this.m_top_ui.y = target_y
+			// if(this._hasGameStarted){
+			// 	this.validateNow()
+			// 	this._hitManager.UpateHitData()
+			// }
+		}
+
 		private _onAddToStage(event:egret.Event):void
 		{
 		}
@@ -53,11 +67,6 @@ module ui{
 				event.stopPropagation()
 			}.bind(this), this)
 
-			this.btn_debug.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.Event){
-				ui.WindowManager.getInstance().open("SettingPanel", __this)
-				event.stopPropagation()
-			}.bind(this), this)
-
 			this.StartGame()
 		}
 
@@ -71,7 +80,7 @@ module ui{
 
 			this.validateNow()
 
-			this.NextBigRound()
+			this.NextRound()
 		}
 
 		public ReStartGame():void
@@ -84,14 +93,16 @@ module ui{
 				this._other_knife_object.Destory()
 				this._other_knife_object = null
 			}
-			this.NextBigRound()
+			this.NextRound()
 		}
 
-		public NextBigRound():void
+		public NextRound():void
 		{
+			this.label_round.text = "第" + (this.current_round + 1) + "关"
 			this.labelResult.visible = false
-			let native_round_config = this.all_round_configs[this.current_round]
-			this.m_plate_object.EnterNextBigRound(native_round_config)
+			let round_config = this.all_round_configs[this.current_round]
+			round_config.Reset()
+			this.m_plate_object.EnterNextBigRound(round_config)
 			this.GenerateNextKnife()
 			for(let index = 0; index < this._all_knife_imgs.length; index++)
 			{
@@ -182,7 +193,7 @@ module ui{
 			if(this._isWin){
 				this.current_round = (this.current_round + 1) % this.all_round_configs.length
 			}
-			this.NextBigRound()
+			this.NextRound()
 		}
 	}
 }

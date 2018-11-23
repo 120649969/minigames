@@ -30,38 +30,42 @@
 
 	</w:Declarations>
 	<e:Image source="bj-fd_png" left="0" top="0" right="0" bottom="0"/>
-	<e:Group width="119.7" height="637.88" x="37.78" y="361.01" anchorOffsetX="0" anchorOffsetY="0" locked="true">
-		<e:Image id="img_knife_1" source="nife_png" x="57" y="102.85" rotation="207.5" anchorOffsetY="0" height="74.45" anchorOffsetX="0" width="32.11" scaleX="1" scaleY="1" visible="false"/>
-		<e:Image id="img_knife_2" source="nife_png" x="57" y="160.39666666666665" rotation="207.5" anchorOffsetY="0" height="74.45" anchorOffsetX="0" width="32.11" scaleX="1" scaleY="1" visible="false"/>
-		<e:Image id="img_knife_3" source="nife_png" x="57" y="217.87333333333328" rotation="207.5" anchorOffsetY="0" height="74.45" anchorOffsetX="0" width="32.11" visible="false"/>
-		<e:Image id="img_knife_4" source="nife_png" x="57" y="275.5899999999999" rotation="207.5" anchorOffsetY="0" height="74.45" anchorOffsetX="0" width="32.11" scaleX="1" scaleY="1" visible="false"/>
-		<e:Image id="img_knife_5" source="nife_png" x="57" y="333.0666666666665" rotation="207.5" anchorOffsetY="0" height="74.45" anchorOffsetX="0" width="32.11" scaleX="1" scaleY="1" visible="false"/>
-		<e:Image id="img_knife_6" source="nife_png" x="57" y="390.39666666666653" rotation="207.5" anchorOffsetY="0" height="74.45" anchorOffsetX="0" width="32.11" scaleX="1" scaleY="1" visible="false"/>
-		<e:Image id="img_knife_7" source="nife_png" x="57" y="447.82999999999976" rotation="207.5" anchorOffsetY="0" height="74.45" anchorOffsetX="0" width="32.11" scaleX="1" scaleY="1" visible="false"/>
-		<e:Image id="img_knife_8" source="nife_png" x="57" y="505.3566666666664" rotation="207.5" anchorOffsetY="0" height="74.45" anchorOffsetX="0" width="32.11" scaleX="1" scaleY="1" visible="false"/>
-		<e:Image id="img_knife_9" source="nife_png" x="57" y="562.903333333333" rotation="207.5" anchorOffsetY="0" height="74.45" anchorOffsetX="0" width="32.11" scaleX="1" scaleY="1" visible="false"/>
-		<e:Image id="img_knife_10" source="nife_png" x="57" y="621.21" rotation="207.5" anchorOffsetY="0" height="74.45" anchorOffsetX="0" width="32.11" scaleX="1" scaleY="1" visible="false"/>
+	<e:Group width="86" height="640" x="20" anchorOffsetX="0" anchorOffsetY="320" verticalCenter="40">
+		<e:Image id="img_knife_1" source="nife_png" x="31" y="102.85" rotation="207.5" anchorOffsetY="0" height="74.45" anchorOffsetX="0" width="32.11" scaleX="1" scaleY="1" visible="false"/>
+		<e:Image id="img_knife_2" source="nife_png" x="31" y="160.39666666666665" rotation="207.5" anchorOffsetY="0" height="74.45" anchorOffsetX="0" width="32.11" scaleX="1" scaleY="1" visible="false"/>
+		<e:Image id="img_knife_3" source="nife_png" x="31" y="217.87333333333328" rotation="207.5" anchorOffsetY="0" height="74.45" anchorOffsetX="0" width="32.11" visible="false"/>
+		<e:Image id="img_knife_4" source="nife_png" x="31" y="275.5899999999999" rotation="207.5" anchorOffsetY="0" height="74.45" anchorOffsetX="0" width="32.11" scaleX="1" scaleY="1" visible="false"/>
+		<e:Image id="img_knife_5" source="nife_png" x="31" y="333.0666666666665" rotation="207.5" anchorOffsetY="0" height="74.45" anchorOffsetX="0" width="32.11" scaleX="1" scaleY="1" visible="false"/>
+		<e:Image id="img_knife_6" source="nife_png" x="31" y="390.39666666666653" rotation="207.5" anchorOffsetY="0" height="74.45" anchorOffsetX="0" width="32.11" scaleX="1" scaleY="1" visible="false"/>
+		<e:Image id="img_knife_7" source="nife_png" x="31" y="447.82999999999976" rotation="207.5" anchorOffsetY="0" height="74.45" anchorOffsetX="0" width="32.11" scaleX="1" scaleY="1" visible="false"/>
+		<e:Image id="img_knife_8" source="nife_png" x="31" y="505.3566666666664" rotation="207.5" anchorOffsetY="0" height="74.45" anchorOffsetX="0" width="32.11" scaleX="1" scaleY="1" visible="false"/>
+		<e:Image id="img_knife_9" source="nife_png" x="31" y="562.903333333333" rotation="207.5" anchorOffsetY="0" height="74.45" anchorOffsetX="0" width="32.11" scaleX="1" scaleY="1" visible="false"/>
+		<e:Image id="img_knife_10" source="nife_png" x="31" y="621.21" rotation="207.5" anchorOffsetY="0" height="74.45" anchorOffsetX="0" width="32.11" scaleX="1" scaleY="1" visible="false"/>
 	</e:Group>
-	<e:Group id="m_container_layer" left="0" top="0" right="0" bottom="0">
+	<e:Group id="m_container_layer" left="0" top="0" right="0" bottom="0" touchEnabled="false">
+		<e:Image id="m_example_knife" source="nife_png" y="920.0000000000001" anchorOffsetX="0" scaleX="1" scaleY="1" horizontalCenter="0" visible="false"/>
 	</e:Group>
-	<e:Group id="m_plate_container" width="360" height="360" x="360" y="440" anchorOffsetX="180" anchorOffsetY="180" rotation="0">
-		<e:Image id="m_plate_image" source="ball_png" anchorOffsetX="180" anchorOffsetY="180" y="180" x="180" scaleX="1" scaleY="1" rotation="0"/>
 
 
 
 
 
+
+
+
+
+
+	<e:Group left="0" top="0" right="0" bottom="0" touchEnabled="false">
+		<e:Group id="m_plate_container" width="360" height="360" anchorOffsetX="180" anchorOffsetY="180" rotation="0" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="-233" x="180" y="227" touchEnabled="false">
+			<e:Image id="m_plate_image" source="ball_png" anchorOffsetX="180" anchorOffsetY="180" y="180" x="180" scaleX="1" scaleY="1" rotation="0"/>
+		</e:Group>
+		<e:Label id="labelResult" text="恭喜您 闯关成功" textColor="0xe01a1a" stroke="3" anchorOffsetX="110" anchorOffsetY="15" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="-100" visible="false"/>
 	</e:Group>
-	<e:Image id="m_example_knife" source="nife_png" y="920" anchorOffsetX="35" scaleX="1" scaleY="1" x="360" visible="false"/>
-	<e:Group width="40" height="190" x="360" y="920" anchorOffsetX="20" anchorOffsetY="0" locked="true"/>
-
-
-
-	<e:Group id="m_touch_layer" left="0" top="0" right="0" bottom="0" locked="true">
+	<e:Group id="m_top_ui" height="200" y="0" left="0" right="0" touchEnabled="false">
+		<e:Label id="label_round" text="第N关" y="22.22" horizontalCenter="0" x="360.00000000000006" scaleX="1" scaleY="1" verticalAlign="middle"/>
+		<e:Button id="btn_prop_knife" label="别人插入刀" scaleX="1" scaleY="1" left="0" verticalCenter="0"/>
+		<e:Button id="btn_debug" label="调试按钮" scaleX="1" scaleY="1" verticalCenter="0" right="0"/>
 	</e:Group>
-	<e:Label id="labelResult" text="恭喜您 闯关成功" x="360.5" y="502.67" textColor="0xe01a1a" stroke="3" anchorOffsetX="110" anchorOffsetY="15" visible="false"/>
+	<e:Group id="m_touch_layer" left="0" top="0" right="0" bottom="0"/>
 
-	<e:Button id="btn_debug" label="调试按钮" x="517" y="78"/>
-	<e:Button id="btn_prop_knife" label="别人插入刀" x="22" y="101"/>
-	<e:Button id="btn_shake" label="抖屏" x="35" y="235"/>
 </e:Skin>

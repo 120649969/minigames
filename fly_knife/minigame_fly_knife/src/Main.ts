@@ -50,6 +50,10 @@ class Main extends eui.UILayer {
             egret.ticker.resume();
         }
 
+        this.setStageSize(false)
+        WindowManager = ui.WindowManager.getInstance();
+        GameNet = io.GameNet.getInstance();
+
         //inject the custom material parser
         //注入自定义的素材解析器
         let assetAdapter = new AssetAdapter();
@@ -61,6 +65,40 @@ class Main extends eui.UILayer {
             console.log(e);
         })
     }
+
+    protected setStageSize(emit:boolean) {
+        /************test1 begin*************** */
+        let width = egret.Capabilities.boundingClientWidth;
+        let height = egret.Capabilities.boundingClientHeight;
+
+        let design_width = Const.MIN_WIDTH
+        let design_height = Const.MIN_HEIGHT
+        let design_rato = design_width / design_height
+        let newWidth = 0
+        let newHeight = 0
+        if(width / height <= design_rato){ //竖屏高度太高
+            newWidth = design_width
+            newHeight = Math.floor(height / width * newWidth);
+        } else if(width / height <= design_rato * 1.15){
+            newWidth = design_width;
+            newHeight = Math.floor(height / width * newWidth);
+        } else {
+            newWidth = design_width
+            newHeight = design_height
+        }
+
+        this.stage.removeEventListener(egret.Event.RESIZE, this.onStageResize, this);
+        this.stage.setContentSize(newWidth, newHeight);
+        this.stage.addEventListener(egret.Event.RESIZE, this.onStageResize, this);
+
+        if (emit) {
+            EventEmitter.getInstance().dispatchEventWith(Const.EVENT.ON_STAGE_RESIZE, false, {width: this.stage.stageWidth, height: this.stage.stageHeight});
+        }
+    }
+
+    protected onStageResize():void {
+        this.setStageSize(true);
+    }     
 
     private async runGame() {
         await this.loadResource()

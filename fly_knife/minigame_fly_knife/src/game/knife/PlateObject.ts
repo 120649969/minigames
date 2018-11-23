@@ -53,16 +53,21 @@ class PlateObject {
 		{
 			let current_config = current_material_configs[index]
 			let type = current_config.type
-			if(type == 1){ //飞刀类型
-				let other_knife_object = new KnifeObject(this._mainPanel)
-				this.m_plate_container.addChild(other_knife_object)
-				other_knife_object.isMe = false
-				other_knife_object.anchorOffsetX = other_knife_object.hit_ball_rect.x + other_knife_object.hit_ball_rect.width / 2
-				other_knife_object.anchorOffsetY = other_knife_object.hit_ball_rect.y + other_knife_object.hit_ball_rect.height / 2
-				other_knife_object.x = this.m_plate_container.width / 2 + (this.m_plate_container.width / 2) * Math.cos(current_config.degree / 180 * Math.PI)
-				other_knife_object.y = this.m_plate_container.height / 2 + (this.m_plate_container.height / 2) * Math.sin(current_config.degree / 180 * Math.PI)
-				other_knife_object.rotation = current_config.degree - 90
-				this._pushNewKnifeObject(other_knife_object)
+			for(let type_index = 0; type_index < current_config.count; type_index ++)
+			{
+				if(type == 1){ //飞刀类型
+					let other_knife_object = new KnifeObject(this._mainPanel)
+					this.m_plate_container.addChild(other_knife_object)
+					other_knife_object.isMe = false
+					other_knife_object.anchorOffsetX = other_knife_object.hit_ball_rect.x + other_knife_object.hit_ball_rect.width / 2
+					other_knife_object.anchorOffsetY = other_knife_object.hit_ball_rect.y + other_knife_object.hit_ball_rect.height / 2
+
+					let random_degree = current_config.getRandomDegree()
+					other_knife_object.x = this.m_plate_container.width / 2 + (this.m_plate_container.width / 2) * Math.cos(random_degree / 180 * Math.PI)
+					other_knife_object.y = this.m_plate_container.height / 2 + (this.m_plate_container.height / 2) * Math.sin(random_degree / 180 * Math.PI)
+					other_knife_object.rotation = random_degree - 90
+					this._pushNewKnifeObject(other_knife_object)
+				}
 			}
 		}
 		this.m_plate_container.setChildIndex(this._mainPanel.m_plate_image, this.m_plate_container.numChildren)
