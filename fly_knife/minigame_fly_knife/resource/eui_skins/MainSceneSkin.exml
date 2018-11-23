@@ -60,6 +60,8 @@
 	<e:Group id="m_touch_layer" left="0" top="0" right="0" bottom="0" locked="true">
 	</e:Group>
 	<e:Label id="labelResult" text="恭喜您 闯关成功" x="360.5" y="502.67" textColor="0xe01a1a" stroke="3" anchorOffsetX="110" anchorOffsetY="15" visible="false"/>
-	<e:Button id="btn_test" label="测试按钮" x="310" y="74.45"/>
+
 	<e:Button id="btn_debug" label="调试按钮" x="517" y="78"/>
+	<e:Button id="btn_prop_knife" label="别人插入刀" x="22" y="101"/>
+	<e:Button id="btn_shake" label="抖屏" x="35" y="235"/>
 </e:Skin>

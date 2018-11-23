@@ -8,6 +8,8 @@ class PlateObject {
 	public all_sort_knife_objects:Array<KnifeObject> = []
 	public roundPlateRotateStrategy:RoundPlateRotateStrategy
 
+	public rotate_scale:number = 1
+
 	public constructor(mainPanel:ui.MainGameScene) {
 		this._mainPanel = mainPanel
 		this.m_plate_container = mainPanel.m_plate_container
@@ -22,6 +24,7 @@ class PlateObject {
 
 	public EnterNextBigRound(roundConfig:RoundConfig):void
 	{
+		this.rotate_scale = 1
 		this.roundPlateRotateStrategy = new RoundPlateRotateStrategy(roundConfig)
 		this._isReady = false
 		let __this = this
@@ -61,7 +64,6 @@ class PlateObject {
 				other_knife_object.rotation = current_config.degree - 90
 				this._pushNewKnifeObject(other_knife_object)
 			}
-			
 		}
 		this.m_plate_container.setChildIndex(this._mainPanel.m_plate_image, this.m_plate_container.numChildren)
 	}
@@ -76,7 +78,7 @@ class PlateObject {
 		if(!this._isReady){
 			return
 		}
-		let step_value = this.roundPlateRotateStrategy.Step(1 / 30)
+		let step_value = this.roundPlateRotateStrategy.Step(1 / 30) * this.rotate_scale
 		this.m_plate_container.rotation += step_value
 
 		if(this._wait_time >= 0){  //有需要插入的
@@ -96,11 +98,6 @@ class PlateObject {
 		}
 		let wait_degree = this.CalculateNextEmptyPlace()
 		this._wait_time  = wait_degree
-	}
-
-	public EnterNextRound():void
-	{
-		
 	}
 
 	public GetAllMyKnifeCount():number
@@ -157,7 +154,7 @@ class PlateObject {
 		knifeObject.label_index = this.all_knife_objects.length
 		knifeObject.testLabel.text = this.all_knife_objects.length.toString()
 		if(!isWin){
-			this._mainPanel.NextRound()
+			this._mainPanel.GenerateNextKnife()
 		}
 
 	}

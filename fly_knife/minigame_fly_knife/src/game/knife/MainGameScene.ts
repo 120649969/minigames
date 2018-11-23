@@ -9,7 +9,9 @@ module ui{
 		public m_plate_image:eui.Image
 		public m_plate_object:PlateObject
 		private labelResult:eui.Label
-		private btn_test:eui.Button
+
+		private btn_shake:eui.Button
+		private btn_prop_knife:eui.Button
 		private btn_debug:eui.Button
 
 		private _all_knife_imgs:Array<eui.Image> = []
@@ -46,7 +48,7 @@ module ui{
 			}
 
 			let __this = this
-			this.btn_test.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.Event){
+			this.btn_prop_knife.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.Event){
 				__this.m_plate_object.WaitToInsertNewKnife()
 				event.stopPropagation()
 			}.bind(this), this)
@@ -90,13 +92,13 @@ module ui{
 			this.labelResult.visible = false
 			let native_round_config = this.all_round_configs[this.current_round]
 			this.m_plate_object.EnterNextBigRound(native_round_config)
-			this.NextRound()
+			this.GenerateNextKnife()
 			for(let index = 0; index < this._all_knife_imgs.length; index++)
 			{
 				let img = this._all_knife_imgs[index]
 				if(index <= this.m_plate_object.GetMaxKnifeCount() - 1){
 					img.visible = true
-					KnifeUtils.SetColor(img, 0x909090)
+					img.filters = []
 				} else {
 					img.visible = false
 				}
@@ -107,7 +109,7 @@ module ui{
 		{
 			let knife_count = this.m_plate_object.GetAllMyKnifeCount()
 			let img = this._all_knife_imgs[knife_count - 1]
-			img.filters = []
+			KnifeUtils.SetColor(img, 0x909090)
 		}
 
 		private _onEnterFrame(event:egret.Event):void
@@ -158,12 +160,6 @@ module ui{
 			KnifeUtils.SetColor(new_other_knife.m_img, 0x7f0000)
 			this.m_container_layer.addChild(new_other_knife)
 			this._other_knife_object = new_other_knife
-		}
-
-		public NextRound():void
-		{
-			this.m_plate_object.EnterNextRound()
-			this.GenerateNextKnife()
 		}
 
 		private _isWin:boolean = false

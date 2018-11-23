@@ -28,7 +28,7 @@ module ui{
 			layerout.gap = 10
 			let __this = this
 			this.btn_close.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.Event){
-				__this.parent.removeChild(__this)
+				ui.WindowManager.getInstance().close("SettingPanel")
 				event.stopPropagation()
 			}.bind(this), this)
 
@@ -49,9 +49,7 @@ module ui{
 			this.btn_yes.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.Event){
 				__this._reloadData()
 				__this._mainPanel.ReStartGame()
-
-				__this.parent.removeChild(__this)
-
+				ui.WindowManager.getInstance().close("SettingPanel")
 				event.stopPropagation()
 			}.bind(this), this)
 			this._loadData()
