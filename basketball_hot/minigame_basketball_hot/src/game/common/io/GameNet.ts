@@ -49,7 +49,11 @@ module io {
 					resolve()
 				}
 
-				self.connect(Const.SERVER_URL)
+				if(DEBUG){
+					self.connect(Const.DEBUG_SERVER_URL)
+				} else {
+					self.connect(Const.RELEASE_SERVER_URL)
+				}
 			})
 		}
 

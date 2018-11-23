@@ -225,7 +225,7 @@ module ui {
 		{
 			this.serverModel.left_time -= 1
 			this.UpdateScore()
-			if(this.serverModel.left_time <= 0 && !this._is_game_over)
+			if(this.serverModel.left_time <= 0 && !this._is_game_over && !GameNet.isConnected())
 			{
 				this._on_game_over()
 			}
@@ -810,6 +810,7 @@ module ui {
 			this.serverModel.AddRole(role_info_other)
 			this.PlayReadyAnimation()
 		}
+
 
 		public onClose():void {
 			let protocol = io.GameNet.GAME_PROTOCOL;
