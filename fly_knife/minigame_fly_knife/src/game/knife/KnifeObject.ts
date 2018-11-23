@@ -5,7 +5,7 @@ class KnifeObject extends eui.Component{
 	public speedY:number = 0
 	public speedX:number = 0
 	public acceY:number = 0
-	private _mainPanel:MainGameScene
+	private _mainPanel:ui.MainGameScene
 	private _platObject:PlateObject
 	public m_img:egret.DisplayObject
 	public behit_rect:eui.Rect
@@ -17,7 +17,7 @@ class KnifeObject extends eui.Component{
 	public label_index:number = 0
 	public isMe:boolean = true
 
-	public constructor(mainPanel:MainGameScene) {
+	public constructor(mainPanel:ui.MainGameScene) {
 		super()
 		this.skinName = "KnifeSkin"
 		this._mainPanel = mainPanel
@@ -122,7 +122,15 @@ class KnifeObject extends eui.Component{
 		this.x = local_in_ball_object.x
 		this.y = local_in_ball_object.y
 		
+		this.CalculateDegreeOnPlat()
+		this._platObject.OnHit(this)
+	}
 
+
+	public CalculateDegreeOnPlat():void
+	{
+		let global_knife_point = this.localToGlobal(0, 0)
+		let local_in_ball_object = this._platObject.m_plate_container.globalToLocal(global_knife_point.x, global_knife_point.y)
 		//a
 		let local_point_in_center = new egret.Point()
 		local_point_in_center.x = this._platObject.m_plate_container.width / 2
@@ -143,8 +151,6 @@ class KnifeObject extends eui.Component{
 			degree = 360 - degree
 		}
 		this.degree_on_plate = degree //0--360范围，已右中间的点为起点，测试计算正确
-
-		this._platObject.OnHit(this)
 	}
 
 	private _onHitOtherKnife():void

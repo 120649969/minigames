@@ -1,14 +1,14 @@
 class PlateObject {
 
 	public m_plate_container:egret.DisplayObjectContainer
-	private _mainPanel:MainGameScene
+	private _mainPanel:ui.MainGameScene
 	private _isReady:boolean
 
 	public all_knife_objects:Array<KnifeObject> = []
 	public all_sort_knife_objects:Array<KnifeObject> = []
 	public roundPlateRotateStrategy:RoundPlateRotateStrategy
 
-	public constructor(mainPanel:MainGameScene) {
+	public constructor(mainPanel:ui.MainGameScene) {
 		this._mainPanel = mainPanel
 		this.m_plate_container = mainPanel.m_plate_container
 		this.m_plate_container.scaleX = this.m_plate_container.scaleY = 0
@@ -20,9 +20,9 @@ class PlateObject {
 		return global_center_point
 	}
 
-	public EnterNextBigRound(strategyConfig:RoundConfig):void
+	public EnterNextBigRound(roundConfig:RoundConfig):void
 	{
-		this.roundPlateRotateStrategy = new RoundPlateRotateStrategy(strategyConfig)
+		this.roundPlateRotateStrategy = new RoundPlateRotateStrategy(roundConfig)
 		this._isReady = false
 		let __this = this
 		this.m_plate_container.visible = true
@@ -38,6 +38,32 @@ class PlateObject {
 		}
 		this.all_knife_objects = []
 		this.all_sort_knife_objects = []
+
+		this._createInitMaterials()
+	}
+
+	//添加初始的材料
+	private _createInitMaterials():void
+	{
+		let current_material_configs = this.roundPlateRotateStrategy.roundConfig.materialConfigs
+		for(let index = 0; index < current_material_configs.length; index++)
+		{
+			let current_config = current_material_configs[index]
+			let type = current_config.type
+			if(type == 1){ //飞刀类型
+				let other_knife_object = new KnifeObject(this._mainPanel)
+				this.m_plate_container.addChild(other_knife_object)
+				other_knife_object.isMe = false
+				other_knife_object.anchorOffsetX = other_knife_object.hit_ball_rect.x + other_knife_object.hit_ball_rect.width / 2
+				other_knife_object.anchorOffsetY = other_knife_object.hit_ball_rect.y + other_knife_object.hit_ball_rect.height / 2
+				other_knife_object.x = this.m_plate_container.width / 2 + (this.m_plate_container.width / 2) * Math.cos(current_config.degree / 180 * Math.PI)
+				other_knife_object.y = this.m_plate_container.height / 2 + (this.m_plate_container.height / 2) * Math.sin(current_config.degree / 180 * Math.PI)
+				other_knife_object.rotation = current_config.degree - 90
+				this._pushNewKnifeObject(other_knife_object)
+			}
+			
+		}
+		this.m_plate_container.setChildIndex(this._mainPanel.m_plate_image, this.m_plate_container.numChildren)
 	}
 
 	public GetMaxKnifeCount():number
@@ -91,16 +117,22 @@ class PlateObject {
 		return count
 	}
 
+	private _pushNewKnifeObject(knife_object:KnifeObject):void
+	{
+		this.all_knife_objects.push(knife_object)
+		this.all_sort_knife_objects.push(knife_object)
+		this.all_sort_knife_objects.sort(function(knife_object_a:KnifeObject, knife_object_b:KnifeObject){
+			return knife_object_a.degree_on_plate < knife_object_b.degree_on_plate
+		}.bind(this))
+	}
+
 	public OnHit(knifeObject:KnifeObject):void
 	{
 		let __this = this
-		this.all_knife_objects.push(knifeObject)
-		
-		this.all_sort_knife_objects.push(knifeObject)
+		this._pushNewKnifeObject(knifeObject)
 		if(knifeObject.isMe){
 			this._mainPanel.OnGetScore()
 		}
-
 		let isWin = this.GetAllMyKnifeCount() >= this.roundPlateRotateStrategy.maxKnifeCount
 
 		if(knifeObject.isMe){
@@ -128,10 +160,6 @@ class PlateObject {
 			this._mainPanel.NextRound()
 		}
 
-		this.all_sort_knife_objects.sort(function(knife_object_a:KnifeObject, knife_object_b:KnifeObject){
-			return knife_object_a.degree_on_plate < knife_object_b.degree_on_plate
-		}.bind(this))
-		let index = 1;
 	}
 
 	//计算等待旋转多少才可以插入

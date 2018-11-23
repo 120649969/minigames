@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="KnifeSkin" width="70" height="195" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
 	<e:Rect id="behit_rect" anchorOffsetX="0" anchorOffsetY="0" strokeAlpha="0.3" fillAlpha="0.6" fillColor="0x0f0d0d" left="0" top="128" right="0" bottom="0" visible="false"/>
-	<e:Image id="m_img" source="nife_png" x="0" y="0" anchorOffsetX="0"/>
+	<e:Image id="m_img" source="nife_png" x="0" y="0" anchorOffsetX="0" rotation="0" anchorOffsetY="0"/>
 	<e:Rect id="hit_rect" width="33" height="127" x="18" y="0" anchorOffsetX="0" anchorOffsetY="0" strokeAlpha="0.3" fillAlpha="0.6" fillColor="0xea1919" visible="false"/>
 	<e:Label id="testLabel" text="" horizontalCenter="0" verticalCenter="71.5" textColor="0xdb1515"/>
 	<e:Rect id="hit_ball_rect" width="5" height="5" x="31" y="112.9"/>

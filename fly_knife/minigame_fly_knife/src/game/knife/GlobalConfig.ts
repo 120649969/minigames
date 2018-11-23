@@ -8,10 +8,12 @@ class StrategyConfig{
 	public duration:number
 	public direction:number
 	public speed:number
+	public fadeTime:number
 	public constructor(strategy_native_config:Object){
 		this.duration = strategy_native_config['duration']
 		this.direction = strategy_native_config['direction']
 		this.speed = strategy_native_config['speed']
+		this.fadeTime = strategy_native_config['fadeTime'] || 2
 	}
 }
 
@@ -47,8 +49,8 @@ class RoundConfig{
 		}
 
 		let strategy_native_configs:Array<Object> = []
-		if(strategy_native_configs['strategys'] != undefined){
-			strategy_native_configs = strategy_native_configs['strategys'] as Array<Object>
+		if(round_native_config['strategys'] != undefined){
+			strategy_native_configs = round_native_config['strategys'] as Array<Object>
 		}
 		for(let index = 0; index < strategy_native_configs.length; index++)
 		{
@@ -64,33 +66,44 @@ class PlateRotateStrategy {
 	public direction:number
 	public speed:number
 	public duration:number  //秒
-
+	public fadeTime:number
 	public curTime:number = 0
 
-	public constructor(config:StrategyConfig) {
-		this.direction = RotateDirection.POSITIVE
-		this.direction = config.direction
-		if(this.direction != RotateDirection.POSITIVE && this.direction != RotateDirection.NEGATIVE){
-			this.direction = RotateDirection.POSITIVE
-			console.error("this config is error", config)
-		}
+	private _current_speed:number = 0
+	private _target_speed:number = 0
+	public constructor(config:StrategyConfig, next_speed: number) {
+		this._target_speed = next_speed
 		this.speed = config.speed
 		this.duration = config.duration
+		this.fadeTime = config.fadeTime
+
+		this._current_speed = this.speed
 	}
 
 	public ReSet():void
 	{
 		this.curTime = 0
+		this._current_speed = this.speed
 	}
 
 	public Step(step_time:number):boolean
 	{
 		this.curTime += step_time
+		if(this.curTime >= this.duration - this.fadeTime &&  this.fadeTime > 0){
+			this._current_speed = this.speed + (this._target_speed - this.speed) * (this.curTime - this.duration + this.fadeTime) / this.fadeTime
+		} else {
+			this._current_speed = this.speed
+		}
+		this.direction = this._current_speed > 0 ? RotateDirection.POSITIVE : RotateDirection.NEGATIVE
 		if(this.curTime >= this.duration){
-			this.ReSet()
 			return true
 		}
 		return false
+	}
+
+	public getCurrentSpeed():number
+	{
+		return this._current_speed
 	}
 }
 
@@ -105,11 +118,14 @@ class RoundPlateRotateStrategy {
 	public constructor(roundConfig:RoundConfig){
 		this.roundConfig = roundConfig
 		let strategy_configs = roundConfig.strategys
-		for(let key in strategy_configs){
-			let config = strategy_configs[key]
-			let new_strategy = new PlateRotateStrategy(config)
+		for(let index = 0; index < strategy_configs.length; index ++)
+		{
+			let config = strategy_configs[index]
+			let next_speed = strategy_configs[(index + 1) % strategy_configs.length].speed
+			let new_strategy = new PlateRotateStrategy(config, next_speed)
 			this.strategys.push(new_strategy)
 		}
+
 		this.maxKnifeCount = roundConfig.count
 	}
 
@@ -122,7 +138,11 @@ class RoundPlateRotateStrategy {
 			if(is_finish){
 				this.strategyIndex = (this.strategyIndex + 1) % this.strategys.length
 			}
-			return cur_strategy.speed * cur_strategy.direction
+			let ret = cur_strategy.getCurrentSpeed()
+			if(is_finish){
+				cur_strategy.ReSet()
+			}
+			return ret
 		}
 		return 0
 	}
@@ -130,5 +150,10 @@ class RoundPlateRotateStrategy {
 	public GetCurrentStrategy():PlateRotateStrategy
 	{
 		return this.strategys[this.strategyIndex]
+	}
+
+	public GetCurrentStrategyConfig():StrategyConfig
+	{
+		return this.roundConfig.strategys[this.strategyIndex]
 	}
 }

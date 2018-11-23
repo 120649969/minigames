@@ -27,13 +27,13 @@
         "strategys":[
             {
                 "duration":3,
-                "direction":1,
-                "speed":15
+                "speed":15,
+                "fadeTime":1
             },
             {
                 "duration":3,
-                "direction":-1,
-                "speed":15
+                "speed":-15,
+                "fadeTime":0
             }
         ]
     },
@@ -65,13 +65,13 @@
         "strategys":[
             {
                 "duration":10,
-                "direction":1,
-                "speed":40
+                "speed":40,
+                "fadeTime":1
             },
             {
                 "duration":10,
-                "direction":-1,
-                "speed":40
+                "speed":-40,
+                "fadeTime":0
             }
         ]
     }
