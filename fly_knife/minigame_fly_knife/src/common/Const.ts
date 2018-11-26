@@ -8,10 +8,10 @@ class Const {
 
 	public static HEARTBEAT_DUR = 6000;
 
-	public static GAME_TIME = 60;
+	public static GAME_TIME = 900;
 
-	public static DEBUG_SERVER_URL = '192.168.20.232:50002';
-	public static RELEASE_SERVER_URL = 'ght-hall.badambiz.com:50002'
+	public static DEBUG_SERVER_URL = 'ght-hall.badambiz.com:50003';
+	public static RELEASE_SERVER_URL = 'ght-hall.badambiz.com:50003'
 	
 	public static EVENT = {
 		ON_STAGE_RESIZE: 'onStageResize',

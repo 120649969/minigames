@@ -30,6 +30,8 @@ declare module skins{
 	class ProgressBarSkin extends eui.Skin{
 	}
 }
+declare class PropSkin extends eui.Skin{
+}
 declare module skins{
 	class RadioButtonSkin extends eui.Skin{
 	}

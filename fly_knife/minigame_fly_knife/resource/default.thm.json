@@ -25,6 +25,7 @@
 		"resource/eui_skins/MainSceneSkin.exml",
 		"resource/eui_skins/PanelSkin.exml",
 		"resource/eui_skins/ProgressBarSkin.exml",
+		"resource/eui_skins/PropSkin.exml",
 		"resource/eui_skins/RadioButtonSkin.exml",
 		"resource/eui_skins/ScrollerSkin.exml",
 		"resource/eui_skins/SettingItemSkin.exml",

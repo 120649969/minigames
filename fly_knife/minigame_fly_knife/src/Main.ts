@@ -54,6 +54,22 @@ class Main extends eui.UILayer {
         WindowManager = ui.WindowManager.getInstance();
         GameNet = io.GameNet.getInstance();
 
+        if(User.openId == "")
+        {
+            User.openId = GamePlatform.GetMyOpenId()
+        }
+
+        if(User.roomId == "")
+        {
+            User.roomId = GamePlatform.GetRoomId()
+        }
+        
+        if (!User.openId || User.openId.length == 0) {
+            User.openId = new Date().getTime().toString() + Math.floor(Math.random() * 10000).toString();
+            egret.localStorage.setItem('openId', User.openId);
+            User.roomId = "0"
+        }
+        
         //inject the custom material parser
         //注入自定义的素材解析器
         let assetAdapter = new AssetAdapter();

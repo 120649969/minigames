@@ -1,4 +1,4 @@
-class KnifeObject extends eui.Component{
+class KnifeObject extends BaseGameObject{
 
 	public is_end:boolean = false
 	public lastY:number = 0
@@ -13,7 +13,6 @@ class KnifeObject extends eui.Component{
 	public hit_ball_rect:eui.Rect
 
 	public testLabel:eui.Label
-	public degree_on_plate:number = 0
 	public label_index:number = 0
 	public isMe:boolean = true
 
@@ -35,9 +34,8 @@ class KnifeObject extends eui.Component{
 
 	public StartBirthMove(targetX:number, targetY:number):void
 	{
-		this.x = targetX - this.width / 2
-		this.y = targetY + 500
-		egret.Tween.get(this).to({x:targetX, y:targetY}, 0.1 * 1000)
+		this.x = targetX
+		this.y = targetY
 	}
 
 	public Update():void
@@ -59,11 +57,19 @@ class KnifeObject extends eui.Component{
 			this.x += step_speend_x
 			this.y += step_speend_y
 			if(this._checkHitBall()){
+
 				this._onHitBall()
 				break
 			}
 
-			if(this.isMe && this._checkOtherKnife())
+			let other_prop_object = null
+			if(this.isMe && (other_prop_object = this._checkHitProp()))
+			{
+				this._onHitOtherProp(other_prop_object)
+				break
+			}
+
+			if(this.isMe && this._checkHitOtherKnife())
 			{
 				this._onHitOtherKnife()
 				break
@@ -81,7 +87,7 @@ class KnifeObject extends eui.Component{
 		return false
 	}
 
-	private _checkOtherKnife():boolean
+	private _checkHitOtherKnife():boolean
 	{
 		let global_knife_left_point = this.localToGlobal(this.hit_rect.x, 0)
 		let global_knife_right_point = this.localToGlobal(this.hit_rect.x + this.hit_rect.width, 0)
@@ -110,6 +116,34 @@ class KnifeObject extends eui.Component{
 		return false
 	}
 
+	private _checkHitProp():PropObject
+	{
+		let global_knife_left_point = this.localToGlobal(this.hit_rect.x, 0)
+		let global_knife_right_point = this.localToGlobal(this.hit_rect.x + this.hit_rect.width, 0)
+		let all_prop_objects = this._platObject.all_prop_objects
+		for(let index = 0; index < all_prop_objects.length; index++)
+		{
+			let other_prop_object = all_prop_objects[index]
+			let left_local_in_prop_object = other_prop_object.globalToLocal(global_knife_left_point.x, global_knife_left_point.y)
+			if(left_local_in_prop_object.x >= other_prop_object.behit_rect.x && left_local_in_prop_object.x <= other_prop_object.behit_rect.x + other_prop_object.behit_rect.width)
+			{
+				if(left_local_in_prop_object.y >= other_prop_object.behit_rect.y && left_local_in_prop_object.y <= other_prop_object.behit_rect.y + other_prop_object.behit_rect.height)
+				{
+					return other_prop_object
+				}
+			}
+
+			let right_local_in_prop_object = other_prop_object.globalToLocal(global_knife_right_point.x, global_knife_right_point.y)
+			if(right_local_in_prop_object.x >= other_prop_object.behit_rect.x && right_local_in_prop_object.x <=  other_prop_object.behit_rect.x + other_prop_object.behit_rect.width)
+			{
+				if(right_local_in_prop_object.y >= other_prop_object.behit_rect.y && right_local_in_prop_object.y <= other_prop_object.behit_rect.y + other_prop_object.behit_rect.height)
+				{
+					return other_prop_object
+				}
+			}
+		}
+		return null
+	}
 	public _onHitBall():void
 	{
 		this.is_end = true
@@ -123,7 +157,12 @@ class KnifeObject extends eui.Component{
 		this.y = local_in_ball_object.y
 		
 		this.CalculateDegreeOnPlat()
-		this._platObject.OnHit(this)
+		this._platObject.OnHitOtherKnife(this)
+
+		if(this.isMe)
+		{
+			GameNet.reqShoot(Math.floor(this.degree_on_plate))			
+		}
 	}
 
 
@@ -167,6 +206,22 @@ class KnifeObject extends eui.Component{
 			egret.Tween.removeTweens(__this)
 			__this._mainPanel.ShowResult(false)
 		})
+	}
+
+	private _onHitOtherProp(prop_object:PropObject):void
+	{
+		if(!prop_object){
+			return
+		}
+		this._platObject.OnHitPropObject(this, prop_object)
+
+		if(this.isMe)
+		{
+			if(prop_object.type == 2)
+			{
+				GameNet.reqUseProp(prop_object.type)
+			}
+		}
 	}
 
 	public Destory():void

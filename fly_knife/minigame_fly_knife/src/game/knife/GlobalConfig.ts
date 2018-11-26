@@ -152,6 +152,7 @@ class RoundPlateRotateStrategy {
 	public maxKnifeCount:number = 0;
 	public roundConfig:RoundConfig;
 
+	public hasChangeStrategy:boolean = false
 	public constructor(roundConfig:RoundConfig){
 		this.roundConfig = roundConfig
 		let strategy_configs = roundConfig.strategys
@@ -162,13 +163,13 @@ class RoundPlateRotateStrategy {
 			let new_strategy = new PlateRotateStrategy(config, next_speed)
 			this.strategys.push(new_strategy)
 		}
-
 		this.maxKnifeCount = roundConfig.count
 	}
 
 	//返回这一个step的旋转角度
 	public Step(step_time:number):number
 	{
+		this.hasChangeStrategy = false
 		let cur_strategy = this.strategys[this.strategyIndex]
 		if(cur_strategy){
 			let is_finish = cur_strategy.Step(step_time)
@@ -177,6 +178,7 @@ class RoundPlateRotateStrategy {
 			}
 			let ret = cur_strategy.getCurrentSpeed()
 			if(is_finish){
+				this.hasChangeStrategy = true
 				cur_strategy.ReSet()
 			}
 			return ret

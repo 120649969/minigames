@@ -11,12 +11,13 @@
 	"game": [
 		"bin-debug/common/io/Net.js",
 		"bin-debug/common/ui/Window.js",
-		"bin-debug/Main.js",
+		"bin-debug/game/knife/PropObject.js",
 		"bin-debug/Platform.js",
 		"bin-debug/ThemeAdapter.js",
 		"bin-debug/common/Config.js",
 		"bin-debug/common/Const.js",
 		"bin-debug/common/EventEmitter.js",
+		"bin-debug/common/GamePlatform.js",
 		"bin-debug/common/User.js",
 		"bin-debug/common/Util.js",
 		"bin-debug/common/io/GameNet.js",
@@ -30,6 +31,8 @@
 		"bin-debug/game/knife/KnifeUtils.js",
 		"bin-debug/game/knife/MainGameScene.js",
 		"bin-debug/game/knife/PlateObject.js",
+		"bin-debug/Main.js",
+		"bin-debug/game/knife/ServerModel.js",
 		"bin-debug/game/knife/SettingPanel.js"
 	]
 }
