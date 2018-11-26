@@ -23,6 +23,7 @@ class MaterialConfig{
 	public degrees:Array<number> = []
 	public count:number = 0
 	private backup_degrees:Array<number> = []
+	private _last_generate_degrees:Array<number> = []
 	public constructor(material_native_config:Object){
 		this.type = material_native_config['type']
 		this.name = material_native_config['name']
@@ -31,12 +32,16 @@ class MaterialConfig{
 		this.Reset()
 	}
 
-	public getRandomDegree():number
+	public getRandomDegree(index:number):number
 	{
+		if(this._last_generate_degrees.length > index){
+			return this._last_generate_degrees[index]
+		}
 		let ret = 0
-		let index = Math.floor(Math.random() * this.backup_degrees.length)
-		ret = this.backup_degrees[index]
-		this.backup_degrees.splice(index, 1)
+		let random_index = Math.floor(Math.random() * this.backup_degrees.length)
+		ret = this.backup_degrees[random_index]
+		this.backup_degrees.splice(random_index, 1)
+		this._last_generate_degrees.push(ret)
 		console.log(this.backup_degrees, ret)
 		return ret
 	}

@@ -32,6 +32,7 @@ class PlateObject {
 		this._isReady = false
 		let __this = this
 		this.m_plate_container.visible = true
+		this.m_plate_container.rotation = 0
 		this.m_plate_container.scaleX = this.m_plate_container.scaleY = 0
 		egret.Tween.get(this.m_plate_container).to({scaleX : 1.2, scaleY : 1.2}, 0.25 * 1000).call(function(){
 			egret.Tween.get(__this.m_plate_container).to({scaleX : 1, scaleY : 1}, 0.1 * 1000)
@@ -70,7 +71,7 @@ class PlateObject {
 					other_knife_object.anchorOffsetX = other_knife_object.hit_ball_rect.x + other_knife_object.hit_ball_rect.width / 2
 					other_knife_object.anchorOffsetY = other_knife_object.hit_ball_rect.y + other_knife_object.hit_ball_rect.height / 2
 
-					let random_degree = current_config.getRandomDegree()
+					let random_degree = current_config.getRandomDegree(type_index)
 					other_knife_object.x = this.m_plate_container.width / 2 + (this.m_plate_container.width / 2) * Math.cos(random_degree / 180 * Math.PI)
 					other_knife_object.y = this.m_plate_container.height / 2 + (this.m_plate_container.height / 2) * Math.sin(random_degree / 180 * Math.PI)
 					other_knife_object.rotation = random_degree - 90
@@ -79,7 +80,7 @@ class PlateObject {
 					let other_prop_object = new PropObject()
 					other_prop_object.type = type
 					this.m_plate_container.addChild(other_prop_object)
-					let random_degree = current_config.getRandomDegree()
+					let random_degree = current_config.getRandomDegree(type_index)
 					let __width = other_prop_object.width
 					other_prop_object.anchorOffsetX =  other_prop_object.width / 2
 					other_prop_object.x = this.m_plate_container.width / 2 + (this.m_plate_container.width / 2) * Math.cos(random_degree / 180 * Math.PI)
