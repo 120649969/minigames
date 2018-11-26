@@ -120,12 +120,7 @@ module ui{
 			for(let index = 0; index < this._all_knife_imgs.length; index++)
 			{
 				let img = this._all_knife_imgs[index]
-				if(index <= this.m_plate_object.GetMaxKnifeCount() - 1){
-					img.visible = true
-					img.filters = []
-				} else {
-					img.visible = false
-				}
+				img.source = 'knifeicon12_png'
 			}
 		}
 
@@ -133,7 +128,7 @@ module ui{
 		{
 			let knife_count = this.m_plate_object.GetAllMyKnifeCount()
 			let img = this._all_knife_imgs[knife_count - 1]
-			KnifeUtils.SetColor(img, 0x909090)
+			img.source = 'knifeicon11_png'
 		}
 
 		private _onEnterFrame(event:egret.Event):void
@@ -185,7 +180,6 @@ module ui{
 			new_other_knife.speedY = 100
 			new_other_knife.speedX = -100
 			new_other_knife.acceY = 0
-			KnifeUtils.SetColor(new_other_knife.m_img, 0x7f0000)
 			this.m_container_layer.addChild(new_other_knife)
 			this._other_knife_object = new_other_knife
 		}

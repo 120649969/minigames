@@ -7,7 +7,9 @@ class KnifeObject extends BaseGameObject{
 	public acceY:number = 0
 	private _mainPanel:ui.MainGameScene
 	private _platObject:PlateObject
-	public m_img:egret.DisplayObject
+	private m_img_1:egret.DisplayObject
+	private m_img_2:egret.DisplayObject
+	private m_img_3:egret.DisplayObject
 	public behit_rect:eui.Rect
 	public hit_rect:eui.Rect
 	public hit_ball_rect:eui.Rect
@@ -16,12 +18,24 @@ class KnifeObject extends BaseGameObject{
 	public label_index:number = 0
 	public isMe:boolean = true
 
-	public constructor(mainPanel:ui.MainGameScene) {
+	public constructor(mainPanel:ui.MainGameScene, is_init:boolean = false) {
 		super()
 		this.skinName = "KnifeSkin"
 		this._mainPanel = mainPanel
 		this._platObject = this._mainPanel.m_plate_object
 		this.is_end = false
+
+		this.m_img_1.visible = false
+		this.m_img_2.visible = false
+		this.m_img_3.visible = false
+
+		if(is_init){
+			this.m_img_2.visible = true
+		} else if((mainPanel.current_round + 1) % 3 == 0){
+			this.m_img_3.visible = true
+		} else {
+			this.m_img_1.visible = true
+		}
 	}
 
 	public StartTouchMove():void

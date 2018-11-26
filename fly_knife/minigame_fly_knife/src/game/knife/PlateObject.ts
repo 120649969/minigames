@@ -64,7 +64,7 @@ class PlateObject {
 			for(let type_index = 0; type_index < current_config.count; type_index ++)
 			{
 				if(type == 1){ //飞刀类型
-					let other_knife_object = new KnifeObject(this._mainPanel)
+					let other_knife_object = new KnifeObject(this._mainPanel, true)
 					this.m_plate_container.addChild(other_knife_object)
 					other_knife_object.isMe = false
 					other_knife_object.anchorOffsetX = other_knife_object.hit_ball_rect.x + other_knife_object.hit_ball_rect.width / 2

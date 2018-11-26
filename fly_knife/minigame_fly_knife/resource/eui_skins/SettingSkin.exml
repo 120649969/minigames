@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="SettingSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Group left="0" top="0" right="0" bottom="0" touchEnabled="true" touchChildren="true" touchThrough="false" locked="true">
+	<e:Group left="0" top="0" right="0" bottom="0" touchEnabled="true" touchChildren="true" touchThrough="false">
 	</e:Group>
-	<e:Rect left="0" top="0" bottom="0" right="0" fillColor="0xafa3a3" locked="true"/>
+	<e:Rect left="0" top="0" bottom="0" right="0" fillColor="0xafa3a3"/>
 
 	<e:Button id="btn_close" label="关闭" x="479" y="0" anchorOffsetX="0" width="238" anchorOffsetY="0" height="76"/>
 	<e:Scroller id="m_scroller" width="546" height="930" x="91" y="192" anchorOffsetX="0" anchorOffsetY="0" scrollPolicyV="on" scrollPolicyH="off">
