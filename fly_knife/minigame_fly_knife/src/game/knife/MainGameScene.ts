@@ -124,7 +124,7 @@ module ui{
 			for(let index = 0; index < this._all_knife_imgs.length; index++)
 			{
 				let img = this._all_knife_imgs[index]
-				img.source = 'knifeicon12_png'
+				img.source = 'knifeicon11_png'
 				img.visible = false
 			}
 
@@ -139,7 +139,7 @@ module ui{
 		{
 			let knife_count = this.m_plate_object.GetAllMyKnifeCount()
 			let img = this._all_knife_imgs[knife_count - 1]
-			img.source = 'knifeicon11_png'
+			img.source = 'knifeicon12_png'
 		}
 
 		private _onEnterFrame(event:egret.Event):void

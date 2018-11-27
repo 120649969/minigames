@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "selected_png,button_down_png,button_up_png,description_json,ball_png,rounds_json,prop_png,knifeicon1_png,knifeicon2_png,knifeicon3_png,knifeicon11_png,knifeicon12_png,bjfd_jpg",
+			"keys": "selected_png,button_down_png,button_up_png,description_json,ball_png,rounds_json,prop_png,knifeicon1_png,knifeicon2_png,knifeicon3_png,knifeicon11_png,knifeicon12_png,bjfd_jpg,roundthumb_png",
 			"name": "preload"
 		}
 	],
@@ -70,6 +70,11 @@
 			"url": "assets/bjfd.jpg",
 			"type": "image",
 			"name": "bjfd_jpg"
+		},
+		{
+			"name": "roundthumb_png",
+			"type": "image",
+			"url": "assets/ScrollBar/roundthumb.png"
 		}
 	]
 }

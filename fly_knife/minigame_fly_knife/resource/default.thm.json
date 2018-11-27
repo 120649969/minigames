@@ -17,14 +17,17 @@
 	"autoGenerateExmlsList": true,
 	"exmls": [
 		"resource/eui_skins/ButtonSkin.exml",
+		"resource/eui_skins/HScrollBarSkin.exml",
 		"resource/eui_skins/ItemRendererSkin.exml",
 		"resource/eui_skins/KnifeSkin.exml",
 		"resource/eui_skins/MainSceneSkin.exml",
 		"resource/eui_skins/PanelSkin.exml",
 		"resource/eui_skins/PropSkin.exml",
+		"resource/eui_skins/ScrollerSkin.exml",
 		"resource/eui_skins/SettingItemSkin.exml",
 		"resource/eui_skins/SettingSkin.exml",
-		"resource/eui_skins/TextInputSkin.exml"
+		"resource/eui_skins/TextInputSkin.exml",
+		"resource/eui_skins/VScrollBarSkin.exml"
 	],
 	"path": "resource/default.thm.json"
 }
