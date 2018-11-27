@@ -72,7 +72,7 @@ module ui{
 
 		private _loadData():void
 		{
-			let current_round_strategys:Array<StrategyConfig> = this._mainPanel.m_plate_object.roundPlateRotateStrategy.strategys
+			let current_round_strategys:Array<StrategyConfig> = this._mainPanel.m_plate_object.roundPlateRotateStrategy.roundConfig.strategys
 			for(let index = 0; index < current_round_strategys.length; index ++)
 			{
 				this.dataArray.addItem(current_round_strategys[index])

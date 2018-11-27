@@ -63,8 +63,13 @@ class RoundConfig{
 	public strategys:Array<StrategyConfig> = []
 
 	public constructor(round_native_config:Object){
-		this.round = round_native_config['round']
-		this.count = round_native_config['count']
+		if(round_native_config['round'] != undefined){
+			this.round = round_native_config['round']
+		}
+		
+		if(round_native_config['count'] != undefined){
+			this.count = round_native_config['count']
+		}
 
 		let material_native_configs:Array<Object> = []
 		if(round_native_config['materials'] != undefined){

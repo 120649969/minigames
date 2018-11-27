@@ -6,8 +6,9 @@
 
 	<e:Button id="btn_close" label="关闭" x="479" y="0" anchorOffsetX="0" width="238" anchorOffsetY="0" height="76"/>
 	<e:Scroller id="m_scroller" width="546" height="930" x="91" y="192" anchorOffsetX="0" anchorOffsetY="0" scrollPolicyV="on" scrollPolicyH="off">
+		<e:List id="m_list" x="86" y="192" scaleX="1" scaleY="1" anchorOffsetX="0" anchorOffsetY="0" itemRendererSkinName="SettingItemSkin"/>
 	</e:Scroller>
-	<e:List id="m_list" width="548" height="930" x="91" y="0" scaleX="1" scaleY="1" anchorOffsetX="0" anchorOffsetY="0"/>
+
 	<e:Button id="btn_add" label="添加配置" x="225" y="98" anchorOffsetX="0" width="238" anchorOffsetY="0" height="76"/>
 	<e:Button id="btn_yes" label="确定" x="241" y="1169" anchorOffsetX="0" width="238" anchorOffsetY="0" height="76"/>
 

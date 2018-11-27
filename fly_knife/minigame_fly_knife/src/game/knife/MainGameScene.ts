@@ -39,6 +39,10 @@ module ui{
 				let round_config = new RoundConfig(native_config)
 				this.all_round_configs.push(round_config)
 			}
+			for(let index = round_native_configs.length - 1; index >= 0; index--)
+			{
+				this.all_round_configs.push(this.all_round_configs[round_native_configs.length - index - 1])
+			}
 		}
 
 		public resizeStage():void
@@ -121,6 +125,13 @@ module ui{
 			{
 				let img = this._all_knife_imgs[index]
 				img.source = 'knifeicon12_png'
+				img.visible = false
+			}
+
+			for(let index = 0; index < this.m_plate_object.GetMaxKnifeCount(); index++)
+			{
+				let img = this._all_knife_imgs[index]
+				img.visible = true
 			}
 		}
 

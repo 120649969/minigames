@@ -1,1009 +1,1009 @@
 [
     {
-        "round": 1,
-        "count": 6,
-        "strategys": [
-            {
-                "speed": 5,
-                "duration": 6,
-                "fadeTime": 3
-            },
-            {
-                "speed": -5,
-                "duration": 6,
-                "fadeTime": 3
-            },
-            {
-                "speed": 9999,
-                "duration": 9999,
-                "fadeTime": 9999
-            }
-        ],
+        "count": 6, 
         "materials": [
             {
-                "type": 1,
-                "count": 2,
+                "count": 0, 
+                "type": 1, 
                 "degree": [
-                    0,
-                    30,
-                    -30,
-                    -90
+                    9999, 
+                    9999, 
+                    9999, 
+                    9999
                 ]
-            },
+            }, 
             {
-                "type": 2,
-                "count": 0,
+                "count": 0, 
+                "type": 2, 
                 "degree": [
-                    9999,
-                    9999,
+                    9999, 
+                    9999, 
                     9999
                 ]
             }
-        ]
-    },
-    {
-        "round": 2,
-        "count": 6,
+        ], 
+        "round": 1, 
         "strategys": [
             {
-                "speed": -5,
-                "duration": 6,
+                "duration": 6, 
+                "speed": 5, 
                 "fadeTime": 3
-            },
+            }, 
             {
-                "speed": 5,
-                "duration": 7,
+                "duration": 6, 
+                "speed": -5, 
                 "fadeTime": 3
-            },
+            }, 
             {
-                "speed": 5,
-                "duration": 8,
-                "fadeTime": 3
+                "duration": 9999, 
+                "speed": 9999, 
+                "fadeTime": 9999
             }
-        ],
+        ]
+    }, 
+    {
+        "count": 6, 
         "materials": [
             {
-                "type": 1,
-                "count": 1,
+                "count": 1, 
+                "type": 1, 
                 "degree": [
-                    -45,
-                    45,
-                    -135,
+                    -45, 
+                    45, 
+                    -135, 
                     135
                 ]
-            },
+            }, 
             {
-                "type": 2,
-                "count": 0,
+                "count": 0, 
+                "type": 2, 
                 "degree": [
-                    9999,
-                    9999,
+                    9999, 
+                    9999, 
                     9999
                 ]
             }
-        ]
-    },
-    {
-        "round": 3,
-        "count": 7,
+        ], 
+        "round": 2, 
         "strategys": [
             {
-                "speed": 5,
-                "duration": 7,
+                "duration": 6, 
+                "speed": -5, 
                 "fadeTime": 3
-            },
+            }, 
             {
-                "speed": -5,
-                "duration": 8,
+                "duration": 7, 
+                "speed": 5, 
                 "fadeTime": 3
-            },
+            }, 
             {
-                "speed": 9999,
-                "duration": 9999,
-                "fadeTime": 9999
+                "duration": 8, 
+                "speed": 5, 
+                "fadeTime": 3
             }
-        ],
+        ]
+    }, 
+    {
+        "count": 7, 
         "materials": [
             {
-                "type": 1,
-                "count": 0,
+                "count": 0, 
+                "type": 1, 
                 "degree": [
-                    9999,
-                    9999,
-                    9999,
+                    9999, 
+                    9999, 
+                    9999, 
                     9999
                 ]
-            },
+            }, 
             {
-                "type": 2,
-                "count": 1,
+                "count": 1, 
+                "type": 2, 
                 "degree": [
-                    -45,
-                    45,
+                    -45, 
+                    45, 
                     180
                 ]
             }
-        ]
-    },
-    {
-        "round": 4,
-        "count": 6,
+        ], 
+        "round": 3, 
         "strategys": [
             {
-                "speed": 5.5,
-                "duration": 6,
+                "duration": 7, 
+                "speed": 5, 
                 "fadeTime": 3
-            },
+            }, 
             {
-                "speed": -5.5,
-                "duration": 7,
+                "duration": 8, 
+                "speed": -5, 
                 "fadeTime": 3
-            },
+            }, 
             {
-                "speed": 5.5,
-                "duration": 8,
-                "fadeTime": 3
-            }
-        ],
-        "materials": [
-            {
-                "type": 1,
-                "count": 0,
-                "degree": [
-                    9999,
-                    9999,
-                    9999,
-                    9999
-                ]
-            },
-            {
-                "type": 2,
-                "count": 0,
-                "degree": [
-                    9999,
-                    9999,
-                    9999
-                ]
+                "duration": 9999, 
+                "speed": 9999, 
+                "fadeTime": 9999
             }
         ]
-    },
+    }, 
     {
-        "round": 5,
-        "count": 6,
-        "strategys": [
-            {
-                "speed": 5,
-                "duration": 7,
-                "fadeTime": 3
-            },
-            {
-                "speed": -5,
-                "duration": 8,
-                "fadeTime": 3
-            },
-            {
-                "speed": 5,
-                "duration": 9,
-                "fadeTime": 3
-            }
-        ],
+        "count": 6, 
         "materials": [
             {
-                "type": 1,
-                "count": 2,
+                "count": 0, 
+                "type": 1, 
                 "degree": [
-                    110,
-                    -70,
-                    -110,
+                    9999, 
+                    9999, 
+                    9999, 
+                    9999
+                ]
+            }, 
+            {
+                "count": 0, 
+                "type": 2, 
+                "degree": [
+                    9999, 
+                    9999, 
+                    9999
+                ]
+            }
+        ], 
+        "round": 4, 
+        "strategys": [
+            {
+                "duration": 6, 
+                "speed": 5.5, 
+                "fadeTime": 3
+            }, 
+            {
+                "duration": 7, 
+                "speed": -5.5, 
+                "fadeTime": 3
+            }, 
+            {
+                "duration": 8, 
+                "speed": 5.5, 
+                "fadeTime": 3
+            }
+        ]
+    }, 
+    {
+        "count": 6, 
+        "materials": [
+            {
+                "count": 2, 
+                "type": 1, 
+                "degree": [
+                    110, 
+                    -70, 
+                    -110, 
                     70
                 ]
-            },
+            }, 
             {
-                "type": 2,
-                "count": 0,
+                "count": 0, 
+                "type": 2, 
                 "degree": [
-                    9999,
-                    9999,
+                    9999, 
+                    9999, 
                     9999
                 ]
             }
-        ]
-    },
-    {
-        "round": 6,
-        "count": 7,
+        ], 
+        "round": 5, 
         "strategys": [
             {
-                "speed": 5,
-                "duration": 7,
+                "duration": 7, 
+                "speed": 5, 
                 "fadeTime": 3
-            },
+            }, 
             {
-                "speed": 5,
-                "duration": 8,
+                "duration": 8, 
+                "speed": -5, 
                 "fadeTime": 3
-            },
+            }, 
             {
-                "speed": -5,
-                "duration": 9,
+                "duration": 9, 
+                "speed": 5, 
                 "fadeTime": 3
             }
-        ],
+        ]
+    }, 
+    {
+        "count": 7, 
         "materials": [
             {
-                "type": 1,
-                "count": 1,
+                "count": 1, 
+                "type": 1, 
                 "degree": [
-                    0,
-                    90,
-                    -90,
+                    0, 
+                    90, 
+                    -90, 
                     -180
                 ]
-            },
+            }, 
             {
-                "type": 2,
-                "count": 1,
+                "count": 1, 
+                "type": 2, 
                 "degree": [
-                    -44,
-                    45,
+                    -44, 
+                    45, 
                     60
                 ]
             }
-        ]
-    },
-    {
-        "round": 7,
-        "count": 7,
+        ], 
+        "round": 6, 
         "strategys": [
             {
-                "speed": -5.2,
-                "duration": 7,
+                "duration": 7, 
+                "speed": 5, 
                 "fadeTime": 3
-            },
+            }, 
             {
-                "speed": 5.2,
-                "duration": 8,
+                "duration": 8, 
+                "speed": 5, 
                 "fadeTime": 3
-            },
+            }, 
             {
-                "speed": -5.2,
-                "duration": 9,
+                "duration": 9, 
+                "speed": -5, 
                 "fadeTime": 3
             }
-        ],
+        ]
+    }, 
+    {
+        "count": 7, 
         "materials": [
             {
-                "type": 1,
-                "count": 2,
+                "count": 2, 
+                "type": 1, 
                 "degree": [
-                    -70,
-                    -90,
-                    70,
+                    -70, 
+                    -90, 
+                    70, 
                     90
                 ]
-            },
+            }, 
             {
-                "type": 2,
-                "count": 0,
+                "count": 0, 
+                "type": 2, 
                 "degree": [
-                    9999,
-                    9999,
+                    9999, 
+                    9999, 
                     9999
                 ]
             }
-        ]
-    },
-    {
-        "round": 8,
-        "count": 7,
+        ], 
+        "round": 7, 
         "strategys": [
             {
-                "speed": 5.5,
-                "duration": 7,
+                "duration": 7, 
+                "speed": -5.2, 
                 "fadeTime": 3
-            },
+            }, 
             {
-                "speed": 5.5,
-                "duration": 7,
+                "duration": 8, 
+                "speed": 5.2, 
                 "fadeTime": 3
-            },
+            }, 
             {
-                "speed": -5.5,
-                "duration": 7,
+                "duration": 9, 
+                "speed": -5.2, 
                 "fadeTime": 3
-            }
-        ],
-        "materials": [
-            {
-                "type": 1,
-                "count": 0,
-                "degree": [
-                    9999,
-                    9999,
-                    9999,
-                    9999
-                ]
-            },
-            {
-                "type": 2,
-                "count": 0,
-                "degree": [
-                    9999,
-                    9999,
-                    9999
-                ]
             }
         ]
-    },
+    }, 
     {
-        "round": 9,
-        "count": 8,
-        "strategys": [
-            {
-                "speed": 5,
-                "duration": 7,
-                "fadeTime": 3
-            },
-            {
-                "speed": -5,
-                "duration": 8,
-                "fadeTime": 3
-            },
-            {
-                "speed": 5,
-                "duration": 8,
-                "fadeTime": 3
-            }
-        ],
+        "count": 7, 
         "materials": [
             {
-                "type": 1,
-                "count": 2,
+                "count": 0, 
+                "type": 1, 
                 "degree": [
-                    0,
-                    180,
-                    9999,
+                    9999, 
+                    9999, 
+                    9999, 
+                    9999
+                ]
+            }, 
+            {
+                "count": 0, 
+                "type": 2, 
+                "degree": [
+                    9999, 
+                    9999, 
+                    9999
+                ]
+            }
+        ], 
+        "round": 8, 
+        "strategys": [
+            {
+                "duration": 7, 
+                "speed": 5.5, 
+                "fadeTime": 3
+            }, 
+            {
+                "duration": 7, 
+                "speed": 5.5, 
+                "fadeTime": 3
+            }, 
+            {
+                "duration": 7, 
+                "speed": -5.5, 
+                "fadeTime": 3
+            }
+        ]
+    }, 
+    {
+        "count": 8, 
+        "materials": [
+            {
+                "count": 2, 
+                "type": 1, 
+                "degree": [
+                    0, 
+                    180, 
+                    9999, 
                     -180
                 ]
-            },
+            }, 
             {
-                "type": 2,
-                "count": 1,
+                "count": 1, 
+                "type": 2, 
                 "degree": [
-                    -43,
-                    90,
+                    -43, 
+                    90, 
                     30
                 ]
             }
-        ]
-    },
-    {
-        "round": 10,
-        "count": 7,
+        ], 
+        "round": 9, 
         "strategys": [
             {
-                "speed": -6,
-                "duration": 6,
+                "duration": 7, 
+                "speed": 5, 
                 "fadeTime": 3
-            },
+            }, 
             {
-                "speed": -6,
-                "duration": 6,
+                "duration": 8, 
+                "speed": -5, 
                 "fadeTime": 3
-            },
+            }, 
             {
-                "speed": 6,
-                "duration": 5,
+                "duration": 8, 
+                "speed": 5, 
                 "fadeTime": 3
-            }
-        ],
-        "materials": [
-            {
-                "type": 1,
-                "count": 0,
-                "degree": [
-                    9999,
-                    9999,
-                    9999,
-                    9999
-                ]
-            },
-            {
-                "type": 2,
-                "count": 0,
-                "degree": [
-                    9999,
-                    9999,
-                    9999
-                ]
             }
         ]
-    },
+    }, 
     {
-        "round": 11,
-        "count": 7,
-        "strategys": [
-            {
-                "speed": 5,
-                "duration": 6,
-                "fadeTime": 2
-            },
-            {
-                "speed": 5,
-                "duration": 5,
-                "fadeTime": 2
-            },
-            {
-                "speed": -5,
-                "duration": 5,
-                "fadeTime": 2
-            }
-        ],
+        "count": 7, 
         "materials": [
             {
-                "type": 1,
-                "count": 4,
+                "count": 0, 
+                "type": 1, 
                 "degree": [
-                    45,
-                    135,
-                    -45,
+                    9999, 
+                    9999, 
+                    9999, 
+                    9999
+                ]
+            }, 
+            {
+                "count": 0, 
+                "type": 2, 
+                "degree": [
+                    9999, 
+                    9999, 
+                    9999
+                ]
+            }
+        ], 
+        "round": 10, 
+        "strategys": [
+            {
+                "duration": 6, 
+                "speed": -6, 
+                "fadeTime": 3
+            }, 
+            {
+                "duration": 6, 
+                "speed": -6, 
+                "fadeTime": 3
+            }, 
+            {
+                "duration": 5, 
+                "speed": 6, 
+                "fadeTime": 3
+            }
+        ]
+    }, 
+    {
+        "count": 7, 
+        "materials": [
+            {
+                "count": 4, 
+                "type": 1, 
+                "degree": [
+                    45, 
+                    135, 
+                    -45, 
                     -135
                 ]
-            },
+            }, 
             {
-                "type": 2,
-                "count": 0,
+                "count": 0, 
+                "type": 2, 
                 "degree": [
-                    9999,
-                    9999,
+                    9999, 
+                    9999, 
                     9999
                 ]
             }
-        ]
-    },
-    {
-        "round": 12,
-        "count": 8,
+        ], 
+        "round": 11, 
         "strategys": [
             {
-                "speed": 5.5,
-                "duration": 5,
+                "duration": 6, 
+                "speed": 5, 
                 "fadeTime": 2
-            },
+            }, 
             {
-                "speed": -5.5,
-                "duration": 4,
+                "duration": 5, 
+                "speed": 5, 
                 "fadeTime": 2
-            },
+            }, 
             {
-                "speed": 5.5,
-                "duration": 5,
+                "duration": 5, 
+                "speed": -5, 
                 "fadeTime": 2
             }
-        ],
+        ]
+    }, 
+    {
+        "count": 8, 
         "materials": [
             {
-                "type": 1,
-                "count": 1,
+                "count": 1, 
+                "type": 1, 
                 "degree": [
-                    30,
-                    -30,
-                    150,
+                    30, 
+                    -30, 
+                    150, 
                     -150
                 ]
-            },
+            }, 
             {
-                "type": 2,
-                "count": 1,
+                "count": 1, 
+                "type": 2, 
                 "degree": [
-                    -42,
-                    80,
+                    -42, 
+                    80, 
                     -90
                 ]
             }
-        ]
-    },
-    {
-        "round": 13,
-        "count": 8,
+        ], 
+        "round": 12, 
         "strategys": [
             {
-                "speed": 6,
-                "duration": 5,
+                "duration": 5, 
+                "speed": 5.5, 
                 "fadeTime": 2
-            },
+            }, 
             {
-                "speed": -6,
-                "duration": 4,
+                "duration": 4, 
+                "speed": -5.5, 
                 "fadeTime": 2
-            },
+            }, 
             {
-                "speed": -6,
-                "duration": 4,
+                "duration": 5, 
+                "speed": 5.5, 
                 "fadeTime": 2
             }
-        ],
+        ]
+    }, 
+    {
+        "count": 8, 
         "materials": [
             {
-                "type": 1,
-                "count": 1,
+                "count": 1, 
+                "type": 1, 
                 "degree": [
-                    40,
-                    -40,
-                    140,
+                    40, 
+                    -40, 
+                    140, 
                     -140
                 ]
-            },
+            }, 
             {
-                "type": 2,
-                "count": 0,
+                "count": 0, 
+                "type": 2, 
                 "degree": [
-                    9999,
-                    9999,
+                    9999, 
+                    9999, 
                     9999
                 ]
             }
-        ]
-    },
-    {
-        "round": 14,
-        "count": 8,
+        ], 
+        "round": 13, 
         "strategys": [
             {
-                "speed": 5.5,
-                "duration": 5,
+                "duration": 5, 
+                "speed": 6, 
                 "fadeTime": 2
-            },
+            }, 
             {
-                "speed": -5.5,
-                "duration": 4,
+                "duration": 4, 
+                "speed": -6, 
                 "fadeTime": 2
-            },
+            }, 
             {
-                "speed": 5.5,
-                "duration": 4,
+                "duration": 4, 
+                "speed": -6, 
                 "fadeTime": 2
-            }
-        ],
-        "materials": [
-            {
-                "type": 1,
-                "count": 3,
-                "degree": [
-                    120,
-                    -120,
-                    0,
-                    9999
-                ]
-            },
-            {
-                "type": 2,
-                "count": 0,
-                "degree": [
-                    9999,
-                    9999,
-                    9999
-                ]
             }
         ]
-    },
+    }, 
     {
-        "round": 15,
-        "count": 9,
-        "strategys": [
-            {
-                "speed": 5,
-                "duration": 4,
-                "fadeTime": 2
-            },
-            {
-                "speed": -5,
-                "duration": 4,
-                "fadeTime": 2
-            },
-            {
-                "speed": 5,
-                "duration": 4,
-                "fadeTime": 2
-            }
-        ],
+        "count": 8, 
         "materials": [
             {
-                "type": 1,
-                "count": 2,
+                "count": 3, 
+                "type": 1, 
                 "degree": [
-                    50,
-                    -50,
-                    130,
+                    120, 
+                    -120, 
+                    0, 
+                    9999
+                ]
+            }, 
+            {
+                "count": 0, 
+                "type": 2, 
+                "degree": [
+                    9999, 
+                    9999, 
+                    9999
+                ]
+            }
+        ], 
+        "round": 14, 
+        "strategys": [
+            {
+                "duration": 5, 
+                "speed": 5.5, 
+                "fadeTime": 2
+            }, 
+            {
+                "duration": 4, 
+                "speed": -5.5, 
+                "fadeTime": 2
+            }, 
+            {
+                "duration": 4, 
+                "speed": 5.5, 
+                "fadeTime": 2
+            }
+        ]
+    }, 
+    {
+        "count": 9, 
+        "materials": [
+            {
+                "count": 2, 
+                "type": 1, 
+                "degree": [
+                    50, 
+                    -50, 
+                    130, 
                     -130
                 ]
-            },
+            }, 
             {
-                "type": 2,
-                "count": 1,
+                "count": 1, 
+                "type": 2, 
                 "degree": [
-                    -41,
-                    70,
+                    -41, 
+                    70, 
                     100
                 ]
             }
-        ]
-    },
-    {
-        "round": 16,
-        "count": 8,
+        ], 
+        "round": 15, 
         "strategys": [
             {
-                "speed": -6,
-                "duration": 4,
+                "duration": 4, 
+                "speed": 5, 
                 "fadeTime": 2
-            },
+            }, 
             {
-                "speed": 6,
-                "duration": 4,
+                "duration": 4, 
+                "speed": -5, 
                 "fadeTime": 2
-            },
+            }, 
             {
-                "speed": -6,
-                "duration": 3,
+                "duration": 4, 
+                "speed": 5, 
                 "fadeTime": 2
-            }
-        ],
-        "materials": [
-            {
-                "type": 1,
-                "count": 0,
-                "degree": [
-                    9999,
-                    9999,
-                    9999,
-                    9999
-                ]
-            },
-            {
-                "type": 2,
-                "count": 0,
-                "degree": [
-                    9999,
-                    9999,
-                    9999
-                ]
             }
         ]
-    },
+    }, 
     {
-        "round": 17,
-        "count": 8,
-        "strategys": [
-            {
-                "speed": 6.2,
-                "duration": 4,
-                "fadeTime": 2
-            },
-            {
-                "speed": -6.2,
-                "duration": 5,
-                "fadeTime": 2
-            },
-            {
-                "speed": 6.2,
-                "duration": 5,
-                "fadeTime": 2
-            }
-        ],
+        "count": 8, 
         "materials": [
             {
-                "type": 1,
-                "count": 1,
+                "count": 0, 
+                "type": 1, 
                 "degree": [
-                    60,
-                    -60,
-                    120,
+                    9999, 
+                    9999, 
+                    9999, 
+                    9999
+                ]
+            }, 
+            {
+                "count": 0, 
+                "type": 2, 
+                "degree": [
+                    9999, 
+                    9999, 
+                    9999
+                ]
+            }
+        ], 
+        "round": 16, 
+        "strategys": [
+            {
+                "duration": 4, 
+                "speed": -6, 
+                "fadeTime": 2
+            }, 
+            {
+                "duration": 4, 
+                "speed": 6, 
+                "fadeTime": 2
+            }, 
+            {
+                "duration": 3, 
+                "speed": -6, 
+                "fadeTime": 2
+            }
+        ]
+    }, 
+    {
+        "count": 8, 
+        "materials": [
+            {
+                "count": 1, 
+                "type": 1, 
+                "degree": [
+                    60, 
+                    -60, 
+                    120, 
                     -120
                 ]
-            },
+            }, 
             {
-                "type": 2,
-                "count": 0,
+                "count": 0, 
+                "type": 2, 
                 "degree": [
-                    9999,
-                    9999,
+                    9999, 
+                    9999, 
                     9999
                 ]
             }
-        ]
-    },
-    {
-        "round": 18,
-        "count": 9,
+        ], 
+        "round": 17, 
         "strategys": [
             {
-                "speed": -6.2,
-                "duration": 3,
+                "duration": 4, 
+                "speed": 6.2, 
                 "fadeTime": 2
-            },
+            }, 
             {
-                "speed": 6.2,
-                "duration": 4,
+                "duration": 5, 
+                "speed": -6.2, 
                 "fadeTime": 2
-            },
+            }, 
             {
-                "speed": -6.2,
-                "duration": 4,
+                "duration": 5, 
+                "speed": 6.2, 
                 "fadeTime": 2
             }
-        ],
+        ]
+    }, 
+    {
+        "count": 9, 
         "materials": [
             {
-                "type": 1,
-                "count": 1,
+                "count": 1, 
+                "type": 1, 
                 "degree": [
-                    70,
-                    -70,
-                    110,
+                    70, 
+                    -70, 
+                    110, 
                     -110
                 ]
-            },
+            }, 
             {
-                "type": 2,
-                "count": 1,
+                "count": 1, 
+                "type": 2, 
                 "degree": [
-                    -40,
-                    60,
+                    -40, 
+                    60, 
                     10
                 ]
             }
-        ]
-    },
-    {
-        "round": 19,
-        "count": 9,
+        ], 
+        "round": 18, 
         "strategys": [
             {
-                "speed": 6,
-                "duration": 4,
+                "duration": 3, 
+                "speed": -6.2, 
                 "fadeTime": 2
-            },
+            }, 
             {
-                "speed": -6,
-                "duration": 4,
+                "duration": 4, 
+                "speed": 6.2, 
                 "fadeTime": 2
-            },
+            }, 
             {
-                "speed": 6,
-                "duration": 3,
+                "duration": 4, 
+                "speed": -6.2, 
                 "fadeTime": 2
-            }
-        ],
-        "materials": [
-            {
-                "type": 1,
-                "count": 3,
-                "degree": [
-                    60,
-                    -60,
-                    -180,
-                    9999
-                ]
-            },
-            {
-                "type": 2,
-                "count": 0,
-                "degree": [
-                    9999,
-                    9999,
-                    9999
-                ]
             }
         ]
-    },
+    }, 
     {
-        "round": 20,
-        "count": 9,
-        "strategys": [
-            {
-                "speed": 6.5,
-                "duration": 4,
-                "fadeTime": 2
-            },
-            {
-                "speed": -6.5,
-                "duration": 4,
-                "fadeTime": 2
-            },
-            {
-                "speed": -6.5,
-                "duration": 3,
-                "fadeTime": 2
-            }
-        ],
+        "count": 9, 
         "materials": [
             {
-                "type": 1,
-                "count": 0,
+                "count": 3, 
+                "type": 1, 
                 "degree": [
-                    9999,
-                    9999,
-                    9999,
+                    60, 
+                    -60, 
+                    -180, 
                     9999
                 ]
-            },
+            }, 
             {
-                "type": 2,
-                "count": 0,
+                "count": 0, 
+                "type": 2, 
                 "degree": [
-                    9999,
-                    9999,
+                    9999, 
+                    9999, 
                     9999
                 ]
+            }
+        ], 
+        "round": 19, 
+        "strategys": [
+            {
+                "duration": 4, 
+                "speed": 6, 
+                "fadeTime": 2
+            }, 
+            {
+                "duration": 4, 
+                "speed": -6, 
+                "fadeTime": 2
+            }, 
+            {
+                "duration": 3, 
+                "speed": 6, 
+                "fadeTime": 2
             }
         ]
-    },
+    }, 
     {
-        "round": 21,
-        "count": 10,
-        "strategys": [
-            {
-                "speed": -6,
-                "duration": 4,
-                "fadeTime": 2
-            },
-            {
-                "speed": 6,
-                "duration": 3,
-                "fadeTime": 2
-            },
-            {
-                "speed": -6,
-                "duration": 3,
-                "fadeTime": 2
-            }
-        ],
+        "count": 9, 
         "materials": [
             {
-                "type": 1,
-                "count": 2,
+                "count": 0, 
+                "type": 1, 
                 "degree": [
-                    80,
-                    100,
-                    -80,
+                    9999, 
+                    9999, 
+                    9999, 
+                    9999
+                ]
+            }, 
+            {
+                "count": 0, 
+                "type": 2, 
+                "degree": [
+                    9999, 
+                    9999, 
+                    9999
+                ]
+            }
+        ], 
+        "round": 20, 
+        "strategys": [
+            {
+                "duration": 4, 
+                "speed": 6.5, 
+                "fadeTime": 2
+            }, 
+            {
+                "duration": 4, 
+                "speed": -6.5, 
+                "fadeTime": 2
+            }, 
+            {
+                "duration": 3, 
+                "speed": -6.5, 
+                "fadeTime": 2
+            }
+        ]
+    }, 
+    {
+        "count": 10, 
+        "materials": [
+            {
+                "count": 2, 
+                "type": 1, 
+                "degree": [
+                    80, 
+                    100, 
+                    -80, 
                     -100
                 ]
-            },
+            }, 
             {
-                "type": 2,
-                "count": 1,
+                "count": 1, 
+                "type": 2, 
                 "degree": [
-                    -39,
-                    50,
+                    -39, 
+                    50, 
                     150
                 ]
             }
-        ]
-    },
-    {
-        "round": 22,
-        "count": 9,
+        ], 
+        "round": 21, 
         "strategys": [
             {
-                "speed": 7,
-                "duration": 4,
+                "duration": 4, 
+                "speed": -6, 
                 "fadeTime": 2
-            },
+            }, 
             {
-                "speed": 7,
-                "duration": 3,
+                "duration": 3, 
+                "speed": 6, 
                 "fadeTime": 2
-            },
+            }, 
             {
-                "speed": -7,
-                "duration": 3,
+                "duration": 3, 
+                "speed": -6, 
                 "fadeTime": 2
             }
-        ],
+        ]
+    }, 
+    {
+        "count": 9, 
         "materials": [
             {
-                "type": 1,
-                "count": 1,
+                "count": 1, 
+                "type": 1, 
                 "degree": [
-                    110,
-                    120,
-                    130,
+                    110, 
+                    120, 
+                    130, 
                     140
                 ]
-            },
+            }, 
             {
-                "type": 2,
-                "count": 0,
+                "count": 0, 
+                "type": 2, 
                 "degree": [
-                    9999,
-                    9999,
+                    9999, 
+                    9999, 
                     9999
                 ]
             }
-        ]
-    },
-    {
-        "round": 23,
-        "count": 9,
+        ], 
+        "round": 22, 
         "strategys": [
             {
-                "speed": 7,
-                "duration": 3,
+                "duration": 4, 
+                "speed": 7, 
                 "fadeTime": 2
-            },
+            }, 
             {
-                "speed": -7,
-                "duration": 3,
+                "duration": 3, 
+                "speed": 7, 
                 "fadeTime": 2
-            },
+            }, 
             {
-                "speed": 7,
-                "duration": 3,
+                "duration": 3, 
+                "speed": -7, 
                 "fadeTime": 2
             }
-        ],
+        ]
+    }, 
+    {
+        "count": 9, 
         "materials": [
             {
-                "type": 1,
-                "count": 3,
+                "count": 3, 
+                "type": 1, 
                 "degree": [
-                    40,
-                    85,
-                    135,
+                    40, 
+                    85, 
+                    135, 
                     170
                 ]
-            },
+            }, 
             {
-                "type": 2,
-                "count": 0,
+                "count": 0, 
+                "type": 2, 
                 "degree": [
-                    9999,
-                    9999,
+                    9999, 
+                    9999, 
                     9999
                 ]
             }
-        ]
-    },
-    {
-        "round": 24,
-        "count": 10,
+        ], 
+        "round": 23, 
         "strategys": [
             {
-                "speed": 7,
-                "duration": 3,
+                "duration": 3, 
+                "speed": 7, 
                 "fadeTime": 2
-            },
+            }, 
             {
-                "speed": 7,
-                "duration": 3,
+                "duration": 3, 
+                "speed": -7, 
                 "fadeTime": 2
-            },
+            }, 
             {
-                "speed": -7,
-                "duration": 3,
+                "duration": 3, 
+                "speed": 7, 
                 "fadeTime": 2
             }
-        ],
+        ]
+    }, 
+    {
+        "count": 10, 
         "materials": [
             {
-                "type": 1,
-                "count": 4,
+                "count": 4, 
+                "type": 1, 
                 "degree": [
-                    0,
-                    -90,
-                    90,
+                    0, 
+                    -90, 
+                    90, 
                     -180
                 ]
-            },
+            }, 
             {
-                "type": 2,
-                "count": 1,
+                "count": 1, 
+                "type": 2, 
                 "degree": [
-                    -38,
-                    30,
+                    -38, 
+                    30, 
                     -45
                 ]
+            }
+        ], 
+        "round": 24, 
+        "strategys": [
+            {
+                "duration": 3, 
+                "speed": 7, 
+                "fadeTime": 2
+            }, 
+            {
+                "duration": 3, 
+                "speed": 7, 
+                "fadeTime": 2
+            }, 
+            {
+                "duration": 3, 
+                "speed": -7, 
+                "fadeTime": 2
             }
         ]
     }
