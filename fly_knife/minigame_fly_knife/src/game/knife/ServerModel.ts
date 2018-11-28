@@ -3,7 +3,7 @@ class RoleInfo {
 	public icon:string = ""
 	public nickname:string = ""
 	public openid:string = ""
-	public level:number = 0
+	public level:number = 1
 	public score:number = 0
 }
 
@@ -40,8 +40,8 @@ class ServerModel {
 		{
 			new_role.icon = roleInfo['icon']
 		}
-		new_role.level = roleInfo['level']
-		new_role.score = 0
+		new_role.level = 1
+		new_role.score = 1
 		if(new_role.openid == User.openId.toString()){
 			this.myRole = new_role
 		} else {
@@ -56,6 +56,15 @@ class ServerModel {
 		if(this.myRole.openid == id){
 		}else if(this.otherRole.openid == id){
 			this.otherRole.score = new_role_info['total']
+		}
+	}
+
+	public UpdateRoleLevel(level_info:Object):void
+	{
+		let id = level_info['id']
+		if(this.myRole.openid == id){
+		}else if(this.otherRole.openid == id){
+			this.otherRole.level = level_info['level']
 		}
 	}
 

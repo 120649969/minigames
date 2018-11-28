@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "selected_png,button_down_png,button_up_png,description_json,ball_png,rounds_json,prop_png,knifeicon1_png,knifeicon2_png,knifeicon3_png,knifeicon11_png,knifeicon12_png,bjfd_jpg,roundthumb_png",
+			"keys": "selected_png,button_down_png,button_up_png,description_json,rounds_json,prop_png,knifeicon1_png,knifeicon2_png,knifeicon3_png,knifeicon11_png,knifeicon12_png,roundthumb_png,bg_jpg,bg2_png,ball1_png,ball4_png,ball2_png,ball3_png,pk_bg_png,title_bg2_png,popup_bg1_png,popup_bg2_png,popup_bg3_png,title_bg_png,title_bg1_png,frame2_png,frame1_png,knife_font_png,knife_font_fnt,default_icon_png,wind_tex_png,wind_ske_json,wind_tex_json,knife_shadow_tex_png,knife_shadow_ske_json,knife_shadow_tex_json,explosion_ske_json,explosion_tex_json,explosion_tex_png",
 			"name": "preload"
 		}
 	],
@@ -25,11 +25,6 @@
 			"url": "config/description.json",
 			"type": "json",
 			"name": "description_json"
-		},
-		{
-			"url": "assets/ball.png",
-			"type": "image",
-			"name": "ball_png"
 		},
 		{
 			"url": "config/rounds.json",
@@ -67,14 +62,144 @@
 			"name": "knifeicon12_png"
 		},
 		{
-			"url": "assets/bjfd.jpg",
-			"type": "image",
-			"name": "bjfd_jpg"
-		},
-		{
 			"name": "roundthumb_png",
 			"type": "image",
 			"url": "assets/ScrollBar/roundthumb.png"
+		},
+		{
+			"name": "bg_jpg",
+			"type": "image",
+			"url": "assets/bg.jpg"
+		},
+		{
+			"name": "bg2_png",
+			"type": "image",
+			"url": "assets/bg2.png"
+		},
+		{
+			"name": "ball1_png",
+			"type": "image",
+			"url": "assets/ball1.png"
+		},
+		{
+			"name": "ball4_png",
+			"type": "image",
+			"url": "assets/ball4.png"
+		},
+		{
+			"name": "ball2_png",
+			"type": "image",
+			"url": "assets/ball2.png"
+		},
+		{
+			"name": "ball3_png",
+			"type": "image",
+			"url": "assets/ball3.png"
+		},
+		{
+			"name": "pk_bg_png",
+			"type": "image",
+			"url": "assets/pk_bg.png"
+		},
+		{
+			"name": "title_bg2_png",
+			"type": "image",
+			"url": "assets/title_bg2.png"
+		},
+		{
+			"name": "popup_bg1_png",
+			"type": "image",
+			"url": "assets/popup_bg1.png"
+		},
+		{
+			"name": "popup_bg2_png",
+			"type": "image",
+			"url": "assets/popup_bg2.png"
+		},
+		{
+			"name": "popup_bg3_png",
+			"type": "image",
+			"url": "assets/popup_bg3.png"
+		},
+		{
+			"name": "title_bg_png",
+			"type": "image",
+			"url": "assets/title_bg.png"
+		},
+		{
+			"name": "title_bg1_png",
+			"type": "image",
+			"url": "assets/title_bg1.png"
+		},
+		{
+			"name": "frame2_png",
+			"type": "image",
+			"url": "assets/frame2.png"
+		},
+		{
+			"name": "frame1_png",
+			"type": "image",
+			"url": "assets/frame1.png"
+		},
+		{
+			"name": "knife_font_png",
+			"type": "image",
+			"url": "assets/knife_font.png"
+		},
+		{
+			"name": "knife_font_fnt",
+			"type": "font",
+			"url": "assets/knife_font.fnt"
+		},
+		{
+			"name": "default_icon_png",
+			"type": "image",
+			"url": "assets/default_icon.png"
+		},
+		{
+			"name": "wind_tex_png",
+			"type": "image",
+			"url": "assets/db/wind/wind_tex.png"
+		},
+		{
+			"name": "wind_ske_json",
+			"type": "json",
+			"url": "assets/db/wind/wind_ske.json"
+		},
+		{
+			"name": "wind_tex_json",
+			"type": "json",
+			"url": "assets/db/wind/wind_tex.json"
+		},
+		{
+			"name": "knife_shadow_tex_png",
+			"type": "image",
+			"url": "assets/db/knife_shadow/knife_shadow_tex.png"
+		},
+		{
+			"name": "knife_shadow_ske_json",
+			"type": "json",
+			"url": "assets/db/knife_shadow/knife_shadow_ske.json"
+		},
+		{
+			"name": "knife_shadow_tex_json",
+			"type": "json",
+			"url": "assets/db/knife_shadow/knife_shadow_tex.json"
+		},
+		{
+			"name": "explosion_ske_json",
+			"type": "json",
+			"url": "assets/db/explosion/explosion_ske.json"
+		},
+		{
+			"name": "explosion_tex_json",
+			"type": "json",
+			"url": "assets/db/explosion/explosion_tex.json"
+		},
+		{
+			"name": "explosion_tex_png",
+			"type": "image",
+			"url": "assets/db/explosion/explosion_tex.png"
 		}
 	]
 }

@@ -1,6 +1,7 @@
 class PlateObject {
 
 	public m_plate_container:egret.DisplayObjectContainer
+	private m_plate_image:eui.Image
 	private _mainPanel:ui.MainGameScene
 	private _isReady:boolean
 
@@ -17,8 +18,21 @@ class PlateObject {
 		this._mainPanel = mainPanel
 		this.m_plate_container = mainPanel.m_plate_container
 		this.m_plate_container.scaleX = this.m_plate_container.scaleY = 0
+
+		this.m_plate_image = mainPanel.m_plate_image
+
+		this.RandomChangeBallBg()
 	}
 
+	public RandomChangeBallBg():void
+	{
+		
+		let random_index = Math.floor(Math.random() * KnifeConst.MAX_BALL_COUNT)
+		let ball_key = "ball" + (random_index + 1) + "_png"
+		this.m_plate_image.source = ball_key
+	}
+
+	
 	public GetGlobalCenterPoint():egret.Point
 	{
 		let global_center_point = this.m_plate_container.localToGlobal(this.m_plate_container.width / 2, this.m_plate_container.height / 2);
@@ -41,11 +55,11 @@ class PlateObject {
 
 		for(let index in this.all_knife_objects){
 			let knife_object = this.all_knife_objects[index]
-			this.m_plate_container.removeChild(knife_object)
+			knife_object.parent.removeChild(knife_object)
 		}
 		for(let index in this.all_prop_objects){
 			let prop_object = this.all_prop_objects[index]
-			this.m_plate_container.removeChild(prop_object)
+			prop_object.parent.removeChild(prop_object)
 		}
 		this.all_knife_objects = []
 		this.all_sort_game_objects = []
@@ -110,29 +124,25 @@ class PlateObject {
 		}
 		let step_value = this.roundPlateRotateStrategy.Step(1 / 30) * this.rotate_scale
 		this.m_plate_container.rotation += step_value
-
-		if(this._wait_time >= 0){  //有需要插入的
-			if(this.roundPlateRotateStrategy.hasChangeStrategy){
-				this._wait_time = -1
-				this.WaitToInsertNewKnife()
-			} else {
-				this._wait_time -= Math.abs(step_value)
-				if(this._wait_time < Math.abs(step_value) * 2){
-					this._wait_time = -1
-					this._mainPanel.GenerateOtherKnife()
-				}
-			}
-		}
 	}
 
-	private _wait_time:number = -1
-	public WaitToInsertNewKnife():void
+	public UpdateVersion2(time_delta:number = 1):void
 	{
-		if(this._wait_time > 0){
+		if(!this._isReady){
 			return
 		}
-		let wait_degree = this.CalculateNextEmptyPlace()
-		this._wait_time  = wait_degree
+		let step_value = this.roundPlateRotateStrategy.Step(1 / 30 * time_delta) * this.rotate_scale * time_delta
+		this.m_plate_container.rotation += step_value
+	}
+
+
+	public has_other_knife = false
+	public WaitToInsertNewKnife():void
+	{
+		if(this.has_other_knife){
+			return
+		}
+		this.has_other_knife = true
 	}
 
 	public GetAllMyKnifeCount():number
@@ -167,7 +177,7 @@ class PlateObject {
 		}.bind(this))
 	}
 
-	public OnHitOtherKnife(knifeObject:KnifeObject):void
+	public OnHitOtherKnife(knifeObject:KnifeObject):boolean
 	{
 		let __this = this
 		this._pushNewKnifeObject(knifeObject)
@@ -200,6 +210,7 @@ class PlateObject {
 		if(!isWin){
 			this._mainPanel.GenerateNextKnife()
 		}
+		return isWin
 	}
 
 	public OnHitPropObject(knifeObject:KnifeObject, prop_object:PropObject):void
@@ -222,59 +233,104 @@ class PlateObject {
 		}
 	}
 
-	//计算等待旋转多少才可以插入
-	//可以再考虑第二个方式，先计算到某个点的角度，然后如果转到改点就发射
-	public CalculateNextEmptyPlace():number
+	public CheckCanInsertOtherKnife():boolean
 	{
-		if(this.all_sort_game_objects.length <= 0){ //马上插入
-			return 0
-		}
-
-		if(this.all_sort_game_objects.length == 1){  //只有一个
-			let current_knife_global_degree = (this.all_sort_game_objects[0].degree_on_plate + (this.m_plate_container.rotation + 360) % 360) % 360
-			if(Math.abs(315 - current_knife_global_degree) <= 20) {
-				return 90
-			}
-			return 0
-		}
-
-		let max_delta_degree = 0
-		let max_degree_game_obejct_a:BaseGameObject
-		let max_degree_game_obejct_b:BaseGameObject
-
+		let big_delta_degree = 30
+		let small_delta_degree = 20
 		let dir = this.roundPlateRotateStrategy.GetCurrentStrategy().direction
-		for(let index = 0; index < this.all_sort_game_objects.length ; index++)
+		let right_top_degree_on_plat = ((360 - 45) - (this.m_plate_container.rotation + 360) % 360 + 360) % 360
+
+		let left_degree = big_delta_degree
+		let right_degree = small_delta_degree
+		if(dir == RotateDirection.NEGATIVE){
+			left_degree = small_delta_degree
+			right_degree = big_delta_degree
+		}
+		for(let index = 0; index < this.all_sort_game_objects.length; index++)
 		{
-			let knife_object_a = this.all_sort_game_objects[index]
-			let knife_object_b = this.all_sort_game_objects[(index + 1) % this.all_sort_game_objects.length]
-
-			let cur_delta_degree = 0
-			if(dir > 0){
-				cur_delta_degree = (knife_object_a.degree_on_plate - knife_object_b.degree_on_plate + 360) % 360
-			} else {
-				cur_delta_degree = (knife_object_a.degree_on_plate - knife_object_b.degree_on_plate + 360) % 360
-			}
-			
-			if (cur_delta_degree > max_delta_degree){
-				max_delta_degree = cur_delta_degree
-				if(dir == RotateDirection.POSITIVE){
-					max_degree_game_obejct_a = knife_object_a
-					max_degree_game_obejct_b = knife_object_b
-				} else {
-					max_degree_game_obejct_a = knife_object_b
-					max_degree_game_obejct_b = knife_object_a
-				}
+			let cur_game_object = this.all_sort_game_objects[index]
+			if(right_top_degree_on_plat >= cur_game_object.degree_on_plate - left_degree && right_top_degree_on_plat <= cur_game_object.degree_on_plate + right_degree)
+			{
+				return false
 			}
 		}
+		return true	
+	}
 
-		if(max_degree_game_obejct_a && max_degree_game_obejct_b){
-			let current_knife_global_degree = (max_degree_game_obejct_a.degree_on_plate - max_delta_degree / 2 * dir + (this.m_plate_container.rotation + 360) % 360) % 360
-			if(dir > 0){
-				return  (315 - current_knife_global_degree + 360) % 360
+	public ShowWinAnimation(callback):void
+	{
+		this._mainPanel.m_copy_plat_container.rotation = this.m_plate_container.rotation
+		for(let index = 0; index < this.all_sort_game_objects.length; index++)
+		{
+			let game_object = this.all_sort_game_objects[index]
+
+			if(game_object == this.all_knife_objects[this.all_knife_objects.length - 1]){
+
 			} else {
-				return  (45 + current_knife_global_degree + 360) % 360
+				game_object.parent.removeChild(game_object)
+				this._mainPanel.m_copy_plat_container.addChild(game_object)
+			}
+
+			let global_center_point = game_object.localToGlobal(game_object.width / 2, game_object.height / 2)
+			let local_point = game_object.parent.globalToLocal(global_center_point.x, global_center_point.y)
+			game_object.anchorOffsetX = game_object.width / 2
+			game_object.anchorOffsetY = game_object.height / 2
+
+			game_object.x = local_point.x
+			game_object.y = local_point.y
+
+			let __this = this
+			if(game_object == this.all_knife_objects[this.all_knife_objects.length - 1]){
+				let move_up_global_point = new egret.Point(global_center_point.x, 100)
+				let local_move_up_in_global_point = game_object.parent.globalToLocal(move_up_global_point.x, move_up_global_point.y)
+
+				let move_down_global_point = new egret.Point(global_center_point.x, this._mainPanel.height)
+				let local_move_down_in_global_point = game_object.parent.globalToLocal(move_down_global_point.x, move_down_global_point.y)
+
+				let time =  1 * 1000
+				egret.Tween.get(game_object).to({x:local_move_up_in_global_point.x, y:local_move_up_in_global_point.y + 200}, time * 0.3)
+				.call(function(){
+					egret.Tween.get(game_object).to({rotation:180}, time * 0.5)
+				})
+				.to({x:local_move_up_in_global_point.x, y:local_move_up_in_global_point.y}, time * 0.5, egret.Ease.sineOut)
+				.call(function(){
+					egret.Tween.get(game_object).to({rotation:360}, time * 0.5)
+					.call(function(){
+						game_object.rotation = 0
+						egret.Tween.get(game_object, {loop:true}).to({rotation:180}, time * 0.5)
+						.to({rotation:360}, time * 0.5)
+					})
+				})
+				.to({x:local_move_down_in_global_point.x, y:local_move_down_in_global_point.y}, time * 1, egret.Ease.sineIn)
+				.call(function(){
+					egret.Tween.removeTweens(game_object)
+					if(callback)
+					{
+						callback()
+						callback = null
+					}
+				})
+			} else {
+				let global_top_center_point = game_object.localToGlobal(game_object.width / 2,0)
+				let dir = new egret.Point(global_center_point.x - global_top_center_point.x, global_center_point.y - global_top_center_point.y)
+				dir.normalize(1)
+
+				let global_target_point = new egret.Point(global_center_point.x + dir.x * 100, global_center_point.y + dir.y * 100)
+
+				let move_up_global_point = new egret.Point(global_target_point.x, global_target_point.y)
+				let local_move_up_in_global_point = game_object.parent.globalToLocal(move_up_global_point.x, move_up_global_point.y)
+
+				let move_down_global_point = new egret.Point(global_target_point.x, global_target_point.y + 1200)
+				let local_move_down_in_global_point = game_object.parent.globalToLocal(move_down_global_point.x, move_down_global_point.y)
+
+				let time =  1 * 1000
+				egret.Tween.get(game_object).to({x:local_move_up_in_global_point.x, y:local_move_up_in_global_point.y}, 0.04 * 1000, egret.Ease.sineOut)
+				.to({x:local_move_down_in_global_point.x, y:local_move_down_in_global_point.y}, time, egret.Ease.sineIn)
+				.call(function(){
+					egret.Tween.removeTweens(game_object)
+				})
+				egret.Tween.get(game_object).to({rotation:game_object.rotation + 180}, time)
 			}
 		}
-		return 0
 	}
 }

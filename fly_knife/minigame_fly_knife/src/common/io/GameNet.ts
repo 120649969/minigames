@@ -95,7 +95,7 @@ module io {
 			});				
 		}
 
-		public async reqReEnter(totalScore, callback ?:any) {
+		public async reqReEnter(level, callback ?:any) {
 			let self = this;
 			return new Promise((resolve, reject) => {
 				self.on(GameNet.GAME_PROTOCOL.CMD_H5_REENTER_RSP, function (msgId, body) {
@@ -107,8 +107,7 @@ module io {
 					}
 				});
 				self.send(GameNet.GAME_PROTOCOL.CMD_H5_REENTER_REQ, {
-					openid: User.openId,
-					total:totalScore
+					level:level
 				});
 			});				
 		}
@@ -128,7 +127,7 @@ module io {
 		}
 
 		//切换关卡
-		public async reqSwitch(){
+		public async reqSwitch(level:number){
 			let self = this;
 			return new Promise((resolve, reject) => {
 				self.on(GameNet.GAME_PROTOCOL.CMD_H5_KNIFE_SWITCH_RSP, function (msgId, body) {
@@ -136,6 +135,7 @@ module io {
 					resolve(body);
 				});
 				self.send(GameNet.GAME_PROTOCOL.CMD_H5_KNIFE_SWITCH_REQ, {
+					level:level
 				});
 			});		
 		}
@@ -143,11 +143,11 @@ module io {
 		public async reqUseProp(prop){
 			let self = this;
 			return new Promise((resolve, reject) => {
-				self.on(GameNet.GAME_PROTOCOL.CMD_H5_KNIFE_SWITCH_RSP, function (msgId, body) {
-					self.off(GameNet.GAME_PROTOCOL.CMD_H5_KNIFE_SWITCH_RSP);
+				self.on(GameNet.GAME_PROTOCOL.CMD_H5_KNIFE_USEPROP_RSP, function (msgId, body) {
+					self.off(GameNet.GAME_PROTOCOL.CMD_H5_KNIFE_USEPROP_RSP);
 					resolve(body);
 				});
-				self.send(GameNet.GAME_PROTOCOL.CMD_H5_KNIFE_SWITCH_REQ, {
+				self.send(GameNet.GAME_PROTOCOL.CMD_H5_KNIFE_USEPROP_REQ, {
 					prop: prop
 				});
 			});		

@@ -26,13 +26,13 @@
         "strategys": [
             {
                 "duration": 6, 
-                "speed": 5, 
-                "fadeTime": 3
+                "speed": 6, 
+                "fadeTime": 4
             }, 
             {
                 "duration": 6, 
-                "speed": -5, 
-                "fadeTime": 3
+                "speed": -6, 
+                "fadeTime": 4
             }, 
             {
                 "duration": 9999, 
@@ -68,18 +68,18 @@
         "strategys": [
             {
                 "duration": 6, 
-                "speed": -5, 
-                "fadeTime": 3
+                "speed": -6, 
+                "fadeTime": 4
             }, 
             {
                 "duration": 7, 
-                "speed": 5, 
-                "fadeTime": 3
+                "speed": 6, 
+                "fadeTime": 4
             }, 
             {
                 "duration": 8, 
-                "speed": 5, 
-                "fadeTime": 3
+                "speed": 6, 
+                "fadeTime": 4
             }
         ]
     }, 
@@ -110,13 +110,13 @@
         "strategys": [
             {
                 "duration": 7, 
-                "speed": 5, 
-                "fadeTime": 3
+                "speed": 6, 
+                "fadeTime": 4
             }, 
             {
                 "duration": 8, 
-                "speed": -5, 
-                "fadeTime": 3
+                "speed": -6, 
+                "fadeTime": 4
             }, 
             {
                 "duration": 9999, 
@@ -152,18 +152,18 @@
         "strategys": [
             {
                 "duration": 6, 
-                "speed": 5.5, 
-                "fadeTime": 3
+                "speed": 6.5, 
+                "fadeTime": 4
             }, 
             {
                 "duration": 7, 
-                "speed": -5.5, 
-                "fadeTime": 3
+                "speed": -6.5, 
+                "fadeTime": 4
             }, 
             {
                 "duration": 8, 
-                "speed": 5.5, 
-                "fadeTime": 3
+                "speed": 6.5, 
+                "fadeTime": 4
             }
         ]
     }, 
@@ -194,18 +194,18 @@
         "strategys": [
             {
                 "duration": 7, 
-                "speed": 5, 
-                "fadeTime": 3
+                "speed": 6, 
+                "fadeTime": 4
             }, 
             {
                 "duration": 8, 
-                "speed": -5, 
-                "fadeTime": 3
+                "speed": -6, 
+                "fadeTime": 4
             }, 
             {
                 "duration": 9, 
-                "speed": 5, 
-                "fadeTime": 3
+                "speed": 6, 
+                "fadeTime": 4
             }
         ]
     }, 
@@ -236,18 +236,18 @@
         "strategys": [
             {
                 "duration": 7, 
-                "speed": 5, 
-                "fadeTime": 3
+                "speed": 6, 
+                "fadeTime": 4
             }, 
             {
                 "duration": 8, 
-                "speed": 5, 
-                "fadeTime": 3
+                "speed": 6, 
+                "fadeTime": 4
             }, 
             {
                 "duration": 9, 
-                "speed": -5, 
-                "fadeTime": 3
+                "speed": -6, 
+                "fadeTime": 4
             }
         ]
     }, 
@@ -278,18 +278,18 @@
         "strategys": [
             {
                 "duration": 7, 
-                "speed": -5.2, 
-                "fadeTime": 3
+                "speed": -6.2, 
+                "fadeTime": 4
             }, 
             {
                 "duration": 8, 
-                "speed": 5.2, 
-                "fadeTime": 3
+                "speed": 6.2, 
+                "fadeTime": 4
             }, 
             {
                 "duration": 9, 
-                "speed": -5.2, 
-                "fadeTime": 3
+                "speed": -6.2, 
+                "fadeTime": 4
             }
         ]
     }, 
@@ -320,18 +320,18 @@
         "strategys": [
             {
                 "duration": 7, 
-                "speed": 5.5, 
-                "fadeTime": 3
+                "speed": 6.5, 
+                "fadeTime": 4
             }, 
             {
                 "duration": 7, 
-                "speed": 5.5, 
-                "fadeTime": 3
+                "speed": 6.5, 
+                "fadeTime": 4
             }, 
             {
                 "duration": 7, 
-                "speed": -5.5, 
-                "fadeTime": 3
+                "speed": -6.5, 
+                "fadeTime": 4
             }
         ]
     }, 
@@ -362,18 +362,18 @@
         "strategys": [
             {
                 "duration": 7, 
-                "speed": 5, 
-                "fadeTime": 3
+                "speed": 6, 
+                "fadeTime": 4
             }, 
             {
                 "duration": 8, 
-                "speed": -5, 
-                "fadeTime": 3
+                "speed": -6, 
+                "fadeTime": 4
             }, 
             {
                 "duration": 8, 
-                "speed": 5, 
-                "fadeTime": 3
+                "speed": 6, 
+                "fadeTime": 4
             }
         ]
     }, 
@@ -404,18 +404,18 @@
         "strategys": [
             {
                 "duration": 6, 
-                "speed": -6, 
-                "fadeTime": 3
+                "speed": -7, 
+                "fadeTime": 4
             }, 
             {
                 "duration": 6, 
-                "speed": -6, 
-                "fadeTime": 3
+                "speed": -7, 
+                "fadeTime": 4
             }, 
             {
                 "duration": 5, 
-                "speed": 6, 
-                "fadeTime": 3
+                "speed": 7, 
+                "fadeTime": 4
             }
         ]
     }, 
@@ -447,17 +447,17 @@
             {
                 "duration": 6, 
                 "speed": 5, 
-                "fadeTime": 2
+                "fadeTime": 3
             }, 
             {
                 "duration": 5, 
                 "speed": 5, 
-                "fadeTime": 2
+                "fadeTime": 3
             }, 
             {
                 "duration": 5, 
-                "speed": -5, 
-                "fadeTime": 2
+                "speed": -5.5, 
+                "fadeTime": 3
             }
         ]
     }, 
@@ -488,18 +488,18 @@
         "strategys": [
             {
                 "duration": 5, 
-                "speed": 5.5, 
-                "fadeTime": 2
+                "speed": 6.5, 
+                "fadeTime": 3
             }, 
             {
                 "duration": 4, 
-                "speed": -5.5, 
-                "fadeTime": 2
+                "speed": -6.5, 
+                "fadeTime": 3
             }, 
             {
                 "duration": 5, 
-                "speed": 5.5, 
-                "fadeTime": 2
+                "speed": 6.5, 
+                "fadeTime": 3
             }
         ]
     }, 
@@ -530,18 +530,18 @@
         "strategys": [
             {
                 "duration": 5, 
-                "speed": 6, 
-                "fadeTime": 2
+                "speed": 7, 
+                "fadeTime": 3
             }, 
             {
                 "duration": 4, 
-                "speed": -6, 
-                "fadeTime": 2
+                "speed": -7, 
+                "fadeTime": 3
             }, 
             {
                 "duration": 4, 
-                "speed": -6, 
-                "fadeTime": 2
+                "speed": -7, 
+                "fadeTime": 3
             }
         ]
     }, 
@@ -573,17 +573,17 @@
             {
                 "duration": 5, 
                 "speed": 5.5, 
-                "fadeTime": 2
+                "fadeTime": 3
             }, 
             {
                 "duration": 4, 
                 "speed": -5.5, 
-                "fadeTime": 2
+                "fadeTime": 3
             }, 
             {
                 "duration": 4, 
                 "speed": 5.5, 
-                "fadeTime": 2
+                "fadeTime": 3
             }
         ]
     }, 
@@ -614,18 +614,18 @@
         "strategys": [
             {
                 "duration": 4, 
-                "speed": 5, 
-                "fadeTime": 2
+                "speed": 6, 
+                "fadeTime": 3
             }, 
             {
                 "duration": 4, 
-                "speed": -5, 
-                "fadeTime": 2
+                "speed": -6, 
+                "fadeTime": 3
             }, 
             {
                 "duration": 4, 
-                "speed": 5, 
-                "fadeTime": 2
+                "speed": 6, 
+                "fadeTime": 3
             }
         ]
     }, 
@@ -656,18 +656,18 @@
         "strategys": [
             {
                 "duration": 4, 
-                "speed": -6, 
-                "fadeTime": 2
+                "speed": -7, 
+                "fadeTime": 3
             }, 
             {
                 "duration": 4, 
-                "speed": 6, 
-                "fadeTime": 2
+                "speed": 7, 
+                "fadeTime": 3
             }, 
             {
                 "duration": 3, 
-                "speed": -6, 
-                "fadeTime": 2
+                "speed": -7, 
+                "fadeTime": 3
             }
         ]
     }, 
@@ -698,18 +698,18 @@
         "strategys": [
             {
                 "duration": 4, 
-                "speed": 6.2, 
-                "fadeTime": 2
+                "speed": 7.2, 
+                "fadeTime": 3
             }, 
             {
                 "duration": 5, 
-                "speed": -6.2, 
-                "fadeTime": 2
+                "speed": -7.2, 
+                "fadeTime": 3
             }, 
             {
                 "duration": 5, 
-                "speed": 6.2, 
-                "fadeTime": 2
+                "speed": 7.2, 
+                "fadeTime": 3
             }
         ]
     }, 
@@ -740,18 +740,18 @@
         "strategys": [
             {
                 "duration": 3, 
-                "speed": -6.2, 
-                "fadeTime": 2
+                "speed": -7.2, 
+                "fadeTime": 3
             }, 
             {
                 "duration": 4, 
-                "speed": 6.2, 
-                "fadeTime": 2
+                "speed": 7.2, 
+                "fadeTime": 3
             }, 
             {
                 "duration": 4, 
-                "speed": -6.2, 
-                "fadeTime": 2
+                "speed": -7.2, 
+                "fadeTime": 3
             }
         ]
     }, 
@@ -782,18 +782,18 @@
         "strategys": [
             {
                 "duration": 4, 
-                "speed": 6, 
-                "fadeTime": 2
+                "speed": 6.5, 
+                "fadeTime": 3
             }, 
             {
                 "duration": 4, 
-                "speed": -6, 
-                "fadeTime": 2
+                "speed": -6.5, 
+                "fadeTime": 3
             }, 
             {
                 "duration": 3, 
-                "speed": 6, 
-                "fadeTime": 2
+                "speed": 6.5, 
+                "fadeTime": 3
             }
         ]
     }, 
@@ -824,18 +824,18 @@
         "strategys": [
             {
                 "duration": 4, 
-                "speed": 6.5, 
-                "fadeTime": 2
+                "speed": 7.5, 
+                "fadeTime": 3
             }, 
             {
                 "duration": 4, 
-                "speed": -6.5, 
-                "fadeTime": 2
+                "speed": -7.5, 
+                "fadeTime": 3
             }, 
             {
                 "duration": 3, 
-                "speed": -6.5, 
-                "fadeTime": 2
+                "speed": -7.5, 
+                "fadeTime": 3
             }
         ]
     }, 
@@ -866,18 +866,18 @@
         "strategys": [
             {
                 "duration": 4, 
-                "speed": -6, 
-                "fadeTime": 2
+                "speed": -7, 
+                "fadeTime": 3
             }, 
             {
                 "duration": 3, 
-                "speed": 6, 
-                "fadeTime": 2
+                "speed": 7, 
+                "fadeTime": 3
             }, 
             {
                 "duration": 3, 
-                "speed": -6, 
-                "fadeTime": 2
+                "speed": -7, 
+                "fadeTime": 3
             }
         ]
     }, 
@@ -908,18 +908,18 @@
         "strategys": [
             {
                 "duration": 4, 
-                "speed": 7, 
-                "fadeTime": 2
+                "speed": 8, 
+                "fadeTime": 3
             }, 
             {
                 "duration": 3, 
-                "speed": 7, 
-                "fadeTime": 2
+                "speed": 8, 
+                "fadeTime": 3
             }, 
             {
                 "duration": 3, 
-                "speed": -7, 
-                "fadeTime": 2
+                "speed": -8, 
+                "fadeTime": 3
             }
         ]
     }, 
@@ -950,18 +950,18 @@
         "strategys": [
             {
                 "duration": 3, 
-                "speed": 7, 
-                "fadeTime": 2
+                "speed": 8, 
+                "fadeTime": 3
             }, 
             {
                 "duration": 3, 
-                "speed": -7, 
-                "fadeTime": 2
+                "speed": -8, 
+                "fadeTime": 3
             }, 
             {
                 "duration": 3, 
-                "speed": 7, 
-                "fadeTime": 2
+                "speed": 8, 
+                "fadeTime": 3
             }
         ]
     }, 
@@ -992,18 +992,18 @@
         "strategys": [
             {
                 "duration": 3, 
-                "speed": 7, 
-                "fadeTime": 2
+                "speed": 8, 
+                "fadeTime": 3
             }, 
             {
                 "duration": 3, 
-                "speed": 7, 
-                "fadeTime": 2
+                "speed": 8, 
+                "fadeTime": 3
             }, 
             {
                 "duration": 3, 
-                "speed": -7, 
-                "fadeTime": 2
+                "speed": -8, 
+                "fadeTime": 3
             }
         ]
     }

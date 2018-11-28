@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="KnifeSkin" width="52" height="223" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Rect id="behit_rect" anchorOffsetX="0" anchorOffsetY="0" strokeAlpha="0.3" fillAlpha="0.6" fillColor="0x0f0d0d" height="48" y="175" width="37" x="0"/>
-	<e:Image id="m_img_1" x="0" y="0" anchorOffsetX="0" rotation="0" anchorOffsetY="0" source="knifeicon1_png"/>
-	<e:Image id="m_img_2" x="0" y="0" anchorOffsetX="0" rotation="0" anchorOffsetY="0" source="knifeicon2_png"/>
-	<e:Image id="m_img_3" x="0" y="0" anchorOffsetX="0" rotation="0" anchorOffsetY="0" source="knifeicon3_png"/>
-	<e:Rect id="hit_rect" height="127" y="-2.1" anchorOffsetX="0" anchorOffsetY="0" strokeAlpha="0.3" fillAlpha="0.6" fillColor="0xea1919" width="40" x="10"/>
+<e:Skin class="KnifeSkin" width="52" height="211.4" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect id="behit_rect" anchorOffsetX="0" anchorOffsetY="0" strokeAlpha="0.3" fillAlpha="0.6" fillColor="0x0f0d0d" height="86" y="127" width="51.4" x="0.8" visible="false"/>
+	<e:Image id="m_img_1" x="0" y="0" anchorOffsetX="0" rotation="0" anchorOffsetY="0" source="knifeicon1_png" locked="true"/>
+	<e:Image id="m_img_2" x="0" y="0" anchorOffsetX="0" rotation="0" anchorOffsetY="0" source="knifeicon2_png" locked="true"/>
+	<e:Image id="m_img_3" x="0" y="0" anchorOffsetX="0" rotation="0" anchorOffsetY="0" source="knifeicon3_png" locked="true"/>
+	<e:Rect id="hit_rect" height="123" y="0" anchorOffsetX="0" anchorOffsetY="0" strokeAlpha="0.3" fillAlpha="0.6" fillColor="0xea1919" width="42" x="10.2" visible="false"/>
 	<e:Label id="testLabel" text="" horizontalCenter="0" verticalCenter="71.5" textColor="0xdb1515"/>
-	<e:Rect id="hit_ball_rect" width="5" height="5" x="24" y="112.9"/>
+	<e:Rect id="hit_ball_rect" width="5" height="5" x="24" y="103" visible="false"/>
 </e:Skin>

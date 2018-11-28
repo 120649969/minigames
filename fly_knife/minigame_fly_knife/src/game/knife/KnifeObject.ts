@@ -52,6 +52,17 @@ class KnifeObject extends BaseGameObject{
 		this.y = targetY
 	}
 
+	public GetStepTimes():number
+	{
+		let target_speed_x = this.speedX
+		let target_speed_y = this.speedY + this.acceY
+
+		let total_speed = Math.sqrt(Math.pow(target_speed_x, 2) + Math.pow(target_speed_y, 2))
+		let step_speed = 2
+		let times = Math.ceil(total_speed / step_speed)
+		return times
+	}
+
 	public Update():void
 	{
 		if(this.is_end){
@@ -70,8 +81,8 @@ class KnifeObject extends BaseGameObject{
 		{
 			this.x += step_speend_x
 			this.y += step_speend_y
-			if(this._checkHitBall()){
-
+			if(this._checkHitBall())
+			{
 				this._onHitBall()
 				break
 			}
@@ -89,6 +100,55 @@ class KnifeObject extends BaseGameObject{
 				break
 			}
 		}
+	}
+
+	public UpdateVersion2(step_callback:Function = null):number
+	{
+		if(this.is_end){
+			return 1
+		}
+
+		let target_speed_x = this.speedX
+		let target_speed_y = this.speedY + this.acceY
+
+		let total_speed = Math.sqrt(Math.pow(target_speed_x, 2) + Math.pow(target_speed_y, 2))
+		let step_speed = 2
+		let times = Math.ceil(total_speed / step_speed)
+		if(times == 0){
+			return 1
+		}
+		let step_speend_x = target_speed_x / times
+		let step_speend_y = target_speed_y / times
+		let step_idx = 1
+		for(step_idx = 1; step_idx <= times; step_idx++)
+		{
+			this.x += step_speend_x
+			this.y += step_speend_y
+
+			if(step_callback)
+			{
+				step_callback(1 / times)
+			}
+			if(this._checkHitBall())
+			{
+				this._onHitBall()
+				break
+			}
+
+			let other_prop_object = null
+			if(this.isMe && (other_prop_object = this._checkHitProp()))
+			{
+				this._onHitOtherProp(other_prop_object)
+				break
+			}
+
+			if(this.isMe && this._checkHitOtherKnife())
+			{
+				this._onHitOtherKnife()
+				break
+			}
+		}
+		return 1 - step_idx / times
 	}
 
 	private _checkHitBall():boolean
@@ -161,17 +221,19 @@ class KnifeObject extends BaseGameObject{
 	public _onHitBall():void
 	{
 		this.is_end = true
-		let global_knife_point = this.localToGlobal(0, 0)
-		let local_in_ball_object = this._platObject.m_plate_container.globalToLocal(global_knife_point.x, global_knife_point.y)
-		this.parent.removeChild(this)
-		this._platObject.m_plate_container.addChild(this)
-		this._platObject.m_plate_container.setChildIndex(this._mainPanel.m_plate_image, this._platObject.m_plate_container.numChildren)
-		this.rotation -= this._platObject.m_plate_container.rotation  //egret好奇葩呀
-		this.x = local_in_ball_object.x
-		this.y = local_in_ball_object.y
-		
-		this.CalculateDegreeOnPlat()
-		this._platObject.OnHitOtherKnife(this)
+		let isWin = this._platObject.OnHitOtherKnife(this)
+		if(!isWin){
+			let global_knife_point = this.localToGlobal(0, 0)
+			let local_in_ball_object = this._platObject.m_plate_container.globalToLocal(global_knife_point.x, global_knife_point.y)
+			this.parent.removeChild(this)
+			this._platObject.m_plate_container.addChild(this)
+			this._platObject.m_plate_container.setChildIndex(this._mainPanel.m_plate_image, this._platObject.m_plate_container.numChildren)
+			this.rotation -= this._platObject.m_plate_container.rotation  //egret好奇葩呀
+			this.x = local_in_ball_object.x
+			this.y = local_in_ball_object.y
+
+			this.CalculateDegreeOnPlat()
+		}
 
 		if(this.isMe)
 		{
@@ -227,15 +289,28 @@ class KnifeObject extends BaseGameObject{
 		if(!prop_object){
 			return
 		}
-		this._platObject.OnHitPropObject(this, prop_object)
 
+		let __this = this
 		if(this.isMe)
 		{
 			if(prop_object.type == 2)
 			{
-				GameNet.reqUseProp(prop_object.type)
+				let random_prop_index = Math.floor(Math.random() * KnifeConst.ALL_PROPS_ARRAY.length)
+				let prop_id = KnifeConst.ALL_PROPS_ARRAY[random_prop_index]
+				if(prop_id == KnifeConst.PROP_OTHER_KNIFE){  //给别人加刀
+					let global_point = prop_object.localToGlobal(prop_object.width / 2, prop_object.height / 2)
+					let local_in_point = this._mainPanel.m_plate_container.parent.globalToLocal(global_point.x, global_point.y)
+					this._mainPanel.ShowMyKnifePropEffect(local_in_point.x, local_in_point.y)
+				}else if(prop_id == KnifeConst.PROP_DOWN_SPEED){ //给自己减速
+					this._mainPanel.m_plate_object.rotate_scale = 0.5
+					KnifeUtils.performDelay(function(){
+						__this._mainPanel.m_plate_object.rotate_scale = 1
+					}, 3 * 1000, this)
+				}
+				GameNet.reqUseProp(prop_id)
 			}
 		}
+		this._platObject.OnHitPropObject(this, prop_object)
 	}
 
 	public Destory():void

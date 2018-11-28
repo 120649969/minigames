@@ -3,7 +3,7 @@ module ui{
 
 		private m_touch_layer:eui.Group
 		private m_knife_object:KnifeObject
-		private m_container_layer:eui.Group
+		public m_container_layer:eui.Group
 		public m_plate_container:eui.Group
 		private m_example_knife:eui.Image
 		public m_plate_image:eui.Image
@@ -11,6 +11,17 @@ module ui{
 		private labelResult:eui.Label
 		private label_round:eui.Label
 		private m_top_ui:eui.Group
+		public m_copy_plat_container:eui.Group
+
+		private label_other_name:eui.Label
+		private label_me_name:eui.Label
+		private label_other_round:eui.Label
+		private label_me_round:eui.Label
+		private img_other_icon:eui.Image
+		private img_me_icon:eui.Image
+		private label_left_time:eui.Label
+
+		private m_offline_tips:eui.Group
 	
 		private btn_prop_knife:eui.Button
 		private btn_debug:eui.Button
@@ -25,7 +36,6 @@ module ui{
 		public serverModel:ServerModel = new ServerModel()
 		private _is_game_over:boolean = false
 		private _timer:egret.Timer
-
 
 		public constructor() {
 			super()
@@ -80,19 +90,56 @@ module ui{
 
 			this.m_plate_container.visible = false
 			this.m_top_ui.visible = false
+
+			this._addAnimation()
+		}
+
+		private m_place_feng:eui.Group
+		private _wind_armatureDisplay:dragonBones.EgretArmatureDisplay
+		private _knife_shadow_armatureDisplay:dragonBones.EgretArmatureDisplay
+		private _explosion_armatureDisplay:dragonBones.EgretArmatureDisplay
+
+		private _addAnimation():void
+		{
+			let armatureDisplay = KnifeUtils.createDragonBones("wind_ske_json", "wind_tex_json", "wind_tex_png", "wind_armature")
+			this.m_plate_container.parent.addChild(armatureDisplay)
+			armatureDisplay.scaleX = armatureDisplay.scaleY = 1.5
+			armatureDisplay.x = this.m_place_feng.x
+			armatureDisplay.y = this.m_place_feng.y
+			armatureDisplay.visible = false
+			this._wind_armatureDisplay = armatureDisplay
+
+			let armatureDisplay2 = KnifeUtils.createDragonBones("knife_shadow_ske_json", "knife_shadow_tex_json", "knife_shadow_tex_png", "knife_shadow_armature")
+			this.m_plate_container.parent.addChild(armatureDisplay2)
+			armatureDisplay2.x = this.m_place_feng.x
+			armatureDisplay2.y = this.m_place_feng.y + 100
+			armatureDisplay2.visible = false
+			this._knife_shadow_armatureDisplay = armatureDisplay2
+			armatureDisplay2.addDBEventListener(dragonBones.AnimationEvent.COMPLETE, function(){
+				// armatureDisplay2.visible = false
+			}, this)
+
+			let armatureDisplay3 = KnifeUtils.createDragonBones("explosion_ske_json", "explosion_tex_json", "explosion_tex_png", "explosion_armature")
+			this.m_plate_container.parent.addChild(armatureDisplay3)
+			armatureDisplay3.visible = false
+			this._explosion_armatureDisplay = armatureDisplay3
 		}
 
 		public StartGame():void
 		{
 			this.m_plate_container.visible = true
 			this.m_top_ui.visible = true
+			this.m_offline_tips.visible = false
 
+			this.serverModel.myRole.level = 1
 			this.removeEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this)
 			this.addEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this)
 
 			this.m_plate_object = new PlateObject(this)
 			this.m_touch_layer.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onTouchBegin, this)
 
+			this._update_player_info()
+			this._update_player_round()
 			this.validateNow()
 
 			this.NextRound()
@@ -145,11 +192,20 @@ module ui{
 		private _onEnterFrame(event:egret.Event):void
 		{
 			if(this.m_knife_object){
-				this.m_knife_object.Update()
+				let __this = this
+				let left_time_scale = this.m_knife_object.UpdateVersion2(function(time_scale){
+					__this.m_plate_object.UpdateVersion2(time_scale)
+				})
+				__this.m_plate_object.UpdateVersion2(left_time_scale)
+			} else {
+				this.m_plate_object.UpdateVersion2(1)
 			}
 
-			this.m_plate_object.Update()
-
+			if(this.m_plate_object.has_other_knife && this.m_plate_object.CheckCanInsertOtherKnife()){
+				this.m_plate_object.has_other_knife = false
+				this.GenerateOtherKnife()
+			}
+			
 			if(this._other_knife_object){
 				this._other_knife_object.Update()
 
@@ -198,23 +254,43 @@ module ui{
 		private _is_last_round_win:boolean = false
 		public ShowResult(isWin:boolean):void
 		{
-			if(isWin){
-				this.labelResult.text = "恭喜您 闯关成功"
-			} else {
-				this.labelResult.text = "很遗憾 闯关失败"
-			}
 			this._is_last_round_win = isWin
-			this.labelResult.visible = true
-			this.fly_up.play(1)
-			this.fly_up.removeEventListener('complete', this._onPlayFlyUpCompelete, this);
-			this.fly_up.addEventListener('complete', this._onPlayFlyUpCompelete, this);
+			// if(isWin){
+			// 	this.labelResult.text = "恭喜您 闯关成功"
+			// } else {
+			// 	this.labelResult.text = "很遗憾 闯关失败"
+			// }
+			// 
+			// this.labelResult.visible = true
+			// this.fly_up.play(1)
+			// this.fly_up.removeEventListener('complete', this._onPlayFlyUpCompelete, this);
+			// this.fly_up.addEventListener('complete', this._onPlayFlyUpCompelete, this);
+
+			let __this = this
+			if(isWin){
+				this.m_plate_object.ShowWinAnimation(function(){
+					__this._onPlayFlyUpCompelete()
+				})
+
+				// KnifeUtils.performDelay(function(){
+				// 	__this._onPlayFlyUpCompelete()
+				// }, 0.2 * 1000, this)
+
+			} else {
+				KnifeUtils.performDelay(function(){
+					__this._onPlayFlyUpCompelete()
+				}, 0.1 * 1000, this)
+			}
 		}
 
 		private _onPlayFlyUpCompelete():void
 		{
 			if(this._is_last_round_win){
 				this.current_round = (this.current_round + 1) % this.all_round_configs.length
-				GameNet.reqSwitch()
+				this.serverModel.myRole.level += 1
+				this.m_plate_object.RandomChangeBallBg()
+				this._update_player_round()
+				GameNet.reqSwitch(this.current_round + 1)
 			}
 			this.NextRound()
 		}
@@ -227,6 +303,8 @@ module ui{
 			//开始计时
 			timer.start();
 			this._timer = timer
+
+			this._update_left_time()
 		}
 
 		private _on_timer_tick():void
@@ -242,6 +320,8 @@ module ui{
 			{
 				this._clearGame()
 			}
+
+			this._update_left_time()
 		}
 
 		private _clearTimer():void
@@ -278,9 +358,38 @@ module ui{
 			}.bind(this), platform_finish_delay_time * 1000, this)
 		}
 
-		private onLevelPush():void
+		private _update_left_time():void
 		{
+			this.label_left_time.text = this.serverModel.left_time.toString()
+		}
 
+		private _update_player_info():void
+		{
+			this.label_other_name.text = this.serverModel.otherRole.nickname
+			this.label_me_name.text = this.serverModel.myRole.nickname
+			// this.serverModel.myRole.icon = "http://192.168.31.145:8083/ac/img/gamehall/ai1.jpg"
+			// this.serverModel.otherRole.icon = "http://192.168.31.145:8083/ac/img/gamehall/ai1.jpg"
+			if(!DEBUG){
+				egret.ImageLoader.crossOrigin = "anonymous" //支持跨域
+				if(this.serverModel.myRole.icon){
+					this.img_me_icon.source = this.serverModel.myRole.icon
+				}
+				if(this.serverModel.otherRole.icon){
+					this.img_other_icon.source = this.serverModel.otherRole.icon
+				}
+			}
+		}
+
+		private _update_player_round():void
+		{
+			this.label_me_round.text =  (this.serverModel.myRole.level).toString()
+			this.label_other_round.text = (this.serverModel.otherRole.level).toString()
+		}
+
+		private onLevelPush(msgId, body):void
+		{
+			this.serverModel.UpdateRoleLevel(body)
+			this._update_player_round()
 		}
 
 		private onRefreshPush():void
@@ -288,14 +397,76 @@ module ui{
 
 		}
 
-		private onUsePropPush():void
+		private onUsePropPush(msgId, body):void
 		{
-
+			let prop = body['prop']
+			this.ShowOtherPropEffect(prop)
 		}
 
+		public ShowOtherPropEffect(prop_id:number):void
+		{
+			let __this = this
+			if(prop_id == KnifeConst.PROP_WIND){
+				this._wind_armatureDisplay.visible = true
+				this._wind_armatureDisplay.animation.stop()
+				this._wind_armatureDisplay.animation.play("xuanzhuan", -1)
+				KnifeUtils.performDelay(function(){
+					__this._wind_armatureDisplay.visible = false
+					__this._wind_armatureDisplay.animation.stop()
+				}.bind(this), 3 * 1000, this)
+			} else if(prop_id == KnifeConst.PROP_OTHER_KNIFE){
+				this.m_plate_object.WaitToInsertNewKnife()
+			}
+		}
+
+
+		public ShowMyKnifePropEffect(x:number, y:number):void
+		{
+			this._knife_shadow_armatureDisplay.visible = true
+			this._knife_shadow_armatureDisplay.animation.stop()
+			this._knife_shadow_armatureDisplay.animation.play('knife_shadow_animation', 1)
+
+			this._explosion_armatureDisplay.visible = true
+			this._explosion_armatureDisplay.animation.stop()
+			this._explosion_armatureDisplay.animation.play('explosion_animation', 1)
+			this._explosion_armatureDisplay.x = x
+			this._explosion_armatureDisplay.y = y
+		}
+
+		private is_connecting:boolean = false
 		private onDisconnected():void
 		{
+			this.m_offline_tips.visible = true
+			if(this._is_game_over){
+				return
+			}
+			GameNet.onDisconnected = this.onDisconnected.bind(this)
+			if(this.is_connecting){
+				let __this = this
+				KnifeUtils.performDelay(function(){
+					if(this._is_game_over){
+						return
+					}
+					if(GameNet.isConnected()){
+						return
+					}
+					__this.is_connecting = true
+					__this.reconnect()
+				}.bind(this), 3 * 1000, this)
+				return
+			}
+			this.is_connecting = true
+			this.reconnect()
+		}
 
+		private async reconnect()
+		{
+			await GameNet.connectServer()
+			await GameNet.reqLogin(User.roomId)
+			//断线重连 同步我的分数给服务器
+			await GameNet.reqReEnter(this.serverModel.myRole.level)
+			this.is_connecting = false
+			this.m_offline_tips.visible = false
 		}
 
 		private onJoinPush():void
@@ -346,9 +517,8 @@ module ui{
 			}
 		}
 
-		private onGameScorePush():void
+		private onGameScorePush(msgId, body):void
 		{
-
 		}
 
 		private onGameOverPush():void
