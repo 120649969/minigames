@@ -8,10 +8,9 @@ module ui{
 		private m_example_knife:eui.Image
 		public m_plate_image:eui.Image
 		public m_plate_object:PlateObject
-		private labelResult:eui.Label
-		private label_round:eui.Label
 		private m_top_ui:eui.Group
 		public m_copy_plat_container:eui.Group
+		public m_broken_plate_container:eui.Group
 
 		private label_other_name:eui.Label
 		private label_me_name:eui.Label
@@ -125,7 +124,9 @@ module ui{
 
 		private _light_particle:particle.GravityParticleSystem;
 		private _normal_change_armatureDisplay:dragonBones.EgretArmatureDisplay
-
+		private _boss_change_armatureDisplay:dragonBones.EgretArmatureDisplay
+		private _speed_down_armatureDisplay:dragonBones.EgretArmatureDisplay
+		private _all_broken_armatureDisplays:Array<dragonBones.EgretArmatureDisplay> = []
 		private _addAnimation():void
 		{
 			let armatureDisplay = KnifeUtils.createDragonBones("wind_ske_json", "wind_tex_json", "wind_tex_png", "wind_armature")
@@ -165,6 +166,35 @@ module ui{
 			armatureDisplay5.x = this.width / 2
 			armatureDisplay5.y = this.height / 2
 
+			let armatureDisplay6 = KnifeUtils.createDragonBones("boss_change_ske_json", "boss_change_tex_json", "boss_change_tex_png", "boss_change_armature")
+			this.addChild(armatureDisplay6)
+			armatureDisplay6.visible = false
+			this._boss_change_armatureDisplay = armatureDisplay6
+			armatureDisplay6.x = this.width / 2
+			armatureDisplay6.y = this.height / 2
+
+			for(let index = 0; index < 2; index++)
+			{
+				let name = "broken" + (index + 1).toString()
+				let temp_armatureDisplay = KnifeUtils.createDragonBones(name + "_ske_json", name + "_tex_json", name + "_tex_png", name + "_armature")
+				temp_armatureDisplay.visible = false
+				this._all_broken_armatureDisplays.push(temp_armatureDisplay)
+				temp_armatureDisplay.scaleX = temp_armatureDisplay.scaleY = 1
+				this.m_broken_plate_container.addChild(temp_armatureDisplay)
+				temp_armatureDisplay.x = this.m_broken_plate_container.width / 2
+				temp_armatureDisplay.y = this.m_broken_plate_container.height / 2
+				temp_armatureDisplay.addDBEventListener(dragonBones.Event.COMPLETE, function(){
+					armatureDisplay.visible = false
+				}, this)
+			}
+
+			let armatureDisplay7 = KnifeUtils.createDragonBones("speed_down_ske_json", "speed_down_tex_json", "speed_down_tex_png", "speed_down_armature")
+			this.m_plate_container.parent.addChild(armatureDisplay7)
+			armatureDisplay7.x = this.m_plate_container.x
+			armatureDisplay7.y = this.m_plate_container.y + 50
+			armatureDisplay7.visible = false
+			this._speed_down_armatureDisplay = armatureDisplay7
+			armatureDisplay7.animation.play("speed_down_animation", -1)
 
 			var texture = RES.getRes("light1_png")
 			var config = RES.getRes("light1_json")
@@ -195,23 +225,65 @@ module ui{
 
 		private m_round_change:eui.Group
 		private label_tips_round:eui.Label
-		public PlayNormalChangeRoundAnimation(callback):void
+		public PlayChangeRoundAnimation(callback):void
 		{
-			this._normal_change_armatureDisplay.x = this.width / 2
-			this._normal_change_armatureDisplay.y = this.height / 2
+			let target_armatureDisplay:dragonBones.EgretArmatureDisplay = this._normal_change_armatureDisplay
+			
+			if(this.serverModel.myRole.level % 3 == 0){
+				target_armatureDisplay = this._boss_change_armatureDisplay
+			}
+			target_armatureDisplay.x = this.width / 2
+			target_armatureDisplay.y = this.height / 2
 			let __this = this
-			this._normal_change_armatureDisplay.visible = true
-			this._normal_change_armatureDisplay.animation.play("normal_change_animation", 1)
-			this.m_round_change.visible = true
+			target_armatureDisplay.visible = true
+			if(target_armatureDisplay == this._normal_change_armatureDisplay){
+				target_armatureDisplay.animation.play("normal_change_animation", 1)
+				this.m_round_change.visible = true
+			} else {
+				target_armatureDisplay.animation.play("boss_change_animation", 1)
+			}
+			
 			this.label_tips_round.text = (this.serverModel.myRole.level).toString()
-			this._normal_change_armatureDisplay.addDBEventListener(dragonBones.AnimationEvent.COMPLETE, function(){
-				__this._normal_change_armatureDisplay.visible = false
+			
+			
+			let __temp_callback = function(){
+				target_armatureDisplay.visible = false
 				__this.m_round_change.visible = false
+				target_armatureDisplay.removeDBEventListener(dragonBones.AnimationEvent.COMPLETE, __temp_callback, __this)
 				if(callback)
 				{
 					callback()
 				}
-			}, this)
+			}
+			target_armatureDisplay.addDBEventListener(dragonBones.AnimationEvent.COMPLETE, __temp_callback, this)
+		}
+
+		public PlayPlatBrokenAnimation():void
+		{
+			let current_index = this.m_plate_object.random_ball_index
+			if(current_index == 2 || current_index == 3){
+				current_index = 0
+			}
+			let armatureDisplay:dragonBones.EgretArmatureDisplay = this._all_broken_armatureDisplays[current_index]
+			
+			let name = "broken" + (current_index + 1) + "_animation"
+			armatureDisplay.animation.play(name, 1)
+			armatureDisplay.visible = true
+			let __play_complete_callback = function(){
+				armatureDisplay.visible = false
+				armatureDisplay.removeDBEventListener(dragonBones.Event.COMPLETE, __play_complete_callback, this)
+			}
+			armatureDisplay.addDBEventListener(dragonBones.Event.COMPLETE, __play_complete_callback, this)
+		}
+
+		public PlayPlatSpeedDownAnimation():void
+		{
+			this._speed_down_armatureDisplay.visible = true
+		}
+
+		public StopPlatSpeedDownAnimation():void
+		{
+			this._speed_down_armatureDisplay.visible = false
 		}
 
 		public StartGame():void
@@ -251,8 +323,6 @@ module ui{
 
 		public NextRound():void
 		{
-			this.label_round.text = "第" + (this.current_round + 1) + "关"
-			this.labelResult.visible = false
 			let round_config = this.all_round_configs[this.current_round]
 			round_config.Reset()
 			this.m_plate_object.EnterNextBigRound(round_config)
@@ -343,6 +413,7 @@ module ui{
 		private _is_last_round_win:boolean = false
 		public ShowResult(isWin:boolean):void
 		{
+			this._speed_down_armatureDisplay.visible = false
 			this._is_last_round_win = isWin
 			let __this = this
 			if(isWin){
@@ -366,7 +437,7 @@ module ui{
 				GameNet.reqSwitch(this.current_round + 1)
 
 				let __this = this
-				this.PlayNormalChangeRoundAnimation(function(){
+				this.PlayChangeRoundAnimation(function(){
 					__this.NextRound()
 				})
 			} else {

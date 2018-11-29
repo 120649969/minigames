@@ -68,6 +68,8 @@
 
 
 	<e:Group left="0" top="0" right="0" bottom="0" touchEnabled="false" locked="true">
+		<e:Group id="m_broken_plate_container" width="347" height="347" anchorOffsetX="173" anchorOffsetY="173" rotation="0" scaleX="1" scaleY="1" x="360" y="495" touchEnabled="false">
+		</e:Group>
 		<e:Group id="m_plate_container" width="347" height="347" anchorOffsetX="173" anchorOffsetY="173" rotation="0" scaleX="1" scaleY="1" x="360" y="495" touchEnabled="false">
 			<e:Image id="m_plate_image" anchorOffsetX="173" anchorOffsetY="173" scaleX="1" scaleY="1" rotation="0" left="0" top="0" right="0" bottom="0" source="ball1_png" locked="true"/>
 		</e:Group>
@@ -78,7 +80,7 @@
 
 
 	<e:Group id="m_top_ui" left="0" right="0" touchEnabled="false" top="50">
-		<e:Label id="label_round" text="第N关" y="22.22" horizontalCenter="0" x="360.00000000000006" scaleX="1" scaleY="1" verticalAlign="middle" visible="false" locked="true"/>
+
 		<e:Button id="btn_prop_knife" label="别人插入刀" scaleX="1" scaleY="1" left="0" verticalCenter="0" visible="false" locked="true"/>
 		<e:Image source="pk_bg_png" x="285.64" y="85.67"/>
 		<e:BitmapLabel id="label_left_time" width="153" height="76" y="137.83" font="knife_font_fnt" text="80" anchorOffsetX="76.5" textAlign="center" anchorOffsetY="38" scaleX="1" scaleY="1" horizontalCenter="-8.5"/>
@@ -89,7 +91,7 @@
 			<e:Image source="title_bg2_png" x="0.67" y="111.67"/>
 			<e:Label text="ئۆتكەل - " x="85.45" y="128.17" stroke="1"/>
 			<e:Label id="label_other_round" text="1" x="173.5" y="128.17" stroke="1"/>
-			<e:Label id="label_other_name" text="你的名字" x="132" y="58.74" textAlign="center" verticalAlign="middle" size="24" anchorOffsetX="0" anchorOffsetY="13" stroke="1" width="133.33" height="26"/>
+			<e:Label id="label_other_name" text="你的名字名字" x="132" y="58.74" textAlign="left" verticalAlign="middle" size="22" anchorOffsetX="0" anchorOffsetY="13" stroke="1" width="138.53" height="26"/>
 		</e:Group>
 		<e:Group width="315" height="199.67" anchorOffsetY="0" anchorOffsetX="0" scaleX="1" scaleY="1" right="0" top="0">
 			<e:Image source="title_bg_png" x="207.4" y="43" scaleX="-1" scaleY="1"/>
@@ -98,16 +100,16 @@
 			<e:Image source="title_bg1_png" x="2.68" y="111.67"/>
 			<e:Label text="ئۆتكەل - " x="85.45" y="128.17" stroke="1"/>
 			<e:Label id="label_me_round" text="10" x="171.87" y="128.17" scaleX="1" scaleY="1" stroke="1"/>
-			<e:Label id="label_me_name" text="我的名字" x="63" y="59.79" textAlign="center" verticalAlign="middle" size="24" anchorOffsetX="0" anchorOffsetY="12.75" stroke="1" width="137.9" height="25.5" scaleX="1" scaleY="1"/>
+			<e:Label id="label_me_name" text="我的名字名字" x="59" y="63.14" textAlign="right" verticalAlign="middle" size="22" anchorOffsetX="0" anchorOffsetY="12.75" stroke="1" width="137.9" height="25.5" scaleX="1" scaleY="1"/>
 		</e:Group>
 	</e:Group>
-	<e:Group left="0" top="0" right="0" bottom="0" touchEnabled="false">
+	<e:Group left="0" top="0" right="0" bottom="0" touchEnabled="false" locked="true">
 		<e:Image id="m_bg_result" source="bg2_png" scaleX="1" scaleY="1" left="0" top="0" right="0" bottom="0" x="-1054" y="-744" visible="false"/>
 		<e:Group id="m_offline_tips" width="505" height="50" x="95" y="429" visible="false">
 			<e:Rect left="0" top="0" bottom="0" right="0" fillAlpha="0.5" locked="true"/>
 			<e:Label text="توردىن ئازراق مەسىلە چىقتى ، سەل ساقلاڭ " x="31" y="10" scaleX="1" scaleY="1" locked="true"/>
 		</e:Group>
-		<e:Label id="labelResult" text="恭喜您 闯关成功" textColor="0xe01a1a" stroke="3" anchorOffsetX="110" anchorOffsetY="15" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="-100" visible="false" x="251" y="525"/>
+
 		<e:Group id="m_round_change" width="200" height="60" anchorOffsetY="0" horizontalCenter="-10" verticalCenter="40" visible="false">
 			<e:Label text="ئۆتكەل - " x="34.5" y="18.33000000000004" stroke="1" scaleX="1" scaleY="1"/>
 			<e:Label id="label_tips_round" text="10" x="126" y="18.33000000000004" scaleX="1" scaleY="1" stroke="1"/>

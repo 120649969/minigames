@@ -304,8 +304,10 @@ class KnifeObject extends BaseGameObject{
 					this._mainPanel.ShowMyKnifePropEffect(local_in_point.x, local_in_point.y)
 				}else if(prop_id == KnifeConst.PROP_DOWN_SPEED){ //给自己减速
 					this._mainPanel.m_plate_object.rotate_scale = 0.5
+					this._mainPanel.PlayPlatSpeedDownAnimation()
 					KnifeUtils.performDelay(function(){
 						__this._mainPanel.m_plate_object.rotate_scale = 1
+						__this._mainPanel.StopPlatSpeedDownAnimation()
 					}, 3 * 1000, this)
 				}
 				GameNet.reqUseProp(prop_id)

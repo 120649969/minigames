@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "selected_png,button_down_png,button_up_png,description_json,rounds_json,prop_png,knifeicon1_png,knifeicon2_png,knifeicon3_png,knifeicon11_png,knifeicon12_png,roundthumb_png,bg_jpg,bg2_png,ball1_png,ball4_png,ball2_png,ball3_png,pk_bg_png,title_bg2_png,title_bg_png,title_bg1_png,frame2_png,frame1_png,knife_font_png,knife_font_fnt,default_icon_png,wind_tex_png,wind_ske_json,wind_tex_json,knife_shadow_tex_png,knife_shadow_ske_json,knife_shadow_tex_json,explosion_ske_json,explosion_tex_json,explosion_tex_png,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,light1_json,light1_png,normal_change_tex_png,normal_change_ske_json,normal_change_tex_json",
+			"keys": "selected_png,button_down_png,button_up_png,description_json,rounds_json,prop_png,knifeicon1_png,knifeicon2_png,knifeicon3_png,knifeicon11_png,knifeicon12_png,roundthumb_png,bg_jpg,bg2_png,ball1_png,ball4_png,ball2_png,ball3_png,pk_bg_png,title_bg2_png,title_bg_png,title_bg1_png,frame2_png,frame1_png,knife_font_png,knife_font_fnt,default_icon_png,wind_tex_png,wind_ske_json,wind_tex_json,knife_shadow_tex_png,knife_shadow_ske_json,knife_shadow_tex_json,explosion_ske_json,explosion_tex_json,explosion_tex_png,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,light1_json,light1_png,normal_change_tex_png,normal_change_ske_json,normal_change_tex_json,boss_change_ske_json,boss_change_tex_json,boss_change_tex_png,broken1_ske_json,broken1_tex_json,broken1_tex_png,broken2_ske_json,broken2_tex_json,broken2_tex_png,speed_down_ske_json,speed_down_tex_json,speed_down_tex_png",
 			"name": "preload"
 		}
 	],
@@ -225,6 +225,66 @@
 			"name": "normal_change_tex_json",
 			"type": "json",
 			"url": "assets/db/normal_change/normal_change_tex.json"
+		},
+		{
+			"name": "boss_change_ske_json",
+			"type": "json",
+			"url": "assets/db/boss_change/boss_change_ske.json"
+		},
+		{
+			"name": "boss_change_tex_json",
+			"type": "json",
+			"url": "assets/db/boss_change/boss_change_tex.json"
+		},
+		{
+			"name": "boss_change_tex_png",
+			"type": "image",
+			"url": "assets/db/boss_change/boss_change_tex.png"
+		},
+		{
+			"name": "broken1_ske_json",
+			"type": "json",
+			"url": "assets/db/broken/broken1_ske.json"
+		},
+		{
+			"name": "broken1_tex_json",
+			"type": "json",
+			"url": "assets/db/broken/broken1_tex.json"
+		},
+		{
+			"name": "broken1_tex_png",
+			"type": "image",
+			"url": "assets/db/broken/broken1_tex.png"
+		},
+		{
+			"name": "broken2_ske_json",
+			"type": "json",
+			"url": "assets/db/broken/broken2_ske.json"
+		},
+		{
+			"name": "broken2_tex_json",
+			"type": "json",
+			"url": "assets/db/broken/broken2_tex.json"
+		},
+		{
+			"name": "broken2_tex_png",
+			"type": "image",
+			"url": "assets/db/broken/broken2_tex.png"
+		},
+		{
+			"name": "speed_down_ske_json",
+			"type": "json",
+			"url": "assets/db/speed_down/speed_down_ske.json"
+		},
+		{
+			"name": "speed_down_tex_json",
+			"type": "json",
+			"url": "assets/db/speed_down/speed_down_tex.json"
+		},
+		{
+			"name": "speed_down_tex_png",
+			"type": "image",
+			"url": "assets/db/speed_down/speed_down_tex.png"
 		}
 	]
 }

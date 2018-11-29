@@ -14,6 +14,7 @@ class PlateObject {
 	public roundPlateRotateStrategy:RoundPlateRotateStrategy
 	public rotate_scale:number = 1
 
+	public random_ball_index = 0;
 	public constructor(mainPanel:ui.MainGameScene) {
 		this._mainPanel = mainPanel
 		this.m_plate_container = mainPanel.m_plate_container
@@ -30,6 +31,8 @@ class PlateObject {
 		let random_index = Math.floor(Math.random() * KnifeConst.MAX_BALL_COUNT)
 		let ball_key = "ball" + (random_index + 1) + "_png"
 		this.m_plate_image.source = ball_key
+
+		this.random_ball_index = random_index
 	}
 
 	
@@ -193,6 +196,7 @@ class PlateObject {
 			egret.Tween.get(this.m_plate_container).to({x:start_x, y:top_y}, 0.05 * 1000).to({x:start_x, y:start_y}, 0.05 * 1000).call(function(){
 				if(isWin){
 					__this.m_plate_container.visible = false
+					__this._mainPanel.PlayPlatBrokenAnimation()
 					__this._mainPanel.ShowResult(true)
 				}
 			})
