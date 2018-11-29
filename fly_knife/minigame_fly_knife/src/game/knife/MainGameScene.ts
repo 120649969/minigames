@@ -21,6 +21,9 @@ module ui{
 		private img_me_icon:eui.Image
 		private label_left_time:eui.Label
 
+		private img_other_icon_bg:eui.Image
+		private img_me_icon_bg:eui.Image
+
 		private m_offline_tips:eui.Group
 	
 		private btn_prop_knife:eui.Button
@@ -84,20 +87,44 @@ module ui{
 			}.bind(this), this)
 
 			this.btn_debug.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.Event){
-				ui.WindowManager.getInstance().open("SettingPanel")
+				// __this._light_particle.start(0.3 * 1000)
+				// ui.WindowManager.getInstance().open("SettingPanel")
 				event.stopPropagation()
 			}.bind(this), this)
+
+			if(!DEBUG){
+				this.btn_debug.visible = false
+			}
 
 			this.m_plate_container.visible = false
 			this.m_top_ui.visible = false
 
 			this._addAnimation()
+
+			let circle1:egret.Shape = new egret.Shape();
+			circle1.graphics.beginFill(0x0000ff);
+			circle1.graphics.drawCircle(this.img_other_icon_bg.x + this.img_other_icon_bg.width / 2, this.img_other_icon_bg.y + this.img_other_icon_bg.height / 2, this.img_other_icon_bg.width / 2 - 5);
+			circle1.graphics.endFill();
+			this.img_other_icon_bg.parent.addChild(circle1);
+			this.img_other_icon.mask = circle1
+			
+			let circle2:egret.Shape = new egret.Shape();
+			circle2.graphics.beginFill(0x0000ff);
+			circle2.graphics.drawCircle(this.img_me_icon_bg.x + this.img_me_icon_bg.width / 2, this.img_me_icon_bg.y + this.img_me_icon_bg.height / 2, this.img_me_icon_bg.width / 2 - 5);
+			circle2.graphics.endFill();
+			this.img_me_icon.parent.addChild(circle2);
+			this.img_me_icon.mask = circle2
 		}
 
 		private m_place_feng:eui.Group
 		private _wind_armatureDisplay:dragonBones.EgretArmatureDisplay
 		private _knife_shadow_armatureDisplay:dragonBones.EgretArmatureDisplay
 		private _explosion_armatureDisplay:dragonBones.EgretArmatureDisplay
+
+		private _ready_go_armatureDisplay:dragonBones.EgretArmatureDisplay
+
+		private _light_particle:particle.GravityParticleSystem;
+		private _normal_change_armatureDisplay:dragonBones.EgretArmatureDisplay
 
 		private _addAnimation():void
 		{
@@ -123,6 +150,68 @@ module ui{
 			this.m_plate_container.parent.addChild(armatureDisplay3)
 			armatureDisplay3.visible = false
 			this._explosion_armatureDisplay = armatureDisplay3
+
+			let armatureDisplay4 = KnifeUtils.createDragonBones("ready_go_ske_json", "ready_go_tex_json", "ready_go_tex_png", "ready_go_armature")
+			this.addChild(armatureDisplay4)
+			armatureDisplay4.visible = false
+			this._ready_go_armatureDisplay = armatureDisplay4
+			armatureDisplay4.x = this.width / 2
+			armatureDisplay4.y = this.height / 2
+
+			let armatureDisplay5 = KnifeUtils.createDragonBones("normal_change_ske_json", "normal_change_tex_json", "normal_change_tex_png", "normal_change_armature")
+			this.addChild(armatureDisplay5)
+			armatureDisplay5.visible = false
+			this._normal_change_armatureDisplay = armatureDisplay5
+			armatureDisplay5.x = this.width / 2
+			armatureDisplay5.y = this.height / 2
+
+
+			var texture = RES.getRes("light1_png")
+			var config = RES.getRes("light1_json")
+			let lightParticle = new particle.GravityParticleSystem(texture, config)
+			this.addChild(lightParticle)
+			this._light_particle = lightParticle
+		}
+
+		public PlayReadyAnimation():void
+		{
+			let __this = this
+			this._ready_go_armatureDisplay.addDBEventListener(dragonBones.AnimationEvent.COMPLETE, function(){
+				__this.StartGame()
+				__this._ready_go_armatureDisplay.visible = false
+			}, this)
+			this._ready_go_armatureDisplay.animation.play("ready_go_animation", 1)
+			this._ready_go_armatureDisplay.visible = true
+		}
+
+		public PlayKnifeHitAnimation(knife_object:KnifeObject):void
+		{
+			let global_hit_ball_point = knife_object.hit_ball_rect.localToGlobal(knife_object.hit_ball_rect.width / 2, knife_object.hit_ball_rect.height / 2)
+			let local_point = this._light_particle.parent.globalToLocal(global_hit_ball_point.x, global_hit_ball_point.y)
+			this._light_particle.start(0.1 * 1000)
+			this._light_particle.x = local_point.x
+			this._light_particle.y = local_point.y
+		}
+
+		private m_round_change:eui.Group
+		private label_tips_round:eui.Label
+		public PlayNormalChangeRoundAnimation(callback):void
+		{
+			this._normal_change_armatureDisplay.x = this.width / 2
+			this._normal_change_armatureDisplay.y = this.height / 2
+			let __this = this
+			this._normal_change_armatureDisplay.visible = true
+			this._normal_change_armatureDisplay.animation.play("normal_change_animation", 1)
+			this.m_round_change.visible = true
+			this.label_tips_round.text = (this.serverModel.myRole.level).toString()
+			this._normal_change_armatureDisplay.addDBEventListener(dragonBones.AnimationEvent.COMPLETE, function(){
+				__this._normal_change_armatureDisplay.visible = false
+				__this.m_round_change.visible = false
+				if(callback)
+				{
+					callback()
+				}
+			}, this)
 		}
 
 		public StartGame():void
@@ -255,27 +344,11 @@ module ui{
 		public ShowResult(isWin:boolean):void
 		{
 			this._is_last_round_win = isWin
-			// if(isWin){
-			// 	this.labelResult.text = "恭喜您 闯关成功"
-			// } else {
-			// 	this.labelResult.text = "很遗憾 闯关失败"
-			// }
-			// 
-			// this.labelResult.visible = true
-			// this.fly_up.play(1)
-			// this.fly_up.removeEventListener('complete', this._onPlayFlyUpCompelete, this);
-			// this.fly_up.addEventListener('complete', this._onPlayFlyUpCompelete, this);
-
 			let __this = this
 			if(isWin){
 				this.m_plate_object.ShowWinAnimation(function(){
 					__this._onPlayFlyUpCompelete()
 				})
-
-				// KnifeUtils.performDelay(function(){
-				// 	__this._onPlayFlyUpCompelete()
-				// }, 0.2 * 1000, this)
-
 			} else {
 				KnifeUtils.performDelay(function(){
 					__this._onPlayFlyUpCompelete()
@@ -291,8 +364,15 @@ module ui{
 				this.m_plate_object.RandomChangeBallBg()
 				this._update_player_round()
 				GameNet.reqSwitch(this.current_round + 1)
+
+				let __this = this
+				this.PlayNormalChangeRoundAnimation(function(){
+					__this.NextRound()
+				})
+			} else {
+				this.NextRound()
 			}
-			this.NextRound()
+			
 		}
 
 		private _startTimer():void
@@ -385,6 +465,7 @@ module ui{
 			this.label_me_round.text =  (this.serverModel.myRole.level).toString()
 			this.label_other_round.text = (this.serverModel.otherRole.level).toString()
 		}
+
 
 		private onLevelPush(msgId, body):void
 		{
@@ -493,7 +574,7 @@ module ui{
 					}
 				}
 
-				this.StartGame()
+				this.PlayReadyAnimation()
 			}
 		}
 

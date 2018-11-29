@@ -281,14 +281,14 @@ class PlateObject {
 
 			let __this = this
 			if(game_object == this.all_knife_objects[this.all_knife_objects.length - 1]){
-				let move_up_global_point = new egret.Point(global_center_point.x, 100)
+				let move_up_global_point = new egret.Point(global_center_point.x, 300)
 				let local_move_up_in_global_point = game_object.parent.globalToLocal(move_up_global_point.x, move_up_global_point.y)
 
 				let move_down_global_point = new egret.Point(global_center_point.x, this._mainPanel.height)
 				let local_move_down_in_global_point = game_object.parent.globalToLocal(move_down_global_point.x, move_down_global_point.y)
 
 				let time =  1 * 1000
-				egret.Tween.get(game_object).to({x:local_move_up_in_global_point.x, y:local_move_up_in_global_point.y + 200}, time * 0.3)
+				egret.Tween.get(game_object).to({x:local_move_up_in_global_point.x, y:local_move_up_in_global_point.y + 200}, time * 0.1)
 				.call(function(){
 					egret.Tween.get(game_object).to({rotation:180}, time * 0.5)
 				})
@@ -304,6 +304,7 @@ class PlateObject {
 				.to({x:local_move_down_in_global_point.x, y:local_move_down_in_global_point.y}, time * 1, egret.Ease.sineIn)
 				.call(function(){
 					egret.Tween.removeTweens(game_object)
+					game_object.visible = false
 					if(callback)
 					{
 						callback()

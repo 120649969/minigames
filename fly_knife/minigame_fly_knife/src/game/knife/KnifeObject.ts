@@ -131,6 +131,7 @@ class KnifeObject extends BaseGameObject{
 			}
 			if(this._checkHitBall())
 			{
+				this._mainPanel.PlayKnifeHitAnimation(this)
 				this._onHitBall()
 				break
 			}

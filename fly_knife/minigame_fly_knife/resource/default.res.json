@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "selected_png,button_down_png,button_up_png,description_json,rounds_json,prop_png,knifeicon1_png,knifeicon2_png,knifeicon3_png,knifeicon11_png,knifeicon12_png,roundthumb_png,bg_jpg,bg2_png,ball1_png,ball4_png,ball2_png,ball3_png,pk_bg_png,title_bg2_png,popup_bg1_png,popup_bg2_png,popup_bg3_png,title_bg_png,title_bg1_png,frame2_png,frame1_png,knife_font_png,knife_font_fnt,default_icon_png,wind_tex_png,wind_ske_json,wind_tex_json,knife_shadow_tex_png,knife_shadow_ske_json,knife_shadow_tex_json,explosion_ske_json,explosion_tex_json,explosion_tex_png",
+			"keys": "selected_png,button_down_png,button_up_png,description_json,rounds_json,prop_png,knifeicon1_png,knifeicon2_png,knifeicon3_png,knifeicon11_png,knifeicon12_png,roundthumb_png,bg_jpg,bg2_png,ball1_png,ball4_png,ball2_png,ball3_png,pk_bg_png,title_bg2_png,title_bg_png,title_bg1_png,frame2_png,frame1_png,knife_font_png,knife_font_fnt,default_icon_png,wind_tex_png,wind_ske_json,wind_tex_json,knife_shadow_tex_png,knife_shadow_ske_json,knife_shadow_tex_json,explosion_ske_json,explosion_tex_json,explosion_tex_png,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,light1_json,light1_png,normal_change_tex_png,normal_change_ske_json,normal_change_tex_json",
 			"name": "preload"
 		}
 	],
@@ -62,144 +62,169 @@
 			"name": "knifeicon12_png"
 		},
 		{
-			"name": "roundthumb_png",
+			"url": "assets/ScrollBar/roundthumb.png",
 			"type": "image",
-			"url": "assets/ScrollBar/roundthumb.png"
+			"name": "roundthumb_png"
 		},
 		{
-			"name": "bg_jpg",
+			"url": "assets/bg.jpg",
 			"type": "image",
-			"url": "assets/bg.jpg"
+			"name": "bg_jpg"
 		},
 		{
-			"name": "bg2_png",
+			"url": "assets/bg2.png",
 			"type": "image",
-			"url": "assets/bg2.png"
+			"name": "bg2_png"
 		},
 		{
-			"name": "ball1_png",
+			"url": "assets/ball1.png",
 			"type": "image",
-			"url": "assets/ball1.png"
+			"name": "ball1_png"
 		},
 		{
-			"name": "ball4_png",
+			"url": "assets/ball4.png",
 			"type": "image",
-			"url": "assets/ball4.png"
+			"name": "ball4_png"
 		},
 		{
-			"name": "ball2_png",
+			"url": "assets/ball2.png",
 			"type": "image",
-			"url": "assets/ball2.png"
+			"name": "ball2_png"
 		},
 		{
-			"name": "ball3_png",
+			"url": "assets/ball3.png",
 			"type": "image",
-			"url": "assets/ball3.png"
+			"name": "ball3_png"
 		},
 		{
-			"name": "pk_bg_png",
+			"url": "assets/pk_bg.png",
 			"type": "image",
-			"url": "assets/pk_bg.png"
+			"name": "pk_bg_png"
 		},
 		{
-			"name": "title_bg2_png",
+			"url": "assets/title_bg2.png",
 			"type": "image",
-			"url": "assets/title_bg2.png"
+			"name": "title_bg2_png"
 		},
 		{
-			"name": "popup_bg1_png",
+			"url": "assets/title_bg.png",
 			"type": "image",
-			"url": "assets/popup_bg1.png"
+			"name": "title_bg_png"
 		},
 		{
-			"name": "popup_bg2_png",
+			"url": "assets/title_bg1.png",
 			"type": "image",
-			"url": "assets/popup_bg2.png"
+			"name": "title_bg1_png"
 		},
 		{
-			"name": "popup_bg3_png",
+			"url": "assets/frame2.png",
 			"type": "image",
-			"url": "assets/popup_bg3.png"
+			"name": "frame2_png"
 		},
 		{
-			"name": "title_bg_png",
+			"url": "assets/frame1.png",
 			"type": "image",
-			"url": "assets/title_bg.png"
+			"name": "frame1_png"
 		},
 		{
-			"name": "title_bg1_png",
+			"url": "assets/knife_font.png",
 			"type": "image",
-			"url": "assets/title_bg1.png"
+			"name": "knife_font_png"
 		},
 		{
-			"name": "frame2_png",
-			"type": "image",
-			"url": "assets/frame2.png"
-		},
-		{
-			"name": "frame1_png",
-			"type": "image",
-			"url": "assets/frame1.png"
-		},
-		{
-			"name": "knife_font_png",
-			"type": "image",
-			"url": "assets/knife_font.png"
-		},
-		{
-			"name": "knife_font_fnt",
+			"url": "assets/knife_font.fnt",
 			"type": "font",
-			"url": "assets/knife_font.fnt"
+			"name": "knife_font_fnt"
 		},
 		{
-			"name": "default_icon_png",
+			"url": "assets/default_icon.png",
 			"type": "image",
-			"url": "assets/default_icon.png"
+			"name": "default_icon_png"
 		},
 		{
-			"name": "wind_tex_png",
+			"url": "assets/db/wind/wind_tex.png",
 			"type": "image",
-			"url": "assets/db/wind/wind_tex.png"
+			"name": "wind_tex_png"
 		},
 		{
-			"name": "wind_ske_json",
+			"url": "assets/db/wind/wind_ske.json",
 			"type": "json",
-			"url": "assets/db/wind/wind_ske.json"
+			"name": "wind_ske_json"
 		},
 		{
-			"name": "wind_tex_json",
+			"url": "assets/db/wind/wind_tex.json",
 			"type": "json",
-			"url": "assets/db/wind/wind_tex.json"
+			"name": "wind_tex_json"
 		},
 		{
-			"name": "knife_shadow_tex_png",
+			"url": "assets/db/knife_shadow/knife_shadow_tex.png",
 			"type": "image",
-			"url": "assets/db/knife_shadow/knife_shadow_tex.png"
+			"name": "knife_shadow_tex_png"
 		},
 		{
-			"name": "knife_shadow_ske_json",
+			"url": "assets/db/knife_shadow/knife_shadow_ske.json",
 			"type": "json",
-			"url": "assets/db/knife_shadow/knife_shadow_ske.json"
+			"name": "knife_shadow_ske_json"
 		},
 		{
-			"name": "knife_shadow_tex_json",
+			"url": "assets/db/knife_shadow/knife_shadow_tex.json",
 			"type": "json",
-			"url": "assets/db/knife_shadow/knife_shadow_tex.json"
+			"name": "knife_shadow_tex_json"
 		},
 		{
-			"name": "explosion_ske_json",
+			"url": "assets/db/explosion/explosion_ske.json",
 			"type": "json",
-			"url": "assets/db/explosion/explosion_ske.json"
+			"name": "explosion_ske_json"
 		},
 		{
-			"name": "explosion_tex_json",
+			"url": "assets/db/explosion/explosion_tex.json",
 			"type": "json",
-			"url": "assets/db/explosion/explosion_tex.json"
+			"name": "explosion_tex_json"
 		},
 		{
-			"name": "explosion_tex_png",
+			"url": "assets/db/explosion/explosion_tex.png",
 			"type": "image",
-			"url": "assets/db/explosion/explosion_tex.png"
+			"name": "explosion_tex_png"
+		},
+		{
+			"url": "assets/db/ready_go/ready_go_tex.png",
+			"type": "image",
+			"name": "ready_go_tex_png"
+		},
+		{
+			"url": "assets/db/ready_go/ready_go_ske.json",
+			"type": "json",
+			"name": "ready_go_ske_json"
+		},
+		{
+			"url": "assets/db/ready_go/ready_go_tex.json",
+			"type": "json",
+			"name": "ready_go_tex_json"
+		},
+		{
+			"url": "assets/light/light1.png",
+			"type": "image",
+			"name": "light1_png"
+		},
+		{
+			"url": "assets/light/light1.json",
+			"type": "json",
+			"name": "light1_json"
+		},
+		{
+			"name": "normal_change_tex_png",
+			"type": "image",
+			"url": "assets/db/normal_change/normal_change_tex.png"
+		},
+		{
+			"name": "normal_change_ske_json",
+			"type": "json",
+			"url": "assets/db/normal_change/normal_change_ske.json"
+		},
+		{
+			"name": "normal_change_tex_json",
+			"type": "json",
+			"url": "assets/db/normal_change/normal_change_tex.json"
 		}
 	]
 }

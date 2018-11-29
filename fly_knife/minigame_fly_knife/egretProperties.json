@@ -26,6 +26,10 @@
     },
     {
       "name":"dragonBones"
+    },
+    {
+      "name": "particle",
+      "path": "libs/bin/particle"
     }
   ]
 }

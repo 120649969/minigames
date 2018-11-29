@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="PropSkin" width="60" height="60" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Rect id="behit_rect" left="0" top="0" bottom="0" right="0"/>
+	<e:Rect id="behit_rect" left="0" top="0" bottom="0" right="0" visible="false"/>
 	<e:Image source="prop_png" left="0" right="0" bottom="0" top="0"/>
 </e:Skin>
