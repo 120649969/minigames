@@ -63,7 +63,7 @@ module ui{
 			let design_height = Const.MIN_HEIGHT
 			let target_y = (design_height - this.height) / 2
 			target_y = 0
-			this.m_top_ui.y = target_y
+			this.m_top_ui.y = target_y + 60
 		}
 
 		private _onAddToStage(event:egret.Event):void

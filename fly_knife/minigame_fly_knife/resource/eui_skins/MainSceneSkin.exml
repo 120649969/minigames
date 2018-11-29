@@ -79,7 +79,7 @@
 	</e:Group>
 
 
-	<e:Group id="m_top_ui" left="0" right="0" touchEnabled="false" top="50">
+	<e:Group id="m_top_ui" left="0" right="0" touchEnabled="false" y="50">
 
 		<e:Button id="btn_prop_knife" label="别人插入刀" scaleX="1" scaleY="1" left="0" verticalCenter="0" visible="false" locked="true"/>
 		<e:Image source="pk_bg_png" x="285.64" y="85.67"/>
