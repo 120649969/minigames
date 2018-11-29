@@ -87,7 +87,7 @@ module ui {
 		{
 			super.resizeStage()
 			let design_height = Const.MIN_HEIGHT
-			let target_y = (design_height - this.height) / 2
+			let target_y = (design_height - this.height) / 2 + 35
 			this.m_top_ui.y = target_y
 			if(this._hasGameStarted){
 				this.validateNow()
@@ -247,6 +247,21 @@ module ui {
 		protected createChildren(): void {
 			super.createChildren();
 			this._addAnimation()
+
+			let circle1:egret.Shape = new egret.Shape();
+			circle1.graphics.beginFill(0x0000ff);
+			circle1.graphics.drawCircle(this.img_icon_other.x, this.img_icon_other.y, this.img_icon_other.width / 2 - 5);
+			circle1.graphics.endFill();
+			this.img_icon_other.parent.addChild(circle1);
+			this.img_icon_other.mask = circle1
+			
+			let circle2:egret.Shape = new egret.Shape();
+			circle2.graphics.beginFill(0x0000ff);
+			circle2.graphics.drawCircle(this.img_icon_me.x, this.img_icon_me.y, this.img_icon_me.width / 2 - 5);
+			circle2.graphics.endFill();
+			this.img_icon_me.parent.addChild(circle2);
+			this.img_icon_me.mask = circle2
+
 		}
 
 		//游戏结束
