@@ -16,6 +16,8 @@ module io {
 			CMD_H5_JOIN_RSP:4, //加入房间
 			CMD_H5_REENTER_REQ: 5,  //重进
 			CMD_H5_REENTER_RSP: 6, //重进
+			CMD_H5_SURREND_REQ:7, //投降
+			CMD_H5_SURREND_RSP:8,
 
 			CMD_H5_KNIFE_SHOT_REQ:1001, //发射
 			CMD_H5_KNIFE_SHOT_RSP:1002, //发射
@@ -149,6 +151,18 @@ module io {
 				});
 				self.send(GameNet.GAME_PROTOCOL.CMD_H5_KNIFE_USEPROP_REQ, {
 					prop: prop
+				});
+			});		
+		}
+
+		public async reqSurrend(){
+			let self = this;
+			return new Promise((resolve, reject) => {
+				self.on(GameNet.GAME_PROTOCOL.CMD_H5_SURREND_RSP, function (msgId, body) {
+					self.off(GameNet.GAME_PROTOCOL.CMD_H5_SURREND_RSP);
+					resolve(body);
+				});
+				self.send(GameNet.GAME_PROTOCOL.CMD_H5_SURREND_REQ, {
 				});
 			});		
 		}

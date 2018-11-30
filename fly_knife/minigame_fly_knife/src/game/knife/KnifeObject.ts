@@ -31,7 +31,7 @@ class KnifeObject extends BaseGameObject{
 
 		if(is_init){
 			this.m_img_2.visible = true
-		} else if((mainPanel.current_round + 1) % 3 == 0){
+		} else if((mainPanel.serverModel.myRole.level) % 3 == 0){
 			this.m_img_3.visible = true
 		} else {
 			this.m_img_1.visible = true
@@ -238,7 +238,15 @@ class KnifeObject extends BaseGameObject{
 
 		if(this.isMe)
 		{
-			GameNet.reqShoot(Math.floor(this.degree_on_plate))			
+			GameNet.reqShoot(Math.floor(this.degree_on_plate))
+
+			if(this._platObject.random_ball_index == 0){
+				SoundManager.getInstance().playSound("hit_plat_1_mp3")
+			} else if(this._platObject.random_ball_index == 1){
+				SoundManager.getInstance().playSound("hit_plat_2_mp3")
+			} else {
+				SoundManager.getInstance().playSound("hit_plat_3_mp3")
+			}
 		}
 	}
 
@@ -283,6 +291,8 @@ class KnifeObject extends BaseGameObject{
 			egret.Tween.removeTweens(__this)
 			__this._mainPanel.ShowResult(false)
 		})
+
+		SoundManager.getInstance().playSound("hit_knife_mp3")
 	}
 
 	private _onHitOtherProp(prop_object:PropObject):void
@@ -290,7 +300,7 @@ class KnifeObject extends BaseGameObject{
 		if(!prop_object){
 			return
 		}
-
+		
 		let __this = this
 		if(this.isMe)
 		{
@@ -309,9 +319,13 @@ class KnifeObject extends BaseGameObject{
 						__this._mainPanel.m_plate_object.rotate_scale = 1
 						__this._mainPanel.StopPlatSpeedDownAnimation()
 					}, 3 * 1000, this)
+				} else if(prop_id == KnifeConst.PROP_WIND){
+					this._mainPanel.ShowWindPropEffect()
 				}
 				GameNet.reqUseProp(prop_id)
 			}
+
+			SoundManager.getInstance().playSound("hit_prop_mp3")
 		}
 		this._platObject.OnHitPropObject(this, prop_object)
 	}

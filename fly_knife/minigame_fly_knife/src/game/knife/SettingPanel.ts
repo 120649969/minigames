@@ -66,7 +66,7 @@ module ui{
 				}
 				new_round_strategys.push(item_render.data)
 			}
-			let current_round_config = this._mainPanel.all_round_configs[this._mainPanel.current_round]
+			let current_round_config = this._mainPanel.all_round_configs[this._mainPanel.serverModel.myRole.level - 1]
 			current_round_config.strategys = new_round_strategys
 		}
 

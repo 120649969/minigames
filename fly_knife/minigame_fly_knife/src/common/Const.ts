@@ -8,7 +8,7 @@ class Const {
 
 	public static HEARTBEAT_DUR = 6000;
 
-	public static GAME_TIME = 900;
+	public static GAME_TIME = 90;
 
 	public static DEBUG_SERVER_URL = 'ght-hall.badambiz.com:50003';
 	public static RELEASE_SERVER_URL = 'ght-hall.badambiz.com:50003'

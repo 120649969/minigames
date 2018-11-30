@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "selected_png,button_down_png,button_up_png,description_json,rounds_json,prop_png,knifeicon1_png,knifeicon2_png,knifeicon3_png,knifeicon11_png,knifeicon12_png,roundthumb_png,bg_jpg,bg2_png,ball1_png,ball4_png,ball2_png,ball3_png,pk_bg_png,title_bg2_png,title_bg_png,title_bg1_png,frame2_png,frame1_png,knife_font_png,knife_font_fnt,default_icon_png,wind_tex_png,wind_ske_json,wind_tex_json,knife_shadow_tex_png,knife_shadow_ske_json,knife_shadow_tex_json,explosion_ske_json,explosion_tex_json,explosion_tex_png,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,light1_json,light1_png,normal_change_tex_png,normal_change_ske_json,normal_change_tex_json,boss_change_ske_json,boss_change_tex_json,boss_change_tex_png,broken1_ske_json,broken1_tex_json,broken1_tex_png,broken2_ske_json,broken2_tex_json,broken2_tex_png,speed_down_ske_json,speed_down_tex_json,speed_down_tex_png",
+			"keys": "selected_png,button_down_png,button_up_png,description_json,rounds_json,prop_png,knifeicon1_png,knifeicon2_png,knifeicon3_png,knifeicon11_png,knifeicon12_png,roundthumb_png,bg_jpg,ball1_png,ball4_png,ball2_png,ball3_png,pk_bg_png,title_bg2_png,title_bg_png,title_bg1_png,frame2_png,frame1_png,knife_font_png,knife_font_fnt,default_icon_png,wind_tex_png,wind_ske_json,wind_tex_json,knife_shadow_tex_png,knife_shadow_ske_json,knife_shadow_tex_json,explosion_ske_json,explosion_tex_json,explosion_tex_png,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,light1_json,light1_png,normal_change_tex_png,normal_change_ske_json,normal_change_tex_json,boss_change_ske_json,boss_change_tex_json,boss_change_tex_png,broken1_ske_json,broken1_tex_json,broken1_tex_png,broken2_ske_json,broken2_tex_json,broken2_tex_png,speed_down_ske_json,speed_down_tex_json,speed_down_tex_png,boss_change_ske2_json,boss_change_tex2_json,boss_change_tex2_png,broken1_ske2_json,broken1_tex2_json,broken1_tex2_png,broken2_ske2_json,broken2_tex2_json,broken2_tex2_png,speed_down_ske2_json,speed_down_tex2_json,speed_down_tex2_png,ready_go_mp3,speed_down_mp3,other_knife_mp3,wind_mp3,hit_prop_mp3,hit_plat_2_mp3,hit_plat_1_mp3,hit_plat_3_mp3,hit_knife_mp3,broken2_mp3,broken1_mp3,broken3_mp3,boss_round_mp3,prop2_png,help_png,light3_json,light3_png,prop_tex_png,prop_ske_json,prop_tex_json,game_result_draw_mp3,game_result_win_mp3,game_result_fail_mp3,broken4_ske_json,broken4_tex_json,broken4_tex_png,broken3_ske_json,broken3_tex_json,broken3_tex_png,word1_png,word2_png,word3_png,word4_png,word5_png",
 			"name": "preload"
 		}
 	],
@@ -70,11 +70,6 @@
 			"url": "assets/bg.jpg",
 			"type": "image",
 			"name": "bg_jpg"
-		},
-		{
-			"url": "assets/bg2.png",
-			"type": "image",
-			"name": "bg2_png"
 		},
 		{
 			"url": "assets/ball1.png",
@@ -285,6 +280,236 @@
 			"name": "speed_down_tex_png",
 			"type": "image",
 			"url": "assets/db/speed_down/speed_down_tex.png"
+		},
+		{
+			"name": "boss_change_ske2_json",
+			"type": "json",
+			"url": "assets/db/boss_change/boss_change_ske.json"
+		},
+		{
+			"name": "boss_change_tex2_json",
+			"type": "json",
+			"url": "assets/db/boss_change/boss_change_tex.json"
+		},
+		{
+			"name": "boss_change_tex2_png",
+			"type": "image",
+			"url": "assets/db/boss_change/boss_change_tex.png"
+		},
+		{
+			"name": "broken1_ske2_json",
+			"type": "json",
+			"url": "assets/db/broken/broken1_ske.json"
+		},
+		{
+			"name": "broken1_tex2_json",
+			"type": "json",
+			"url": "assets/db/broken/broken1_tex.json"
+		},
+		{
+			"name": "broken1_tex2_png",
+			"type": "image",
+			"url": "assets/db/broken/broken1_tex.png"
+		},
+		{
+			"name": "broken2_ske2_json",
+			"type": "json",
+			"url": "assets/db/broken/broken2_ske.json"
+		},
+		{
+			"name": "broken2_tex2_json",
+			"type": "json",
+			"url": "assets/db/broken/broken2_tex.json"
+		},
+		{
+			"name": "broken2_tex2_png",
+			"type": "image",
+			"url": "assets/db/broken/broken2_tex.png"
+		},
+		{
+			"name": "speed_down_ske2_json",
+			"type": "json",
+			"url": "assets/db/speed_down/speed_down_ske.json"
+		},
+		{
+			"name": "speed_down_tex2_json",
+			"type": "json",
+			"url": "assets/db/speed_down/speed_down_tex.json"
+		},
+		{
+			"name": "speed_down_tex2_png",
+			"type": "image",
+			"url": "assets/db/speed_down/speed_down_tex.png"
+		},
+		{
+			"name": "ready_go_mp3",
+			"type": "sound",
+			"url": "assets/music/ready_go.mp3"
+		},
+		{
+			"name": "speed_down_mp3",
+			"type": "sound",
+			"url": "assets/music/speed_down.mp3"
+		},
+		{
+			"name": "other_knife_mp3",
+			"type": "sound",
+			"url": "assets/music/other_knife.mp3"
+		},
+		{
+			"name": "wind_mp3",
+			"type": "sound",
+			"url": "assets/music/wind.mp3"
+		},
+		{
+			"name": "hit_prop_mp3",
+			"type": "sound",
+			"url": "assets/music/hit_prop.mp3"
+		},
+		{
+			"name": "hit_plat_2_mp3",
+			"type": "sound",
+			"url": "assets/music/hit_plat_2.mp3"
+		},
+		{
+			"name": "hit_plat_1_mp3",
+			"type": "sound",
+			"url": "assets/music/hit_plat_1.mp3"
+		},
+		{
+			"name": "hit_plat_3_mp3",
+			"type": "sound",
+			"url": "assets/music/hit_plat_3.mp3"
+		},
+		{
+			"name": "hit_knife_mp3",
+			"type": "sound",
+			"url": "assets/music/hit_knife.mp3"
+		},
+		{
+			"name": "broken2_mp3",
+			"type": "sound",
+			"url": "assets/music/broken2.mp3"
+		},
+		{
+			"name": "broken1_mp3",
+			"type": "sound",
+			"url": "assets/music/broken1.mp3"
+		},
+		{
+			"name": "broken3_mp3",
+			"type": "sound",
+			"url": "assets/music/broken3.mp3"
+		},
+		{
+			"name": "boss_round_mp3",
+			"type": "sound",
+			"url": "assets/music/boss_round.mp3"
+		},
+		{
+			"name": "prop2_png",
+			"type": "image",
+			"url": "assets/prop2.png"
+		},
+		{
+			"name": "help_png",
+			"type": "image",
+			"url": "assets/help.png"
+		},
+		{
+			"name": "light3_json",
+			"type": "json",
+			"url": "assets/light/light3.json"
+		},
+		{
+			"name": "light3_png",
+			"type": "image",
+			"url": "assets/light/light3.png"
+		},
+		{
+			"name": "prop_tex_png",
+			"type": "image",
+			"url": "assets/db/prop/prop_tex.png"
+		},
+		{
+			"name": "prop_ske_json",
+			"type": "json",
+			"url": "assets/db/prop/prop_ske.json"
+		},
+		{
+			"name": "prop_tex_json",
+			"type": "json",
+			"url": "assets/db/prop/prop_tex.json"
+		},
+		{
+			"name": "game_result_draw_mp3",
+			"type": "sound",
+			"url": "assets/music/game_result_draw.mp3"
+		},
+		{
+			"name": "game_result_win_mp3",
+			"type": "sound",
+			"url": "assets/music/game_result_win.mp3"
+		},
+		{
+			"name": "game_result_fail_mp3",
+			"type": "sound",
+			"url": "assets/music/game_result_fail.mp3"
+		},
+		{
+			"name": "broken4_ske_json",
+			"type": "json",
+			"url": "assets/db/broken/broken4_ske.json"
+		},
+		{
+			"name": "broken4_tex_json",
+			"type": "json",
+			"url": "assets/db/broken/broken4_tex.json"
+		},
+		{
+			"name": "broken4_tex_png",
+			"type": "image",
+			"url": "assets/db/broken/broken4_tex.png"
+		},
+		{
+			"name": "broken3_ske_json",
+			"type": "json",
+			"url": "assets/db/broken/broken3_ske.json"
+		},
+		{
+			"name": "broken3_tex_json",
+			"type": "json",
+			"url": "assets/db/broken/broken3_tex.json"
+		},
+		{
+			"name": "broken3_tex_png",
+			"type": "image",
+			"url": "assets/db/broken/broken3_tex.png"
+		},
+		{
+			"name": "word1_png",
+			"type": "image",
+			"url": "assets/word1.png"
+		},
+		{
+			"name": "word2_png",
+			"type": "image",
+			"url": "assets/word2.png"
+		},
+		{
+			"name": "word3_png",
+			"type": "image",
+			"url": "assets/word3.png"
+		},
+		{
+			"name": "word4_png",
+			"type": "image",
+			"url": "assets/word4.png"
+		},
+		{
+			"name": "word5_png",
+			"type": "image",
+			"url": "assets/word5.png"
 		}
 	]
 }

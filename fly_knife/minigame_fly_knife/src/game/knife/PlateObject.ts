@@ -21,20 +21,20 @@ class PlateObject {
 		this.m_plate_container.scaleX = this.m_plate_container.scaleY = 0
 
 		this.m_plate_image = mainPanel.m_plate_image
-
-		this.RandomChangeBallBg()
 	}
 
 	public RandomChangeBallBg():void
 	{
-		
-		let random_index = Math.floor(Math.random() * KnifeConst.MAX_BALL_COUNT)
+		let random_index = this.roundPlateRotateStrategy.roundConfig.skin - 1
 		let ball_key = "ball" + (random_index + 1) + "_png"
 		this.m_plate_image.source = ball_key
-
 		this.random_ball_index = random_index
 	}
 
+	public IsReady():boolean
+	{
+		return this._isReady
+	}
 	
 	public GetGlobalCenterPoint():egret.Point
 	{
@@ -46,6 +46,7 @@ class PlateObject {
 	{
 		this.rotate_scale = 1
 		this.roundPlateRotateStrategy = new RoundPlateRotateStrategy(roundConfig)
+		this.RandomChangeBallBg()
 		this._isReady = false
 		let __this = this
 		this.m_plate_container.visible = true
@@ -185,7 +186,7 @@ class PlateObject {
 		let __this = this
 		this._pushNewKnifeObject(knifeObject)
 		if(knifeObject.isMe){
-			this._mainPanel.OnGetScore()
+			this._mainPanel.OnMyKnifeHitBall()
 		}
 		let isWin = this.GetAllMyKnifeCount() >= this.roundPlateRotateStrategy.maxKnifeCount
 
@@ -211,8 +212,12 @@ class PlateObject {
 		
 		knifeObject.label_index = this.all_knife_objects.length
 		knifeObject.testLabel.text = this.all_knife_objects.length.toString()
-		if(!isWin){
+		if(!isWin  && knifeObject.isMe){
 			this._mainPanel.GenerateNextKnife()
+		}
+
+		if(isWin){
+			this._isReady = false
 		}
 		return isWin
 	}
@@ -231,10 +236,11 @@ class PlateObject {
 			this.all_sort_game_objects.splice(__index_in_sort, 1)
 		}
 
-		if(prop_object.parent)
-		{
-			prop_object.parent.removeChild(prop_object)
-		}
+		prop_object.PlayBrokenAnimation()
+		// if(prop_object.parent)
+		// {
+		// 	prop_object.parent.removeChild(prop_object)
+		// }
 	}
 
 	public CheckCanInsertOtherKnife():boolean
@@ -332,6 +338,7 @@ class PlateObject {
 				egret.Tween.get(game_object).to({x:local_move_up_in_global_point.x, y:local_move_up_in_global_point.y}, 0.04 * 1000, egret.Ease.sineOut)
 				.to({x:local_move_down_in_global_point.x, y:local_move_down_in_global_point.y}, time, egret.Ease.sineIn)
 				.call(function(){
+					game_object.visible = false
 					egret.Tween.removeTweens(game_object)
 				})
 				egret.Tween.get(game_object).to({rotation:game_object.rotation + 180}, time)

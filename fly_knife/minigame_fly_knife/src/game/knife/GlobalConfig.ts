@@ -59,6 +59,7 @@ class MaterialConfig{
 class RoundConfig{
 	public round:number = 0
 	public count:number = 0
+	public skin:number = 1
 	public materialConfigs:Array<MaterialConfig> = []
 	public strategys:Array<StrategyConfig> = []
 
@@ -70,6 +71,11 @@ class RoundConfig{
 		if(round_native_config['count'] != undefined){
 			this.count = round_native_config['count']
 		}
+
+		if(round_native_config['skin'] != undefined){
+			this.skin = round_native_config['skin']
+		}
+		
 
 		let material_native_configs:Array<Object> = []
 		if(round_native_config['materials'] != undefined){

@@ -1,0 +1,11 @@
+{"file":"knife_font.png","frames":{
+"0":{"x":52,"y":1,"w":49,"h":62,"offX":0,"offY":6,"sourceW":49,"sourceH":68},
+"1":{"x":193,"y":65,"w":39,"h":62,"offX":3,"offY":6,"sourceW":49,"sourceH":68},
+"2":{"x":99,"y":65,"w":46,"h":62,"offX":0,"offY":6,"sourceW":49,"sourceH":68},
+"3":{"x":203,"y":1,"w":47,"h":62,"offX":1,"offY":6,"sourceW":49,"sourceH":68},
+"4":{"x":1,"y":1,"w":49,"h":62,"offX":0,"offY":6,"sourceW":49,"sourceH":68},
+"5":{"x":50,"y":65,"w":47,"h":62,"offX":1,"offY":6,"sourceW":49,"sourceH":68},
+"6":{"x":1,"y":65,"w":47,"h":62,"offX":2,"offY":6,"sourceW":49,"sourceH":68},
+"7":{"x":147,"y":65,"w":44,"h":60,"offX":2,"offY":8,"sourceW":48,"sourceH":68},
+"8":{"x":153,"y":1,"w":48,"h":62,"offX":0,"offY":6,"sourceW":49,"sourceH":68},
+"9":{"x":103,"y":1,"w":48,"h":62,"offX":1,"offY":6,"sourceW":49,"sourceH":68}}}
