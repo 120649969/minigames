@@ -546,6 +546,7 @@ module ui{
 
 			//延迟一点时间弹出去
 			let platform_finish_delay_time = 2
+			GamePlatform.onCalculating()
 			KnifeUtils.performDelay(function(){
 				GamePlatform.onFinished()
 			}.bind(this), platform_finish_delay_time * 1000, this)
