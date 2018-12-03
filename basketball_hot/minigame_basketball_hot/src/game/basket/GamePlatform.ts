@@ -34,6 +34,14 @@ class GamePlatform {
 		}
 	}
 
+	public static onCalculating():void
+	{
+		if(typeof(bdm) != "undefined")
+		{
+			bdm.pk.onCalculating()
+		}
+	}
+
 	public static GetIcon():void
 	{
 		if(typeof(bdm) != "undefined" && typeof(bdm.args) != "undefined")
@@ -63,5 +71,18 @@ class GamePlatform {
 		}
 
 		return ""
+	}
+
+	public static registerSurrenderCallback(callback):void
+	{
+		if(typeof(bdm) != "undefined" && typeof(bdm.args) != "undefined")
+		{
+			bdm.pk.onUserExit(function(){
+				if(callback)
+				{
+					callback()
+				}
+			})
+		}
 	}
 }

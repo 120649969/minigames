@@ -33,7 +33,7 @@ module io {
 		public constructor() {
 			this.socket = new egret.WebSocket();
 
-			this.ssl = false;
+			this.ssl = true;
 
 			this.socket.addEventListener(egret.Event.CONNECT, this.onSocketOpen, this);
 			this.socket.addEventListener(egret.ProgressEvent.SOCKET_DATA, this.onMessage, this);

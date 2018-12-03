@@ -16,6 +16,8 @@ module io {
 			CMD_H5_SHOOT_JOIN_RSP:4, //加入房间
 			CMD_H5_SHOOT_SHOOT_REQ :5, //投篮
 			CMD_H5_SHOOT_SHOOT_RSP: 6, //投篮
+			CMD_H5_SURREND_REQ:7, //投降
+			CMD_H5_SURREND_RSP:8,
 			CMD_H5_SHOOT_REENTER_REQ: 9,  //重进
 			CMD_H5_SHOOT_REENTER_RSP: 10, //重进
 
@@ -116,6 +118,18 @@ module io {
 				});
 				self.send(GameNet.GAME_PROTOCOL.CMD_H5_SHOOT_SHOOT_REQ, {
 					score: score
+				});
+			});		
+		}
+
+		public async reqSurrend(){
+			let self = this;
+			return new Promise((resolve, reject) => {
+				self.on(GameNet.GAME_PROTOCOL.CMD_H5_SURREND_RSP, function (msgId, body) {
+					self.off(GameNet.GAME_PROTOCOL.CMD_H5_SURREND_RSP);
+					resolve(body);
+				});
+				self.send(GameNet.GAME_PROTOCOL.CMD_H5_SURREND_REQ, {
 				});
 			});		
 		}

@@ -1,0 +1,9 @@
+{
+    "useClip": false,
+    "maxImageWidth": 2048,
+    "maxImageHeight": 2048,
+    "defaultResPath": "c:\\zhipin\\minigames\\basketball_hot\\minigame_basketball_hot\\resource\\default.res.json",
+    "packGroups": {
+        "preload": true
+    }
+}

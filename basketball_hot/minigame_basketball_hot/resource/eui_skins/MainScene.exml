@@ -7,7 +7,7 @@
 		<e:Group id="m_floor" height="10" left="0" right="0" anchorOffsetX="320" x="0" scaleX="1" scaleY="1" verticalCenter="485" visible="false">
 			<e:Rect scaleX="1" scaleY="1" left="0" top="0" right="0" bottom="0"/>
 		</e:Group>
-		<e:Group id="m_basket_container_back" anchorOffsetX="0" anchorOffsetY="640" scaleX="1" scaleY="1" width="720" height="1280" horizontalCenter="0" verticalCenter="0" locked="true">
+		<e:Group id="m_basket_container_back" anchorOffsetX="0" anchorOffsetY="640" scaleX="1" scaleY="1" width="720" height="1280" horizontalCenter="0" y="640">
 			<e:Image id="img_net_back" x="85.2" y="692.1" scaleX="1" scaleY="1" source="wang2_png"/>
 			<e:Image id="img_board_body" source="ban_png" x="0" y="504.64" scaleX="1" scaleY="1"/>
 			<e:Image id="img_board_back" source="kuang_png" x="64.25" y="681.64" scaleX="1" scaleY="1"/>
@@ -18,7 +18,7 @@
 		<e:Group id="m_basket_ball" width="86" height="86" x="404" y="417.00000000000006" scaleX="1" scaleY="1">
 			<e:Image id="m_image_ball" source="qiu_png" scaleX="0.9" scaleY="0.9" anchorOffsetX="94" anchorOffsetY="94" horizontalCenter="0" verticalCenter="0"/>
 		</e:Group>
-		<e:Group id="m_basket_container_pre" anchorOffsetX="0" anchorOffsetY="640" scaleX="1" scaleY="1" height="1280" width="720" horizontalCenter="0" verticalCenter="0" locked="true">
+		<e:Group id="m_basket_container_pre" anchorOffsetX="0" anchorOffsetY="640" scaleX="1" scaleY="1" height="1280" width="720" horizontalCenter="0" y="640">
 			<e:Image id="img_net_pre" x="85.2" y="713.31" scaleX="1" scaleY="1" source="wang_png"/>
 			<e:Image id="img_board_pre" source="kuang2_png" x="64.25" y="680.54"/>
 		</e:Group>
@@ -38,7 +38,7 @@
 				<e:Label text="توردىن ئازراق مەسىلە چىقتى ، سەل ساقلاڭ " x="31.360000000000014" y="10" scaleX="1" scaleY="1"/>
 			</e:Group>
 		</e:Group>
-		<e:Group id="m_decision_container" scaleX="1" scaleY="1" anchorOffsetY="640" horizontalCenter="0" verticalCenter="0" height="1280" width="720" locked="true">
+		<e:Group id="m_decision_container" scaleX="1" scaleY="1" anchorOffsetY="640" horizontalCenter="0" height="1280" width="720" y="640">
 			<e:Group id="m_board_scope" width="24" height="281" x="38.93" y="502.9800000000001" scaleX="1" scaleY="1" anchorOffsetY="0" anchorOffsetX="0">
 
 			</e:Group>

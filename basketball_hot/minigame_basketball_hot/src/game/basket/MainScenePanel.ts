@@ -119,8 +119,8 @@ module ui {
 			}.bind(this), this)
 
 			this.btn_debug.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.Event){
-				// let debugPanel = new DebugPanel()
-				// this.addChild(debugPanel)
+				let debugPanel = new DebugPanel()
+				this.addChild(debugPanel)
 				event.stopPropagation()
 			}.bind(this), this)
 
@@ -277,6 +277,7 @@ module ui {
 			this._playerBall.OnGameOver()
 			this._clearTimer()
 
+			GamePlatform.onCalculating()
 			//延迟一点时间弹出去
 			let platform_finish_delay_time = 2
 			BasketUtils.performDelay(function(){
@@ -689,6 +690,10 @@ module ui {
 					this.PlayReadyAnimation()
 				}
 			}
+
+			GamePlatform.registerSurrenderCallback(function(){
+				GameNet.reqSurrend()
+			})
 		}
 
 		private onShootGameStartPush(msgId, body):void
