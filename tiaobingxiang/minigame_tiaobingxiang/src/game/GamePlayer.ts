@@ -1,17 +1,14 @@
 class GamePlayer extends eui.Component{
+	
+	public m_behit_rects:Array<eui.Rect> = []
+	public m_hit_rect:eui.Rect
 
-	private HIT_NUM = 2
-	public m_hit_rects:Array<eui.Rect> = []
 	private _mainPanel:ui.MainScenePanel
-
 	public move_speed_y = 0
 	public move_speed_x = 0
 
 	public isOnLand:boolean = true
 	public isInFly:boolean = false
-
-	private _fly_times = 15
-	private _cur_fly_times = 0
 
 	public constructor(mainPanel:ui.MainScenePanel) {
 		super()
@@ -21,10 +18,11 @@ class GamePlayer extends eui.Component{
 		this.anchorOffsetX = this.width / 2
 		this.anchorOffsetY = this.height
 
-		for(let index = 0; index < this.HIT_NUM; index ++)
+		for(let index = 0; index < GameConst.HIT_NUM; index++)
 		{
-			this.m_hit_rects.push(this['m_hit_rect' + (index + 1)])
+			this.m_behit_rects.push(this['m_behit_rect' + (index + 1)])
 		}
+		this.touchEnabled = false
 	}
 
 	
@@ -33,27 +31,42 @@ class GamePlayer extends eui.Component{
 		if(!this.isOnLand){
 			return
 		}
-		this.move_speed_y = -40
+		this.move_speed_y = GameConst.PLAYER_MOVE_SPEED_INIT_Y
 		this.isOnLand = false
 	}
 
 	public Update(_time_step_callback:Function = null):void
 	{
-		if(this.isInFly) {
-			this._hitFlyUpdate()
+		if(this.isInFly || this.isOnLand) {
+			this._invalidUpate(_time_step_callback)
 		} else {
-			if(this.isOnLand)
-			{
-				return 
-			}
 			this._touchFlyUpdate(_time_step_callback)
+		}
+	}
+
+	private _invalidUpate(_time_step_callback:Function = null):void
+	{
+		if(this._mainPanel.currentBox)
+		{
+			let time_scale = 1 / GameConst.TOTAL_TIME
+			for(let index = 0; index < GameConst.TOTAL_TIME; index ++)
+			{
+				if(_time_step_callback)
+				{
+					_time_step_callback(time_scale)
+				}
+				if(this._checkHitBox())
+				{
+					return
+				}
+			}
 		}
 	}
 
 	private _touchFlyUpdate(_time_step_callback:Function = null):void
 	{
-		let gravity:number = 5
-		let total_time = 30
+		let gravity:number = GameConst.GRAVITY
+		let total_time = GameConst.TOTAL_TIME
 		for(let index = 0; index < total_time; index ++)
 		{
 			let start_speed_y = this.move_speed_y - gravity / total_time * index
@@ -65,9 +78,17 @@ class GamePlayer extends eui.Component{
 				_time_step_callback(1/ total_time)
 			}
 
-			this._checkHitFloor()
+			if(this._checkLandOnBox())
+			{
+				return
+			}
 
-			if(this.isOnLand || this.isInFly)
+			if(this._checkHitBox())
+			{
+				return
+			}
+
+			if(this._checkHitFloor())
 			{
 				return
 			}
@@ -75,52 +96,78 @@ class GamePlayer extends eui.Component{
 		this.move_speed_y += gravity
 	}
 
-	private _checkHitFloor():void
+	private _checkHitBox():boolean
 	{
-		let global_player_point = this.parent.localToGlobal(this.x, this.y)
-		global_player_point.y = Math.min(global_player_point.y, this._mainPanel.GetMaxY())
-		if(global_player_point.y == this._mainPanel.GetMaxY()){
-			let local_player_point = this.parent.globalToLocal(global_player_point.x, global_player_point.y)
-			this.y = local_player_point.y
-			this.OnLand(false)
-		}
-	}
-
-	private _hitFlyUpdate():void
-	{
-		let gravity:number = 5
-		this._cur_fly_times += 1
-		this.x += this.move_speed_x
-		let target_speed_y = this.move_speed_y + gravity
-		this.y += (target_speed_y + this.move_speed_y) / 2
-		this.move_speed_y = target_speed_y
-
-		if(this._cur_fly_times >= this._fly_times){
-			this.ReSet()
-		}
-	}
-
-	public OnLand(is_land_on_box:boolean = true):void
-	{
-		this.isOnLand = true
-		if(is_land_on_box)
+		if(!this._mainPanel.currentBox || !this._mainPanel.currentBox.IsValid())
 		{
-			let __this = this
-			CommonUtils.performDelay(function(){
-				__this._mainPanel.GenerateNextBox()
-			}, 1 * 1000, this)
+			return false
 		}
+		for(let index = 0; index < this.m_behit_rects.length; index++)
+		{
+			let hit_rect = this.m_behit_rects[index]
+			let global_left_top_point = hit_rect.localToGlobal(0, 0)
+			let global_right_down_point = hit_rect.localToGlobal(hit_rect.width, hit_rect.height)
+			if(this._mainPanel.currentBox.IsHitRect(global_left_top_point, global_right_down_point)){
+				this._mainPanel.currentBox.OnPlayerHit()
+				this.OnHit()
+				return true
+			}
+		}
+		return false
+	}
+
+	private _checkLandOnBox():boolean
+	{
+		let global_buttom_point = this.m_hit_rect.localToGlobal(this.m_hit_rect.width / 2, this.m_hit_rect.height)
+		for(let index = this._mainPanel.all_boxs.length - 1; index >= 0; index--)
+		{
+			let currentBox = this._mainPanel.all_boxs[index]
+			if(currentBox.m_hit_rect.hitTestPoint(global_buttom_point.x, global_buttom_point.y)){
+				this.isOnLand = true
+				this.y = currentBox.y - this._mainPanel.box_height
+				this._mainPanel.UpdateBg()
+				if(!currentBox.isOver)
+				{
+					currentBox.OnPlayerLandOn()
+					let __this = this
+					CommonUtils.performDelay(function(){
+						__this._mainPanel.GenerateNextBox()
+					}, 1 * 1000, this)
+				}
+				return true
+			}
+		}
+		return false
+	}
+
+	private _checkHitFloor():boolean
+	{
+		let floor_y = this._mainPanel.GetFloorY()
+		if(this.y >= floor_y){
+			this.y = floor_y
+			this.isOnLand = true
+			return true
+		}
+		return false
 	}
 
 	public OnHit():void
 	{
 		this.isInFly = true
+		let target_x = this.x - 500
+		if(this._mainPanel.currentBox.speed_x > 0){
+			target_x = this.x + 500
+		}
+		let __this = this
+		egret.Tween.get(this).to({x:target_x}, 0.3 * 1000).call(function(){
+			__this.ReSet()
+		},this)
 	}
 
 	public ReSet():void
 	{
 		this.x = this._mainPanel.width / 2
-		this.y = this._mainPanel.last_box_y
+		this.y = this._mainPanel.current_box_y
 		this.isOnLand = true
 		this.isInFly = false
 		this.move_speed_x = 0

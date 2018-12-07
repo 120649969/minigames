@@ -26,6 +26,7 @@
 		"bin-debug/Main.js",
 		"bin-debug/common/ui/WindowManager.js",
 		"bin-debug/game/CommonUtils.js",
+		"bin-debug/game/DebugPanel.js",
 		"bin-debug/game/GameBox.js",
 		"bin-debug/game/GameConst.js",
 		"bin-debug/game/GamePlayer.js",

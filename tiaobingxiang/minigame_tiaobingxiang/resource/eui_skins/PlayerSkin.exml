@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="PlayerSkin" width="171" height="217" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Rect id="m_hit_rect1" width="160" height="106.5" x="5.5" y="31.5" anchorOffsetX="0" anchorOffsetY="0" visible="false" locked="true"/>
-	<e:Rect id="m_hit_rect2" width="116.5" height="210.5" x="27.5" y="5.5" anchorOffsetX="0" anchorOffsetY="0" visible="false" locked="true"/>
+	<e:Rect id="m_behit_rect3" width="69.83" height="15.03" x="43.73" y="185.9" anchorOffsetX="0" anchorOffsetY="0" touchEnabled="false"/>
+	<e:Rect id="m_behit_rect2" width="116.5" height="39.7" x="27.4" y="147.9" anchorOffsetX="0" anchorOffsetY="0" touchEnabled="false"/>
+	<e:Rect id="m_behit_rect1" width="139.2" height="103.7" x="12.6" y="32.7" anchorOffsetX="0" anchorOffsetY="0" touchEnabled="false"/>
+	<e:Rect id="m_hit_rect" width="32.7" height="30.1" x="61.17" y="185.9" anchorOffsetX="0" anchorOffsetY="0" touchEnabled="false"/>
 	<e:Image source="role_png" x="0" y="0" locked="true"/>
 </e:Skin>

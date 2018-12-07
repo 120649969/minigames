@@ -8,6 +8,8 @@ declare module skins{
 	class CheckBoxSkin extends eui.Skin{
 	}
 }
+declare class DebugSkin extends eui.Skin{
+}
 declare module skins{
 	class HScrollBarSkin extends eui.Skin{
 	}

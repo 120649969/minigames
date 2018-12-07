@@ -95,7 +95,7 @@ class Main extends eui.UILayer {
         if(width / height <= design_rato){ //竖屏高度太高
             newWidth = design_width
             newHeight = Math.floor(height / width * newWidth);
-        } else if(width / height <= design_rato * 1.5){
+        } else if(width / height <= design_rato * 1.25){
             newWidth = design_width;
             newHeight = Math.floor(height / width * newWidth);
         } else {

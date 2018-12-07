@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="DebugSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image source="bg_jpg" left="0" top="0" right="0" bottom="0"/>
+	<e:Label text="重力：" x="139" y="322" size="40" verticalAlign="middle" textAlign="right"/>
+	<e:TextInput id="m_input_gravity" width="266.97" height="62.42" x="275.58" y="310.79" anchorOffsetX="0" anchorOffsetY="0"/>
+	<e:Label text="起跳速度：" x="59" y="423" size="40" textAlign="right"/>
+	<e:Label text="箱子速度：" x="59" y="524" size="40" textAlign="right"/>
+	<e:TextInput id="m_input_player_speed_y" width="266.97" height="62.42" x="275.58" y="411.79" anchorOffsetX="0" anchorOffsetY="0"/>
+	<e:TextInput id="m_input_box_speed_x" width="266.97" height="62.42" x="275.58" y="512.79" anchorOffsetX="0" anchorOffsetY="0"/>
+	<e:Button id="btn_yes" label="确定" x="139" y="993.67" anchorOffsetX="0" width="164.01" anchorOffsetY="0" height="63.33" touchChildren="true" touchEnabled="true" enabled="true"/>
+	<e:Button id="btn_close" label="关闭" x="460.54" y="993.67" anchorOffsetX="0" width="164.01" anchorOffsetY="0" height="63.33" enabled="true" touchChildren="true" touchEnabled="true"/>
+</e:Skin>

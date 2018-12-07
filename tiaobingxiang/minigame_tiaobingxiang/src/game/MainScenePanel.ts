@@ -9,18 +9,24 @@ module ui {
 		private m_me_icon:eui.Image
 		private m_other_progress:eui.Image
 		private m_me_progress:eui.Image
-
 		private m_touch_layer:eui.Group
-
 		public serverModel:ServerModel = new ServerModel()
 		private _is_game_over:boolean = false
 		private _timer:egret.Timer
-
 		public m_display_player:egret.DisplayObject
+		public m_floor:eui.Rect
 
+		private btn_debug:eui.Button
 		public constructor() {
 			super()
 			this.skinName = "MainSceneSkin"
+		}
+
+		public resizeStage():void
+		{
+			super.resizeStage()
+			this.validateNow()
+			this.ResizeUpdateBg()
 		}
 
 		protected createChildren(): void {
@@ -39,6 +45,13 @@ module ui {
 
 			this._setProgress(10)
 
+			if(DEBUG){
+				this.btn_debug.visible = true
+				this.btn_debug.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.Event){
+					WindowManager.getInstance().open("DebugPanel")
+					event.stopPropagation()
+				}.bind(this), this)
+			}
 			this.StartGame()
 		}
 
@@ -61,13 +74,44 @@ module ui {
 			this.m_me_progress.mask = me_rect
 		}
 
-		private _updateBg():void
+		public UpdateBg():void
 		{
+			let global_center_buttom_point = this.mainPlayer.m_hit_rect.localToGlobal(this.mainPlayer.m_hit_rect.width / 2, this.mainPlayer.m_hit_rect.height)
+			let delta_y = 0
+			if(global_center_buttom_point.y < this.height / 2){
+				let cur_y = this.m_bg.y
+				let target_y = cur_y + 95
+				egret.Tween.get(this.m_bg).to({y:target_y}, 0.3 * 1000)
+				egret.Tween.get(this.m_container).to({y:target_y}, 0.3 * 1000)
+				delta_y = 95
+			}
 			let last_bg = this.m_img_bgs[this.m_img_bgs.length - 1]
 			let global_point = last_bg.localToGlobal(0, 0)
-			if(global_point.y >= this.height){
+			if(global_point.y + delta_y >= this.height){
 				this.m_img_bgs.splice(this.m_img_bgs.length - 1)
 				this.m_img_bgs.unshift(last_bg)
+				last_bg.y -= last_bg.height * 2
+			}
+		}
+
+		public ResizeUpdateBg():void
+		{
+			let global_center_buttom_point = this.mainPlayer.m_hit_rect.localToGlobal(this.mainPlayer.m_hit_rect.width / 2, this.mainPlayer.m_hit_rect.height)
+			let delta_y = 0
+			if(global_center_buttom_point.y < this.height / 2){
+				let cur_y = this.m_bg.y
+				let target_y = this.height / 2
+				let local_in_point = this.m_bg.parent.globalToLocal(0, target_y)
+				egret.Tween.get(this.m_bg).to({y:local_in_point.y}, 0.3 * 1000)
+				egret.Tween.get(this.m_container).to({y:local_in_point.y}, 0.3 * 1000)
+				delta_y = local_in_point.y - this.m_bg.y
+			}
+			let last_bg = this.m_img_bgs[this.m_img_bgs.length - 1]
+			let global_point = last_bg.localToGlobal(0, 0)
+			if(global_point.y + delta_y >= this.height){
+				this.m_img_bgs.splice(this.m_img_bgs.length - 1)
+				this.m_img_bgs.unshift(last_bg)
+				last_bg.y -= last_bg.height * 2
 			}
 		}
 
@@ -117,17 +161,16 @@ module ui {
 			}.bind(this), platform_finish_delay_time * 1000, this)
 		}
 
-		public GetMaxY():number
+		public GetFloorY():number
 		{
-			return this.height - 60
+			return this.m_floor.y
 		}
 
 		public StartGame():void
 		{
-			this.last_box_y = this.GetMaxY()
-			this.current_box_y = this.GetMaxY()
+			this.current_box_y = this.GetFloorY()
 			this.mainPlayer = new GamePlayer(this)
-			this.addChild(this.mainPlayer)
+			this.m_container.addChild(this.mainPlayer)
 			this.mainPlayer.y = this.current_box_y
 			this.mainPlayer.x = this.width / 2
 
@@ -154,67 +197,55 @@ module ui {
 			if(this.mainPlayer)
 			{
 				let __this = this
-				let has_update = false
 				this.mainPlayer.Update(function(time_scale){
-					has_update = true
 					if(__this.currentBox)
 					{
 						__this.currentBox.Update(time_scale)
 					}
 				})
-				if(!has_update)
-				{
-					if(this.currentBox)
-					{
-						let time_scale = 1 / 30
-						for(let index = 0; index < 30; index ++)
-						{
-							this.currentBox.Update(time_scale)
-						}
-						
-					}
-					
-				}
 			}
 		}
 		
 		public currentBox:GameBox
 		public mainPlayer:GamePlayer
-		private _is_left_to_right:boolean = true
+		public is_left_to_right:boolean = false
 		public current_box_y = 0
-		public last_box_y = 0
 		private m_container:eui.Group
+		public all_boxs:Array<GameBox> = []
+		public box_height:number = 0
 		public GenerateNextBox():void
 		{
-			if(this.currentBox && !this.currentBox.isOver){
-				return
-			}
-
 			if(this.currentBox && this.currentBox.isReStart)
 			{
 				this.currentBox.ReStart()
 				return
 			}
-
+			if(this.currentBox && !this.currentBox.isOver){
+				return
+			}
+			
+			this.is_left_to_right = !this.is_left_to_right
 			let newBox = new GameBox(this)
+			if(this.all_boxs.length > 0){
+				this.current_box_y -= newBox.height
+			}
+			
 			this.currentBox = newBox
-			if(this._is_left_to_right){
+			if(this.is_left_to_right){
 				this.currentBox.x = 0 - this.currentBox.width
-				this.currentBox.speed_x = 20
-				this.mainPlayer.move_speed_x = 30
+				this.currentBox.speed_x = GameConst.BOX_MOVE_SPEED_X
+				this.mainPlayer.move_speed_x = GameConst.PLAYER_MOVE_SPEED_INIT_X
 			} else {
 				this.currentBox.x = this.width + this.currentBox.width
-				this.currentBox.speed_x = -20
-				this.mainPlayer.move_speed_x = -30
+				this.currentBox.speed_x = -1 * GameConst.BOX_MOVE_SPEED_X
+				this.mainPlayer.move_speed_x = -1 * GameConst.PLAYER_MOVE_SPEED_INIT_X
 			}
-			this.last_box_y = this.current_box_y
 			this.currentBox.y = this.current_box_y
-
 			this.currentBox.init_x = this.currentBox.x
 			this.currentBox.init_y = this.currentBox.y
-			this.current_box_y -= this.currentBox.height
-			this._is_left_to_right = !this._is_left_to_right
 			this.m_container.addChild(this.currentBox)
+			this.all_boxs.push(this.currentBox)
+			this.box_height = this.currentBox.height
 		}
 	}
 }
