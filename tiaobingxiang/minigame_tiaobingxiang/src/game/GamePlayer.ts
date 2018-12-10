@@ -33,6 +33,26 @@ class GamePlayer extends eui.Component{
 		}
 		this.move_speed_y = GameConst.PLAYER_MOVE_SPEED_INIT_Y
 		this.isOnLand = false
+		this._checkChangeBoxMove()
+	}
+
+	private _checkChangeBoxMove():void
+	{
+		let box_count = this._mainPanel.all_boxs.length
+		if(box_count <= 1){
+			return
+		}
+		let last_box = this._mainPanel.all_boxs[box_count - 2]
+		let delta_x = 0
+		if(this._mainPanel.currentBox.speed_x > 0){
+			delta_x = last_box.x - this._mainPanel.currentBox.x - this._mainPanel.currentBox.width
+		} else {
+			delta_x = this._mainPanel.currentBox.x - last_box.x - this._mainPanel.currentBox.width
+		}
+		
+		if(delta_x >= GameConst.MIN_COMBOX_DELTA_X && delta_x <= GameConst.MAX_COMBOX_DELTA_X){
+			this._mainPanel.currentBox.MoveToDesition(last_box.x)
+		}
 	}
 
 	public Update(_time_step_callback:Function = null):void

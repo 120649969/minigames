@@ -33,6 +33,8 @@ class GameBox extends eui.Component{
 		this.isReStart = false
 		this.visible = true
 		this._move_total_x = 0
+		this._target_x = 0
+		this._has_reach_target = false
 	}
 
 	public Update(delta:number = 1):void
@@ -41,7 +43,21 @@ class GameBox extends eui.Component{
 		{
 			return
 		}
+		if(this._has_reach_target){
+			return
+		}
+
+		let last_x = this.x
 		this.x += this.speed_x * delta
+		if(this._target_x > 0){
+			let rate_1 = last_x < this._target_x ? 1 : -1
+			let rate_2 = this.x > this._target_x ? 1 : -1
+			if(rate_1 / rate_2 > 0){
+				this.x = this._target_x
+				this._has_reach_target = true
+				return
+			}
+		}
 		this._move_total_x += this.speed_x * delta
 		
 		if(Math.abs(this._move_total_x) > this._mainPanel.width * 2){
@@ -51,6 +67,14 @@ class GameBox extends eui.Component{
 				__this._mainPanel.GenerateNextBox()
 			}, 0.1 * 1000, this)
 		}
+	}
+
+	private _target_x:number = 0
+	private _has_reach_target:boolean = false
+	public MoveToDesition(target_x:number):void
+	{
+		this._target_x = target_x
+		this._has_reach_target = false
 	}
 
 	public IsValid():boolean

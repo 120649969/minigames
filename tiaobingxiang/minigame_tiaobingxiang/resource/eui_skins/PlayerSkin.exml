@@ -3,6 +3,6 @@
 
 
 	<e:Rect id="m_behit_rect1" width="120" height="120" x="18.23" y="4.07" anchorOffsetX="0" anchorOffsetY="0" touchEnabled="false" visible="false"/>
-	<e:Rect id="m_hit_rect" width="61.83" height="4.7" x="48.32" y="124.18" anchorOffsetX="0" anchorOffsetY="0" touchEnabled="false" visible="false"/>
-	<e:Image source="role_png" left="0" top="2" bottom="-2" right="0" locked="true"/>
+	<e:Rect id="m_hit_rect" width="61.83" height="4.7" x="48.32" y="126.56" anchorOffsetX="0" anchorOffsetY="0" touchEnabled="false" visible="false"/>
+	<e:Image source="role_png" left="0" top="3" bottom="-3" right="0"/>
 </e:Skin>

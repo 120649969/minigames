@@ -1,0 +1,9 @@
+{
+    "useClip": false,
+    "maxImageWidth": 2048,
+    "maxImageHeight": 2048,
+    "defaultResPath": "e:\\gitclient\\minigames\\tiaobingxiang\\minigame_tiaobingxiang\\resource\\default.res.json",
+    "packGroups": {
+        "preload": true
+    }
+}
