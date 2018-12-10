@@ -105,13 +105,20 @@ class GamePlayer extends eui.Component{
 		for(let index = 0; index < this.m_behit_rects.length; index++)
 		{
 			let hit_rect = this.m_behit_rects[index]
-			let global_left_top_point = hit_rect.localToGlobal(0, 0)
-			let global_right_down_point = hit_rect.localToGlobal(hit_rect.width, hit_rect.height)
-			if(this._mainPanel.currentBox.IsHitRect(global_left_top_point, global_right_down_point)){
+			let global_center_point = hit_rect.localToGlobal(hit_rect.width  / 2, hit_rect.height / 2)
+			let radius = hit_rect.width  / 2
+			if(this._mainPanel.currentBox.IsHitCircle(global_center_point, radius)){
 				this._mainPanel.currentBox.OnPlayerHit()
 				this.OnHit()
 				return true
 			}
+			// let global_left_top_point = hit_rect.localToGlobal(0, 0)
+			// let global_right_down_point = hit_rect.localToGlobal(hit_rect.width, hit_rect.height)
+			// if(this._mainPanel.currentBox.IsHitRect(global_left_top_point, global_right_down_point)){
+			// 	this._mainPanel.currentBox.OnPlayerHit()
+			// 	this.OnHit()
+			// 	return true
+			// }
 		}
 		return false
 	}
@@ -129,6 +136,7 @@ class GamePlayer extends eui.Component{
 				if(!currentBox.isOver)
 				{
 					currentBox.OnPlayerLandOn()
+					this._mainPanel.AddScore(1)
 					let __this = this
 					CommonUtils.performDelay(function(){
 						__this._mainPanel.GenerateNextBox()

@@ -52,7 +52,16 @@ module ui {
 					event.stopPropagation()
 				}.bind(this), this)
 			}
+			this._init_debug_role()
+			this._updateScrore()
+			this._update_time()
 			this.StartGame()
+		}
+
+		private _init_debug_role():void
+		{
+			this.serverModel.AddRole({openid:User.openId.toString()})
+			this.serverModel.AddRole({})
 		}
 
 		private _addCircleMask(img_icon:eui.Image, x:number, y:number, radius:number):void
@@ -80,10 +89,10 @@ module ui {
 			let delta_y = 0
 			if(global_center_buttom_point.y < this.height / 2){
 				let cur_y = this.m_bg.y
-				let target_y = cur_y + 95
+				let target_y = cur_y + GameConst.BOX_HEIGHT
 				egret.Tween.get(this.m_bg).to({y:target_y}, 0.3 * 1000)
 				egret.Tween.get(this.m_container).to({y:target_y}, 0.3 * 1000)
-				delta_y = 95
+				delta_y = GameConst.BOX_HEIGHT
 			}
 			let last_bg = this.m_img_bgs[this.m_img_bgs.length - 1]
 			let global_point = last_bg.localToGlobal(0, 0)
@@ -117,7 +126,7 @@ module ui {
 
 		private _startTimer():void
 		{
-			var timer:egret.Timer = new egret.Timer(1000, Const.GAME_TIME);
+			var timer:egret.Timer = new egret.Timer(1000, GameConst.GAME_TIME);
 			//注册事件侦听器
 			timer.addEventListener(egret.TimerEvent.TIMER,this._on_timer_tick,this);
 			//开始计时
@@ -125,9 +134,17 @@ module ui {
 			this._timer = timer
 		}
 
+		private labelTime:eui.Label
+		private _update_time():void
+		{
+			this.labelTime.text = this.serverModel.left_time.toString()
+		}
+
 		private _on_timer_tick():void
 		{
 			this.serverModel.left_time -= 1
+			this.serverModel.left_time = Math.max(this.serverModel.left_time, 0)
+			this._update_time()
 			//只有在未连接服务器的时候才自动结束，要不然等服务器的推送才结束
 			if(this.serverModel.left_time <= 0 && !this._is_game_over && !GameNet.isConnected())
 			{
@@ -166,6 +183,18 @@ module ui {
 			return this.m_floor.y
 		}
 
+		private labelScore:eui.Label
+		public AddScore(score:number):void
+		{
+			this.serverModel.myRole.score += score
+			this._updateScrore()
+		}
+
+		private _updateScrore():void
+		{
+			this.labelScore.text = this.serverModel.myRole.score.toString()
+		}
+
 		public StartGame():void
 		{
 			this.current_box_y = this.GetFloorY()
@@ -182,6 +211,7 @@ module ui {
 			CommonUtils.performDelay(function(){
 				__this.GenerateNextBox()
 			}, 2 * 1000, this)
+			this._startTimer()
 		}
 
 		private _onTouchBegin(event:egret.TouchEvent):void

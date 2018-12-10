@@ -11,7 +11,7 @@ class ServerModel {
 
 	public my_icon_url:string = ""
 	public other_icon_url:string = ""
-	public left_time:number = Const.GAME_TIME
+	public left_time:number = GameConst.GAME_TIME
 
 	public myRole:RoleInfo
 	public otherRole:RoleInfo
@@ -41,7 +41,7 @@ class ServerModel {
 			new_role.icon = roleInfo['icon']
 		}
 		new_role.level = 1
-		new_role.score = 1
+		new_role.score = 0
 		if(new_role.openid == User.openId.toString()){
 			this.myRole = new_role
 		} else {

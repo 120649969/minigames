@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,bg_jpg,egret_icon_png,description_json,role_png,box1_png,box2_png,box3_png,box4_png,icon_circle_1_png,icon_circle_2_png,iconbg1_png,iconbg2_png,default_icon_png",
+			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,egret_icon_png,description_json,role_png,box1_png,box2_png,box3_png,box4_png,icon_circle_1_png,icon_circle_2_png,iconbg1_png,iconbg2_png,default_icon_png,bg_png,box_font_1_fnt,box_font_1_png,box5_png,iconbg3_png,jindutiaobaitiao_png,shijian_ditu_png,box_font_2_png,box_font_2_fnt,zuigaofendi_png,zuigaofen1_png,jueseyinying_png",
 			"name": "preload"
 		}
 	],
@@ -122,11 +122,6 @@
 			"name": "track_sb_png"
 		},
 		{
-			"url": "assets/bg.jpg",
-			"type": "image",
-			"name": "bg_jpg"
-		},
-		{
 			"url": "assets/egret_icon.png",
 			"type": "image",
 			"name": "egret_icon_png"
@@ -185,6 +180,66 @@
 			"name": "default_icon_png",
 			"type": "image",
 			"url": "assets/default_icon.png"
+		},
+		{
+			"name": "bg_png",
+			"type": "image",
+			"url": "assets/bg.png"
+		},
+		{
+			"name": "box_font_1_fnt",
+			"type": "font",
+			"url": "assets/box_font_1.fnt"
+		},
+		{
+			"name": "box_font_1_png",
+			"type": "image",
+			"url": "assets/box_font_1.png"
+		},
+		{
+			"name": "box5_png",
+			"type": "image",
+			"url": "assets/box5.png"
+		},
+		{
+			"name": "iconbg3_png",
+			"type": "image",
+			"url": "assets/iconbg3.png"
+		},
+		{
+			"name": "jindutiaobaitiao_png",
+			"type": "image",
+			"url": "assets/jindutiaobaitiao.png"
+		},
+		{
+			"name": "shijian_ditu_png",
+			"type": "image",
+			"url": "assets/shijian_ditu.png"
+		},
+		{
+			"name": "box_font_2_png",
+			"type": "image",
+			"url": "assets/box_font_2.png"
+		},
+		{
+			"name": "box_font_2_fnt",
+			"type": "font",
+			"url": "assets/box_font_2.fnt"
+		},
+		{
+			"name": "zuigaofendi_png",
+			"type": "image",
+			"url": "assets/zuigaofendi.png"
+		},
+		{
+			"name": "zuigaofen1_png",
+			"type": "image",
+			"url": "assets/zuigaofen1.png"
+		},
+		{
+			"name": "jueseyinying_png",
+			"type": "image",
+			"url": "assets/jueseyinying.png"
 		}
 	]
 }

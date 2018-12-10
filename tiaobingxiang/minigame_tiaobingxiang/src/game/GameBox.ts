@@ -58,6 +58,40 @@ class GameBox extends eui.Component{
 		return !this.isOver && !this.isReStart
 	}
 
+	public IsHitCircle(cirle_point:egret.Point, radius:number):boolean
+	{
+		let global_left_top_point = this.m_hit_rect.localToGlobal(0, 0)
+		let global_right_down_point = this.m_hit_rect.localToGlobal(this.m_hit_rect.width, this.m_hit_rect.height)
+		if(this.speed_x > 0){ //向右
+			if(this._isPointInCircle(new egret.Point(global_right_down_point.x, global_left_top_point.y), cirle_point, radius)){
+				return true
+			}
+			if(this._isPointInCircle(new egret.Point(global_right_down_point.x, (global_right_down_point.y + global_left_top_point.y) / 2), cirle_point, radius)){
+				return true
+			}
+			if(this._isPointInCircle(global_right_down_point, cirle_point, radius)){
+				return true
+			}
+		} else{
+			if(this._isPointInCircle(new egret.Point(global_left_top_point.x, global_right_down_point.y), cirle_point, radius)){
+				return true
+			}
+			if(this._isPointInCircle(new egret.Point(global_left_top_point.x, (global_right_down_point.y + global_left_top_point.y) / 2), cirle_point, radius)){
+				return true
+			}
+			if(this._isPointInCircle(global_left_top_point, cirle_point, radius)){
+				return true
+			}
+		}
+		return false
+	}
+
+	public _isPointInCircle(testPoint:egret.Point, cirle_point:egret.Point, radius:number):boolean
+	{
+		let distance = Math.sqrt(Math.pow(testPoint.x - cirle_point.x, 2) + Math.pow(testPoint.y - cirle_point.y, 2))
+		return distance <= radius
+	}
+
 	public IsHitRect(left_top_point:egret.Point, right_down_point:egret.Point):boolean
 	{
 		if(this._is_hit(left_top_point)){
