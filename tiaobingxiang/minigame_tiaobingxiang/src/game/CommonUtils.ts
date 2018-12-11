@@ -2,17 +2,17 @@ class CommonUtils {
 	public constructor() {
 	}
 
-	// public static createDragonBones(skeleton_json:string, texture_json:string, texture_png:string, armature_name:string):dragonBones.EgretArmatureDisplay
-	// {
-	// 	var dragonbonesData = RES.getRes(skeleton_json);
-    //  	var textureData = RES.getRes(texture_json);
-    //     var texture = RES.getRes(texture_png);
-    //     var dragonbonesFactory: dragonBones.EgretFactory = dragonBones.EgretFactory.factory;
-    //    	dragonbonesFactory.parseDragonBonesData(dragonbonesData);  
-	// 	dragonbonesFactory.parseTextureAtlasData(textureData, texture);
-	// 	let armatureDisplay: dragonBones.EgretArmatureDisplay = dragonbonesFactory.buildArmatureDisplay(armature_name);
-	// 	return armatureDisplay
-	// }
+	public static createDragonBones(skeleton_json:string, texture_json:string, texture_png:string, armature_name:string):dragonBones.EgretArmatureDisplay
+	{
+		var dragonbonesData = RES.getRes(skeleton_json);
+     	var textureData = RES.getRes(texture_json);
+        var texture = RES.getRes(texture_png);
+        var dragonbonesFactory: dragonBones.EgretFactory = dragonBones.EgretFactory.factory;
+       	dragonbonesFactory.parseDragonBonesData(dragonbonesData);  
+		dragonbonesFactory.parseTextureAtlasData(textureData, texture);
+		let armatureDisplay: dragonBones.EgretArmatureDisplay = dragonbonesFactory.buildArmatureDisplay(armature_name);
+		return armatureDisplay
+	}
 	
 	public static SetColor(image: egret.DisplayObject, color: number) {
 		// 将16进制颜色分割成rgb值

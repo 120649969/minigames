@@ -2,7 +2,7 @@ class GameConst {
 	public constructor() {
 	}
 
-	public static M_BG_NUM = 3;
+	public static M_BG_NUM = 2;
 	public static MAX_BOX_COUNT = 5
 	public static HIT_NUM = 1
 
@@ -19,4 +19,9 @@ class GameConst {
 
 	public static MIN_COMBOX_DELTA_X = 5
 	public static MAX_COMBOX_DELTA_X = 40
+}
+
+enum GameScore{
+	SCORE_1 = 1,
+	SCORE_2 = 2
 }

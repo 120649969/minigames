@@ -25,6 +25,22 @@ class GamePlayer extends eui.Component{
 		this.touchEnabled = false
 	}
 
+	private labelComb:eui.BitmapLabel
+	private PlayCombAnimation():void
+	{
+		if(this._comb_times <= 0){
+			return
+		}
+		this.labelComb.visible = true
+		this.labelComb.text = 'c' + this._comb_times.toString()
+		this.labelComb.scaleX = this.labelComb.scaleY = 0.1
+		let __this = this
+		egret.Tween.get(this.labelComb).to({scaleX:0.5, scaleY:0.5}, 0.3 * 1000, egret.Ease.sineIn).call(function(){
+			CommonUtils.performDelay(function(){
+				__this.labelComb.visible = false
+			}.bind(__this), 0.6 * 1000, __this)
+		}.bind(this))
+	}
 	
 	public OnTouch():void
 	{
@@ -53,6 +69,23 @@ class GamePlayer extends eui.Component{
 		if(delta_x >= GameConst.MIN_COMBOX_DELTA_X && delta_x <= GameConst.MAX_COMBOX_DELTA_X){
 			this._mainPanel.currentBox.MoveToDesition(last_box.x)
 		}
+	}
+
+	private _comb_times:number = 0
+	private _calcBoxScore():number
+	{
+		let box_count = this._mainPanel.all_boxs.length
+		if(box_count <= 1){
+			return GameScore.SCORE_1
+		}
+		let last_box = this._mainPanel.all_boxs[box_count - 2]
+		let cur_box = this._mainPanel.all_boxs[box_count - 1]
+		// if (cur_box.x != last_box.x){
+		// 	this._comb_times = 0
+		// 	return GameScore.SCORE_1
+		// }
+		this._comb_times += 1
+		return this._comb_times * GameScore.SCORE_2
 	}
 
 	public Update(_time_step_callback:Function = null):void
@@ -156,11 +189,20 @@ class GamePlayer extends eui.Component{
 				if(!currentBox.isOver)
 				{
 					currentBox.OnPlayerLandOn()
-					this._mainPanel.AddScore(1)
+					let score = this._calcBoxScore()
+					this._mainPanel.AddScore(score)
+					this._mainPanel.ShowScoreAnimation(score, this._comb_times)
+					if(this._comb_times <= 0){
+						this._mainPanel.PlayLandOnAnimation()
+					} else {
+						this._mainPanel.PlayCombAnimation()
+					}
+					this.PlayCombAnimation()
+					
 					let __this = this
 					CommonUtils.performDelay(function(){
 						__this._mainPanel.GenerateNextBox()
-					}, 1 * 1000, this)
+					}, 0.3 * 1000, this)
 				}
 				return true
 			}

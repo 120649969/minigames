@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,egret_icon_png,description_json,role_png,box1_png,box2_png,box3_png,box4_png,icon_circle_1_png,icon_circle_2_png,iconbg1_png,iconbg2_png,default_icon_png,bg_png,box_font_1_fnt,box_font_1_png,box5_png,iconbg3_png,jindutiaobaitiao_png,shijian_ditu_png,box_font_2_png,box_font_2_fnt,zuigaofendi_png,zuigaofen1_png,jueseyinying_png",
+			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,egret_icon_png,description_json,role_png,box1_png,box2_png,box3_png,box4_png,icon_circle_1_png,icon_circle_2_png,iconbg1_png,iconbg2_png,default_icon_png,box_font_1_fnt,box_font_1_png,box5_png,iconbg3_png,jindutiaobaitiao_png,shijian_ditu_png,box_font_2_png,box_font_2_fnt,zuigaofendi_png,zuigaofen1_png,jueseyinying_png,shuoming_png,wenhao_png,bg1_jpg,bg2_jpg,shadow_ske_json,shadow_tex_json,shadow_tex_png,comb_tex_png,comb_ske_json,comb_tex_json,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,ready_go_mp3",
 			"name": "preload"
 		}
 	],
@@ -182,11 +182,6 @@
 			"url": "assets/default_icon.png"
 		},
 		{
-			"name": "bg_png",
-			"type": "image",
-			"url": "assets/bg.png"
-		},
-		{
 			"name": "box_font_1_fnt",
 			"type": "font",
 			"url": "assets/box_font_1.fnt"
@@ -240,6 +235,76 @@
 			"name": "jueseyinying_png",
 			"type": "image",
 			"url": "assets/jueseyinying.png"
+		},
+		{
+			"name": "shuoming_png",
+			"type": "image",
+			"url": "assets/shuoming.png"
+		},
+		{
+			"name": "wenhao_png",
+			"type": "image",
+			"url": "assets/wenhao.png"
+		},
+		{
+			"name": "bg1_jpg",
+			"type": "image",
+			"url": "assets/bg1.jpg"
+		},
+		{
+			"name": "bg2_jpg",
+			"type": "image",
+			"url": "assets/bg2.jpg"
+		},
+		{
+			"name": "shadow_ske_json",
+			"type": "json",
+			"url": "assets/db/shadow/shadow_ske.json"
+		},
+		{
+			"name": "shadow_tex_json",
+			"type": "json",
+			"url": "assets/db/shadow/shadow_tex.json"
+		},
+		{
+			"name": "shadow_tex_png",
+			"type": "image",
+			"url": "assets/db/shadow/shadow_tex.png"
+		},
+		{
+			"name": "comb_tex_png",
+			"type": "image",
+			"url": "assets/db/comb/comb_tex.png"
+		},
+		{
+			"name": "comb_ske_json",
+			"type": "json",
+			"url": "assets/db/comb/comb_ske.json"
+		},
+		{
+			"name": "comb_tex_json",
+			"type": "json",
+			"url": "assets/db/comb/comb_tex.json"
+		},
+		{
+			"name": "ready_go_ske_json",
+			"type": "json",
+			"url": "assets/db/ready_go/ready_go_ske.json"
+		},
+		{
+			"name": "ready_go_tex_json",
+			"type": "json",
+			"url": "assets/db/ready_go/ready_go_tex.json"
+		},
+		{
+			"name": "ready_go_tex_png",
+			"type": "image",
+			"url": "assets/db/ready_go/ready_go_tex.png"
+		},
+		{
+			"name": "ready_go_mp3",
+			"type": "sound",
+			"url": "assets/music/ready_go.mp3"
 		}
 	]
 }

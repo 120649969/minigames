@@ -18,13 +18,8 @@ module io {
 			CMD_H5_REENTER_RSP: 6, //重进
 			CMD_H5_SURREND_REQ:7, //投降
 			CMD_H5_SURREND_RSP:8,
-
-			CMD_H5_KNIFE_SHOT_REQ:1001, //发射
-			CMD_H5_KNIFE_SHOT_RSP:1002, //发射
-			CMD_H5_KNIFE_SWITCH_REQ:1003, //切换关卡
-			CMD_H5_KNIFE_SWITCH_RSP:1004, //切换关卡
-			CMD_H5_KNIFE_USEPROP_REQ:1005, //使用道具
-			CMD_H5_KNIFE_USEPROP_RSP:1006, //使用道具
+			CMD_H5_SCORE_REQ:9,  //分数
+			CMD_H5_SCORE_RSP:10, //分数
 
 			CMD_H5_JOIN_PUSH: 100, //加入房间推送
 			CMD_H5_GAME_STATUS_PUSH: 102, //房间状态改变推送
@@ -33,10 +28,6 @@ module io {
 			CMD_H5_SCORE_PUSH: 108, //分数变化推送
 			CMD_H5_GAME_OVER_PUSH: 110, //游戏结束推送
 			CMD_H5_REENTER_PUSH: 112, //重进推送
-
-			CMD_H5_KNIFE_LEVEL_PUSH:10000, // 等级更新
-			CMD_H5_KNIFE_REFRESH_PUSH:10002, // 更新
-			CMD_H5_KNIFE_USEPROP_PUSH:10004 // 使用道具
 		};
 
 		public sessionKey:string;
@@ -97,62 +88,31 @@ module io {
 			});				
 		}
 
-		public async reqReEnter(level, callback ?:any) {
+		public async reqReEnter(score) {
 			let self = this;
 			return new Promise((resolve, reject) => {
 				self.on(GameNet.GAME_PROTOCOL.CMD_H5_REENTER_RSP, function (msgId, body) {
 					self.off(GameNet.GAME_PROTOCOL.CMD_H5_REENTER_RSP);
 					resolve(body);
-					if(callback)
-					{
-						callback(body);
-					}
 				});
 				self.send(GameNet.GAME_PROTOCOL.CMD_H5_REENTER_REQ, {
-					level:level
+					score:score
 				});
 			});				
 		}
 
-		//at:在转盘上的角度
-		public async reqShoot(at:number) {
-			let self = this;
-			return new Promise((resolve, reject) => {
-				self.on(GameNet.GAME_PROTOCOL.CMD_H5_KNIFE_SHOT_RSP, function (msgId, body) {
-					self.off(GameNet.GAME_PROTOCOL.CMD_H5_KNIFE_SHOT_RSP);
-					resolve(body);
-				});
-				self.send(GameNet.GAME_PROTOCOL.CMD_H5_KNIFE_SHOT_REQ, {
-					at: at
-				});
-			});		
-		}
-
 		//切换关卡
-		public async reqSwitch(level:number){
+		public async reqSwitch(score:number){
 			let self = this;
 			return new Promise((resolve, reject) => {
-				self.on(GameNet.GAME_PROTOCOL.CMD_H5_KNIFE_SWITCH_RSP, function (msgId, body) {
-					self.off(GameNet.GAME_PROTOCOL.CMD_H5_KNIFE_SWITCH_RSP);
+				self.on(GameNet.GAME_PROTOCOL.CMD_H5_SCORE_RSP, function (msgId, body) {
+					self.off(GameNet.GAME_PROTOCOL.CMD_H5_SCORE_RSP);
 					resolve(body);
 				});
-				self.send(GameNet.GAME_PROTOCOL.CMD_H5_KNIFE_SWITCH_REQ, {
-					level:level
+				self.send(GameNet.GAME_PROTOCOL.CMD_H5_SCORE_REQ, {
+					score:score
 				});
-			});		
-		}
-
-		public async reqUseProp(prop){
-			let self = this;
-			return new Promise((resolve, reject) => {
-				self.on(GameNet.GAME_PROTOCOL.CMD_H5_KNIFE_USEPROP_RSP, function (msgId, body) {
-					self.off(GameNet.GAME_PROTOCOL.CMD_H5_KNIFE_USEPROP_RSP);
-					resolve(body);
-				});
-				self.send(GameNet.GAME_PROTOCOL.CMD_H5_KNIFE_USEPROP_REQ, {
-					prop: prop
-				});
-			});		
+			});
 		}
 
 		public async reqSurrend(){
