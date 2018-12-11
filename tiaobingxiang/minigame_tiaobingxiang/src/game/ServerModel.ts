@@ -13,8 +13,8 @@ class ServerModel {
 	public other_icon_url:string = ""
 	public left_time:number = GameConst.GAME_TIME
 
-	public myRole:RoleInfo
-	public otherRole:RoleInfo
+	public myRole:RoleInfo = null
+	public otherRole:RoleInfo = null
 	public constructor() {
 	}
 
@@ -52,7 +52,8 @@ class ServerModel {
 
 	public UpdateRoleScore(new_role_info:Object):void
 	{
-		let id = new_role_info['openid']
+
+		let id = new_role_info['id']
 		if(this.myRole.openid == id){
 		}else if(this.otherRole.openid == id){
 			this.otherRole.score = new_role_info['total']
@@ -83,6 +84,4 @@ class ServerModel {
 			}
 		}
 	}
-
-	
 }

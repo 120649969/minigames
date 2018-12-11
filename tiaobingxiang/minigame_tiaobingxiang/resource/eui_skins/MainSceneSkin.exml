@@ -6,8 +6,8 @@
 				<e:Image id="bg_1" y="-1280" scaleX="1" scaleY="1" right="0" left="0" height="1280" source="bg2_jpg"/>
 				<e:Image id="bg_2" left="0" right="0" x="0" y="0" scaleX="1" scaleY="1" height="1280" source="bg2_jpg"/>
 				<e:Image left="0" right="0" x="0" y="0" scaleX="1" scaleY="1" height="1280" source="bg1_jpg"/>
-				<e:Rect id="m_floor" height="1" scaleX="1" scaleY="1" left="0" right="0" bottom="60" x="0" y="1219"/>
-				<e:Image source="jueseyinying_png" horizontalCenter="0" bottom="31" x="256" y="1187" scaleX="1" scaleY="1"/>
+				<e:Rect id="m_floor" height="1" scaleX="1" scaleY="1" left="0" right="0" bottom="60" x="0" y="1219" visible="false"/>
+				<e:Image id="m_shadow" source="jueseyinying_png" horizontalCenter="0" bottom="31" x="256" y="1187" scaleX="1" scaleY="1" visible="false" locked="true"/>
 			</e:Group>
 			<e:Group id="m_animationContainer" height="1280" left="0" right="0" y="0"/>
 			<e:Group id="m_container" left="0" right="0" height="1280" y="0" x="0" scaleX="1" scaleY="1">
@@ -46,7 +46,8 @@
 			<e:Rect width="505" height="50" horizontalCenter="0" verticalCenter="0" fillColor="0x302f2f" fillAlpha="0.5" x="0" y="0" scaleX="1" scaleY="1"/>
 			<e:Label text="توردىن ئازراق مەسىلە چىقتى ، سەل ساقلاڭ " x="31.360000000000014" y="10" scaleX="1" scaleY="1"/>
 		</e:Group>
+		<e:Label id="labelScore" text="" y="57.5" scaleX="1" scaleY="1" horizontalCenter="0"/>
 	</e:Group>
 	<e:Button id="btn_debug" label="调试" y="331.21" right="0" anchorOffsetX="0" width="139.39" anchorOffsetY="0" height="71.21" touchEnabled="true" touchChildren="true" enabled="true" visible="false" locked="true"/>
-	<e:Image id="img_help" source="shuoming_png" y="258.55" anchorOffsetX="0" x="25.56" visible="false"/>
+	<e:Image id="img_help" source="shuoming_png" anchorOffsetX="0" y="259" width="679" x="26" visible="false"/>
 </e:Skin>

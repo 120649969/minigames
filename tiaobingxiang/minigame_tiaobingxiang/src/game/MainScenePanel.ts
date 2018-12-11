@@ -59,9 +59,15 @@ module ui {
 
 			let __this = this
 			this.btn_help.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.Event){
+
+				let global_btn_help_point = __this.btn_help.localToGlobal(0, 0)
+				let delta_y = __this.height - global_btn_help_point.y
+				let max_scale = (delta_y - 50) / (__this.img_help.height)
+				max_scale = Math.min(max_scale, 1)
 				__this.img_help.visible = true
 				__this.img_help.scaleX = __this.img_help.scaleY = 0
-				egret.Tween.get(__this.img_help).to({"scaleX": 1, "scaleY": 1}, 0.2 *1000)
+				egret.Tween.get(__this.img_help).to({"scaleX": max_scale, "scaleY": max_scale}, 0.2 *1000)
+
 				event.stopPropagation()
 			}.bind(this), this)
 
@@ -78,6 +84,8 @@ module ui {
 			}.bind(this), this)
 
 			this._addAnimation()
+
+			this._updateProgress()
 		}
 
 		private _shadow_display:dragonBones.EgretArmatureDisplay
@@ -157,11 +165,18 @@ module ui {
 			img_icon.mask = circle2
 		}
 
+		private labelScore:eui.Label
 		private m_seperator:eui.Image
+		private m_shadow:eui.Image
+
 		private _updateProgress():void
 		{
-			let other_score = this.serverModel.otherRole.score
-			let me_score = this.serverModel.myRole.score
+			let other_score = 0
+			let me_score = 0
+			if(this.serverModel.otherRole && this.serverModel.myRole){
+				other_score = this.serverModel.otherRole.score
+				me_score = this.serverModel.myRole.score
+			}
 			let rate = 0.5
 			if(other_score == 0 && me_score == 0){
 				rate = 0.5
@@ -173,6 +188,13 @@ module ui {
 			let me_rect = new egret.Rectangle(this.m_other_progress.width * rate, 0, this.m_me_progress.width * (1 - rate), this.m_me_progress.height)
 			this.m_me_progress.mask = me_rect
 			this.m_seperator.x = this.m_other_progress.width * rate - this.m_seperator.width / 2
+			if(other_score < me_score){
+				this.labelScore.text = "领先" + (me_score - other_score) + "分"
+			} else if(other_score > me_score){
+				this.labelScore.text = "落后" + (other_score - me_score) + "分"
+			} else {
+				this.labelScore.text = "旗鼓相当"
+			}
 		}
 
 		public UpdateBg():void
@@ -239,8 +261,6 @@ module ui {
 
 		private _on_timer_tick():void
 		{
-			this.serverModel.otherRole.score += 1
-			this._updateProgress()
 			this.serverModel.left_time -= 1
 			this.serverModel.left_time = Math.max(this.serverModel.left_time, 0)
 			this._update_time()
@@ -298,6 +318,7 @@ module ui {
 		{
 			this.serverModel.myRole.score += score
 			this._updateProgress()
+			GameNet.reqChangeScore(score)
 		}
 
 		private labelComb:eui.BitmapLabel
@@ -310,13 +331,14 @@ module ui {
 			egret.Tween.get(this.labelComb).to({y:this.labelComb.y - 100}, 0.5 * 1000).call(function(){
 				__this.labelComb.visible = false
 			}.bind(this), this)
-			if(GameNet.isConnected()){
+			if(!GameNet.isConnected()){
 				this._offline_score += score
 			}
 		}
 
 		public StartGame():void
 		{
+			this.m_shadow.visible = true
 			this._updateProgress()
 			this._update_time()
 			this.current_box_y = this.GetFloorY()
@@ -457,7 +479,6 @@ module ui {
 
 		private onGameScorePush(msgId, body):void
 		{
-			console.log("####onGameScorePush#######", body)
 			this.serverModel.UpdateRoleScore(body)
 			this._updateProgress()
 		}
@@ -513,7 +534,6 @@ module ui {
 
 		private onShootGameStatusPush():void
 		{
-
 		}
 
 		public onOpen():void

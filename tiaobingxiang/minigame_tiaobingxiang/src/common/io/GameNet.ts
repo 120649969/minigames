@@ -102,7 +102,7 @@ module io {
 		}
 
 		//切换关卡
-		public async reqSwitch(score:number){
+		public async reqChangeScore(score:number){
 			let self = this;
 			return new Promise((resolve, reject) => {
 				self.on(GameNet.GAME_PROTOCOL.CMD_H5_SCORE_RSP, function (msgId, body) {
