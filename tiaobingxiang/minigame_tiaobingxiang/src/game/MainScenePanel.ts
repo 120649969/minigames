@@ -23,6 +23,10 @@ module ui {
 		private m_moveContainer:eui.Group
 		private m_animationContainer:eui.Group
 
+		private img_equal:eui.Image
+		private labelScore:eui.Label
+		private img_score_type:eui.Image
+
 		public constructor() {
 			super()
 			this.skinName = "MainSceneSkin"
@@ -58,34 +62,37 @@ module ui {
 			}
 
 			let __this = this
-			this.btn_help.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(event:egret.Event){
-
-				let global_btn_help_point = __this.btn_help.localToGlobal(0, 0)
-				let delta_y = __this.height - global_btn_help_point.y
-				let max_scale = (delta_y - 50) / (__this.img_help.height)
-				max_scale = Math.min(max_scale, 1)
-				__this.img_help.visible = true
-				__this.img_help.scaleX = __this.img_help.scaleY = 0
-				egret.Tween.get(__this.img_help).to({"scaleX": max_scale, "scaleY": max_scale}, 0.2 *1000)
-
-				event.stopPropagation()
-			}.bind(this), this)
-
-			this.btn_help.addEventListener(egret.TouchEvent.TOUCH_END, function(event:egret.Event){
-			egret.Tween.get(__this.img_help).to({"scaleX": 0, "scaleY": 0}, 0.1 *1000).call(function(){
-					__this.img_help.visible = false
-				})
-			}.bind(this), this)
-
-			this.btn_help.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, function(event:egret.Event){
-				egret.Tween.get(__this.img_help).to({"scaleX": 0, "scaleY": 0}, 0.1 *1000).call(function(){
-					__this.img_help.visible = false
-				})
+			this.btn_help.addEventListener(egret.TouchEvent.TOUCH_TAP, function(event:egret.Event){
+				if(__this.img_help.visible){
+					__this.HideHelp()
+				} else {
+					__this.ShowHelp()
+				}
+				// event.stopPropagation()
 			}.bind(this), this)
 
 			this._addAnimation()
 
 			this._updateProgress()
+		}
+
+		private ShowHelp():void
+		{
+			let global_btn_help_point = this.btn_help.localToGlobal(0, 0)
+			let delta_y = this.height - global_btn_help_point.y
+			let max_scale = (delta_y - 50) / (this.img_help.height)
+			max_scale = Math.min(max_scale, 1)
+			this.img_help.visible = true
+			this.img_help.scaleX = this.img_help.scaleY = 0
+			egret.Tween.get(this.img_help).to({"scaleX": max_scale, "scaleY": max_scale}, 0.2 *1000)
+		}
+
+		private HideHelp():void
+		{
+			let __this = this
+			egret.Tween.get(__this.img_help).to({"scaleX": 0, "scaleY": 0}, 0.1 *1000).call(function(){
+				__this.img_help.visible = false
+			})
 		}
 
 		private _shadow_display:dragonBones.EgretArmatureDisplay
@@ -165,7 +172,6 @@ module ui {
 			img_icon.mask = circle2
 		}
 
-		private labelScore:eui.Label
 		private m_seperator:eui.Image
 		private m_shadow:eui.Image
 
@@ -188,12 +194,22 @@ module ui {
 			let me_rect = new egret.Rectangle(this.m_other_progress.width * rate, 0, this.m_me_progress.width * (1 - rate), this.m_me_progress.height)
 			this.m_me_progress.mask = me_rect
 			this.m_seperator.x = this.m_other_progress.width * rate - this.m_seperator.width / 2
+			this.img_equal.visible = false
+			this.img_score_type.visible = false
+			this.labelScore.visible = false
 			if(other_score < me_score){
 				this.labelScore.text = "领先" + (me_score - other_score) + "分"
+				this.img_score_type.visible = true
+				this.labelScore.visible = true
+				this.img_score_type.source = "winnumber_png"
 			} else if(other_score > me_score){
 				this.labelScore.text = "落后" + (other_score - me_score) + "分"
+				this.img_score_type.visible = true
+				this.labelScore.visible = true
+				this.img_score_type.source = "losenumber_png"
 			} else {
 				this.labelScore.text = "旗鼓相当"
+				this.img_equal.visible = true
 			}
 		}
 
@@ -370,6 +386,10 @@ module ui {
 
 		private _onTouchBegin(event:egret.TouchEvent):void
 		{
+			if(this.img_help.visible){
+				this.HideHelp()
+				return
+			}
 			if(this.mainPlayer)
 			{
 				this.mainPlayer.OnTouch()
@@ -431,6 +451,11 @@ module ui {
 			this.m_bg.addChild(this.currentBox)
 			this.all_boxs.push(this.currentBox)
 			this.box_height = this.currentBox.height
+			if(this.is_left_to_right){
+				this.mainPlayer.PlayLeftAnimation()
+			}else{
+				this.mainPlayer.PlayRightAnimation()
+			}
 		}
 
 		private _real_join(body):void

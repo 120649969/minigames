@@ -21,8 +21,8 @@
 
 	<e:Group id="m_touch_layer" left="0" top="0" right="0" bottom="0" touchEnabled="true" touchThrough="false" touchChildren="true" locked="true">
 	</e:Group>
-	<e:Group id="m_ui_top" height="200" left="0" right="0" y="85">
-		<e:Group height="55" y="45" anchorOffsetY="0" anchorOffsetX="0" left="82" right="73">
+	<e:Group id="m_ui_top" height="200" left="0" right="0" y="85" touchEnabled="false">
+		<e:Group height="55" y="45" anchorOffsetY="0" anchorOffsetX="0" left="82" right="73" touchEnabled="false">
 		<e:Image source="iconbg3_png" x="0" y="-4.4" scaleX="1" scaleY="1"/>
 		<e:Image id="m_other_progress" source="iconbg1_png" left="0" top="0" right="0" bottom="0"/>
 		<e:Image id="m_me_progress" source="iconbg2_png" left="0" top="0" right="0" bottom="0"/>
@@ -34,7 +34,7 @@
 		<e:Image id="m_me_icon" x="646" y="68" anchorOffsetX="44" anchorOffsetY="44" source="" locked="true"/>
 		<e:Image source="shijian_ditu_png" y="145.47" left="71"/>
 		<e:BitmapLabel id="labelTime" width="80" height="30.67" y="169.33" text="60" anchorOffsetX="40" anchorOffsetY="15.33" font="box_font_2_fnt" textAlign="center" verticalAlign="center" left="71"/>
-		<e:Button id="btn_help" label="" y="139.47" width="53" height="53" left="11">
+		<e:Button id="btn_help" label="" y="149.33" width="40" height="40" left="24">
 		<e:skinName>
 			<e:Skin states="up,down,disabled">
 			<e:Image width="100%" height="100%" source="wenhao_png" source.down="wenhao_png" source.disabled="wenhao_png"/>
@@ -46,8 +46,10 @@
 			<e:Rect width="505" height="50" horizontalCenter="0" verticalCenter="0" fillColor="0x302f2f" fillAlpha="0.5" x="0" y="0" scaleX="1" scaleY="1"/>
 			<e:Label text="توردىن ئازراق مەسىلە چىقتى ، سەل ساقلاڭ " x="31.360000000000014" y="10" scaleX="1" scaleY="1"/>
 		</e:Group>
-		<e:Label id="labelScore" text="" y="57.5" scaleX="1" scaleY="1" horizontalCenter="0"/>
+		<e:Image id="img_equal" source="equal_png" y="60" scaleX="1" scaleY="1" horizontalCenter="0" visible="false"/>
+		<e:Image id="img_score_type" source="winnumber_png" y="58.32" scaleX="1" scaleY="1" horizontalCenter="-31" visible="false"/>
+		<e:BitmapLabel id="labelScore" width="80" height="30.67" y="72.17" text="60" anchorOffsetX="0" anchorOffsetY="15.33" font="box_font_2_fnt" textAlign="left" verticalAlign="left" left="388" x="374" scaleX="1" scaleY="1" visible="false"/>
 	</e:Group>
 	<e:Button id="btn_debug" label="调试" y="331.21" right="0" anchorOffsetX="0" width="139.39" anchorOffsetY="0" height="71.21" touchEnabled="true" touchChildren="true" enabled="true" visible="false" locked="true"/>
-	<e:Image id="img_help" source="shuoming_png" anchorOffsetX="0" y="259" width="679" x="26" visible="false"/>
+	<e:Image id="img_help" source="shuoming_png" anchorOffsetX="0" y="259" width="679" x="26" touchEnabled="false" visible="false"/>
 </e:Skin>

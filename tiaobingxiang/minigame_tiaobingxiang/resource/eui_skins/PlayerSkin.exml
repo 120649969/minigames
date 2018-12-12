@@ -4,6 +4,6 @@
 
 	<e:Rect id="m_behit_rect1" width="120" height="120" x="18.23" y="4.07" anchorOffsetX="0" anchorOffsetY="0" touchEnabled="false" visible="false"/>
 	<e:Rect id="m_hit_rect" width="61.83" height="4.7" x="48.32" y="126.56" anchorOffsetX="0" anchorOffsetY="0" touchEnabled="false" visible="false"/>
-	<e:Image source="role_png" left="0" top="3" bottom="-3" right="0" locked="true"/>
+	<e:Image source="role_png" left="0" top="3" bottom="-3" right="0" locked="true" visible="false"/>
 	<e:BitmapLabel id="labelComb" width="492.93" height="110" x="120" y="123.12" font="box_font_1_fnt" text="c1" anchorOffsetX="0" anchorOffsetY="55" scaleX="0.1" scaleY="0.1" visible="false"/>
 </e:Skin>

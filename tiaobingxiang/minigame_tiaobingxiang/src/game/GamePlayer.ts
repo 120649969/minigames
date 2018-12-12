@@ -10,6 +10,7 @@ class GamePlayer extends eui.Component{
 	public isOnLand:boolean = true
 	public isInFly:boolean = false
 
+	private _comb_index = 1
 	public constructor(mainPanel:ui.MainScenePanel) {
 		super()
 		this.skinName = "PlayerSkin"
@@ -23,6 +24,41 @@ class GamePlayer extends eui.Component{
 			this.m_behit_rects.push(this['m_behit_rect' + (index + 1)])
 		}
 		this.touchEnabled = false
+		this._addAnimation()
+	}
+
+	private _playerStandDisplay:dragonBones.EgretArmatureDisplay
+	private _flyDisplay:dragonBones.EgretArmatureDisplay
+	private _addAnimation():void
+	{
+		let armatureDisplay = CommonUtils.createDragonBones("player_stand_ske_json", "player_stand_tex_json", "player_stand_tex_png", "player_stand_armature")
+		this.addChild(armatureDisplay)
+		this._playerStandDisplay = armatureDisplay
+		this._playerStandDisplay.animation.play('normal')
+		this._playerStandDisplay.x = this.width / 2
+		this._playerStandDisplay.y = this.height / 2 + 10
+
+		let armatureDisplay2 = CommonUtils.createDragonBones("fly_ske_json", "fly_tex_json", "fly_tex_png", "fly_armature")
+		this.addChild(armatureDisplay2)
+		this._flyDisplay = armatureDisplay2
+		armatureDisplay2.visible = false
+		this._flyDisplay.x = this.width / 2
+		this._flyDisplay.y = this.height / 2 + 10
+
+		let __this = this
+		armatureDisplay2.addDBEventListener(dragonBones.AnimationEvent.COMPLETE, function(){
+			__this.ReSet()
+		}, this)
+	}
+
+	public PlayLeftAnimation():void
+	{
+		this._playerStandDisplay.animation.play("left")
+	}
+
+	public PlayRightAnimation():void
+	{
+		this._playerStandDisplay.animation.play("right")
 	}
 
 	private labelComb:eui.BitmapLabel
@@ -47,6 +83,7 @@ class GamePlayer extends eui.Component{
 		if(!this.isOnLand){
 			return
 		}
+		SoundManager.getInstance().playSound("jump_mp3");
 		this.move_speed_y = GameConst.PLAYER_MOVE_SPEED_INIT_Y
 		this.isOnLand = false
 		this._checkChangeBoxMove()
@@ -80,10 +117,11 @@ class GamePlayer extends eui.Component{
 		}
 		let last_box = this._mainPanel.all_boxs[box_count - 2]
 		let cur_box = this._mainPanel.all_boxs[box_count - 1]
-		// if (cur_box.x != last_box.x){
-		// 	this._comb_times = 0
-		// 	return GameScore.SCORE_1
-		// }
+		
+		if (Math.abs(cur_box.x - last_box.x) > 3){
+			this._comb_times = 0
+			return GameScore.SCORE_1
+		}
 		this._comb_times += 1
 		return this._comb_times * GameScore.SCORE_2
 	}
@@ -176,6 +214,7 @@ class GamePlayer extends eui.Component{
 		return false
 	}
 
+
 	private _checkLandOnBox():boolean
 	{
 		let global_buttom_point = this.m_hit_rect.localToGlobal(this.m_hit_rect.width / 2, this.m_hit_rect.height)
@@ -195,10 +234,17 @@ class GamePlayer extends eui.Component{
 					if(this._comb_times <= 0){
 						this._mainPanel.PlayLandOnAnimation()
 					} else {
+						let combo_name = "combo" + this._comb_index + "_mp3"
 						this._mainPanel.PlayCombAnimation()
+						SoundManager.getInstance().playSound(combo_name);
+						if(this._comb_index == 1){
+							this._comb_index = 2
+						} else {
+							this._comb_index = 1
+						}
 					}
 					this.PlayCombAnimation()
-					
+					SoundManager.getInstance().playSound("land_mp3");
 					let __this = this
 					CommonUtils.performDelay(function(){
 						__this._mainPanel.GenerateNextBox()
@@ -229,9 +275,18 @@ class GamePlayer extends eui.Component{
 			target_x = this.x + 500
 		}
 		let __this = this
-		egret.Tween.get(this).to({x:target_x}, 0.3 * 1000).call(function(){
-			__this.ReSet()
-		},this)
+		// egret.Tween.get(this).to({x:target_x}, 0.3 * 1000).call(function(){
+		// 	__this.ReSet()
+		// },this)
+
+		this._flyDisplay.visible = true
+		this._playerStandDisplay.visible = false
+		if(this._mainPanel.is_left_to_right){
+			this._flyDisplay.animation.play("fly_right", 1)
+		} else {
+			this._flyDisplay.animation.play("fly_left", 1)
+		}
+		SoundManager.getInstance().playSound("hit_mp3");
 	}
 
 	public ReSet():void
@@ -246,5 +301,8 @@ class GamePlayer extends eui.Component{
 		CommonUtils.performDelay(function(){
 			__this._mainPanel.GenerateNextBox()
 		}, 0.5 * 1000, this)
+		this._playerStandDisplay.animation.play("normal")
+		this._flyDisplay.visible = false
+		this._playerStandDisplay.visible = true
 	}
 }

@@ -11,7 +11,7 @@ class GameConst {
 
 	public static PLAYER_MOVE_SPEED_INIT_Y = -42
 	public static PLAYER_MOVE_SPEED_INIT_X = 30
-	public static BOX_MOVE_SPEED_X:number = 17
+	public static BOX_MOVE_SPEED_X:number = 18
 
 	public static BOX_HEIGHT:number = 139
 

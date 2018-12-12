@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,egret_icon_png,description_json,role_png,box1_png,box2_png,box3_png,box4_png,icon_circle_1_png,icon_circle_2_png,iconbg1_png,iconbg2_png,default_icon_png,box_font_1_fnt,box_font_1_png,box5_png,iconbg3_png,jindutiaobaitiao_png,shijian_ditu_png,box_font_2_png,box_font_2_fnt,zuigaofendi_png,zuigaofen1_png,jueseyinying_png,shuoming_png,wenhao_png,bg1_jpg,bg2_jpg,shadow_ske_json,shadow_tex_json,shadow_tex_png,comb_tex_png,comb_ske_json,comb_tex_json,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,ready_go_mp3",
+			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,egret_icon_png,description_json,role_png,box1_png,box2_png,box3_png,box4_png,icon_circle_1_png,icon_circle_2_png,iconbg1_png,iconbg2_png,default_icon_png,box_font_1_fnt,box_font_1_png,box5_png,iconbg3_png,jindutiaobaitiao_png,shijian_ditu_png,box_font_2_png,box_font_2_fnt,zuigaofendi_png,zuigaofen1_png,jueseyinying_png,shuoming_png,wenhao_png,bg1_jpg,bg2_jpg,shadow_ske_json,shadow_tex_json,shadow_tex_png,comb_tex_png,comb_ske_json,comb_tex_json,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,ready_go_mp3,equal_png,losenumber_png,winnumber_png,player_stand_tex_png,player_stand_ske_json,player_stand_tex_json,fly_tex_json,fly_tex_png,fly_ske_json,jump_mp3,hit_mp3,land_mp3,combo2_mp3,combo1_mp3",
 			"name": "preload"
 		}
 	],
@@ -305,6 +305,76 @@
 			"name": "ready_go_mp3",
 			"type": "sound",
 			"url": "assets/music/ready_go.mp3"
+		},
+		{
+			"name": "equal_png",
+			"type": "image",
+			"url": "assets/equal.png"
+		},
+		{
+			"name": "losenumber_png",
+			"type": "image",
+			"url": "assets/losenumber.png"
+		},
+		{
+			"name": "winnumber_png",
+			"type": "image",
+			"url": "assets/winnumber.png"
+		},
+		{
+			"name": "player_stand_tex_png",
+			"type": "image",
+			"url": "assets/db/player_stand/player_stand_tex.png"
+		},
+		{
+			"name": "player_stand_ske_json",
+			"type": "json",
+			"url": "assets/db/player_stand/player_stand_ske.json"
+		},
+		{
+			"name": "player_stand_tex_json",
+			"type": "json",
+			"url": "assets/db/player_stand/player_stand_tex.json"
+		},
+		{
+			"name": "fly_tex_json",
+			"type": "json",
+			"url": "assets/db/fly/fly_tex.json"
+		},
+		{
+			"name": "fly_tex_png",
+			"type": "image",
+			"url": "assets/db/fly/fly_tex.png"
+		},
+		{
+			"name": "fly_ske_json",
+			"type": "json",
+			"url": "assets/db/fly/fly_ske.json"
+		},
+		{
+			"name": "jump_mp3",
+			"type": "sound",
+			"url": "assets/music/jump.mp3"
+		},
+		{
+			"name": "hit_mp3",
+			"type": "sound",
+			"url": "assets/music/hit.mp3"
+		},
+		{
+			"name": "land_mp3",
+			"type": "sound",
+			"url": "assets/music/land.mp3"
+		},
+		{
+			"name": "combo2_mp3",
+			"type": "sound",
+			"url": "assets/music/combo2.mp3"
+		},
+		{
+			"name": "combo1_mp3",
+			"type": "sound",
+			"url": "assets/music/combo1.mp3"
 		}
 	]
 }
