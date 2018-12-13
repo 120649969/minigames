@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="MainSceneSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image source="di_jpg" left="0" top="0" bottom="0" right="0" locked="true"/>
+	<e:Group id="box_line_container" height="200" left="0" top="0" right="0" locked="true"/>
+	<e:Group id="m_touch_layer" left="0" top="0" bottom="0" right="0" touchEnabled="true"/>
+</e:Skin>

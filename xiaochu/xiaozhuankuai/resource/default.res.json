@@ -1,0 +1,65 @@
+{
+	"groups": [
+		{
+			"keys": "button_down_png,button_up_png,description_json,di_jpg,VS_png,ready_go_mp3,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,hard_png,normal_png",
+			"name": "preload"
+		}
+	],
+	"resources": [
+		{
+			"url": "assets/Button/button_down.png",
+			"type": "image",
+			"name": "button_down_png"
+		},
+		{
+			"url": "assets/Button/button_up.png",
+			"type": "image",
+			"name": "button_up_png"
+		},
+		{
+			"name": "description_json",
+			"type": "json",
+			"url": "config/description.json"
+		},
+		{
+			"name": "di_jpg",
+			"type": "image",
+			"url": "assets/di.jpg"
+		},
+		{
+			"name": "VS_png",
+			"type": "image",
+			"url": "assets/VS.png"
+		},
+		{
+			"name": "ready_go_mp3",
+			"type": "sound",
+			"url": "assets/music/ready_go.mp3"
+		},
+		{
+			"name": "ready_go_ske_json",
+			"type": "json",
+			"url": "assets/db/ready_go/ready_go_ske.json"
+		},
+		{
+			"name": "ready_go_tex_json",
+			"type": "json",
+			"url": "assets/db/ready_go/ready_go_tex.json"
+		},
+		{
+			"name": "ready_go_tex_png",
+			"type": "image",
+			"url": "assets/db/ready_go/ready_go_tex.png"
+		},
+		{
+			"name": "hard_png",
+			"type": "image",
+			"url": "assets/hard.png"
+		},
+		{
+			"name": "normal_png",
+			"type": "image",
+			"url": "assets/normal.png"
+		}
+	]
+}
