@@ -67,30 +67,27 @@ class GameBoxLine extends egret.DisplayObjectContainer{
 		this.y += GameConst.LINE_MOVE_SPEED
 	}
 
-	public Hit():boolean
+	public InsertBox(position):void
 	{
-		this.life -= 1
-		return this.IsDead()
-	}
-
-	public IsDead():boolean
-	{
-		return this.life <= 0
-	}
-
-	public ShowBox(position):void
-	{
-		this.boxes[position].visible = true
-		let index = this.idle_positions.indexOf(position)
-		if(index >= 0)
-		{
-			this.idle_positions.splice(index, 1)
-			if(this.idle_positions.length <= 0)
+		if(this.life > 1) {
+			this.life -= 1 //困难模式的块 生命值-1
+			for(let index = 0; index < this.boxes.length; index++)
 			{
+				let box = this.boxes[index]
+				box.ChangeMiddle()
+			}
+		} else {
+			if(this.idle_positions.length == 1 && this.idle_positions[0] == position){
+				this.life -= 1
+				this.idle_positions = []
+				this.boxes[position].visible = true
 				this.PlayHitAnimation()
+			} else {
+				this.boxes[position].visible = true
+				let index_position = this.idle_positions.indexOf(position)
+				this.idle_positions.splice(index_position, 1)
 			}
 		}
-		
 	}
 
 	public PlayHitAnimation():void

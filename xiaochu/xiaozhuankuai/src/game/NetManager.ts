@@ -148,8 +148,8 @@ class NetManager {
 
 	private _init_debug_role():void
 	{
-		this._serverModel.AddRole({openid:User.openId.toString()})
-		this._serverModel.AddRole({})
+		this._serverModel.AddRole({openid:User.openId.toString(), nickname:"hehehe"})
+		this._serverModel.AddRole({nickname:"hahaha"})
 	}
 
 	private async run() {

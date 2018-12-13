@@ -17,13 +17,14 @@ class GameLogicComponent extends BaseComponent {
 		let position = Math.floor(stageX / (this._mainScenePanel.width / 4))
 		
 		let init_x = this._mainScenePanel.width / 8 * (position * 2 + 1)
-		let init_y = this._mainScenePanel.height + _myMoveObject.height
+		let init_y = this._mainScenePanel.height + 10
 		_myMoveObject.Restart(init_x, init_y, position)
 		return false
 	}
 
 	public OnEnterFrame():void
 	{
+		GameController.instance.GetMoveObject().CheckHit()
 		GameBoxLineManager.instance.Update()
 		GameController.instance.GetMoveObject().Move()
 

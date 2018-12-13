@@ -6,6 +6,12 @@ module ui {
 		private m_touch_layer:eui.Group
 		public btn_help:eui.Button
 		public img_help:eui.Image
+		public m_other_icon_bg:eui.Image
+		public m_me_icon_bg:eui.Image
+		public m_other_icon:eui.Image
+		public m_me_icon:eui.Image
+		public label_other_name:eui.Label
+		public label_my_name:eui.Label
 
 		private _gameLogicComponent:GameLogicComponent
 		private _commonUIComponent:CommonUIComponent
@@ -13,6 +19,12 @@ module ui {
 		public constructor() {
 			super()
 			this.skinName = "MainSceneSkin"
+		}
+
+		public resizeStage():void
+		{
+			super.resizeStage()
+			this.validateNow()
 		}
 
 		//连接到了服务器回调
@@ -26,6 +38,8 @@ module ui {
 
 		public StartGame():void
 		{
+			this._commonUIComponent.UpdateIcon()
+			this._commonUIComponent.UpdateName()
 			this.m_touch_layer.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onTouchBegin, this)
 			GameController.instance.StartGame()
 		}

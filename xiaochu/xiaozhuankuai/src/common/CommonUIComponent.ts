@@ -41,7 +41,8 @@ class CommonUIComponent extends BaseComponent{
 		let global_btn_help_point = this._mainScenePanel.btn_help.localToGlobal(0, 0)
 		let delta_y = this._mainScenePanel.height - global_btn_help_point.y
 		let max_scale = (delta_y - 50) / (this._mainScenePanel.img_help.height)
-		max_scale = Math.min(max_scale, 1)
+		let max_scale_x = (this._mainScenePanel.width - 80) / (this._mainScenePanel.img_help.width)
+		max_scale = Math.min(max_scale, max_scale_x)
 		this._mainScenePanel.img_help.visible = true
 		this._mainScenePanel.img_help.scaleX = this._mainScenePanel.img_help.scaleY = 0
 		egret.Tween.get(this._mainScenePanel.img_help).to({"scaleX": max_scale, "scaleY": max_scale}, 0.2 *1000)
@@ -84,5 +85,44 @@ class CommonUIComponent extends BaseComponent{
 		this._ready_go_armatureDisplay.animation.play("ready_go_animation", 1)
 		this._ready_go_armatureDisplay.visible = true
 		SoundManager.getInstance().playSound("ready_go_mp3");
+	}
+
+	public UpdateIcon():void
+	{
+		this._addCircleMask(this._mainScenePanel.m_other_icon, this._mainScenePanel.m_other_icon_bg.x, this._mainScenePanel.m_other_icon_bg.y,this._mainScenePanel.m_other_icon_bg.width / 2 - 5)
+		this._addCircleMask(this._mainScenePanel.m_me_icon, this._mainScenePanel.m_me_icon_bg.x, this._mainScenePanel.m_me_icon_bg.y, this._mainScenePanel.m_me_icon_bg.width / 2 - 5)
+		if(!DEBUG){ 
+			let serverModel = GameController.instance.serverModel
+			egret.ImageLoader.crossOrigin = "anonymous" //支持跨域
+			if(serverModel.myRole.icon){
+				this._mainScenePanel.m_me_icon.source = serverModel.myRole.icon
+			}
+			if(serverModel.otherRole.icon){
+				this._mainScenePanel.m_other_icon.source = serverModel.otherRole.icon
+			}
+		}
+	}
+
+	public UpdateName():void
+	{
+		let serverModel = GameController.instance.serverModel
+		if(this._mainScenePanel.label_my_name)
+		{
+			this._mainScenePanel.label_my_name.text = serverModel.myRole.nickname
+		}
+		if(this._mainScenePanel.label_other_name)
+		{
+			this._mainScenePanel.label_other_name.text = serverModel.otherRole.nickname
+		}
+	}
+
+	private _addCircleMask(img_icon:eui.Image, x:number, y:number, radius:number):void
+	{
+		let circle2:egret.Shape = new egret.Shape();
+		circle2.graphics.beginFill(0x0000ff);
+		circle2.graphics.drawCircle(x, y, radius);
+		circle2.graphics.endFill();
+		img_icon.parent.addChild(circle2);
+		img_icon.mask = circle2
 	}
 }

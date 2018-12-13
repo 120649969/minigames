@@ -117,12 +117,12 @@ class GameBoxLineManager {
 		return this.allBoxLines[0]
 	}
 
-	public AddLine():void
+	public AddLine(count:number):void
 	{
 		for(let index = 0; index < this.allBoxLines.length; index++)
 		{
 			let box_line = this.allBoxLines[index]
-			box_line.y += box_line.height
+			box_line.y += box_line.height * count
 		}
 	}
 	

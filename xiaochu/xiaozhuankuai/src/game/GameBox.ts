@@ -14,4 +14,9 @@ class GameBox extends eui.Component{
 		this.anchorOffsetX = this.width / 2
 		this.anchorOffsetY = this.height / 2
 	}
+
+	public ChangeMiddle():void
+	{
+		this.imgBox.source = "middle_png"
+	}
 }

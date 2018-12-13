@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="MyMoveObjectSkin" width="175" height="123" xmlns:e="http://ns.egret.com/eui">
-	<e:Image horizontalCenter="0" verticalCenter="0" source="normal_png"/>
+<e:Skin class="MyMoveObjectSkin" width="175" height="720" xmlns:e="http://ns.egret.com/eui">
+	<e:Image source="guang_png" y="8" x="11.8" anchorOffsetY="0" height="712"/>
+	<e:Image source="normal_png" y="-9" horizontalCenter="0"/>
+	<e:Image source="shang_png" x="-2" y="83.69"/>
+	<e:Image source="shang_png" x="-1" y="136.42"/>
 </e:Skin>
