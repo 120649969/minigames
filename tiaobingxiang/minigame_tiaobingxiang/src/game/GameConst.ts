@@ -2,7 +2,7 @@ class GameConst {
 	public constructor() {
 	}
 
-	public static M_BG_NUM = 2;
+	public static M_BG_NUM = 3;
 	public static MAX_BOX_COUNT = 5
 	public static HIT_NUM = 1
 

@@ -3,8 +3,9 @@
 	<e:Group left="0" right="0" bottom="0" height="1280">
 		<e:Group id="m_moveContainer" height="1280" y="0" left="0" right="0">
 			<e:Group id="m_bg" height="1280" y="0" scaleX="1" scaleY="1" left="0" right="0" x="0">
-				<e:Image id="bg_1" y="-1280" scaleX="1" scaleY="1" right="0" left="0" height="1280" source="bg2_jpg"/>
-				<e:Image id="bg_2" left="0" right="0" x="0" y="0" scaleX="1" scaleY="1" height="1280" source="bg2_jpg"/>
+				<e:Image id="bg_1" y="-2560" scaleX="1" scaleY="1" right="0" left="0" height="1280" source="bg2_jpg"/>
+				<e:Image id="bg_2" y="-1280" scaleX="1" scaleY="1" right="0" left="0" height="1280" source="bg2_jpg"/>
+				<e:Image id="bg_3" left="0" right="0" x="0" y="0" scaleX="1" scaleY="1" height="1280" source="bg2_jpg"/>
 				<e:Image left="0" right="0" x="0" y="0" scaleX="1" scaleY="1" height="1280" source="bg1_jpg"/>
 				<e:Rect id="m_floor" height="1" scaleX="1" scaleY="1" left="0" right="0" bottom="60" x="0" y="1219" visible="false"/>
 				<e:Image id="m_shadow" source="jueseyinying_png" horizontalCenter="0" bottom="31" x="256" y="1187" scaleX="1" scaleY="1" visible="false" locked="true"/>

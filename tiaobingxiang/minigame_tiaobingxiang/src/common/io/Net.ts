@@ -51,7 +51,7 @@ module io {
 
 			this.closeFlag = false;
 			this.reconnectFlag = false;
-
+			this.ssl = true
 			this.logHeartbeat = false;
 		}
 

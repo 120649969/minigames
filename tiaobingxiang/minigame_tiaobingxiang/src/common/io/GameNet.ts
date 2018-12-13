@@ -38,7 +38,7 @@ module io {
 			this.name = 'GameNet';
 
 			this.sessionKey = null;
-
+			
 			this.regProtocol(GameNet.GAME_PROTOCOL);
 		}
 

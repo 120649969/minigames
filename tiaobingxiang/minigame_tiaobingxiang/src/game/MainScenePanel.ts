@@ -198,17 +198,17 @@ module ui {
 			this.img_score_type.visible = false
 			this.labelScore.visible = false
 			if(other_score < me_score){
-				this.labelScore.text = "领先" + (me_score - other_score) + "分"
+				this.labelScore.text = (me_score - other_score).toString()
 				this.img_score_type.visible = true
 				this.labelScore.visible = true
 				this.img_score_type.source = "winnumber_png"
 			} else if(other_score > me_score){
-				this.labelScore.text = "落后" + (other_score - me_score) + "分"
+				this.labelScore.text = (other_score - me_score).toString()
 				this.img_score_type.visible = true
 				this.labelScore.visible = true
 				this.img_score_type.source = "losenumber_png"
 			} else {
-				this.labelScore.text = "旗鼓相当"
+				// this.labelScore.text = "旗鼓相当"
 				this.img_equal.visible = true
 			}
 		}
@@ -228,7 +228,7 @@ module ui {
 			}
 			let last_bg = this.m_img_bgs[this.m_img_bgs.length - 1]
 			let global_point = last_bg.localToGlobal(0, 0)
-			if(global_point.y + delta_y >= this.height){
+			if(global_point.y + delta_y >= this.height + 100){
 				this.m_img_bgs.splice(this.m_img_bgs.length - 1)
 				this.m_img_bgs.unshift(last_bg)
 				last_bg.y -= last_bg.height * GameConst.M_BG_NUM
@@ -252,7 +252,7 @@ module ui {
 			}
 			let last_bg = this.m_img_bgs[this.m_img_bgs.length - 1]
 			let global_point = last_bg.localToGlobal(0, 0)
-			if(global_point.y + delta_y >= this.height){
+			if(global_point.y + delta_y >= this.height + 100){
 				this.m_img_bgs.splice(this.m_img_bgs.length - 1)
 				this.m_img_bgs.unshift(last_bg)
 				last_bg.y -= last_bg.height * GameConst.M_BG_NUM
@@ -319,6 +319,7 @@ module ui {
 
 			//延迟一点时间弹出去
 			let platform_finish_delay_time = 2
+			GamePlatform.onCalculating()
 			CommonUtils.performDelay(function(){
 				GamePlatform.onFinished()
 			}.bind(this), platform_finish_delay_time * 1000, this)
