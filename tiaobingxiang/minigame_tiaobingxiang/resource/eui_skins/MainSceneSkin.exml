@@ -29,10 +29,10 @@
 		<e:Image id="m_me_progress" source="iconbg2_png" left="0" top="0" right="0" bottom="0"/>
 		<e:Image id="m_seperator" source="jindutiaobaitiao_png" x="285" top="0" bottom="0"/>
 		</e:Group>
-		<e:Image id="m_other_icon_bg" source="icon_circle_2_png" y="68" anchorOffsetX="44" anchorOffsetY="44" left="30" locked="true"/>
-		<e:Image id="m_me_icon_bg" source="icon_circle_1_png" y="68" anchorOffsetX="44" anchorOffsetY="44" right="30" locked="true"/>
-		<e:Image id="m_other_icon" x="74" y="68" anchorOffsetX="44" anchorOffsetY="44" source="" locked="true"/>
-		<e:Image id="m_me_icon" x="646" y="68" anchorOffsetX="44" anchorOffsetY="44" source="" locked="true"/>
+		<e:Image id="m_other_icon_bg" source="icon_circle_2_png" y="68" anchorOffsetX="44" anchorOffsetY="44" left="30"/>
+		<e:Image id="m_me_icon_bg" source="icon_circle_1_png" y="68" anchorOffsetX="44" anchorOffsetY="44" right="30"/>
+		<e:Image id="m_other_icon" x="74" y="68" anchorOffsetX="44" anchorOffsetY="44" source="" width="88" height="88"/>
+		<e:Image id="m_me_icon" x="646" y="68" anchorOffsetX="44" anchorOffsetY="44" source="" width="88" height="88"/>
 		<e:Image source="shijian_ditu_png" y="145.47" left="71"/>
 		<e:BitmapLabel id="labelTime" width="80" height="30.67" y="169.33" text="60" anchorOffsetX="40" anchorOffsetY="15.33" font="box_font_2_fnt" textAlign="center" verticalAlign="center" left="71"/>
 		<e:Button id="btn_help" label="" y="149.33" width="40" height="40" left="24">

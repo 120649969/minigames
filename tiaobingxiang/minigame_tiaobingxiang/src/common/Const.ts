@@ -13,6 +13,8 @@ class Const {
 	public static DEBUG_SERVER_URL = 'ght-hall.badambiz.com:50012';
 	public static RELEASE_SERVER_URL = 'pk-gamesvr.badambiz.com/jumpup/'
 	
+	public static Publish = 1
+
 	public static EVENT = {
 		ON_STAGE_RESIZE: 'onStageResize',
 		ON_WINDOW_OPEN: 'onWindowOpen',

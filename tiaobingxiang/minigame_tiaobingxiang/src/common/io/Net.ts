@@ -51,7 +51,11 @@ module io {
 
 			this.closeFlag = false;
 			this.reconnectFlag = false;
-			this.ssl = true
+			if(Const.Publish == 1){
+				this.ssl = true
+			}else{
+				this.ssl = false
+			}
 			this.logHeartbeat = false;
 		}
 
