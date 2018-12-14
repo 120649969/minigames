@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="MainSceneSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Image source="di_jpg" left="0" top="0" bottom="0" right="0"/>
+	<e:Image source="di_jpg" left="0" top="0" bottom="0" right="0" locked="true"/>
 	<e:Group id="box_line_container" height="200" left="0" top="0" right="0" locked="true"/>
 	<e:Group id="m_touch_layer" left="0" top="0" bottom="0" right="0" touchEnabled="true" locked="true"/>
 
 	<e:Group id="m_ui_top" height="200" left="0" right="0" y="85" touchEnabled="false">
 		<e:Image source="mingzidi_png" x="174.51" y="47.65" anchorOffsetX="0" width="178" anchorOffsetY="0" height="27" scale9Grid="10,9,114,3" touchEnabled="false"/>
-		<e:Image source="mingzidi_png" x="381.33" y="47.65" scale9Grid="10,8,117,3" width="178" height="27" touchEnabled="false"/>
+		<e:Image source="mingzidi_png" x="382.2" y="47.65" scale9Grid="10,8,117,3" width="178" height="27" touchEnabled="false"/>
 
-		<e:Image id="m_other_icon_bg" y="49" anchorOffsetX="44" anchorOffsetY="44" source="txk_2_png" x="152" touchEnabled="false"/>
-		<e:Image id="m_me_icon_bg" y="49" anchorOffsetX="44" anchorOffsetY="44" source="txk_1_png" x="589" touchEnabled="false"/>
-		<e:Image id="m_other_icon" x="152" y="49" anchorOffsetX="44" anchorOffsetY="44" source="" touchEnabled="false"/>
-		<e:Image id="m_me_icon" x="589" y="49" anchorOffsetX="44" anchorOffsetY="44" source="" touchEnabled="false"/>
+		<e:Image id="m_other_icon_bg" y="49" anchorOffsetX="40" anchorOffsetY="40" source="txk_2_png" x="152" touchEnabled="false"/>
+		<e:Image id="m_me_icon_bg" y="49" anchorOffsetX="40" anchorOffsetY="40" source="txk_1_png" x="589" touchEnabled="false"/>
+		<e:Image id="m_other_icon" x="152" y="49" anchorOffsetX="40" anchorOffsetY="40" source="" touchEnabled="false" width="80" height="80"/>
+		<e:Image id="m_me_icon" x="589" y="49" anchorOffsetX="40" anchorOffsetY="40" source="" touchEnabled="false" width="80" height="80"/>
 
 
 		<e:Button id="btn_help" label="" y="45" width="40" height="40" left="41">
@@ -26,12 +26,16 @@
 			<e:Rect width="505" height="50" horizontalCenter="0" verticalCenter="0" fillColor="0x302f2f" fillAlpha="0.5" x="0" y="0" scaleX="1" scaleY="1"/>
 			<e:Label text="توردىن ئازراق مەسىلە چىقتى ، سەل ساقلاڭ " x="31.360000000000014" y="10" scaleX="1" scaleY="1"/>
 		</e:Group>
-		<e:Label id="label_other_name" text="" x="188" y="61" size="24" anchorOffsetY="12" anchorOffsetX="0" width="162" textAlign="left" touchEnabled="false"/>
-		<e:Label id="label_my_name" text="" x="381.33" y="61.15" size="24" anchorOffsetY="12" anchorOffsetX="0" width="162" textAlign="right" touchEnabled="false"/>
+		<e:Label id="label_other_name" text="" x="192.8" y="61" size="24" anchorOffsetY="10" anchorOffsetX="0" width="150" textAlign="left" touchEnabled="false" height="20"/>
+		<e:Label id="label_my_name" text="" x="399.12" y="61" size="24" anchorOffsetY="10" anchorOffsetX="0" width="150" textAlign="right" touchEnabled="false" height="20"/>
 		<e:Image source="VS_png" x="325" y="30" touchEnabled="false"/>
 
 
 
 	</e:Group>
 	<e:Image id="img_help" source="shuoming_png" x="36.05" y="139.15" scaleX="0.9" scaleY="0.9" touchEnabled="false" visible="false"/>
+	<e:Group id="m_addline_tips" width="520" height="65" y="417.12" horizontalCenter="0" visible="false">
+		<e:Image source="jia_png" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="0"/>
+		<e:BitmapLabel id="label_add_line" width="38.5" height="44" x="258.17" y="6.9" scaleX="1" scaleY="1" font="jia_font_fnt" text="0" anchorOffsetX="0" anchorOffsetY="0"/>
+	</e:Group>
 </e:Skin>

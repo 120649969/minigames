@@ -12,13 +12,17 @@ module ui {
 		public m_me_icon:eui.Image
 		public label_other_name:eui.Label
 		public label_my_name:eui.Label
+		public label_add_line:eui.BitmapLabel
+		public m_addline_tips:eui.Group
 
 		private _gameLogicComponent:GameLogicComponent
 		private _commonUIComponent:CommonUIComponent
 
+		private _init_add_line_y:number = 0
 		public constructor() {
 			super()
 			this.skinName = "MainSceneSkin"
+			this._init_add_line_y = this.m_addline_tips.y
 		}
 
 		public resizeStage():void
@@ -85,6 +89,20 @@ module ui {
 		public GetGameLogicComponent():GameLogicComponent
 		{
 			return this._gameLogicComponent
+		}
+
+		public ShowAddLine(line_count:number):void
+		{
+			this.label_add_line.text = line_count.toString()
+			this.m_addline_tips.y = this._init_add_line_y
+			this.m_addline_tips.alpha = 1.0
+			this.m_addline_tips.visible = true
+			let target_y = this._init_add_line_y - 100
+			egret.Tween.removeTweens(this.m_addline_tips)
+			let __this = this
+			egret.Tween.get(this.m_addline_tips).to({y:target_y},0.8 * 1000).to({y:target_y - 50, alpha:0}, 0.5 * 1000).call(function(){
+				__this.m_addline_tips.visible = false
+			})
 		}
 	}
 }

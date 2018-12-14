@@ -48,8 +48,6 @@ class GameController {
 	{
 		this._mainScenePanel.GetCommonUIComponent().OnEnterFrame()
 		this._mainScenePanel.GetGameLogicComponent().OnEnterFrame()
-		// GameBoxLineManager.instance.Update()
-		// this._myMoveObject.Move()
 	}
 
 	private _startTimer():void
@@ -67,6 +65,9 @@ class GameController {
 		this.serverModel.left_time -= 1
 		this.serverModel.left_time = Math.max(this.serverModel.left_time, 0)
 		this._mainScenePanel.UpdateTime()
+		let max_count = GameBoxLineManager.instance.GetMaxBoxCount()
+		let cur_count = GameBoxLineManager.instance.GetCurrentBoxCount()
+		GameNet.reqUpdateState(max_count, cur_count, 0)
 	}
 
 	private _clearGame():void

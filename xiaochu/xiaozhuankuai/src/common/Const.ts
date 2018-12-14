@@ -10,8 +10,8 @@ class Const {
 
 	public static GAME_TIME = 90;
 
-	public static DEBUG_SERVER_URL = 'ght-hall.badambiz.com:50012';
-	public static RELEASE_SERVER_URL = 'ght-hall.badambiz.com:50012'
+	public static DEBUG_SERVER_URL = 'ght-hall.badambiz.com:50013';
+	public static RELEASE_SERVER_URL = 'pk-gamesvr.badambiz.com/xmbg/'
 	
 	public static EVENT = {
 		ON_STAGE_RESIZE: 'onStageResize',

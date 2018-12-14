@@ -21,6 +21,10 @@ module io {
 			CMD_H5_SCORE_REQ:9,  //分数
 			CMD_H5_SCORE_RSP:10, //分数
 
+			CMD_H5_UPDATE_STATE_REQ:1001, //同步状态
+			CMD_H5_UPDATE_STATE_RSP:1002, //同步状态推送
+			CMD_H5_UPDATE_STATE_PUSH:10000, 
+
 			CMD_H5_JOIN_PUSH: 100, //加入房间推送
 			CMD_H5_GAME_STATUS_PUSH: 102, //房间状态改变推送
 			CMD_H5_GAME_START_PUSH: 104, //游戏开始推送
@@ -38,6 +42,11 @@ module io {
 			this.name = 'GameNet';
 
 			this.sessionKey = null;
+			if(DEBUG || !Config.Pushlish){
+				this.ssl = false
+			}else{
+				this.ssl = true
+			}
 
 			this.regProtocol(GameNet.GAME_PROTOCOL);
 		}
@@ -49,7 +58,7 @@ module io {
 					resolve()
 				}
 
-				if(DEBUG){
+				if(DEBUG || !Config.Pushlish){
 					self.connect(Const.DEBUG_SERVER_URL)
 				} else {
 					self.connect(Const.RELEASE_SERVER_URL)
@@ -123,6 +132,21 @@ module io {
 					resolve(body);
 				});
 				self.send(GameNet.GAME_PROTOCOL.CMD_H5_SURREND_REQ, {
+				});
+			});		
+		}
+		
+		public async reqUpdateState(total, curLine, clearLineCount){
+			let self = this;
+			return new Promise((resolve, reject) => {
+				self.on(GameNet.GAME_PROTOCOL.CMD_H5_UPDATE_STATE_RSP, function (msgId, body) {
+					self.off(GameNet.GAME_PROTOCOL.CMD_H5_UPDATE_STATE_RSP);
+					resolve(body);
+				});
+				self.send(GameNet.GAME_PROTOCOL.CMD_H5_UPDATE_STATE_REQ, {
+					total:total,
+					current:curLine,
+					add:clearLineCount
 				});
 			});		
 		}

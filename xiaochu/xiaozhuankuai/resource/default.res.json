@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "button_down_png,button_up_png,description_json,di_jpg,VS_png,ready_go_mp3,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,hard_png,normal_png,middle_png,txk_1_png,txk_2_png,mingzidi_png,wenhao_png,shuoming_png,shang_png,guang_png",
+			"keys": "button_down_png,button_up_png,description_json,di_jpg,VS_png,ready_go_mp3,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,hard_png,normal_png,middle_png,txk_1_png,txk_2_png,mingzidi_png,wenhao_png,shuoming_png,shang_png,guang_png,guang2_png,middle2_png,mingzidi2_png,shang2_png,shuoming2_png,txk_12_png,txk_22_png,wenhao2_png,line_ske_json,line_tex_json,line_tex_png,move_ske_json,move_tex_json,move_tex_png,jia_png,jia_font_png,jia_font_fnt,normal_mp3,clear_mp3",
 			"name": "preload"
 		}
 	],
@@ -100,6 +100,101 @@
 			"name": "guang_png",
 			"type": "image",
 			"url": "assets/guang.png"
+		},
+		{
+			"name": "guang2_png",
+			"type": "image",
+			"url": "assets/guang.png"
+		},
+		{
+			"name": "middle2_png",
+			"type": "image",
+			"url": "assets/middle.png"
+		},
+		{
+			"name": "mingzidi2_png",
+			"type": "image",
+			"url": "assets/mingzidi.png"
+		},
+		{
+			"name": "shang2_png",
+			"type": "image",
+			"url": "assets/shang.png"
+		},
+		{
+			"name": "shuoming2_png",
+			"type": "image",
+			"url": "assets/shuoming.png"
+		},
+		{
+			"name": "txk_12_png",
+			"type": "image",
+			"url": "assets/txk_1.png"
+		},
+		{
+			"name": "txk_22_png",
+			"type": "image",
+			"url": "assets/txk_2.png"
+		},
+		{
+			"name": "wenhao2_png",
+			"type": "image",
+			"url": "assets/wenhao.png"
+		},
+		{
+			"name": "line_ske_json",
+			"type": "json",
+			"url": "assets/db/line/line_ske.json"
+		},
+		{
+			"name": "line_tex_json",
+			"type": "json",
+			"url": "assets/db/line/line_tex.json"
+		},
+		{
+			"name": "line_tex_png",
+			"type": "image",
+			"url": "assets/db/line/line_tex.png"
+		},
+		{
+			"name": "move_ske_json",
+			"type": "json",
+			"url": "assets/db/move/move_ske.json"
+		},
+		{
+			"name": "move_tex_json",
+			"type": "json",
+			"url": "assets/db/move/move_tex.json"
+		},
+		{
+			"name": "move_tex_png",
+			"type": "image",
+			"url": "assets/db/move/move_tex.png"
+		},
+		{
+			"name": "jia_png",
+			"type": "image",
+			"url": "assets/jia.png"
+		},
+		{
+			"name": "jia_font_png",
+			"type": "image",
+			"url": "assets/jia_font.png"
+		},
+		{
+			"name": "jia_font_fnt",
+			"type": "font",
+			"url": "assets/jia_font.fnt"
+		},
+		{
+			"name": "normal_mp3",
+			"type": "sound",
+			"url": "assets/music/normal.mp3"
+		},
+		{
+			"name": "clear_mp3",
+			"type": "sound",
+			"url": "assets/music/clear.mp3"
 		}
 	]
 }

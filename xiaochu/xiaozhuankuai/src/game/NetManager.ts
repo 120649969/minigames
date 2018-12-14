@@ -120,9 +120,22 @@ class NetManager {
 		this.reconnect()
 	}
 
+	private onUpdateStatePush(msgId, body):void
+	{
+		if(GameController.instance.is_game_over){
+			return
+		}
+		let id = body['id'] || body['openid']
+		if(id == User.openId){
+			return
+		}
+		let count = body['add']
+		GameBoxLineManager.instance.AddLine(count)
+	}
+
 	public StartConnectServer():void
 	{
-		if(Config.debug){
+		if(DEBUG && Config.debug){
 			this._init_debug_role()
 			this._mainScenePanel.OnConnectServer()
 			return
@@ -132,6 +145,7 @@ class NetManager {
 		GameNet.on(protocol.CMD_H5_SECOND_PUSH, this.onGameSecondPush.bind(this)); //游戏时间推送
 		GameNet.on(protocol.CMD_H5_GAME_STATUS_PUSH, this.onGameStatusPush.bind(this)); //游戏状态推送
 		GameNet.on(protocol.CMD_H5_SCORE_PUSH, this.onGameScorePush.bind(this)); //游戏分数推送
+		GameNet.on(protocol.CMD_H5_UPDATE_STATE_PUSH, this.onUpdateStatePush.bind(this))
 		GameNet.on(protocol.CMD_H5_GAME_OVER_PUSH, this.onGameOverPush.bind(this)); //游戏结束推送
 		GameNet.on(protocol.CMD_H5_REENTER_PUSH, this.onGameReEnterPush.bind(this)); //游戏重进推送
 		GameNet.onDisconnected = this.onDisconnected.bind(this)

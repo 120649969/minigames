@@ -48,9 +48,12 @@ class GameBoxLine extends egret.DisplayObjectContainer{
 			new_box.visible = false
 		}
 		let random_index = index_array.indexOf(position)
-		index_array.splice(random_index, 1)
+		if(random_index >= 0)
+		{
+			index_array.splice(random_index, 1)
+			this.boxes[random_index].visible = true
+		}
 		this.idle_positions = index_array
-		this.boxes[random_index].visible = true
 	}
 
 	public resizeStage():void
@@ -67,7 +70,7 @@ class GameBoxLine extends egret.DisplayObjectContainer{
 		this.y += GameConst.LINE_MOVE_SPEED
 	}
 
-	public InsertBox(position):void
+	public InsertBox(position):boolean
 	{
 		if(this.life > 1) {
 			this.life -= 1 //困难模式的块 生命值-1
@@ -81,13 +84,23 @@ class GameBoxLine extends egret.DisplayObjectContainer{
 				this.life -= 1
 				this.idle_positions = []
 				this.boxes[position].visible = true
-				this.PlayHitAnimation()
+				return true
 			} else {
 				this.boxes[position].visible = true
 				let index_position = this.idle_positions.indexOf(position)
 				this.idle_positions.splice(index_position, 1)
 			}
 		}
+		return false
+	}
+
+	public CanClear():boolean
+	{
+		if(this.idle_positions.length == 0)
+		{
+			return true
+		}
+		return false
 	}
 
 	public PlayHitAnimation():void

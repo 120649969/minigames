@@ -9,7 +9,7 @@ class GameConst {
 	public static LINE_MOVE_SPEED = 6
 	public static NORMAL_BOX_LINE_COUNT:number = 20
 
-	public static MY_MOVE_SPEED = -80
+	public static MY_MOVE_SPEED = -140
 
 	public static HARD_RATE = 0.1
 	public static type_2_lift:Object = {

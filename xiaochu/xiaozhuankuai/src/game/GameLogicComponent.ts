@@ -42,7 +42,6 @@ class GameLogicComponent extends BaseComponent {
 	public Fail():void
 	{
 		//我输了
-		let index = 1
 		GameController.instance.GameOver()
 	}
 }

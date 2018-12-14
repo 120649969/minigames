@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="MyMoveObjectSkin" width="175" height="720" xmlns:e="http://ns.egret.com/eui">
-	<e:Image source="guang_png" y="8" x="11.8" anchorOffsetY="0" height="712"/>
-	<e:Image source="normal_png" y="-9" horizontalCenter="0"/>
-	<e:Image source="shang_png" x="-2" y="83.69"/>
-	<e:Image source="shang_png" x="-1" y="136.42"/>
+<e:Skin class="MyMoveObjectSkin" width="175" height="631" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image source="guang_png" y="8" x="11.8" anchorOffsetY="0" height="712" visible="false"/>
+	<e:Image id="img_box" source="normal_png" y="-9" horizontalCenter="0" visible="false"/>
+	<e:Image source="shang_png" x="-2" y="83.69" visible="false"/>
+	<e:Image source="shang_png" x="-1" y="136.42" visible="false"/>
 </e:Skin>
