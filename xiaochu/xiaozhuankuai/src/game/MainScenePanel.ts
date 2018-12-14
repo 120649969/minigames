@@ -79,6 +79,8 @@ module ui {
 			this._gameLogicComponent = new GameLogicComponent()
 
 			NetManager.instance.StartConnectServer()
+
+			this.box_line_container.mask = new egret.Rectangle(0, 0, this.box_line_container.width, this.box_line_container.height)
 		}
 
 		public GetCommonUIComponent():CommonUIComponent

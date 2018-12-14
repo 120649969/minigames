@@ -41,7 +41,7 @@ class GameBoxLineManager {
 		}
 		if(this._maxBoxCountInVisible == 0)
 		{
-			this._maxBoxCountInVisible = Math.ceil(this._mainScenePanel.height / this._boxHeight)
+			this._maxBoxCountInVisible = Math.ceil(this._mainScenePanel.box_line_container.height / this._boxHeight)
 		}
 		return this._maxBoxCountInVisible
 	}
@@ -144,31 +144,6 @@ class GameBoxLineManager {
 			}
 		}
 		return count
-	}
-
-	public GetMaxCanClearLines(position:number):Array<GameBoxLine>
-	{
-		let ret:Array<GameBoxLine> = []
-		for(let index = 0; index < this.allBoxLines.length; index++)
-		{
-			let box_line = this.allBoxLines[index]
-			if(box_line.idle_positions.indexOf(position) >= 0){
-				if(box_line.idle_positions.length == 1){
-					if(box_line.life >= 1){
-						ret.unshift(box_line)
-						if(box_line.life > 1){
-							return ret
-						}
-					}
-				} else {
-					ret.unshift(box_line)
-					return ret
-				}
-			} else {
-				return ret
-			}
-		}
-		return ret
 	}
 
 	public GetButtomBoxLine():GameBoxLine

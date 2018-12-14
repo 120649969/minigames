@@ -9,9 +9,9 @@ class GameConst {
 	public static LINE_MOVE_SPEED = 6
 	public static NORMAL_BOX_LINE_COUNT:number = 20
 
-	public static MY_MOVE_SPEED = -140
+	public static MY_MOVE_SPEED = -160
 
-	public static HARD_RATE = 0.1
+	public static HARD_RATE = 0.15
 	public static type_2_lift:Object = {
 		[GAME_BOX_LINE_TYPE.NORMAL] : 	1,
 		[GAME_BOX_LINE_TYPE.HARD]:		2
