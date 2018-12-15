@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="DebugSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image source="bg_jpg" left="0" top="0" bottom="0" right="0" locked="true"/>
+	<e:Button id="btn_close" label="关闭" x="310" top="57"/>
+	<e:Button id="btn_1" label="10_9_10_9_10" left="0" top="165"/>
+	<e:Button id="btn_2" label="9_10_9_10_9" left="191" top="165"/>
+	<e:Group id="m_demo_group" width="100" height="531.82" x="260" y="509" anchorOffsetX="0" anchorOffsetY="0" touchEnabled="true" visible="false">
+		<e:Rect left="0" top="0" bottom="0" right="0" fillAlpha="0.5"/>
+		<e:Image id="img_demo_1" source="ball1_png" touchEnabled="true" y="9.12" x="6"/>
+		<e:Image id="img_demo_2" x="6" scaleX="1" scaleY="1" source="ball2_png" touchEnabled="true" y="106.12"/>
+		<e:Image id="img_demo_3" x="6" scaleX="1" scaleY="1" source="ball3_png" touchEnabled="true" y="203.12"/>
+		<e:Image id="img_demo_4" x="6" scaleX="1" scaleY="1" source="ball4_png" touchEnabled="true" y="300.12"/>
+		<e:Button id="img_demo_5" label="清空" x="0" y="395.11"/>
+	</e:Group>
+	<e:Button id="btn_export" label="导出" x="139" bottom="138"/>
+	<e:Rect height="110" fillColor="0xfcf9f9" left="0" right="0" bottom="0"/>
+	<e:EditableText id="m_edit_text" text="" anchorOffsetX="0" anchorOffsetY="0" left="0" bottom="0" right="0" height="110" maxWidth="720" width="720" multiline="true" textColor="0x0a0a0a"/>
+	<e:Button id="btn_load" label="加载" x="490.12" bottom="138"/>
+</e:Skin>

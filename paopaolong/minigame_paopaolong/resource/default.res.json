@@ -1,0 +1,75 @@
+{
+	"groups": [
+		{
+			"keys": "button_down_png,button_up_png,bg_jpg,description_json,ball1_png,ball2_png,ball3_png,ball4_png,data_json,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,ready_go_mp3",
+			"name": "preload"
+		}
+	],
+	"resources": [
+		{
+			"url": "assets/Button/button_down.png",
+			"type": "image",
+			"name": "button_down_png"
+		},
+		{
+			"url": "assets/Button/button_up.png",
+			"type": "image",
+			"name": "button_up_png"
+		},
+		{
+			"url": "assets/bg.jpg",
+			"type": "image",
+			"name": "bg_jpg"
+		},
+		{
+			"name": "description_json",
+			"type": "json",
+			"url": "config/description.json"
+		},
+		{
+			"name": "ball1_png",
+			"type": "image",
+			"url": "assets/ball1.png"
+		},
+		{
+			"name": "ball2_png",
+			"type": "image",
+			"url": "assets/ball2.png"
+		},
+		{
+			"name": "ball3_png",
+			"type": "image",
+			"url": "assets/ball3.png"
+		},
+		{
+			"name": "ball4_png",
+			"type": "image",
+			"url": "assets/ball4.png"
+		},
+		{
+			"name": "data_json",
+			"type": "json",
+			"url": "config/data.json"
+		},
+		{
+			"name": "ready_go_ske_json",
+			"type": "json",
+			"url": "assets/db/ready_go/ready_go_ske.json"
+		},
+		{
+			"name": "ready_go_tex_json",
+			"type": "json",
+			"url": "assets/db/ready_go/ready_go_tex.json"
+		},
+		{
+			"name": "ready_go_tex_png",
+			"type": "image",
+			"url": "assets/db/ready_go/ready_go_tex.png"
+		},
+		{
+			"name": "ready_go_mp3",
+			"type": "sound",
+			"url": "assets/music/ready_go.mp3"
+		}
+	]
+}

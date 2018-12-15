@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="BallLineSkin" width="720" height="72" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+	<e:Group id="balls_10" left="0" right="0" bottom="0" top="0" visible="false">
+		<ns1:Ball id="m_1_1" width="72" height="72" skinName="BallSkin" x="0" y="0" scaleX="1" scaleY="1"/>
+        <ns1:Ball id="m_1_2" width="72" height="72" x="72" y="0" skinName="BallSkin" scaleX="1" scaleY="1"/>
+        <ns1:Ball id="m_1_3" width="72" height="72" x="144" y="0" skinName="BallSkin" scaleX="1" scaleY="1"/>
+        <ns1:Ball id="m_1_4" width="72" height="72" x="216" y="0" skinName="BallSkin" scaleX="1" scaleY="1"/>
+		<ns1:Ball id="m_1_5" width="72" height="72" x="288" y="0" skinName="BallSkin" scaleX="1" scaleY="1"/>
+		<ns1:Ball id="m_1_6" width="72" height="72" x="360" y="0" skinName="BallSkin" scaleX="1" scaleY="1"/>
+		<ns1:Ball id="m_1_7" width="72" height="72" x="432" y="0" skinName="BallSkin" scaleX="1" scaleY="1"/>
+		<ns1:Ball id="m_1_8" width="72" height="72" x="504" y="0" skinName="BallSkin" scaleX="1" scaleY="1"/>
+		<ns1:Ball id="m_1_9" width="72" height="72" x="576" y="0" skinName="BallSkin" scaleX="1" scaleY="1"/>
+		<ns1:Ball id="m_1_10" width="72" height="72" skinName="BallSkin" y="0" x="648" scaleX="1" scaleY="1"/>
+	</e:Group>
+	<e:Group id="balls_9" left="0" right="0" bottom="0" top="0" visible="false">
+		<ns1:Ball id="m_2_1" width="72" height="72" x="36" y="0" skinName="BallSkin" scaleX="1" scaleY="1"/>
+		<ns1:Ball id="m_2_2" width="72" height="72" x="108" y="0" skinName="BallSkin" scaleX="1" scaleY="1"/>
+		<ns1:Ball id="m_2_3" width="72" height="72" x="180" y="0" skinName="BallSkin" scaleX="1" scaleY="1"/>
+		<ns1:Ball id="m_2_4" width="72" height="72" x="252" y="0" skinName="BallSkin" scaleX="1" scaleY="1"/>
+		<ns1:Ball id="m_2_5" width="72" height="72" x="324" y="0" skinName="BallSkin" scaleX="1" scaleY="1"/>
+		<ns1:Ball id="m_2_6" width="72" height="72" x="396" y="0" skinName="BallSkin" scaleX="1" scaleY="1"/>
+		<ns1:Ball id="m_2_7" width="72" height="72" x="468" y="0" skinName="BallSkin" scaleX="1" scaleY="1"/>
+		<ns1:Ball id="m_2_8" width="72" height="72" x="540" y="0" skinName="BallSkin" scaleX="1" scaleY="1"/>
+		<ns1:Ball id="m_2_9" width="72" height="72" x="612" y="0" skinName="BallSkin" scaleX="1" scaleY="1"/>
+	</e:Group>
+</e:Skin>
