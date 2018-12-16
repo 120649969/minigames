@@ -1,24 +1,19 @@
 class BallMultiLine extends eui.Component{
-	public is_top_down_long:boolean = true
 
 	public all_lines:Array<BallLine> = []
 	public multiLineConfig:MultiLineConfig
 
-	public constructor(is_top_down_long) {
+	public constructor() {
 		super()
-		this.is_top_down_long = is_top_down_long
 		this.skinName = "BallMultiLineSkin"
 		this._createLines()
 	}
 
 	private _createLines():void
 	{
-		let is_long = this.is_top_down_long
 		for(let index = 0; index < GameConst.LINE_COUNT; index++)
 		{
 			let line = new BallLine()
-			line.ShowLine(is_long)
-			is_long = !is_long
 			let circle_width = line.height
 			this.addChild(line)
 			line.y = line.height / 2 + (circle_width * Math.sin(60 / 180 * Math.PI)) * index - circle_width / 2
@@ -39,18 +34,9 @@ class BallMultiLine extends eui.Component{
 
 	public ChangeTopDownLong(new_top_down_long):void
 	{
-		if(this.is_top_down_long == new_top_down_long){
-			return
-		}
-
-		this.is_top_down_long = new_top_down_long
-
-		let is_long = this.is_top_down_long
 		for(let index = 0; index < GameConst.LINE_COUNT; index++)
 		{
 			let line = this.all_lines[index]
-			line.ShowLine(is_long)
-			is_long = !is_long
 			let circle_width = line.height
 			line.y = line.height / 2 + (circle_width * Math.sin(60 / 180 * Math.PI)) * index - circle_width / 2
 		}

@@ -1,5 +1,3 @@
-declare class BallLineSkin extends eui.Skin{
-}
 declare class BallMultiLineSkin extends eui.Skin{
 }
 declare class BallSkin extends eui.Skin{

@@ -3,8 +3,9 @@
 	<e:Image source="bg_jpg" top="0" right="0" left="0" bottom="0" locked="true"/>
 	<e:Group id="m_game_container" left="0" right="0" bottom="0" anchorOffsetY="0" touchEnabled="false" top="200" locked="true"/>
 	<e:Group id="m_start" width="88" height="88" anchorOffsetX="44" anchorOffsetY="44" horizontalCenter="0" bottom="124" touchEnabled="false" locked="true"/>
-	<e:Rect id="m_line" height="2" left="0" right="0" fillColor="0xe5dcdc" fillAlpha="0.8" touchEnabled="false" bottom="324" locked="true"/>
+	<e:Rect id="m_line" height="2" left="0" right="0" fillColor="0xe5dcdc" fillAlpha="0.8" touchEnabled="false" bottom="324"/>
+	<e:Rect id="m_rotate_line" height="2" fillAlpha="0.8" touchEnabled="false" width="200" x="350" y="994" anchorOffsetY="0" fillColor="0xe22222" rotation="0" visible="false"/>
 	<e:Group id="m_floor" height="166.67" y="1113.33" left="0" right="0" anchorOffsetY="0" touchEnabled="false" locked="true"/>
-	<e:Group id="m_touch_layer" left="0" top="0" bottom="0" right="0" touchEnabled="false"/>
+	<e:Group id="m_touch_layer" left="0" top="0" bottom="0" right="0" touchEnabled="true" locked="true"/>
 	<e:Button id="btn_debug" label="调试" right="0" enabled="true" touchEnabled="true" bottom="0"/>
 </e:Skin>

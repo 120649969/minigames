@@ -5,18 +5,76 @@ class GameLogicComponent extends BaseComponent {
 	public all_lines:Array<BallLine> = []
 	private _myBall:MyBall
 
+	private _global_start_point:egret.Point
+
 	public constructor() {
 		super()
 		this._mainScenePanel = GameController.instance.GetMainScenePanel()
 		let native_configs:Array<Object>= RES.getRes("data_json")
 		this.gameConfig = new GameConfig(native_configs)
+
+		let global_start_point = this._mainScenePanel.m_start.localToGlobal(this._mainScenePanel.m_start.width / 2, this._mainScenePanel.m_start.height / 2)
+		this._global_start_point = global_start_point
+		let local_in_cointainer = this._mainScenePanel.m_rotate_line.parent.globalToLocal(global_start_point.x, global_start_point.y)
+		this._mainScenePanel.m_rotate_line.x = local_in_cointainer.x
+		this._mainScenePanel.m_rotate_line.y = local_in_cointainer.y
 	}
 
-	public OnTouch(stageX:number, stageY:number):boolean
+	private _get_rotate(stageX:number, stageY:number):number
 	{
-		super.OnTouch(stageX, stageY)
+		let distance = Math.sqrt(Math.pow(stageX - this._global_start_point.x, 2) + Math.pow(stageY - this._global_start_point.y, 2))
+		let rate_x = (stageX - this._global_start_point.x) / distance
+		let rate_y = (stageY - this._global_start_point.y) / distance
 
+		let degree = Math.acos(rate_x)
+		return degree
+	}
+
+	public OnTouchStart(stageX:number, stageY:number):boolean
+	{
+		super.OnTouchStart(stageX, stageY)
+		if(this._myBall && this._myBall.is_moving){
+			return false
+		}
+
+		this._mainScenePanel.m_rotate_line.visible = true
+		let degree = this._get_rotate(stageX, stageY)
+		degree = degree / Math.PI * 180
+		degree = Math.min(GameConst.MAX_DEGREE, Math.max(GameConst.MIN_DEGREE, degree))
+		this._mainScenePanel.m_rotate_line.rotation = degree * -1
 		return false
+	}
+
+	public OnTouchMove(stageX:number, stageY:number):void
+	{
+		super.OnTouchMove(stageX, stageY)
+		let degree = this._get_rotate(stageX, stageY)
+		degree = degree / Math.PI * 180
+		degree = Math.min(GameConst.MAX_DEGREE, Math.max(GameConst.MIN_DEGREE, degree))
+		this._mainScenePanel.m_rotate_line.rotation = degree * -1
+	}
+
+	public OnTouchEnd(stageX:number, stageY:number):void
+	{
+		super.OnTouchEnd(stageX, stageY)
+		this._mainScenePanel.m_rotate_line.visible = false
+		if(this._myBall && this._myBall.is_moving){
+			return
+		}
+
+		if(this._mainScenePanel.m_rotate_line.rotation == -1 * GameConst.MIN_DEGREE || this._mainScenePanel.m_rotate_line.rotation == -1 * GameConst.MAX_DEGREE)
+		{
+			return
+		}
+		let rate_x = Math.cos(this._mainScenePanel.m_rotate_line.rotation * -1 / 180 * Math.PI)
+		let rate_y = Math.sin(this._mainScenePanel.m_rotate_line.rotation * -1 / 180 * Math.PI) * -1
+
+		let speed_x = rate_x * GameConst.MY_BALL_SPEED
+		let speed_y = rate_y * GameConst.MY_BALL_SPEED
+		this._myBall.speed_x = speed_x
+		this._myBall.speed_y = speed_y
+
+		this._myBall.is_moving = true
 	}
 
 	public TryGenerateMultiLine():void
@@ -78,8 +136,23 @@ class GameLogicComponent extends BaseComponent {
 		return GameConst.normal_ball_speed
 	}	
 
+	private _isStop:boolean = false
 	public OnEnterFrame():void
 	{
+		for(let index = this._all_move_down_balls.length - 1; index >= 0; index--)
+		{
+			let ball = this._all_move_down_balls[index]
+			if(ball.UpdateMoveDown()){
+				this._all_move_down_balls.splice(index, 1)
+			}
+		}
+		if(this._myBall)
+		{
+			this._myBall.Update()
+		}
+		if(this._isStop){
+			return
+		}
 		if(this.CheckOver()){
 			return
 		}
@@ -90,13 +163,23 @@ class GameLogicComponent extends BaseComponent {
 			let line = this.all_lines[index]
 			line.MoveDown(speed)
 		}
+		
+	}
+
+	public Stop():void
+	{
+		this._isStop = true
 	}
 
 	public OnStart():void
 	{
 		super.OnStart()
+		this.GenerateNextMyBall()
+	}
+
+	public GenerateNextMyBall():void
+	{
 		this._myBall = new MyBall()
-		this._myBall.visible = false
 	}
 
 	public Fail():void
@@ -107,6 +190,39 @@ class GameLogicComponent extends BaseComponent {
 
 	public TestFindBall(sourceBall:Ball):void
 	{
-		this._myBall.TestFindBall(sourceBall)
+	}
+
+	private _all_move_down_balls:Array<MoveDownBall> = []
+	public AddMoveDownBalls(source_ball:Ball):void
+	{
+		let move_down_ball:MoveDownBall = new MoveDownBall()
+		move_down_ball.SetBallType(source_ball.ball_type)
+		move_down_ball.x = source_ball.x
+		move_down_ball.y = source_ball.y
+		source_ball.parent.addChild(move_down_ball)
+
+		move_down_ball.PlayMoveDownAnimation()
+		this._all_move_down_balls.push(move_down_ball)
+	}
+
+	public InsertNewLineToButtom():BallLine
+	{
+		let ball_line = new BallLine()
+		let line_config = null
+		let is_last_long = false
+		if(this.all_lines.length > 0){
+			is_last_long = this.all_lines[0].is_long
+		}
+		if(is_last_long){
+			ball_line.UpdateConfig(GameConst.Generat9LineConfig())
+		}else{
+			ball_line.UpdateConfig(GameConst.Generate10LineConfig())
+		}
+		ball_line.isVisible = true
+		this._mainScenePanel.m_game_container.addChild(ball_line)
+		let circle_width = ball_line.height
+		ball_line.y = this.all_lines[0].y + ball_line.height - circle_width / 2 * (1 - Math.cos(30 / 180 * Math.PI)) - 5
+		this.all_lines.unshift(ball_line)
+		return ball_line
 	}
 }

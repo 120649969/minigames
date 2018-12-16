@@ -1,7 +1,4 @@
-class BallLine extends eui.Component{
-
-	public balls_10:eui.Group
-	public balls_9:eui.Group
+class BallLine extends egret.DisplayObjectContainer{
 
 	public line_10_balls:Array<Ball> = []
 	public line_9_balls:Array<Ball> = []
@@ -12,30 +9,36 @@ class BallLine extends eui.Component{
 
 	public constructor() {
 		super()
-		this.skinName = "BallLineSkin"
 
+		let next_x = 0
+		let ball_width = 0
+		let ball_height = 0
 		for(let index = 0; index < GameConst.LINE_BALL_COUNT; index++)
 		{
-			if(index % 2 == 0){
-				let ball:Ball = this["m_1_" + (index / 2 + 1)]
+			let ball = new Ball()
+			ball.SetBallType(BALL_TYPE.TYPE_EMPTY)
+			this.all_balls.push(ball)
+			if(index % 2== 0){
 				this.line_10_balls.push(ball)
-				this.all_balls.push(ball)
-				ball.index_in_line = index
-				ball.ball_line = this
 			}else{
-				let ball:Ball = this["m_2_" + ((index - 1) / 2 + 1)]
 				this.line_9_balls.push(ball)
-				this.all_balls.push(ball)
-				ball.index_in_line = index
-				ball.ball_line = this
 			}
+			this.addChild(ball)
+			ball.index_in_line = index
+			ball.ball_line = this
+			ball.x = next_x
+			next_x += ball.width / 2
+			ball_width = ball.width / 2
+			ball_height = ball.height
 		}
+		this.width = next_x + ball_width
+		this.height = ball_height
 	}
 
 	public UpdateConfig(line_config:Array<number>):void
 	{
 		let is_long = line_config.length == this.line_10_balls.length
-		this.ShowLine(is_long)
+		this.is_long = is_long
 		let target_balls = this.line_10_balls
 		let other_balls = this.line_9_balls
 		if(!is_long){
@@ -46,28 +49,14 @@ class BallLine extends eui.Component{
 		{
 			let ball = target_balls[index]
 			ball.SetBallType(line_config[index])
+			ball.visible = true
 		}
 		for(let index = 0; index < other_balls.length; index++)
 		{
 			let ball = other_balls[index]
 			ball.SetBallType(BALL_TYPE.TYPE_EMPTY)
+			ball.visible = false
 		}
-	}
-
-	public ShowLine(isLong:boolean):void
-	{
-		this.is_long = isLong
-		for(let index = 0; index < this.line_10_balls.length; index++)
-		{
-			this.line_10_balls[index].visible = this.is_long
-		}
-		this.balls_10.visible = this.is_long
-
-		for(let index = 0; index < this.line_9_balls.length; index++)
-		{
-			this.line_9_balls[index].visible = !this.is_long
-		}
-		this.balls_9.visible = !this.is_long
 	}
 
 	public IsValidIndex(index:number):boolean
@@ -75,25 +64,11 @@ class BallLine extends eui.Component{
 		if(index >= this.all_balls.length || index < 0){
 			return false
 		}
-		if(index % 2 == 0 && !this.is_long){
-			return false
-		}else if(index % 2 != 0 && this.is_long){
-			return false
-		}
 		let ball = this.all_balls[index]
-		if(ball.ball_type != BALL_TYPE.TYPE_EMPTY && !ball.isMarkedSameColorClear){
+		if(ball.IsValid() && !ball.isMarkedSameColorClear){
 			return true
 		}
 		return false
-	}
-
-	public GetValidBalls():Array<Ball>
-	{
-		if(this.is_long){
-			return this.line_10_balls
-		}else{
-			return this.line_9_balls
-		}
 	}
 
 	public GetBallIndex(index):Ball
@@ -104,8 +79,7 @@ class BallLine extends eui.Component{
 	public MoveDown(speed):void
 	{
 		this.y += speed
-		// this.isVisible = this.y >= this.height * -0.8
-		this.isVisible = this.y >= 0
+		this.isVisible = this.y >= this.height * -0.8
 	}
 
 	public ExportJson():Object
@@ -139,5 +113,17 @@ class BallLine extends eui.Component{
 			let ball:Ball = target_line_balls[index]
 			ball.SetBallType(data[index])
 		}
+	}
+
+	public IsValid():boolean
+	{
+		for(let ball of this.all_balls)
+		{
+			if(ball.IsValid())
+			{
+				return true
+			}
+		}
+		return false
 	}
 }

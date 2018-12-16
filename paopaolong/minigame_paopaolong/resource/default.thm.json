@@ -16,9 +16,8 @@
 	},
 	"autoGenerateExmlsList": true,
 	"exmls": [
-		"resource/eui_skins/BallSkin.exml",
-		"resource/eui_skins/BallLineSkin.exml",
 		"resource/eui_skins/BallMultiLineSkin.exml",
+		"resource/eui_skins/BallSkin.exml",
 		"resource/eui_skins/ButtonSkin.exml",
 		"resource/eui_skins/DebugSkin.exml",
 		"resource/eui_skins/MainSceneSkin.exml",

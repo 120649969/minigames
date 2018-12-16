@@ -14,10 +14,6 @@ class Ball extends eui.Component{
 		this.skinName = "BallSkin"
 
 		let __this = this
-
-		CommonUtils.Add_Btn_Click(this.img_ball, function(){
-			GameController.instance.GetMainScenePanel().GetGameLogicComponent().TestFindBall(__this)
-		}, this)
 	}
 
 	public SetBallType(ball_type:BALL_TYPE):void
@@ -36,12 +32,18 @@ class Ball extends eui.Component{
 		return this.ball_type != BALL_TYPE.TYPE_EMPTY
 	}
 
-	public MoveDown222():void
+	public PlayMoveDownAnimation():void
+	{
+		GameController.instance.GetMainScenePanel().GetGameLogicComponent().AddMoveDownBalls(this)
+		this.SetBallType(BALL_TYPE.TYPE_EMPTY)
+	}
+
+	public PlayBoomAnimation(delay_time:number):void
 	{
 		this.ball_type = BALL_TYPE.TYPE_EMPTY
 		let __this = this
-		egret.Tween.get(this).to({y:this.y + 200}, 2 * 1000).call(function(){
+		CommonUtils.performDelay(function(){
 			__this.SetBallType(BALL_TYPE.TYPE_EMPTY)
-		})
+		}, delay_time, this)
 	}
 }

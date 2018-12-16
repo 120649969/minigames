@@ -15,6 +15,8 @@ module ui {
 		public m_addline_tips:eui.Group
 		public m_game_container:eui.Group
 		public m_line:eui.Rect
+		public m_start:eui.Group
+		public m_rotate_line:eui.Rect
 		
 		private _gameLogicComponent:GameLogicComponent
 		private _commonUIComponent:CommonUIComponent
@@ -35,8 +37,6 @@ module ui {
 
 		protected createChildren(): void {
 			super.createChildren()
-
-
 			this.btn_debug.addEventListener(egret.TouchEvent.TOUCH_TAP, function(event:egret.Event){
 				ui.WindowManager.getInstance().open("DebugPanel")
 			}.bind(this), this)
@@ -87,6 +87,8 @@ module ui {
 			this._commonUIComponent.UpdateIcon()
 			this._commonUIComponent.UpdateName()
 			this.m_touch_layer.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onTouchBegin, this)
+			this.m_touch_layer.addEventListener(egret.TouchEvent.TOUCH_MOVE, this._TouchMove, this)
+			this.m_touch_layer.addEventListener(egret.TouchEvent.TOUCH_END, this._TouchEnd, this)
 			GameController.instance.StartGame()
 
 			this._gameLogicComponent.OnStart()
@@ -94,13 +96,22 @@ module ui {
 
 		private _onTouchBegin(event:egret.TouchEvent):void
 		{
-			let isStop = this._commonUIComponent.OnTouch(event.stageX, event.stageY)
+			let isStop = this._commonUIComponent.OnTouchStart(event.stageX, event.stageY)
 			if(isStop)
 			{
 				return
 			}
-			this._gameLogicComponent.OnTouch(event.stageX, event.stageY)
+			this._gameLogicComponent.OnTouchStart(event.stageX, event.stageY)
 		}
 
+		private _TouchMove(event:egret.TouchEvent):void
+		{
+			this._gameLogicComponent.OnTouchMove(event.stageX, event.stageY)
+		}
+
+		private _TouchEnd(event:egret.TouchEvent):void
+		{
+			this._gameLogicComponent.OnTouchEnd(event.stageX, event.stageY)
+		}
 	}
 }

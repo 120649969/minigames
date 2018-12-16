@@ -11,13 +11,36 @@ module ui {
 		private btn_load:eui.Button
 
 		private _current_ball:Ball
+		private _init_10_config:MultiLineConfig
+		private _init_9_config:MultiLineConfig
+
 		public constructor() {
 			super()
 			this.skinName = "DebugSkin"
 
-			let multi_line = new BallMultiLine(true)
+			let multi_line = new BallMultiLine()
+
 			this.addChild(multi_line)
+
+			let configs = []
+			
+			configs.push(GameConst.Generate10LineConfig(BALL_TYPE.TYPE_1))
+			configs.push(GameConst.Generat9LineConfig(BALL_TYPE.TYPE_1))
+			configs.push(GameConst.Generate10LineConfig(BALL_TYPE.TYPE_1))
+			configs.push(GameConst.Generat9LineConfig(BALL_TYPE.TYPE_1))
+			configs.push(GameConst.Generate10LineConfig(BALL_TYPE.TYPE_1))
+			this._init_10_config = new MultiLineConfig(configs)
+			
+			configs = []
+			configs.push(GameConst.Generat9LineConfig(BALL_TYPE.TYPE_1))
+			configs.push(GameConst.Generate10LineConfig(BALL_TYPE.TYPE_1))
+			configs.push(GameConst.Generat9LineConfig(BALL_TYPE.TYPE_1))
+			configs.push(GameConst.Generate10LineConfig(BALL_TYPE.TYPE_1))
+			configs.push(GameConst.Generat9LineConfig(BALL_TYPE.TYPE_1))
+			this._init_9_config = new MultiLineConfig(configs)
+
 			this._multiLine = multi_line
+			this._multiLine.UpdateConfig(this._init_10_config)
 			multi_line.y = 300
 		}
 
@@ -30,11 +53,11 @@ module ui {
 
 			let __this = this
 			CommonUtils.Add_Btn_Click(this.btn_1, function(){
-				__this._multiLine.ChangeTopDownLong(true)
+				__this._multiLine.UpdateConfig(__this._init_10_config)
 			}, this)
 
 			CommonUtils.Add_Btn_Click(this.btn_2, function(){
-				__this._multiLine.ChangeTopDownLong(false)
+				__this._multiLine.UpdateConfig(__this._init_9_config)
 			}, this)
 
 			CommonUtils.Add_Btn_Click(this.btn_export, function(){
@@ -46,8 +69,15 @@ module ui {
 
 			CommonUtils.Add_Btn_Click(this.btn_load, function(){
 				let content = __this.m_edit_text.text
-				let result = JSON.parse(content)
-				__this._multiLine.LoadJson(result)
+				let result:Array<Object> = JSON.parse(content)
+				if((result[0] as Array<number>).length == 10){
+					__this._init_10_config.all_line_config = result
+					__this._multiLine.UpdateConfig(__this._init_10_config)
+				}else{
+					__this._init_9_config.all_line_config = result
+					__this._multiLine.UpdateConfig(__this._init_9_config)
+				}
+				
 			}, this)
 
 			let all_lines = this._multiLine.all_lines

@@ -14,7 +14,7 @@
 		"bin-debug/common/io/Net.js",
 		"bin-debug/common/ui/Window.js",
 		"bin-debug/game/ball/Ball.js",
-		"bin-debug/common/User.js",
+		"bin-debug/common/Util.js",
 		"bin-debug/AssetAdapter.js",
 		"bin-debug/common/CommonUIComponent.js",
 		"bin-debug/common/CommonUtils.js",
@@ -25,8 +25,8 @@
 		"bin-debug/common/GamePlatform.js",
 		"bin-debug/common/NetManager.js",
 		"bin-debug/common/ServerModel.js",
+		"bin-debug/common/User.js",
 		"bin-debug/LoadingUI.js",
-		"bin-debug/common/Util.js",
 		"bin-debug/common/io/GameNet.js",
 		"bin-debug/Main.js",
 		"bin-debug/common/sound/SoundManager.js",
@@ -40,6 +40,7 @@
 		"bin-debug/ThemeAdapter.js",
 		"bin-debug/game/ball/BallLine.js",
 		"bin-debug/game/ball/BallMultiLine.js",
+		"bin-debug/game/ball/MoveDownBall.js",
 		"bin-debug/game/ball/MyBall.js"
 	]
 }

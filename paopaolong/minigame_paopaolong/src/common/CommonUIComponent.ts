@@ -56,9 +56,9 @@ class CommonUIComponent extends BaseComponent{
 		})
 	}
 
-	public OnTouch(stargeX:number, stageY:number):boolean
+	public OnTouchStart(stargeX:number, stageY:number):boolean
 	{
-		super.OnTouch(stargeX, stageY)
+		super.OnTouchStart(stargeX, stageY)
 		if(this._mainScenePanel.img_help)
 		{
 			if(this._mainScenePanel.img_help.visible){

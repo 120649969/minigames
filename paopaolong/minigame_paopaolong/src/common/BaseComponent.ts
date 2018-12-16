@@ -7,9 +7,19 @@ class BaseComponent {
 
 	}
 
-	public OnTouch(stargeX:number, stageY:number):boolean
+	public OnTouchStart(stageX:number, stageY:number):boolean
 	{
 		return false
+	}
+
+	public OnTouchMove(stageX:number, stageY:number):void
+	{
+
+	}
+
+	public OnTouchEnd(stageX:number, stageY:number):void
+	{
+
 	}
 
 	public OnEnterFrame():void

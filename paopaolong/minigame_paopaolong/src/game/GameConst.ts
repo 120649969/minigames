@@ -16,7 +16,31 @@ class GameConst {
 	public static GENERATE_STEP_LINE_COUNT:number = 5
 
 	public static quick_ball_speed:number = 25
-	public static slow_ball_speed:number = 0.2
-	public static normal_ball_speed:number = 0.4
+	public static slow_ball_speed:number = 0.05
+	public static normal_ball_speed:number = 0.05
 
+	public static MY_BALL_SPEED:number = 10
+
+	public static MIN_DEGREE:number = 20
+	public static MAX_DEGREE:number = 160
+
+	public static Generate10LineConfig(type:BALL_TYPE = BALL_TYPE.TYPE_EMPTY):Array<number>
+	{
+		let ret:Array<number> = []
+		for(let index = 0; index < GameConst.LINE_LONG_BALL_COUNT; index++)
+		{
+			ret.push(type)
+		}
+		return ret
+	}
+
+	public static Generat9LineConfig(type:BALL_TYPE = BALL_TYPE.TYPE_EMPTY):Array<number>
+	{
+		let ret:Array<number> = []
+		for(let index = 0; index < GameConst.LINE_BALL_COUNT - GameConst.LINE_LONG_BALL_COUNT; index++)
+		{
+			ret.push(type)
+		}
+		return ret
+	}
 }
