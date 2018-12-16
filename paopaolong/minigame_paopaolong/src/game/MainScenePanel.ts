@@ -71,7 +71,7 @@ module ui {
 			this._gameLogicComponent = new GameLogicComponent()
 
 			NetManager.instance.StartConnectServer()
-			this.m_game_container.mask = new egret.Rectangle(0, 0, this.m_game_container.width, this.m_game_container.height)
+			this.m_game_container.mask = new egret.Rectangle(0, -100, this.m_game_container.width, this.m_game_container.height + 100)
 		}
 
 		public OnConnectServer():void

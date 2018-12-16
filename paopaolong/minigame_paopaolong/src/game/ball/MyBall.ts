@@ -11,6 +11,9 @@ class MyBall extends Ball{
 	public is_end:boolean = false
 	public is_moving:boolean = false
 
+	private _hit_point:egret.Point = new egret.Point()
+	private _hit_dir:egret.Point = new egret.Point()
+
 	public constructor() {
 		super()
 		this._mainPanel = GameController.instance.GetMainScenePanel()
@@ -24,6 +27,7 @@ class MyBall extends Ball{
 		this.y = local_in_cointainer.y
 
 		let random_type = Math.ceil(Math.random() * (BALL_TYPE.MAX_TYPE - 1))
+		random_type = 4
 		this.SetBallType(random_type)
 		this.is_moving = false
 		this.is_end = false
@@ -104,6 +108,14 @@ class MyBall extends Ball{
 		}
 	}
 
+	private _checkHitBall(other_ball:Ball):boolean
+	{
+		let global_point = other_ball.localToGlobal(other_ball.width / 2, other_ball.height / 2)
+		let local_point = this._mainPanel.m_game_container.globalToLocal(global_point.x, global_point.y)
+		let distance = Math.sqrt(Math.pow(this.x - local_point.x, 2) + Math.pow(this.y - local_point.y, 2))
+		return distance <= other_ball.width
+	}
+
 	private _on_hit_ball(hit_ball:Ball):void
 	{
 		let global_point = hit_ball.localToGlobal(hit_ball.width / 2, hit_ball.height / 2)
@@ -148,24 +160,28 @@ class MyBall extends Ball{
 					test_idx = hit_ball.index_in_line + 2
 				}
 				let ball = ball_line.GetBallIndex(test_idx)
-				ball.SetBallType(this.ball_type)
-				target_ball = ball
+				if(ball){
+					ball.SetBallType(this.ball_type)
+					target_ball = ball
+				}
 				break
 			}
 			
 		}while(0);
 
 		if(target_ball){
-			target_ball.visible = false
 			let global_ball_point = target_ball.localToGlobal(target_ball.width / 2, target_ball.height / 2)
 			let local_point = this.parent.globalToLocal(global_ball_point.x, global_ball_point.y)
 			game_logic_component.GenerateNextMyBall()
-			this.TryClearBalls(target_ball)
+			this.TryClearBalls(target_ball, hit_ball)
 			target_ball.visible = true
-			this.visible = false
-		}else{
-			let temp = 1
+			this.Remove()
 		}
+	}
+
+	private Remove():void
+	{
+		this.parent.removeChild(this)
 	}
 
 	private _clear_all_data():void
@@ -175,7 +191,7 @@ class MyBall extends Ball{
 		this._all_connected_balls = []
 	}
 
-	public TryClearBalls(sourceBall:Ball):void
+	public TryClearBalls(sourceBall:Ball, hitBall:Ball):void
 	{
 		this._clear_all_data()
 		this._all_linked_same_color_balls.push([sourceBall])
@@ -186,7 +202,7 @@ class MyBall extends Ball{
 		for(let array of this._all_linked_same_color_balls){
 			total_same_color_count += (array as Array<Ball>).length
 		}
-		if(total_same_color_count < 3){
+		if(total_same_color_count < GameConst.MIN_CLEAR_BALL_COUNT){
 			for(let array of this._all_linked_same_color_balls)
 			{
 				for(let ball of array)
@@ -194,11 +210,45 @@ class MyBall extends Ball{
 					(ball as Ball).isMarkedSameColorClear = false
 				}
 			}
+			this.do_hit_effect(this, hitBall)
 			return
 		}
 		this._search_all_not_linked_balls()
-		this.test_find_balls()
+		this.do_clear_effect()
 		this._remove_invalid_ball_line()
+	}
+
+	private do_hit_effect(source_ball:Ball, hitBall:Ball):void
+	{
+		let dir_point = this._calculateDir(source_ball, hitBall)
+		this._do_ball_hit_effect(source_ball, hitBall)
+		let hit_connected_balls = this._find_connected_balls(hitBall)
+		for(let ball of hit_connected_balls){
+			this._do_ball_hit_effect(hitBall, ball)
+		}
+	}
+
+	private _do_ball_hit_effect(ball1:Ball, ball2:Ball):void
+	{
+		let dir = this._calculateDir(ball1, ball2)
+		let cur_img_x = ball2.img_ball.x
+		let cur_img_y = ball2.img_ball.y
+
+		let target_x = cur_img_x + dir.x * GameConst.HIT_MOVE_DISTANCE
+		let target_y = cur_img_y + dir.y * GameConst.HIT_MOVE_DISTANCE
+		egret.Tween.get(ball2.img_ball).to({x:target_x, y:target_y}, 0.05 * 1000).to({x:cur_img_x, y:cur_img_y}, 0.05 * 1000)
+	}
+
+	private _calculateDir(ball1:Ball, ball2:Ball):egret.Point
+	{
+		let global_ball1_point = ball1.localToGlobal(ball1.width / 2, ball1.height / 2)
+		let global_ball2_point = ball2.localToGlobal(ball2.width / 2, ball2.height / 2)
+		let dir_x = global_ball2_point.x - global_ball1_point.x
+		let dir_y = global_ball2_point.y - global_ball1_point.y
+		dir_x = dir_x / Math.sqrt(Math.pow(dir_x, 2) + Math.pow(dir_y, 2))
+		dir_y = dir_y / Math.sqrt(Math.pow(dir_x, 2) + Math.pow(dir_y, 2))
+
+		return new egret.Point(dir_x, dir_y)
 	}
 
 	private _remove_invalid_ball_line():void
@@ -217,13 +267,6 @@ class MyBall extends Ball{
 		console.log("移除了行数：", remove_count)
 	}
 
-	private _checkHitBall(other_ball:Ball):boolean
-	{
-		let global_point = other_ball.localToGlobal(other_ball.width / 2, other_ball.height / 2)
-		let local_point = this._mainPanel.m_game_container.globalToLocal(global_point.x, global_point.y)
-		let distance = Math.sqrt(Math.pow(this.x - local_point.x, 2) + Math.pow(this.y - local_point.y, 2))
-		return distance <= other_ball.width
-	}
 
 	private _search_all_not_linked_balls():void
 	{
@@ -244,9 +287,12 @@ class MyBall extends Ball{
 			return
 		}
 
-		for(let index = 0; index < top_line.all_balls.length; index++)
-		{
-			let ball = top_line.all_balls[index]
+		//fix bug:这里应该用当前最顶层的ballLine的上一层作为搜索起点，因为最顶层有可能出现消除的情况，不能把它的所有ball视为连接的。所以要取上一层。
+		let last_of_top_line = game_logic_component.all_lines[top_line_index + 1]
+		if(!last_of_top_line){
+			last_of_top_line = top_line
+		}
+		for(let ball of last_of_top_line.all_balls){
 			if(!ball.isMarkedSameColorClear && ball.IsValid()){
 				this._search_connected_balls(ball)
 			}
@@ -274,15 +320,24 @@ class MyBall extends Ball{
 		}
 		sourceBall.isRootConnected = true
 
+		let connected_balls:Array<Ball> = this._find_connected_balls(sourceBall)
+		for(let ball of connected_balls){
+			this._search_connected_balls(ball)
+		}
+	}
+
+	private _find_connected_balls(sourceBall:Ball):Array<Ball>
+	{
+		let ret:Array<Ball> = []
 		//left
 		let ball = this._get_ball_in_ball_line(sourceBall.ball_line, sourceBall.index_in_line - 2)
 		if(ball){
-			this._search_connected_balls(ball)
+			ret.push(ball)
 		}
 		//right
 		ball = this._get_ball_in_ball_line(sourceBall.ball_line, sourceBall.index_in_line + 2)
 		if(ball){
-			this._search_connected_balls(ball)
+			ret.push(ball)
 		}
 
 		//left down right down
@@ -293,12 +348,12 @@ class MyBall extends Ball{
 		if(next_line){
 			ball = this._get_ball_in_ball_line(next_line, sourceBall.index_in_line - 1)
 			if(ball){
-				this._search_connected_balls(ball)
+				ret.push(ball)
 			}
 
 			ball = this._get_ball_in_ball_line(next_line, sourceBall.index_in_line + 1)
 			if(ball){
-				this._search_connected_balls(ball)
+				ret.push(ball)
 			}
 		}
 
@@ -308,14 +363,15 @@ class MyBall extends Ball{
 		if(last_line && last_line.isVisible){
 			ball = this._get_ball_in_ball_line(last_line, sourceBall.index_in_line - 1)
 			if(ball){
-				this._search_connected_balls(ball)
+				ret.push(ball)
 			}
 
 			ball = this._get_ball_in_ball_line(last_line, sourceBall.index_in_line + 1)
 			if(ball){
-				this._search_connected_balls(ball)
+				ret.push(ball)
 			}
 		}
+		return ret
 	}
 
 
@@ -326,7 +382,7 @@ class MyBall extends Ball{
 		for(let index = 0; index < thisStepBalls.length; index++)
 		{
 			let ball:Ball = thisStepBalls[index]
-			let linkedBalls = this._search_linked_balls_by_ball(ball)
+			let linkedBalls = this._search_linked_same_color_balls_by_ball(ball)
 			new_step_array = new_step_array.concat(linkedBalls)
 		}
 		if(new_step_array.length > 0)
@@ -336,7 +392,7 @@ class MyBall extends Ball{
 		}
 	}
 
-	private test_find_balls():void
+	private do_clear_effect():void
 	{
 		for(let index1 = 0; index1 < this._all_linked_same_color_balls.length; index1++)
 		{
@@ -378,55 +434,16 @@ class MyBall extends Ball{
 		}
 	}
 
-	private _search_linked_balls_by_ball(sourceBall:Ball):Array<Ball>
+	private _search_linked_same_color_balls_by_ball(sourceBall:Ball):Array<Ball>
 	{
 		if(sourceBall.isMarkedSameColorClear){
 			return []
 		}
 		sourceBall.isMarkedSameColorClear = true
 		let ret:Array<Ball> = []
-		//left
-		let ball = this._get_same_color_ball_in_ball_line(sourceBall.ball_line, sourceBall.index_in_line - 2, sourceBall)
-		if(ball){
-			ret.push(ball)
-		}
-		//right
-
-		ball = this._get_same_color_ball_in_ball_line(sourceBall.ball_line, sourceBall.index_in_line + 2, sourceBall)
-		if(ball){
-			ret.push(ball)
-		}
-
-		let game_logic_component = this._mainPanel.GetGameLogicComponent()
-		let cur_line_index = game_logic_component.all_lines.indexOf(sourceBall.ball_line)
-
-		let next_line_index = cur_line_index - 1
-		let next_line = game_logic_component.all_lines[next_line_index]
-		if(next_line){
-			//left_down
-			ball = this._get_same_color_ball_in_ball_line(next_line, sourceBall.index_in_line - 1, sourceBall)
-			if(ball){
-				ret.push(ball)
-			}
-			//right_down
-			ball = this._get_same_color_ball_in_ball_line(next_line, sourceBall.index_in_line + 1, sourceBall)
-			if(ball){
-				ret.push(ball)
-			}
-		}
-		
-		let last_line_index = cur_line_index + 1
-		let last_line = game_logic_component.all_lines[last_line_index]
-		if(last_line && last_line.isVisible){
-			//left_top
-			ball = this._get_same_color_ball_in_ball_line(last_line, sourceBall.index_in_line - 1, sourceBall)
-			if(ball){
-				ret.push(ball)
-			}
-
-			//right_top
-			ball = this._get_same_color_ball_in_ball_line(last_line, sourceBall.index_in_line + 1, sourceBall)
-			if(ball){
+		let connected_balls = this._find_connected_balls(sourceBall)
+		for(let ball of connected_balls){
+			if(ball.ball_type == sourceBall.ball_type){
 				ret.push(ball)
 			}
 		}
