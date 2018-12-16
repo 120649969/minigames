@@ -91,7 +91,7 @@ class GameLogicComponent extends BaseComponent {
 			let multi_line_config = this.gameConfig.GetRandomLineConfig(is_last_long)
 			for(let index = 0; index < GameConst.GENERATE_STEP_LINE_COUNT; index++)
 			{
-				let line_config:Array<number> = multi_line_config.all_line_config[index] as Array<number>
+				let line_config:Array<number> = multi_line_config.all_line_config[GameConst.GENERATE_STEP_LINE_COUNT - 1 - index] as Array<number>
 				let new_line = new BallLine()
 				new_line.UpdateConfig(line_config)
 				this._mainScenePanel.m_game_container.addChild(new_line)
@@ -146,13 +146,7 @@ class GameLogicComponent extends BaseComponent {
 				this._all_move_down_balls.splice(index, 1)
 			}
 		}
-		if(this._myBall)
-		{
-			this._myBall.Update()
-		}
-		if(this._isStop){
-			return
-		}
+		
 		if(this.CheckOver()){
 			return
 		}
@@ -164,11 +158,10 @@ class GameLogicComponent extends BaseComponent {
 			line.MoveDown(speed)
 		}
 		
-	}
-
-	public Stop():void
-	{
-		this._isStop = true
+		if(this._myBall)
+		{
+			this._myBall.Update()
+		}
 	}
 
 	public OnStart():void

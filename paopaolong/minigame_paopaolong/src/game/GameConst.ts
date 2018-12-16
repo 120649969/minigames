@@ -16,10 +16,10 @@ class GameConst {
 	public static GENERATE_STEP_LINE_COUNT:number = 5
 
 	public static quick_ball_speed:number = 25
-	public static slow_ball_speed:number = 0.05
-	public static normal_ball_speed:number = 0.05
+	public static slow_ball_speed:number = 0.2
+	public static normal_ball_speed:number = 0.1
 
-	public static MY_BALL_SPEED:number = 10
+	public static MY_BALL_SPEED:number = 60
 
 	public static MIN_DEGREE:number = 20
 	public static MAX_DEGREE:number = 160

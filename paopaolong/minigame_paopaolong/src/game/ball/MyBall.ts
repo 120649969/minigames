@@ -24,7 +24,6 @@ class MyBall extends Ball{
 		this.y = local_in_cointainer.y
 
 		let random_type = Math.ceil(Math.random() * (BALL_TYPE.MAX_TYPE - 1))
-		random_type = 4
 		this.SetBallType(random_type)
 		this.is_moving = false
 		this.is_end = false
@@ -51,6 +50,7 @@ class MyBall extends Ball{
 		}
 		if(this.y <= 0){
 			this.is_end = true
+			this.parent.removeChild(this)
 			this._mainPanel.GetGameLogicComponent().GenerateNextMyBall()
 		}
 	}
@@ -113,38 +113,46 @@ class MyBall extends Ball{
 		
 		let target_ball:Ball = null
 		do{
-			let next_line_index = cur_line_index - 1
-			let ball_line:BallLine = game_logic_component.all_lines[next_line_index]
-			if(!ball_line){
-				ball_line = game_logic_component.InsertNewLineToButtom()
-			}
-			if(this.x < local_point.x){
-				if(!ball_line.IsValidIndex(hit_ball.index_in_line - 1)){
-					let ball = ball_line.GetBallIndex(hit_ball.index_in_line - 1)
-					ball.SetBallType(this.ball_type)
-					target_ball = ball
-					break
+			
+			let is_buttom = Math.abs(local_point.x - this.x)  < Math.abs(local_point.y - this.y)
+			if(is_buttom){
+				let next_line_index = cur_line_index - 1
+				let ball_line:BallLine = game_logic_component.all_lines[next_line_index]
+				if(!ball_line){
+					ball_line = game_logic_component.InsertNewLineToButtom()
 				}
-				if(!ball_line.IsValidIndex(hit_ball.index_in_line + 1)){
-					let ball = ball_line.GetBallIndex(hit_ball.index_in_line + 1)
+				egret.assert(!ball_line.IsValidIndex(hit_ball.index_in_line - 1) || !ball_line.IsValidIndex(hit_ball.index_in_line + 1))
+				let test_idxs = []
+				if(this.x < local_point.x){
+					test_idxs.push(hit_ball.index_in_line - 1)
+					test_idxs.push(hit_ball.index_in_line + 1)
+				}else{
+					test_idxs.push(hit_ball.index_in_line + 1)
+					test_idxs.push(hit_ball.index_in_line - 1)
+				}
+				for(let test_idx of test_idxs){
+					let ball = ball_line.GetBallIndex(test_idx)
 					ball.SetBallType(this.ball_type)
 					target_ball = ball
 					break
 				}
 			}else{
-				if(!ball_line.IsValidIndex(hit_ball.index_in_line + 1)){
-					let ball = ball_line.GetBallIndex(hit_ball.index_in_line + 1)
-					ball.SetBallType(this.ball_type)
-					target_ball = ball
-					break
+				let ball_line:BallLine = hit_ball.ball_line
+				let test_idx = -1
+				//left right
+				if(local_point.x > this.x){ //left
+					egret.assert(!ball_line.IsValidIndex(hit_ball.index_in_line - 2))
+					test_idx = hit_ball.index_in_line - 2
+				}else{//right
+					egret.assert(!ball_line.IsValidIndex(hit_ball.index_in_line + 2))
+					test_idx = hit_ball.index_in_line + 2
 				}
-				if(!ball_line.IsValidIndex(hit_ball.index_in_line - 1)){
-					let ball = ball_line.GetBallIndex(hit_ball.index_in_line - 1)
-					ball.SetBallType(this.ball_type)
-					target_ball = ball
-					break
-				}
+				let ball = ball_line.GetBallIndex(test_idx)
+				ball.SetBallType(this.ball_type)
+				target_ball = ball
+				break
 			}
+			
 		}while(0);
 
 		if(target_ball){
