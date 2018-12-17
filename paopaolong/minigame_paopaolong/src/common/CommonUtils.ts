@@ -38,6 +38,23 @@ class CommonUtils {
 		image.filters = [colorFilter];
 	}
 
+	/**
+     * 替换插槽
+     * @param slotName 插槽名称 原材料
+     * @param textureName 图片名  xxx_png
+     * @param 偏移量
+     */
+    public static setNewSlot(armatureDisplay:dragonBones.EgretArmatureDisplay, slotName:string, textureName:string ,offsetX:number=0, offsetY:number=0){
+        var slot:dragonBones.Slot = armatureDisplay.armature.getSlot(slotName);
+        var b:egret.Bitmap = new egret.Bitmap();
+        b.texture = RES.getRes(textureName);
+        b.x = slot.display.x;
+        b.y = slot.display.y;
+        b.anchorOffsetX = b.width/2 + offsetX;
+        b.anchorOffsetY = b.height/2 + offsetY;
+        slot.setDisplay(b);
+    }
+	
 	public static GetRandomPositive():number
 	{
 		return (Math.floor(Math.random() * 2) == 0) ? 1 : -1
