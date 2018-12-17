@@ -10,7 +10,7 @@
 		<e:Image id="img_demo_2" x="6" scaleX="1" scaleY="1" source="ball2_png" touchEnabled="true" y="106.12"/>
 		<e:Image id="img_demo_3" x="6" scaleX="1" scaleY="1" source="ball3_png" touchEnabled="true" y="203.12"/>
 		<e:Image id="img_demo_4" x="6" scaleX="1" scaleY="1" source="ball4_png" touchEnabled="true" y="300.12"/>
-		<e:Button id="img_demo_5" label="清空" x="0" y="395.11"/>
+		<e:Button id="img_demo_100" label="清空" x="0" y="395.11"/>
 	</e:Group>
 	<e:Button id="btn_export" label="导出" x="139" bottom="138"/>
 	<e:Rect height="110" fillColor="0xfcf9f9" left="0" right="0" bottom="0"/>

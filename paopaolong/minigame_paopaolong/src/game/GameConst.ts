@@ -3,8 +3,8 @@ enum BALL_TYPE{
 	TYPE_2 = 2,	//紫
 	TYPE_3 = 3,	//蓝
 	TYPE_4 = 4,	//红
-	TYPE_EMPTY = 5, //清空
-	MAX_TYPE = 5
+	TYPE_EMPTY = 100, //清空
+	MAX_TYPE = 4
 }
 
 class GameConst {
@@ -15,7 +15,7 @@ class GameConst {
 	public static MIN_KEPP_LINE_COUNT:number = 15
 	public static GENERATE_STEP_LINE_COUNT:number = 5
 
-	public static quick_ball_speed:number = 0.1
+	public static quick_ball_speed:number = 25
 	public static slow_ball_speed:number = 0.1
 	public static normal_ball_speed:number = 0.4
 

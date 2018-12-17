@@ -26,7 +26,7 @@ class MyBall extends Ball{
 		this.x = local_in_cointainer.x
 		this.y = local_in_cointainer.y
 
-		let random_type = Math.ceil(Math.random() * (BALL_TYPE.MAX_TYPE - 1))
+		let random_type = Math.ceil(Math.random() * (BALL_TYPE.MAX_TYPE))
 		random_type = 4
 		this.SetBallType(random_type)
 		this.is_moving = false

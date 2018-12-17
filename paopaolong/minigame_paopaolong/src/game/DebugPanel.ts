@@ -104,17 +104,24 @@ module ui {
 			for(let index = 0; index < BALL_TYPE.MAX_TYPE; index++)
 			{
 				let img:eui.Image = this['img_demo_' + (index + 1)] as eui.Image
-				CommonUtils.Add_Btn_Click(img, function(){
-					if(!__this._current_ball){
-						return
-					}
-					__this.m_demo_group.visible = false
-					 __this._current_ball.SetBallType(index + 1)
-					__this._current_ball = null
-				}, this)
+				this._addIconClick(img, index + 1)
 			}
+			this._addIconClick(this['img_demo_100'], BALL_TYPE.TYPE_EMPTY)
 
 			this.m_demo_group.parent.setChildIndex(this.m_demo_group, this.m_demo_group.parent.numChildren - 1)
+		}
+
+		private _addIconClick(img, type):void
+		{
+			let __this = this
+			CommonUtils.Add_Btn_Click(img, function(){
+				if(!__this._current_ball){
+					return
+				}
+				__this.m_demo_group.visible = false
+				__this._current_ball.SetBallType(type)
+				__this._current_ball = null
+			}, this)
 		}
 	}
 }
