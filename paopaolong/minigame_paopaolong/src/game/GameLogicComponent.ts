@@ -124,7 +124,7 @@ class GameLogicComponent extends BaseComponent {
 			return 0
 		}
 		let buttom_multi_line = this.all_lines[0]
-		if(buttom_multi_line.y <= 1 * buttom_multi_line.height){
+		if(buttom_multi_line.y <= 2 * buttom_multi_line.height){
 			return GameConst.quick_ball_speed
 		}
 		let buttom_point = buttom_multi_line.localToGlobal(0, buttom_multi_line.height)

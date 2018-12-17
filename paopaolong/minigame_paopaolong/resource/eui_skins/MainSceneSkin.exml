@@ -6,20 +6,13 @@
 	</e:Group>
 
 
-	<e:Group id="m_start" width="88" height="88" anchorOffsetX="44" anchorOffsetY="44" horizontalCenter="0" bottom="124" touchEnabled="false" locked="true"/>
-	<e:Rect id="m_line" height="2" left="0" right="0" fillColor="0xe5dcdc" fillAlpha="0.8" touchEnabled="false" bottom="324" locked="true"/>
+	<e:Group id="m_start" width="88" height="88" anchorOffsetX="44" anchorOffsetY="44" horizontalCenter="0" bottom="92" touchEnabled="false" locked="true"/>
+	<e:Rect id="m_line" height="2" left="0" right="0" fillColor="0xe5dcdc" fillAlpha="0.8" touchEnabled="false" bottom="262" locked="true"/>
 	<e:Rect id="m_rotate_line" height="2" fillAlpha="0.8" touchEnabled="false" width="200" x="350" y="994" anchorOffsetY="0" fillColor="0xe22222" rotation="0" visible="false" locked="true"/>
-	<e:Group id="m_floor" height="166.67" left="0" right="0" anchorOffsetY="0" touchEnabled="false" bottom="0" locked="true"/>
+	<e:Group id="m_floor" height="133.34" left="0" right="0" anchorOffsetY="0" touchEnabled="false" bottom="0" locked="true"/>
 	<e:Group id="m_touch_layer" left="0" top="0" bottom="0" right="0" touchEnabled="true" locked="true"/>
-	<e:Group id="m_ui_top" height="200" left="0" right="0" y="85" touchEnabled="false">
-		<e:Button id="btn_help" label="" y="100" width="40" height="40" left="4">
-		<e:skinName>
-			<e:Skin states="up,down,disabled">
-			<e:Image width="100%" height="100%" source="wenhao_png" source.down="wenhao_png" source.disabled="wenhao_png"/>
-			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
-			</e:Skin>
-		</e:skinName>
-		</e:Button>
+	<e:Group id="m_ui_top" height="200" left="0" right="0" y="85" touchEnabled="false" locked="true">
+
 		<e:Group id="m_offline_tips" width="505" height="50" horizontalCenter="0" verticalCenter="218" touchEnabled="false" visible="false">
 		<e:Rect width="505" height="50" horizontalCenter="0" verticalCenter="0" fillColor="0x302f2f" fillAlpha="0.5" x="0" y="0" scaleX="1" scaleY="1"/>
 		<e:Label text="توردىن ئازراق مەسىلە چىقتى ، سەل ساقلاڭ " x="31.360000000000014" y="10" scaleX="1" scaleY="1"/>
@@ -37,6 +30,14 @@
 		<e:Label id="label_my_name" text="" x="14" y="53.7" size="24" anchorOffsetY="13" anchorOffsetX="0" width="150" textAlign="right" touchEnabled="false" height="26" scaleX="1" scaleY="1"/>
 		</e:Group>
 	</e:Group>
+	<e:Button id="btn_help" label="" y="137.2" width="40" height="40" left="0">
+		<e:skinName>
+		<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="wenhao_png" source.down="wenhao_png" source.disabled="wenhao_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+		</e:Skin>
+		</e:skinName>
+	</e:Button>
 	<e:Button id="btn_debug" label="调试" right="0" enabled="true" touchEnabled="true" bottom="0"/>
 	<e:Image id="img_help" source="shuoming_png" x="24" y="195.9" scaleX="0.9" scaleY="0.9" touchEnabled="false" anchorOffsetX="0" width="658.91" visible="false"/>
 </e:Skin>

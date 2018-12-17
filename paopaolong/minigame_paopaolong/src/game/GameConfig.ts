@@ -37,7 +37,6 @@ class GameConfig {
 			return this.shortMultiLineConfigs[index]
 		}else{
 			let index = Math.floor(Math.random() * this.longMultiLineConfigs.length)
-			index = 2
 			return this.longMultiLineConfigs[index]
 		}
 		

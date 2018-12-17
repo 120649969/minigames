@@ -7,6 +7,7 @@ class MyBall extends Ball{
 	private _all_linked_same_color_balls = []
 	private _all_not_connected_balls = []
 	private _all_connected_balls = []
+	private _has_insert_balls:Array<Ball> = []
 
 	public is_end:boolean = false
 	public is_moving:boolean = false
@@ -14,6 +15,7 @@ class MyBall extends Ball{
 	private _hit_point:egret.Point = new egret.Point()
 	private _hit_dir:egret.Point = new egret.Point()
 
+	public static times:number = 0
 	public constructor() {
 		super()
 		this._mainPanel = GameController.instance.GetMainScenePanel()
@@ -26,8 +28,7 @@ class MyBall extends Ball{
 		this.x = local_in_cointainer.x
 		this.y = local_in_cointainer.y
 
-		// let random_type = Math.ceil(Math.random() * (BALL_TYPE.MAX_TYPE))
-		let random_type = Math.ceil(Math.random() * 4)
+		let random_type = Math.ceil(Math.random() * (BALL_TYPE.MAX_TYPE))
 		this.SetBallType(random_type)
 		this.is_moving = false
 		this.is_end = false
@@ -188,12 +189,14 @@ class MyBall extends Ball{
 		this._all_linked_same_color_balls = []
 		this._all_not_connected_balls = []
 		this._all_connected_balls = []
+		this._has_insert_balls = []
 	}
 
 	public TryClearBalls(sourceBall:Ball, hitBall:Ball):void
 	{
 		this._clear_all_data()
 		this._all_linked_same_color_balls.push([sourceBall])
+		this._has_insert_balls.push(sourceBall)
 		this._clear_all_balls_state()
 		this._search_linked_same_color_balls()
 
@@ -414,21 +417,21 @@ class MyBall extends Ball{
 
 	private _clear_all_balls_state():void
 	{
+		//fix bug：这里最好对所有的行进行重置。
+		//之前判断了行是否在可视范围，但是在搜索连接的球时用的是顶行的上一行，这行会设置isRootConnected为true。
+		//如果这里只对可视行进行重置，那么上次搜索用到的顶行的上一行数据将不能进行重置。
+		//这里为了方便，就最好对所有行重置
 		let game_logic_component = this._mainPanel.GetGameLogicComponent()
 		for(let index = 0; index < game_logic_component.all_lines.length; index ++)
 		{
 			let cur_line = game_logic_component.all_lines[index]
-			if(cur_line.isVisible){
-				for(let ball_index = 0; ball_index < cur_line.all_balls.length; ball_index++)
-				{
-					let ball = cur_line.all_balls[ball_index]
-					if(ball.IsValid()){
-						ball.isMarkedSameColorClear = false
-						ball.isRootConnected = false
-					}
+			for(let ball_index = 0; ball_index < cur_line.all_balls.length; ball_index++)
+			{
+				let ball = cur_line.all_balls[ball_index]
+				if(ball.IsValid()){
+					ball.isMarkedSameColorClear = false
+					ball.isRootConnected = false
 				}
-			}else{
-				break
 			}
 		}
 	}
@@ -442,8 +445,9 @@ class MyBall extends Ball{
 		let ret:Array<Ball> = []
 		let connected_balls = this._find_connected_balls(sourceBall)
 		for(let ball of connected_balls){
-			if(ball.ball_type == sourceBall.ball_type){
+			if(ball.ball_type == sourceBall.ball_type && this._has_insert_balls.indexOf(ball) == -1){
 				ret.push(ball)
+				this._has_insert_balls.push(ball)
 			}
 		}
 		return ret
