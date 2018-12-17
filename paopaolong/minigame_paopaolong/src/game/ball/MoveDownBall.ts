@@ -26,7 +26,7 @@ class MoveDownBall extends Ball{
 		this.y = Math.min(this.y, this._move_down_target_y)
 		if(this.y == this._move_down_target_y){
 			this._reach_target_times += 1
-			this._move_down_speed_y *= -0.8
+			this._move_down_speed_y *= -0.3
 		}
 		if(this._reach_target_times == 2){
 			this.visible = false

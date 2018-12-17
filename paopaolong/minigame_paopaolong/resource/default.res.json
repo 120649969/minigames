@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "button_down_png,button_up_png,bg_jpg,description_json,ball1_png,ball2_png,ball3_png,ball4_png,data_json,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,ready_go_mp3",
+			"keys": "button_down_png,button_up_png,bg_jpg,description_json,ball1_png,ball2_png,ball3_png,ball4_png,data_json,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,ready_go_mp3,ball7_png,ball5_png,ball6_png,mingzidi_png,txk_1_png,txk_2_png,wenhao_png,shuoming_png",
 			"name": "preload"
 		}
 	],
@@ -70,6 +70,46 @@
 			"name": "ready_go_mp3",
 			"type": "sound",
 			"url": "assets/music/ready_go.mp3"
+		},
+		{
+			"name": "ball7_png",
+			"type": "image",
+			"url": "assets/ball7.png"
+		},
+		{
+			"name": "ball5_png",
+			"type": "image",
+			"url": "assets/ball5.png"
+		},
+		{
+			"name": "ball6_png",
+			"type": "image",
+			"url": "assets/ball6.png"
+		},
+		{
+			"name": "mingzidi_png",
+			"type": "image",
+			"url": "assets/mingzidi.png"
+		},
+		{
+			"name": "txk_1_png",
+			"type": "image",
+			"url": "assets/txk_1.png"
+		},
+		{
+			"name": "txk_2_png",
+			"type": "image",
+			"url": "assets/txk_2.png"
+		},
+		{
+			"name": "wenhao_png",
+			"type": "image",
+			"url": "assets/wenhao.png"
+		},
+		{
+			"name": "shuoming_png",
+			"type": "image",
+			"url": "assets/shuoming.png"
 		}
 	]
 }

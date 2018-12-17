@@ -26,8 +26,8 @@ class MyBall extends Ball{
 		this.x = local_in_cointainer.x
 		this.y = local_in_cointainer.y
 
-		let random_type = Math.ceil(Math.random() * (BALL_TYPE.MAX_TYPE))
-		random_type = 4
+		// let random_type = Math.ceil(Math.random() * (BALL_TYPE.MAX_TYPE))
+		let random_type = Math.ceil(Math.random() * 4)
 		this.SetBallType(random_type)
 		this.is_moving = false
 		this.is_end = false
@@ -125,7 +125,6 @@ class MyBall extends Ball{
 		
 		let target_ball:Ball = null
 		do{
-			
 			let is_buttom = Math.abs(local_point.x - this.x)  < Math.abs(local_point.y - this.y)
 			if(is_buttom){
 				let next_line_index = cur_line_index - 1

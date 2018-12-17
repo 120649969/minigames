@@ -3,8 +3,11 @@ enum BALL_TYPE{
 	TYPE_2 = 2,	//紫
 	TYPE_3 = 3,	//蓝
 	TYPE_4 = 4,	//红
+	TYPE_5 = 5,	//红
+	TYPE_6 = 6,	//红
+	TYPE_7 = 7,	//红
 	TYPE_EMPTY = 100, //清空
-	MAX_TYPE = 4
+	MAX_TYPE = 7
 }
 
 class GameConst {

@@ -1,13 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="MainSceneSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+<e:Skin class="MainSceneSkin" width="640" height="1138" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
 	<e:Image source="bg_jpg" top="0" right="0" left="0" bottom="0" locked="true"/>
-	<e:Group id="m_game_container" left="0" right="0" bottom="0" anchorOffsetY="0" touchEnabled="false" top="200">
-		<e:Rect height="2" top="0" left="0" right="0"/>
+	<e:Group id="m_game_container" left="0" bottom="0" anchorOffsetY="0" touchEnabled="false" top="200" right="0" locked="true">
+		<e:Rect height="2" top="0" left="0" right="0" visible="false"/>
 	</e:Group>
+
+
 	<e:Group id="m_start" width="88" height="88" anchorOffsetX="44" anchorOffsetY="44" horizontalCenter="0" bottom="124" touchEnabled="false" locked="true"/>
-	<e:Rect id="m_line" height="2" left="0" right="0" fillColor="0xe5dcdc" fillAlpha="0.8" touchEnabled="false" bottom="324"/>
-	<e:Rect id="m_rotate_line" height="2" fillAlpha="0.8" touchEnabled="false" width="200" x="350" y="994" anchorOffsetY="0" fillColor="0xe22222" rotation="0" visible="false"/>
-	<e:Group id="m_floor" height="166.67" y="1113.33" left="0" right="0" anchorOffsetY="0" touchEnabled="false" locked="true"/>
+	<e:Rect id="m_line" height="2" left="0" right="0" fillColor="0xe5dcdc" fillAlpha="0.8" touchEnabled="false" bottom="324" locked="true"/>
+	<e:Rect id="m_rotate_line" height="2" fillAlpha="0.8" touchEnabled="false" width="200" x="350" y="994" anchorOffsetY="0" fillColor="0xe22222" rotation="0" visible="false" locked="true"/>
+	<e:Group id="m_floor" height="166.67" left="0" right="0" anchorOffsetY="0" touchEnabled="false" bottom="0" locked="true"/>
 	<e:Group id="m_touch_layer" left="0" top="0" bottom="0" right="0" touchEnabled="true" locked="true"/>
+	<e:Group id="m_ui_top" height="200" left="0" right="0" y="85" touchEnabled="false">
+		<e:Button id="btn_help" label="" y="100" width="40" height="40" left="4">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="wenhao_png" source.down="wenhao_png" source.disabled="wenhao_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+		</e:Button>
+		<e:Group id="m_offline_tips" width="505" height="50" horizontalCenter="0" verticalCenter="218" touchEnabled="false" visible="false">
+		<e:Rect width="505" height="50" horizontalCenter="0" verticalCenter="0" fillColor="0x302f2f" fillAlpha="0.5" x="0" y="0" scaleX="1" scaleY="1"/>
+		<e:Label text="توردىن ئازراق مەسىلە چىقتى ، سەل ساقلاڭ " x="31.360000000000014" y="10" scaleX="1" scaleY="1"/>
+		</e:Group>
+		<e:Group width="244" height="80" y="9" anchorOffsetY="0" anchorOffsetX="0" left="40" touchEnabled="false">
+		<e:Image source="mingzidi_png" x="59.03" y="42.5" anchorOffsetX="0" width="178" anchorOffsetY="0" height="27" scale9Grid="10,9,114,3" touchEnabled="false" scaleX="1" scaleY="1"/>
+		<e:Image id="m_other_icon_bg" y="40" anchorOffsetX="40" anchorOffsetY="40" source="txk_2_png" x="40" touchEnabled="false" scaleX="1" scaleY="1" width="80" height="80"/>
+		<e:Image id="m_other_icon" x="40" y="40" anchorOffsetX="40" anchorOffsetY="40" source="" touchEnabled="false" width="80" height="80" scaleX="1" scaleY="1"/>
+		<e:Label id="label_other_name" text="" x="80" y="56" size="24" anchorOffsetY="13" anchorOffsetX="0" width="150" textAlign="left" touchEnabled="false" height="26" scaleX="1" scaleY="1"/>
+		</e:Group>
+		<e:Group width="244" height="80" y="11.5" anchorOffsetX="244" right="40" touchEnabled="false">
+		<e:Image source="mingzidi_png" x="6.33" y="40" scale9Grid="10,8,117,3" width="178" height="27" touchEnabled="false" scaleX="1" scaleY="1"/>
+		<e:Image id="m_me_icon_bg" y="40" anchorOffsetX="40" anchorOffsetY="40" source="txk_1_png" x="204" touchEnabled="false" scaleX="1" scaleY="1" height="80" width="80"/>
+		<e:Image id="m_me_icon" x="204" y="40" anchorOffsetX="40" anchorOffsetY="40" source="" touchEnabled="false" width="80" height="80" scaleX="1" scaleY="1"/>
+		<e:Label id="label_my_name" text="" x="14" y="53.7" size="24" anchorOffsetY="13" anchorOffsetX="0" width="150" textAlign="right" touchEnabled="false" height="26" scaleX="1" scaleY="1"/>
+		</e:Group>
+	</e:Group>
 	<e:Button id="btn_debug" label="调试" right="0" enabled="true" touchEnabled="true" bottom="0"/>
+	<e:Image id="img_help" source="shuoming_png" x="24" y="195.9" scaleX="0.9" scaleY="0.9" touchEnabled="false" anchorOffsetX="0" width="658.91" visible="false"/>
 </e:Skin>
