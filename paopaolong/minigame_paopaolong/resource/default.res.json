@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "button_down_png,button_up_png,bg_jpg,description_json,ball1_png,ball2_png,ball3_png,ball4_png,data_json,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,ready_go_mp3,ball7_png,ball5_png,ball6_png,mingzidi_png,txk_1_png,txk_2_png,wenhao_png,shuoming_png",
+			"keys": "button_down_png,button_up_png,bg_jpg,description_json,ball1_png,ball2_png,ball3_png,ball4_png,data_json,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,ready_go_mp3,ball7_png,ball5_png,ball6_png,mingzidi_png,txk_1_png,txk_2_png,wenhao_png,shuoming_png,ppl_cannon_png,ppl_leaf_png,ppl_role_skill2_png,ppl_role_skill3_png,ppl_role_skillbg_png,ppl_line_w_png,ppl_line_light_png,ppl_clock_png,clock_fnt,clock_png,ppl_combo_png,combo_fnt,combo_png,ppl_rival_png,ppl_mine_png",
 			"name": "preload"
 		}
 	],
@@ -110,6 +110,81 @@
 			"name": "shuoming_png",
 			"type": "image",
 			"url": "assets/shuoming.png"
+		},
+		{
+			"name": "ppl_cannon_png",
+			"type": "image",
+			"url": "assets/ppl_cannon.png"
+		},
+		{
+			"name": "ppl_leaf_png",
+			"type": "image",
+			"url": "assets/ppl_leaf.png"
+		},
+		{
+			"name": "ppl_role_skill2_png",
+			"type": "image",
+			"url": "assets/ppl_role_skill2.png"
+		},
+		{
+			"name": "ppl_role_skill3_png",
+			"type": "image",
+			"url": "assets/ppl_role_skill3.png"
+		},
+		{
+			"name": "ppl_role_skillbg_png",
+			"type": "image",
+			"url": "assets/ppl_role_skillbg.png"
+		},
+		{
+			"name": "ppl_line_w_png",
+			"type": "image",
+			"url": "assets/ppl_line_w.png"
+		},
+		{
+			"name": "ppl_line_light_png",
+			"type": "image",
+			"url": "assets/ppl_line_light.png"
+		},
+		{
+			"name": "ppl_clock_png",
+			"type": "image",
+			"url": "assets/ppl_clock.png"
+		},
+		{
+			"name": "clock_fnt",
+			"type": "font",
+			"url": "assets/clock.fnt"
+		},
+		{
+			"name": "clock_png",
+			"type": "image",
+			"url": "assets/clock.png"
+		},
+		{
+			"name": "ppl_combo_png",
+			"type": "image",
+			"url": "assets/ppl_combo.png"
+		},
+		{
+			"name": "combo_fnt",
+			"type": "font",
+			"url": "assets/combo.fnt"
+		},
+		{
+			"name": "combo_png",
+			"type": "image",
+			"url": "assets/combo.png"
+		},
+		{
+			"name": "ppl_rival_png",
+			"type": "image",
+			"url": "assets/ppl_rival.png"
+		},
+		{
+			"name": "ppl_mine_png",
+			"type": "image",
+			"url": "assets/ppl_mine.png"
 		}
 	]
 }

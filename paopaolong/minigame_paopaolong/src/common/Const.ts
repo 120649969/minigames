@@ -2,9 +2,9 @@ class Const {
 	public constructor() {
 	}
 
-	public static MIN_RESOLUTION = 640;//640;
-	public static MIN_WIDTH = 640;//1136;
-	public static MIN_HEIGHT = 1138;//640;
+	public static MIN_RESOLUTION = 720;//640;
+	public static MIN_WIDTH = 720;//1136;
+	public static MIN_HEIGHT = 1280;//640;
 
 	public static HEARTBEAT_DUR = 6000;
 

@@ -92,8 +92,8 @@ class CommonUIComponent extends BaseComponent{
 		if(!this._mainScenePanel.m_other_icon){
 			return
 		}
-		this._addCircleMask(this._mainScenePanel.m_other_icon, this._mainScenePanel.m_other_icon_bg.x, this._mainScenePanel.m_other_icon_bg.y,this._mainScenePanel.m_other_icon_bg.width / 2 - 5)
-		this._addCircleMask(this._mainScenePanel.m_me_icon, this._mainScenePanel.m_me_icon_bg.x, this._mainScenePanel.m_me_icon_bg.y, this._mainScenePanel.m_me_icon_bg.width / 2 - 5)
+		this._addCircleMask(this._mainScenePanel.m_other_icon, this._mainScenePanel.m_other_icon.x, this._mainScenePanel.m_other_icon.y,this._mainScenePanel.m_other_icon.width / 2 - 5)
+		this._addCircleMask(this._mainScenePanel.m_me_icon, this._mainScenePanel.m_me_icon.x, this._mainScenePanel.m_me_icon.y, this._mainScenePanel.m_me_icon.width / 2 - 5)
 		let serverModel = GameController.instance.serverModel
 		egret.ImageLoader.crossOrigin = "anonymous" //支持跨域
 		if(serverModel.myRole.icon){
