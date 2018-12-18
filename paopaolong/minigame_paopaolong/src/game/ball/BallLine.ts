@@ -33,6 +33,17 @@ class BallLine extends egret.DisplayObjectContainer{
 		}
 		this.width = next_x + ball_width
 		this.height = ball_height
+
+		GameController.instance.GetMainScenePanel().m_game_container.addChild(this)
+	}
+
+	public ReSet():void
+	{
+		for(let ball of this.all_balls)
+		{
+			ball.ReSet()
+			this.isVisible = false
+		}
 	}
 
 	public UpdateConfig(line_config:Array<number>):void

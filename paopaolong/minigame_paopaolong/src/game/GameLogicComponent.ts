@@ -22,6 +22,7 @@ class GameLogicComponent extends BaseComponent {
 		this._mainScenePanel.m_fixline.y = local_in_cointainer.y
 
 		this._calc_line()
+		this._create_init_boom_armature()
 	}
 
 	private _calc_line():void
@@ -30,6 +31,30 @@ class GameLogicComponent extends BaseComponent {
 		let end_point = this._mainScenePanel.m_line.localToGlobal(0, 0)
 		let max_height = end_point.y - game_container_top.y
 		this.max_line = Math.ceil((max_height - GameConst.LINE_HEIGHT) / (GameConst.LINE_HEIGHT * Math.cos(Math.PI / 6)) + 1)
+	}
+
+	public OnResize():void
+	{
+		this._calc_line()
+	}
+
+	private _cache_lines:Array<BallLine> = []
+	public RecyleLine(line:BallLine):void
+	{
+		line.visible = false
+		line.ReSet()
+		this._cache_lines.push(line)
+	}
+
+	public get_or_create_line():BallLine
+	{
+		if(this._cache_lines.length > 1){
+			let line = this._cache_lines.pop()
+			line.visible = true
+			console.log("#####重用了行######")
+			return line
+		}
+		return new BallLine()
 	}
 
 	private _get_rotate(stageX:number, stageY:number):number
@@ -105,9 +130,8 @@ class GameLogicComponent extends BaseComponent {
 			for(let index = 0; index < GameConst.GENERATE_STEP_LINE_COUNT; index++)
 			{
 				let line_config:Array<number> = multi_line_config.all_line_config[GameConst.GENERATE_STEP_LINE_COUNT - 1 - index] as Array<number>
-				let new_line = new BallLine()
+				let new_line = this.get_or_create_line()
 				new_line.UpdateConfig(line_config)
-				this._mainScenePanel.m_game_container.addChild(new_line)
 				let circle_width = new_line.height
 				new_line.y = top_y - new_line.height + circle_width / 2 * (1 - Math.cos(30 / 180 * Math.PI)) + 5
 				this.all_lines.push(new_line)
@@ -341,13 +365,9 @@ class GameLogicComponent extends BaseComponent {
 	}
 
 	private _cache_boom_armatures = []
-	public GetNextBoomArmature():dragonBones.EgretArmatureDisplay
+
+	private _create_boom_armature():dragonBones.EgretArmatureDisplay
 	{
-		if(this._cache_boom_armatures.length > 0){
-			let armature = this._cache_boom_armatures.pop()
-			armature.visible = true
-			return armature
-		}
 		let __this = this
 		let boom_armature = CommonUtils.createDragonBones("boom_ske_json", "boom_tex_json", "boom_tex_png", "boom_armature")
 		this._mainScenePanel.m_game_container.addChild(boom_armature)
@@ -356,5 +376,26 @@ class GameLogicComponent extends BaseComponent {
 			__this._cache_boom_armatures.push(boom_armature)
 		}, this)
 		return boom_armature
+	}
+
+	private _create_init_boom_armature():void
+	{
+		let init_count = 20
+		for(let index = 0; index < init_count; index++)
+		{
+			let armature = this._create_boom_armature()
+			this._cache_boom_armatures.push(armature)
+			armature.visible = false
+		}
+	}
+
+	public GetNextBoomArmature():dragonBones.EgretArmatureDisplay
+	{
+		if(this._cache_boom_armatures.length > 0){
+			let armature = this._cache_boom_armatures.pop()
+			armature.visible = true
+			return armature
+		}
+		return this._create_boom_armature()
 	}
 }

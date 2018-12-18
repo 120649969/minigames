@@ -293,6 +293,7 @@ class MyBall extends Ball{
 				break
 			}else{
 				remove_count++
+				game_logic_component.RecyleLine(ballLine)
 			}
 		}
 		game_logic_component.all_lines.splice(0, remove_count)

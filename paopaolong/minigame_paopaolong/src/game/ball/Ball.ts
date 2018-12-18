@@ -27,6 +27,14 @@ class Ball extends eui.Component{
 		}
 	}
 
+
+	public ReSet():void
+	{
+		this.isMarkedSameColorClear = false
+		this.isRootConnected = false
+		this.SetBallType(BALL_TYPE.TYPE_EMPTY)
+	}
+
 	public IsValid():boolean
 	{
 		return this.ball_type != BALL_TYPE.TYPE_EMPTY

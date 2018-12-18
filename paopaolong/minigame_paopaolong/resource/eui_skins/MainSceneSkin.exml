@@ -100,7 +100,7 @@
 		</e:skinName>
 		</e:Button>
 		<e:Image id="img_help" source="shuoming_png" x="45.28" y="195.9" scaleX="0.8" scaleY="0.8" touchEnabled="false" anchorOffsetX="0" width="658.91" visible="false"/>
-		<e:Group id="m_combo_group" width="180" height="180" anchorOffsetY="63" anchorOffsetX="174" y="577" x="360" scaleX="1" scaleY="1" touchEnabled="false" visible="false" locked="true">
+		<e:Group id="m_combo_group" width="250" height="200" anchorOffsetY="100" anchorOffsetX="125" scaleX="1" scaleY="1" touchEnabled="false" x="360" y="640" visible="false">
 		<e:Image source="ppl_combo_png" horizontalCenter="0.5" top="9" touchEnabled="false"/>
 		<e:BitmapLabel id="label_combo" width="202" height="37.33" y="76" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0" font="combo_fnt" text="x1" textAlign="center" touchEnabled="false"/>
 		</e:Group>

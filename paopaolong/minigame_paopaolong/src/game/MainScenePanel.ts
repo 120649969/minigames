@@ -84,6 +84,11 @@ module ui {
 
 			this.m_other_group.y = this._init_m_other_group_y / Const.MIN_HEIGHT * this.height
 			this.m_my_group.y = this._ini_m_my_group_y / Const.MIN_HEIGHT * this.height
+
+			if(this._gameLogicComponent){
+				this._gameLogicComponent.OnResize()
+			}
+			
 		}
 
 		protected createChildren(): void {
@@ -150,6 +155,8 @@ module ui {
 				}
 				__this.m_role_armature.animation.play("role_animation_1", -1)
 			}, this)
+
+			this._create_init_combo_label()
 		}
 
 		public OpenAddLineSkill():void
@@ -327,25 +334,59 @@ module ui {
 			}
 		}
 
+		private _cacheComboLabels:Array<eui.BitmapLabel> = []
+
+		private _create_combo_label():eui.BitmapLabel
+		{
+			let label = new eui.BitmapLabel()
+			label.font = "combo_fnt"
+			label.textAlign = "center"
+			label.text = "x10"
+			label.scaleX = label.scaleY = 0.8
+			label.anchorOffsetX = label.width / 2
+			label.anchorOffsetY = label.height / 2
+			this.m_effect_container.addChild(label)
+			return label
+		}
+
+		private _get_or_create_combo_label():eui.BitmapLabel
+		{
+			if(this._cacheComboLabels.length > 0){
+				let label = this._cacheComboLabels.pop()
+				label.visible = true
+				return label
+			}
+			return this._create_combo_label()
+		}
+
+		private _create_init_combo_label():void
+		{
+			let init_count = 20
+			for(let index = 0; index < init_count; index++)
+			{
+				let label = this._create_combo_label()
+				this._cacheComboLabels.push(label)
+				label.visible = false
+			}
+		}
+
 		public PlayFlyUpNumberAnimation(balls:Array<Ball>):void
 		{
 			for(let ball of balls)
 			{
-				let label = new eui.BitmapLabel()
-				label.font = "combo_fnt"
-				label.textAlign = "center"
-				label.text = "x10"
-				label.scaleX = label.scaleY = 0.8
-				this.m_effect_container.addChild(label)
+				let label = this._get_or_create_combo_label()
 				let global_point = ball.localToGlobal(ball.width / 2, ball.height / 2)
 				let local_point = this.m_effect_container.globalToLocal(global_point.x, global_point.y)
-				label.anchorOffsetX = label.width / 2
-				label.anchorOffsetY = label.height / 2
 				label.x = local_point.x
 				label.y = local_point.y
 
+				label.visible = true
+				let __this = this
+				egret.Tween.removeTweens(label)
+				label.alpha = 1
 				egret.Tween.get(label).to({y:local_point.y - 40}, 0.4 * 1000).to({y:local_point.y - 80, alpha:0}, 0.4 * 1000).call(function(){
-					label.parent.removeChild(label)
+					label.visible = false
+					__this._cacheComboLabels.push(label)
 				}, this)
 			}
 		}
