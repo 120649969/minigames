@@ -219,7 +219,11 @@ class GameLogicComponent extends BaseComponent {
 		move_down_ball.SetBallType(source_ball.ball_type)
 		move_down_ball.x = source_ball.x
 		move_down_ball.y = source_ball.y
-		source_ball.parent.addChild(move_down_ball)
+		let global_source_ball_point = source_ball.parent.localToGlobal(source_ball.x, source_ball.y)
+		let local_point = this._mainScenePanel.m_ui_down.globalToLocal(global_source_ball_point.x, global_source_ball_point.y)
+		this._mainScenePanel.m_ui_down.addChild(move_down_ball)
+		move_down_ball.x = local_point.x
+		move_down_ball.y = local_point.y
 
 		move_down_ball.PlayMoveDownAnimation()
 		this._all_move_down_balls.push(move_down_ball)
@@ -296,5 +300,59 @@ class GameLogicComponent extends BaseComponent {
 		let ball:Ball= valid_balls[random_ball_index]
 		ball.SetBallType(BALL_TYPE.TYPE_7)
 		this._mainScenePanel.ShowValidBallSkillTips()
+	}
+
+	//根据当前可视范围的球出现的次数来动态获取下一个球的颜色
+	public GetNextBallType():number
+	{
+		let ret = -1
+		let num_counts = []
+		let total_num = 0
+		for(let index = 0; index < BALL_TYPE.TYPE_6; index++)
+		{
+			num_counts.push(0)
+		}
+
+		for(let line of this.all_lines)
+		{
+			if(!line.isVisible){
+				break
+			}
+			for(let ball of line.all_balls)
+			{
+				if(ball.IsValid() && !ball.isMarkedSameColorClear && ball.ball_type < BALL_TYPE.MAX_TYPE){
+					num_counts[ball.ball_type - 1] ++
+					total_num++
+				}
+			}
+		}
+		
+		let random_num = Math.floor(Math.random() * total_num)
+		for(let index = 0; index < num_counts.length; index++)
+		{
+			if(random_num < num_counts[index]){
+				return index + 1
+			}
+			random_num -= num_counts[index]
+		}
+		return Math.ceil(Math.random() * (BALL_TYPE.MAX_TYPE - 1))
+	}
+
+	private _cache_boom_armatures = []
+	public GetNextBoomArmature():dragonBones.EgretArmatureDisplay
+	{
+		if(this._cache_boom_armatures.length > 0){
+			let armature = this._cache_boom_armatures.pop()
+			armature.visible = true
+			return armature
+		}
+		let __this = this
+		let boom_armature = CommonUtils.createDragonBones("boom_ske_json", "boom_tex_json", "boom_tex_png", "boom_armature")
+		this._mainScenePanel.m_game_container.addChild(boom_armature)
+		boom_armature.addDBEventListener(dragonBones.AnimationEvent.COMPLETE, function(){
+			boom_armature.visible = false
+			__this._cache_boom_armatures.push(boom_armature)
+		}, this)
+		return boom_armature
 	}
 }

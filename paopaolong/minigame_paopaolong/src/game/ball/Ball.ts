@@ -46,5 +46,12 @@ class Ball extends eui.Component{
 			__this.SetBallType(BALL_TYPE.TYPE_EMPTY)
 		}, delay_time, this)
 		SoundManager.getInstance().playSound("ball_broken_mp3")
+
+		let armature = GameController.instance.GetMainScenePanel().GetGameLogicComponent().GetNextBoomArmature()
+		armature.animation.play("boom_animtion_1", 1)
+		let global_point = this.localToGlobal(this.width / 2, this.height / 2)
+		let local_point = armature.parent.globalToLocal(global_point.x, global_point.y)
+		armature.x = local_point.x
+		armature.y = local_point.y
 	}
 }

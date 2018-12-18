@@ -108,4 +108,46 @@ class CommonUtils {
 			}
 		}, callbackThisObject)
 	}
+
+	public static addSkillArcMask(test_shape:egret.DisplayObject, total_time:number, callback:Function = null):void
+	{
+		let shape:egret.Shape = new egret.Shape();
+		test_shape.mask = shape
+		test_shape.parent.addChild(shape)
+		let angle = 360;
+		test_shape.visible = true
+		let step_time = 0.1 * 1000
+		let step_angle = 360 / (total_time / (0.1 * 1000))
+		let start_time = egret.getTimer()
+		let step_set_angle = function(){
+			CommonUtils.performDelay(function(){
+				angle -= step_angle;
+				changeGraphics(angle);
+				if(angle < 0){
+					test_shape.visible = false
+					if(callback)
+					{
+						callback()
+					}
+					return
+				}
+				step_set_angle()
+			}, step_time, this)
+		}
+        step_set_angle()
+		shape.x = test_shape.x
+		shape.y = test_shape.y
+		shape.scaleX = -1
+		shape.rotation = 90
+        function changeGraphics(angle) {
+            shape.graphics.clear();
+
+            shape.graphics.beginFill(0x00ffff, 1);
+            shape.graphics.moveTo(0, 0);
+            shape.graphics.lineTo(0, -54);
+            shape.graphics.drawArc(0, 0, 54, 0, angle * Math.PI / 180, false);
+            shape.graphics.lineTo(0, 0);
+            shape.graphics.endFill();
+        }
+	}
 }

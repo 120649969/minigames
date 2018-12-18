@@ -31,6 +31,15 @@ class MoveDownBall extends Ball{
 		}
 		if(this._reach_target_times == 2){
 			this.visible = false
+			
+
+			let armature = GameController.instance.GetMainScenePanel().GetGameLogicComponent().GetNextBoomArmature()
+			armature.animation.play("boom_animtion_2", 1)
+			let global_point = this.localToGlobal(this.width / 2, this.height / 2)
+			let local_point = armature.parent.globalToLocal(global_point.x, global_point.y)
+			armature.x = local_point.x
+			armature.y = local_point.y
+
 			this.parent.removeChild(this)
 			return true
 		}

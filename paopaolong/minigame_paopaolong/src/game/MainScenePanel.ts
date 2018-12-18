@@ -23,7 +23,7 @@ module ui {
 		public m_combo_group:eui.Group
 		public m_effect_container:eui.Group
 
-
+		public m_leaf:eui.Image
 		public m_line_light:eui.Image
 		public m_fixline:FixLine
 
@@ -31,9 +31,12 @@ module ui {
 		public m_line:eui.Rect
 		public m_start:eui.Group
 		public m_rotate_line:eui.Rect
+		public m_ui_down:eui.Group
 
 		public m_skill_add_line:eui.Group
 		public m_skill_invalid_ball:eui.Group
+		public m_add_line_mask:eui.Rect
+		public m_invalid_ball_mask:eui.Rect
 		
 		private _gameLogicComponent:GameLogicComponent
 		private _commonUIComponent:CommonUIComponent
@@ -63,17 +66,21 @@ module ui {
 
 		protected createChildren(): void {
 			super.createChildren()
+			let __this = this
 			this.btn_debug.addEventListener(egret.TouchEvent.TOUCH_TAP, function(event:egret.Event){
-				ui.WindowManager.getInstance().open("DebugPanel")
+				// ui.WindowManager.getInstance().open("DebugPanel")
+				__this.PlayFailAnimation(function(){
+					console.log("#####PlayFailAnimation#####")
+				})
 			}.bind(this), this)
 
-			if(DEBUG){
+			if(!DEBUG){
 				this.btn_debug.visible = false
 			}
 			CommonUtils.GrayDisplayObject(this.m_skill_add_line)
 			CommonUtils.GrayDisplayObject(this.m_skill_invalid_ball)
 
-			let __this = this
+			
 			this.m_skill_add_line.addEventListener(egret.TouchEvent.TOUCH_TAP, function(event:egret.Event){
 				if(!__this.is_add_line_skill_open){
 					return
@@ -86,6 +93,9 @@ module ui {
 					__this.is_in_add_line_cd = false
 				}, 30 * 1000, __this)
 				GameNet.reqUseProp(SKILL_PROP_TYPE.ADD_LINE)
+				CommonUtils.addSkillArcMask(this.m_add_line_mask, 30 * 1000, function(){
+					__this.is_in_add_line_cd = false
+				})
 			}.bind(this), this)
 
 			this.m_skill_invalid_ball.addEventListener(egret.TouchEvent.TOUCH_TAP, function(event:egret.Event){
@@ -100,6 +110,9 @@ module ui {
 					__this.is_in_invalid_skill_cd = false
 				}, 30 * 1000, __this)
 				GameNet.reqUseProp(SKILL_PROP_TYPE.INVALID_BALL)
+				CommonUtils.addSkillArcMask(this.m_invalid_ball_mask, 30 * 1000,function(){
+					__this.is_in_invalid_skill_cd = false
+				})
 			}.bind(this), this)
 		}
 
@@ -167,7 +180,8 @@ module ui {
 			this._gameLogicComponent = new GameLogicComponent()
 
 			NetManager.instance.StartConnectServer()
-			this.m_game_container.mask = new egret.Rectangle(0, 0, this.m_game_container.width, this.m_game_container.height)
+			this.m_game_container.mask = new egret.Rectangle(0, -80, this.m_game_container.width, this.m_game_container.height)
+
 		}
 
 		public OnConnectServer():void
@@ -253,7 +267,7 @@ module ui {
 				label.font = "combo_fnt"
 				label.textAlign = "center"
 				label.text = "x10"
-				label.scaleX = label.scaleY = 0.5
+				label.scaleX = label.scaleY = 0.8
 				this.m_effect_container.addChild(label)
 				let global_point = ball.localToGlobal(ball.width / 2, ball.height / 2)
 				let local_point = this.m_effect_container.globalToLocal(global_point.x, global_point.y)
@@ -282,17 +296,38 @@ module ui {
 		public PlayWinAnimation(callback:Function):void
 		{
 			SoundManager.getInstance().playSound("win_mp3")
-			if(callback){
-				callback()
-			}
+			let armatureDisplay = CommonUtils.createDragonBones("win_ske_json", "win_tex_json", "win_tex_png", "win_armature")
+			this.addChild(armatureDisplay)
+			armatureDisplay.x = this.stage.stageWidth / 2
+			armatureDisplay.y = this.stage.stageHeight / 2
+			armatureDisplay.addDBEventListener(dragonBones.AnimationEvent.COMPLETE, function(){
+				armatureDisplay.visible = false
+				if(callback){
+					callback()
+				}
+			}, this)
+			armatureDisplay.animation.play("win_animation", 1)
 		}
 
 		public PlayFailAnimation(callback:Function):void
 		{
 			SoundManager.getInstance().playSound("fail_mp3")
-			if(callback){
-				callback()
-			}
+			let armatureDisplay = CommonUtils.createDragonBones("fail_ske_json", "fail_tex_json", "fail_tex_png", "fail_armature")
+			this.addChild(armatureDisplay)
+			
+
+			let global_line_point = this.m_line.localToGlobal(0, 0)
+			let local_point = this.globalToLocal(global_line_point.x, global_line_point.y)
+
+			armatureDisplay.x = this.stage.stageWidth / 2
+			armatureDisplay.y = local_point.y
+			armatureDisplay.addDBEventListener(dragonBones.AnimationEvent.COMPLETE, function(){
+				armatureDisplay.visible = false
+				if(callback){
+					callback()
+				}
+			}, this)
+			armatureDisplay.animation.play("fail_animation", 1)
 		}
 
 		public PlayEqualAnimation(callback:Function):void
@@ -302,6 +337,4 @@ module ui {
 			}
 		}
 	}
-
-	
 }

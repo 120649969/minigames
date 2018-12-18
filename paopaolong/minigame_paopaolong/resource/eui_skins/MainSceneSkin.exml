@@ -38,8 +38,8 @@
 		</tween:TweenGroup>
 	</w:Declarations>
 	<e:Image source="bg_jpg" top="0" right="0" left="0" bottom="0"/>
-	<e:Image source="ppl_leaf_png" horizontalCenter="0" top="0"/>
-	<e:Group id="m_floor" height="133.34" left="0" right="0" anchorOffsetY="0" touchEnabled="false" bottom="0">
+	<e:Group id="m_ui_down" width="200" height="200" x="368" y="470"/>
+	<e:Group id="m_floor" height="133.34" left="0" right="0" anchorOffsetY="0" touchEnabled="false" bottom="0" locked="true">
 		<e:Image source="ppl_cannon_png" x="295" y="-131" touchEnabled="false"/>
 		<e:Image id="m_line" source="ppl_line_w_png" x="0" y="-214.66" scaleX="1" scaleY="1" touchEnabled="false"/>
 		<e:Image id="m_line_light" source="ppl_line_light_png" x="0" y="-225.66" touchEnabled="false"/>
@@ -57,15 +57,10 @@
 		<e:Rect height="2" top="0" left="0" right="0" visible="false"/>
 	</e:Group>
 	<e:Group id="m_touch_layer" left="0" top="0" bottom="0" right="0" touchEnabled="true" locked="true"/>
-	<e:Group id="m_skill_invalid_ball" width="108" height="108" anchorOffsetX="54" anchorOffsetY="54" right="19" bottom="87">
-		<e:Image source="ppl_role_skillbg_png" anchorOffsetY="54" anchorOffsetX="54" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="0"/>
-		<e:Image source="ppl_role_skill3_png" scaleX="1" scaleY="1" anchorOffsetY="30" anchorOffsetX="30" x="55" y="54"/>
-	</e:Group>
-	<e:Group id="m_skill_add_line" width="108" height="108" anchorOffsetX="54" anchorOffsetY="54" right="160" bottom="87">
-		<e:Image source="ppl_role_skillbg_png" y="54" anchorOffsetY="54" anchorOffsetX="54" x="54" scaleX="1" scaleY="1" touchEnabled="false"/>
-		<e:Image source="ppl_role_skill2_png" anchorOffsetX="25" anchorOffsetY="44" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="0" touchEnabled="false"/>
-	</e:Group>
-	<e:Group id="m_ui_top" height="200" left="0" right="0" touchEnabled="false" top="0">
+	<e:Image id="m_leaf" source="ppl_leaf_png" horizontalCenter="0" top="0"/>
+
+
+	<e:Group id="m_ui_top" left="0" right="0" touchEnabled="false" top="0" bottom="0">
 
 		<e:Group id="m_offline_tips" width="505" height="50" horizontalCenter="0" verticalCenter="218" touchEnabled="false" visible="false">
 		<e:Rect width="505" height="50" horizontalCenter="0" verticalCenter="0" fillColor="0x302f2f" fillAlpha="0.5" x="0" y="0" scaleX="1" scaleY="1"/>
@@ -97,19 +92,33 @@
 			</e:Skin>
 			</e:skinName>
 		</e:Button>
+		<e:Button id="btn_debug" label="调试" right="0" enabled="true" touchEnabled="true" bottom="0" x="620" y="1230" scaleX="1" scaleY="1"/>
+		<e:Image id="img_help" source="shuoming_png" x="45.28" y="195.9" scaleX="0.8" scaleY="0.8" touchEnabled="false" anchorOffsetX="0" width="658.91" visible="false"/>
+		<e:Group id="m_combo_group" width="348" height="126" horizontalCenter="0" anchorOffsetY="63" anchorOffsetX="174" y="577" x="186" scaleX="1" scaleY="1" visible="false">
+			<e:Image source="ppl_combo_png" horizontalCenter="0.5" top="9" locked="true"/>
+			<e:BitmapLabel id="label_combo" width="202" height="37.33" y="76" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0" font="combo_fnt" text="x1" textAlign="center" locked="true"/>
+		</e:Group>
+		<e:Group id="m_skill_tips" height="200" left="0" right="0" y="388" x="0" scaleX="1" scaleY="1" visible="false">
+			<e:Image source="ppl_skillex_bg_png" horizontalCenter="0" y="67"/>
+			<e:Image id="skill_add_line_tips" source="ppl_skillex_movedown_png" x="124" y="78" visible="false"/>
+			<e:Image id="skill_valid_ball_tips" source="ppl_skillex_fullcolor_png" horizontalCenter="0" verticalCenter="0" visible="false"/>
+		</e:Group>
+		<e:Group id="m_skill_invalid_ball" width="108" height="108" anchorOffsetX="54" anchorOffsetY="54" right="19" bottom="87" x="593" y="1085" scaleX="1" scaleY="1">
+			<e:Image source="ppl_role_skillbg_png" anchorOffsetY="54" anchorOffsetX="54" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="0"/>
+			<e:Image source="ppl_role_skill3_png" scaleX="1" scaleY="1" anchorOffsetY="30" anchorOffsetX="30" x="55" y="54"/>
+			<e:Rect id="m_invalid_ball_mask" scaleX="1" scaleY="1" left="0" top="0" bottom="0" right="0" ellipseWidth="108" fillAlpha="0.6" anchorOffsetX="54" anchorOffsetY="54" visible="false"/>
+		</e:Group>
+		<e:Group id="m_skill_add_line" width="108" height="108" anchorOffsetX="54" anchorOffsetY="54" right="160" bottom="87" x="452" y="1085" scaleX="1" scaleY="1">
+			<e:Image source="ppl_role_skillbg_png" y="54" anchorOffsetY="54" anchorOffsetX="54" x="54" scaleX="1" scaleY="1" touchEnabled="false"/>
+			<e:Image source="ppl_role_skill2_png" anchorOffsetX="25" anchorOffsetY="44" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="0" touchEnabled="false"/>
+			<e:Rect id="m_add_line_mask" scaleX="1" scaleY="1" left="0" top="0" bottom="0" right="0" ellipseWidth="108" fillAlpha="0.6" anchorOffsetX="54" anchorOffsetY="54" visible="false"/>
+		</e:Group>
 	</e:Group>
-	<e:Button id="btn_debug" label="调试" right="0" enabled="true" touchEnabled="true" bottom="0"/>
-	<e:Image id="img_help" source="shuoming_png" x="45.28" y="195.9" scaleX="0.8" scaleY="0.8" touchEnabled="false" anchorOffsetX="0" width="658.91" visible="false"/>
-	<e:Group id="m_combo_group" width="348" height="126" horizontalCenter="0" anchorOffsetY="63" anchorOffsetX="174" y="640" visible="false" locked="true">
-		<e:Image source="ppl_combo_png" horizontalCenter="0.5" top="9" locked="true"/>
-		<e:BitmapLabel id="label_combo" width="202" height="37.33" y="76" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0" font="combo_fnt" text="x1" textAlign="center" locked="true"/>
-	</e:Group>
+
+
+
 	<e:Group id="m_effect_container" left="0" top="0" bottom="0" right="0" touchEnabled="false" locked="true">
 		<e:BitmapLabel id="label_combo_score" width="200" height="51" scaleX="1" scaleY="1" font="combo_fnt" text="x8" textAlign="center" anchorOffsetY="25" y="489" anchorOffsetX="100" x="360" visible="false"/>
 	</e:Group>
-	<e:Group id="m_skill_tips" height="200" left="0" right="0" y="388" visible="false">
-		<e:Image source="ppl_skillex_bg_png" horizontalCenter="0" y="67"/>
-		<e:Image id="skill_add_line_tips" source="ppl_skillex_movedown_png" x="124" y="78" visible="false"/>
-		<e:Image id="skill_valid_ball_tips" source="ppl_skillex_fullcolor_png" horizontalCenter="0" verticalCenter="0" visible="false"/>
-	</e:Group>
+
 </e:Skin>
