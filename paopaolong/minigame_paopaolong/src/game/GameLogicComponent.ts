@@ -200,16 +200,18 @@ class GameLogicComponent extends BaseComponent {
 	public OnStart():void
 	{
 		super.OnStart()
+		this.next_ball_type = this.GetNextBallType()
 		this.GenerateNextMyBall()
+		this._mainScenePanel.m_role_armature.visible = true
 	}
 
+	public next_ball_type:number
 	public GenerateNextMyBall():void
 	{
 		this._myBall = new MyBall()
-	}
-
-	public TestFindBall(sourceBall:Ball):void
-	{
+		this.next_ball_type = this.GetNextBallType()
+		this._mainScenePanel.m_role_armature.animation.play("role_animation_2", 1)
+		CommonUtils.setNewSlot(this._mainScenePanel.m_role_armature, "001ball", "ball" + (this.next_ball_type) + "_png")
 	}
 
 	private _all_move_down_balls:Array<MoveDownBall> = []
@@ -274,7 +276,7 @@ class GameLogicComponent extends BaseComponent {
 			let line = this.all_lines[index]
 			line.MoveDown(speed)
 		}
-		this._mainScenePanel.ShowMoveDownSkillTips()
+		this._mainScenePanel.ShowOtherToMeMoveDownSkillTips()
 	}
 
 	private _invalid_ball():void
@@ -299,7 +301,7 @@ class GameLogicComponent extends BaseComponent {
 		let random_ball_index = Math.floor(Math.random() * valid_balls.length)
 		let ball:Ball= valid_balls[random_ball_index]
 		ball.SetBallType(BALL_TYPE.TYPE_7)
-		this._mainScenePanel.ShowValidBallSkillTips()
+		this._mainScenePanel.ShowOtherToMeValidBallSkillTips()
 	}
 
 	//根据当前可视范围的球出现的次数来动态获取下一个球的颜色

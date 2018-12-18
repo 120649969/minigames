@@ -29,7 +29,7 @@ class MyBall extends Ball{
 		this.x = local_in_cointainer.x
 		this.y = local_in_cointainer.y
 
-		let random_type = this._game_logic_component.GetNextBallType() // 过滤掉灰色的
+		let random_type = this._game_logic_component.next_ball_type // 过滤掉灰色的
 		this.SetBallType(random_type)
 		this.is_moving = false
 		this.is_end = false

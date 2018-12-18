@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "button_down_png,button_up_png,bg_jpg,description_json,ball1_png,ball2_png,ball3_png,ball4_png,data_json,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,ready_go_mp3,ball7_png,ball5_png,ball6_png,mingzidi_png,txk_1_png,txk_2_png,wenhao_png,shuoming_png,ppl_cannon_png,ppl_leaf_png,ppl_role_skill2_png,ppl_role_skill3_png,ppl_role_skillbg_png,ppl_line_w_png,ppl_line_light_png,ppl_clock_png,clock_fnt,clock_png,ppl_combo_png,combo_fnt,combo_png,ppl_rival_png,ppl_mine_png,time_png,time_fnt,ppl_line_png,touch_down_mp3,ball_broken_mp3,hit_floor_up_mp3,ball_hit_mP3,win_mp3,fail_mp3,ppl_skillex_movedown_png,ppl_skillex_bg_png,ppl_skillex_fullcolor_png,win_tex_png,win_ske_json,win_tex_json,fail_tex_png,fail_ske_json,fail_tex_json,boom_tex_png,boom_ske_json,boom_tex_json",
+			"keys": "button_down_png,button_up_png,bg_jpg,description_json,ball1_png,ball2_png,ball3_png,ball4_png,data_json,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,ready_go_mp3,ball7_png,ball5_png,ball6_png,mingzidi_png,txk_1_png,txk_2_png,wenhao_png,shuoming_png,ppl_cannon_png,ppl_leaf_png,ppl_role_skill2_png,ppl_role_skillbg_png,ppl_line_w_png,ppl_line_light_png,ppl_clock_png,clock_fnt,clock_png,ppl_combo_png,combo_fnt,combo_png,ppl_rival_png,ppl_mine_png,time_png,time_fnt,ppl_line_png,touch_down_mp3,ball_broken_mp3,hit_floor_up_mp3,ball_hit_mP3,win_mp3,fail_mp3,ppl_skillex_fullcolor_png,win_tex_png,win_ske_json,win_tex_json,fail_tex_png,fail_ske_json,fail_tex_json,boom_tex_png,boom_ske_json,boom_tex_json,ppl_skillex_movedown_png,ppl_role_skill3_png,ppl_skillex_bg_png,stqqt_lingxain_png,ppl_duishouxiayi_png,ppl_shihuatangguo_png,ppl_word_win_png,ppl_skillex_shihua_png,ppl_skillex_xiayi_png,role_tex_png,role_ske_json,role_tex_json",
 			"name": "preload"
 		}
 	],
@@ -127,11 +127,6 @@
 			"name": "ppl_role_skill2_png"
 		},
 		{
-			"url": "assets/ppl_role_skill3.png",
-			"type": "image",
-			"name": "ppl_role_skill3_png"
-		},
-		{
 			"url": "assets/ppl_role_skillbg.png",
 			"type": "image",
 			"name": "ppl_role_skillbg_png"
@@ -232,16 +227,6 @@
 			"url": "assets/music/fail.mp3"
 		},
 		{
-			"name": "ppl_skillex_movedown_png",
-			"type": "image",
-			"url": "assets/ppl_skillex_movedown.png"
-		},
-		{
-			"name": "ppl_skillex_bg_png",
-			"type": "image",
-			"url": "assets/ppl_skillex_bg.png"
-		},
-		{
 			"name": "ppl_skillex_fullcolor_png",
 			"type": "image",
 			"url": "assets/ppl_skillex_fullcolor.png"
@@ -290,6 +275,66 @@
 			"name": "boom_tex_json",
 			"type": "json",
 			"url": "assets/db/boom/boom_tex.json"
+		},
+		{
+			"name": "ppl_skillex_movedown_png",
+			"type": "image",
+			"url": "assets/ppl_skillex_movedown.png"
+		},
+		{
+			"name": "ppl_role_skill3_png",
+			"type": "image",
+			"url": "assets/ppl_role_skill3.png"
+		},
+		{
+			"name": "ppl_skillex_bg_png",
+			"type": "image",
+			"url": "assets/ppl_skillex_bg.png"
+		},
+		{
+			"name": "stqqt_lingxain_png",
+			"type": "image",
+			"url": "assets/stqqt_lingxain.png"
+		},
+		{
+			"name": "ppl_duishouxiayi_png",
+			"type": "image",
+			"url": "assets/ppl_duishouxiayi.png"
+		},
+		{
+			"name": "ppl_shihuatangguo_png",
+			"type": "image",
+			"url": "assets/ppl_shihuatangguo.png"
+		},
+		{
+			"name": "ppl_word_win_png",
+			"type": "image",
+			"url": "assets/ppl_word_win.png"
+		},
+		{
+			"name": "ppl_skillex_shihua_png",
+			"type": "image",
+			"url": "assets/ppl_skillex_shihua.png"
+		},
+		{
+			"name": "ppl_skillex_xiayi_png",
+			"type": "image",
+			"url": "assets/ppl_skillex_xiayi.png"
+		},
+		{
+			"name": "role_tex_png",
+			"type": "image",
+			"url": "assets/db/role/role_tex.png"
+		},
+		{
+			"name": "role_ske_json",
+			"type": "json",
+			"url": "assets/db/role/role_ske.json"
+		},
+		{
+			"name": "role_tex_json",
+			"type": "json",
+			"url": "assets/db/role/role_tex.json"
 		}
 	]
 }

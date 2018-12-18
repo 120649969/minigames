@@ -45,23 +45,45 @@ module ui {
 		private btn_debug:eui.Button
 
 		private m_skill_tips:eui.Group
-		private skill_add_line_tips:eui.Image
-		private skill_valid_ball_tips:eui.Image
+		private me_to_other_skill_add_line_tips:eui.Image
+		private me_to_other_skill_valid_ball_tips:eui.Image
+		private other_to_me_skill_valid_ball_tips:eui.Image
+		private other_to_me_skill_add_line_tips:eui.Image
+
+		private m_other_flag:eui.Image
+		private m_my_flag:eui.Image
+
+		public m_role_container:eui.Group
+		public m_role_armature:dragonBones.EgretArmatureDisplay
 
 		public is_add_line_skill_open:boolean = false
 		public is_invalid_ball_skill_open:boolean = false
 		public is_in_add_line_cd:boolean = false
 		public is_in_invalid_skill_cd:boolean = false
 
+		private m_other_group:eui.Group
+		private m_my_group:eui.Group
+		private _init_m_other_group_x:number
+		private _init_m_other_group_y:number
+		private _init_m_my_group_x:number
+		private _ini_m_my_group_y:number
+
 		public constructor() {
 			super()
 			this.skinName = "MainSceneSkin"
+			this._init_m_other_group_x = this.m_other_group.x
+			this._init_m_other_group_y = this.m_other_group.y
+			this._init_m_my_group_x = this.m_my_group.x
+			this._ini_m_my_group_y = this.m_my_group.y
 		}
 
 		public resizeStage():void
 		{
 			super.resizeStage()
 			this.validateNow()
+
+			this.m_other_group.y = this._init_m_other_group_y / Const.MIN_HEIGHT * this.height
+			this.m_my_group.y = this._ini_m_my_group_y / Const.MIN_HEIGHT * this.height
 		}
 
 		protected createChildren(): void {
@@ -96,6 +118,7 @@ module ui {
 				CommonUtils.addSkillArcMask(this.m_add_line_mask, 30 * 1000, function(){
 					__this.is_in_add_line_cd = false
 				})
+				__this.ShowMeToOtherMoveDownSkillTips()
 			}.bind(this), this)
 
 			this.m_skill_invalid_ball.addEventListener(egret.TouchEvent.TOUCH_TAP, function(event:egret.Event){
@@ -113,7 +136,20 @@ module ui {
 				CommonUtils.addSkillArcMask(this.m_invalid_ball_mask, 30 * 1000,function(){
 					__this.is_in_invalid_skill_cd = false
 				})
+				__this.ShowMeToOtherValidBallSkillTips()
 			}.bind(this), this)
+
+			this.m_role_armature = CommonUtils.createDragonBones("role_ske_json", "role_tex_json", "role_tex_png", "role_armature")
+			this.m_role_container.addChild(this.m_role_armature)
+			this.m_role_armature.x = this.m_role_container.width / 2
+			this.m_role_armature.y = this.m_role_container.height / 2 - this.m_role_armature.height / 2
+			this.m_role_armature.visible = false
+			this.m_role_armature.addDBEventListener(dragonBones.AnimationEvent.COMPLETE, function(){
+				if(GameController.instance.is_game_over){
+					return
+				}
+				__this.m_role_armature.animation.play("role_animation_1", -1)
+			}, this)
 		}
 
 		public OpenAddLineSkill():void
@@ -128,26 +164,50 @@ module ui {
 			this.is_invalid_ball_skill_open = true
 		}
 
-		public ShowMoveDownSkillTips():void
+		public ShowMeToOtherMoveDownSkillTips():void
 		{
 			this.m_skill_tips.visible = true
-			this.skill_add_line_tips.visible = true
+			this.me_to_other_skill_add_line_tips.visible = true
 			let __this = this
 			CommonUtils.performDelay(function(){
 				__this.m_skill_tips.visible = false
-				__this.skill_add_line_tips.visible = false
+				__this.me_to_other_skill_add_line_tips.visible = false
 			}, 2 * 1000, this)
 		}
 
-		public ShowValidBallSkillTips():void
+		public ShowMeToOtherValidBallSkillTips():void
 		{
 			this.m_skill_tips.visible = true
-			this.skill_valid_ball_tips.visible = true
+			this.me_to_other_skill_valid_ball_tips.visible = true
 			let __this = this
 			CommonUtils.performDelay(function(){
 				__this.m_skill_tips.visible = false
-				__this.skill_valid_ball_tips.visible = false
+				__this.me_to_other_skill_valid_ball_tips.visible = false
 			}, 2 * 1000, this)
+		}
+
+		public ShowOtherToMeMoveDownSkillTips():void
+		{
+			this.other_to_me_skill_add_line_tips.visible = true
+			this.other_to_me_skill_add_line_tips.x = this.other_to_me_skill_add_line_tips.width * -1 - 50
+			let __this = this
+			egret.Tween.get(this.other_to_me_skill_add_line_tips).to({x:48}, 0.5 * 1000).call(function(){
+				CommonUtils.performDelay(function(){
+					__this.other_to_me_skill_add_line_tips.visible = false
+				}, 2 * 1000, __this)
+			})
+		}
+
+		public ShowOtherToMeValidBallSkillTips():void
+		{
+			this.other_to_me_skill_valid_ball_tips.visible = true
+			this.other_to_me_skill_valid_ball_tips.x = this.other_to_me_skill_valid_ball_tips.width * -1 - 50
+			let __this = this
+			egret.Tween.get(this.other_to_me_skill_valid_ball_tips).to({x:48}, 0.5 * 1000).call(function(){
+				CommonUtils.performDelay(function(){
+					__this.other_to_me_skill_valid_ball_tips.visible = false
+				}, 2 * 1000, __this)
+			})
 		}
 
 		public UpdateTime():void
@@ -159,6 +219,14 @@ module ui {
 		{
 			this.label_my_score.text = GameController.instance.serverModel.myRole.score.toString()
 			this.label_other_score.text = GameController.instance.serverModel.otherRole.score.toString()
+
+			this.m_other_flag.visible = false
+			this.m_my_flag.visible = false
+			if(GameController.instance.serverModel.myRole.score > GameController.instance.serverModel.otherRole.score){
+				this.m_my_flag.visible = true
+			}else if(GameController.instance.serverModel.myRole.score < GameController.instance.serverModel.otherRole.score){
+				this.m_other_flag.visible = true
+			}
 		}
 
 		public GetCommonUIComponent():CommonUIComponent
@@ -328,6 +396,7 @@ module ui {
 				}
 			}, this)
 			armatureDisplay.animation.play("fail_animation", 1)
+			this.m_role_armature.animation.play("role_animation_3", 1)
 		}
 
 		public PlayEqualAnimation(callback:Function):void
