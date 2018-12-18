@@ -56,7 +56,7 @@ class ServerModel {
 		let id = new_role_info['id']
 		if(this.myRole.openid == id){
 		}else if(this.otherRole.openid == id){
-			this.otherRole.score = new_role_info['total']
+			this.otherRole.score = new_role_info['score'] || 0
 		}
 	}
 

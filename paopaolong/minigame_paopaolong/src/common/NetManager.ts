@@ -75,6 +75,27 @@ class NetManager {
 
 	private onGameOverPush(msgId, body):void
 	{
+		let result = body['result']
+		if(result != undefined){
+			let winners_body = result['winners']
+			if(winners_body != undefined){
+				let winners:Array<Object> = winners_body as Array<Object>
+				if(winners.length != 1){
+					//平局
+					// SoundManager.getInstance().playSound("game_result_draw_mp3")
+				} else {
+					if(winners[0] == GameController.instance.serverModel.myRole.openid){
+						//胜利
+						// SoundManager.getInstance().playSound("game_result_win_mp3")
+						GameController.instance.is_win = true
+					} else {
+						//失败
+						// SoundManager.getInstance().playSound("game_result_fail_mp3")
+						GameController.instance.is_fail = true
+					}
+				}
+			}
+		}
 		GameController.instance.GameOver()
 	}
 
@@ -130,6 +151,17 @@ class NetManager {
 			return
 		}
 		let count = body['add']
+	}	
+
+	private onPPLScorePush(msgId, body):void
+	{
+		this._serverModel.UpdateRoleScore(body)
+		this._mainScenePanel.UpdateScore()
+	}
+
+	private onPPLPropPush(msgId, body):void
+	{
+		this._mainScenePanel.GetGameLogicComponent().OnUseProp(body)
 	}
 
 	public StartConnectServer():void
@@ -144,9 +176,11 @@ class NetManager {
 		GameNet.on(protocol.CMD_H5_SECOND_PUSH, this.onGameSecondPush.bind(this)); //游戏时间推送
 		GameNet.on(protocol.CMD_H5_GAME_STATUS_PUSH, this.onGameStatusPush.bind(this)); //游戏状态推送
 		GameNet.on(protocol.CMD_H5_SCORE_PUSH, this.onGameScorePush.bind(this)); //游戏分数推送
-		GameNet.on(protocol.CMD_H5_UPDATE_STATE_PUSH, this.onUpdateStatePush.bind(this))
 		GameNet.on(protocol.CMD_H5_GAME_OVER_PUSH, this.onGameOverPush.bind(this)); //游戏结束推送
 		GameNet.on(protocol.CMD_H5_REENTER_PUSH, this.onGameReEnterPush.bind(this)); //游戏重进推送
+
+		GameNet.on(protocol.CMD_H5_PPL_SCORE_PUSH, this.onPPLScorePush.bind(this)); //得分推送
+		GameNet.on(protocol.CMD_H5_PPL_PROP_PUSH, this.onPPLPropPush.bind(this)); //得分推送
 		GameNet.onDisconnected = this.onDisconnected.bind(this)
 
 		GamePlatform.onInit(); //onInit

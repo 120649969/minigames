@@ -14,11 +14,12 @@ class MyBall extends Ball{
 
 	private _hit_point:egret.Point = new egret.Point()
 	private _hit_dir:egret.Point = new egret.Point()
-
+	private _game_logic_component:GameLogicComponent
 	public static times:number = 0
 	public constructor() {
 		super()
 		this._mainPanel = GameController.instance.GetMainScenePanel()
+		this._game_logic_component = this._mainPanel.GetGameLogicComponent()
 		this.anchorOffsetX = this.width / 2
 		this.anchorOffsetY = this.height / 2
 		this._mainPanel.m_game_container.addChild(this)
@@ -28,7 +29,7 @@ class MyBall extends Ball{
 		this.x = local_in_cointainer.x
 		this.y = local_in_cointainer.y
 
-		let random_type = Math.ceil(Math.random() * (BALL_TYPE.MAX_TYPE))
+		let random_type = Math.ceil(Math.random() * (BALL_TYPE.MAX_TYPE - 1)) // 过滤掉灰色的
 		this.SetBallType(random_type)
 		this.is_moving = false
 		this.is_end = false
@@ -200,10 +201,7 @@ class MyBall extends Ball{
 		this._clear_all_balls_state()
 		this._search_linked_same_color_balls()
 
-		let total_same_color_count = 0
-		for(let array of this._all_linked_same_color_balls){
-			total_same_color_count += (array as Array<Ball>).length
-		}
+		let total_same_color_count = this._has_insert_balls.length
 		if(total_same_color_count < GameConst.MIN_CLEAR_BALL_COUNT){
 			for(let array of this._all_linked_same_color_balls)
 			{
@@ -213,11 +211,43 @@ class MyBall extends Ball{
 				}
 			}
 			this.do_hit_effect(this, hitBall)
+			this._game_logic_component.combo_times = 0
+			SoundManager.getInstance().playSound("ball_hit_mp3")
 			return
 		}
+		this._game_logic_component.combo_times += 1
 		this._search_all_not_linked_balls()
+		this._updateScore()
 		this.do_clear_effect()
 		this._remove_invalid_ball_line()
+	}
+
+	private _updateScore():void
+	{
+		let score = this._calc_score()
+		let last_score = GameController.instance.serverModel.myRole.score
+		GameController.instance.serverModel.myRole.score += score
+
+		if(GameController.instance.serverModel.myRole.score > 1000 && last_score < 1000){
+			this._mainPanel.OpenInvalidBallSkill()
+		}
+		if(GameController.instance.serverModel.myRole.score > 2000 && last_score < 2000){
+			this._mainPanel.OpenAddLineSkill()
+		}
+
+		this._mainPanel.PlayCombAnimation(this._game_logic_component.combo_times)
+		this._mainPanel.PlayFlyUpNumberAnimation(this._has_insert_balls)
+		this._mainPanel.UpdateScore()
+		GameNet.reqScore(score, this._game_logic_component.max_line, this._game_logic_component.GetLineCountInVisible())
+	}
+
+	private _calc_score():number
+	{
+		let score = 0
+		score += this._has_insert_balls.length * 10
+		score += this._all_not_connected_balls.length * 15
+		score += (this._game_logic_component.combo_times - 1) * 8
+		return score
 	}
 
 	private do_hit_effect(source_ball:Ball, hitBall:Ball):void

@@ -5,8 +5,10 @@ class GameLogicComponent extends BaseComponent {
 	public all_lines:Array<BallLine> = []
 	private _myBall:MyBall
 
+	public combo_times:number = 0
 	private _global_start_point:egret.Point
-
+	
+	public max_line:number = 0
 	public constructor() {
 		super()
 		this._mainScenePanel = GameController.instance.GetMainScenePanel()
@@ -15,9 +17,19 @@ class GameLogicComponent extends BaseComponent {
 
 		let global_start_point = this._mainScenePanel.m_start.localToGlobal(this._mainScenePanel.m_start.width / 2, this._mainScenePanel.m_start.height / 2)
 		this._global_start_point = global_start_point
-		let local_in_cointainer = this._mainScenePanel.m_rotate_line.parent.globalToLocal(global_start_point.x, global_start_point.y)
-		this._mainScenePanel.m_rotate_line.x = local_in_cointainer.x
-		this._mainScenePanel.m_rotate_line.y = local_in_cointainer.y
+		let local_in_cointainer = this._mainScenePanel.m_fixline.parent.globalToLocal(global_start_point.x, global_start_point.y)
+		this._mainScenePanel.m_fixline.x = local_in_cointainer.x
+		this._mainScenePanel.m_fixline.y = local_in_cointainer.y
+
+		this._calc_line()
+	}
+
+	private _calc_line():void
+	{
+		let game_container_top = this._mainScenePanel.m_game_container.localToGlobal(0, 0)
+		let end_point = this._mainScenePanel.m_line.localToGlobal(0, 0)
+		let max_height = end_point.y - game_container_top.y
+		this.max_line = Math.ceil((max_height - GameConst.LINE_HEIGHT) / (GameConst.LINE_HEIGHT * Math.cos(Math.PI / 6)) + 1)
 	}
 
 	private _get_rotate(stageX:number, stageY:number):number
@@ -37,11 +49,11 @@ class GameLogicComponent extends BaseComponent {
 			return false
 		}
 
-		this._mainScenePanel.m_rotate_line.visible = true
+		this._mainScenePanel.m_fixline.visible = true
 		let degree = this._get_rotate(stageX, stageY)
 		degree = degree / Math.PI * 180
 		degree = Math.min(GameConst.MAX_DEGREE, Math.max(GameConst.MIN_DEGREE, degree))
-		this._mainScenePanel.m_rotate_line.rotation = degree * -1
+		this._mainScenePanel.m_fixline.rotation = degree * -1
 		return false
 	}
 
@@ -51,23 +63,23 @@ class GameLogicComponent extends BaseComponent {
 		let degree = this._get_rotate(stageX, stageY)
 		degree = degree / Math.PI * 180
 		degree = Math.min(GameConst.MAX_DEGREE, Math.max(GameConst.MIN_DEGREE, degree))
-		this._mainScenePanel.m_rotate_line.rotation = degree * -1
+		this._mainScenePanel.m_fixline.rotation = degree * -1
 	}
 
 	public OnTouchEnd(stageX:number, stageY:number):void
 	{
 		super.OnTouchEnd(stageX, stageY)
-		this._mainScenePanel.m_rotate_line.visible = false
+		this._mainScenePanel.m_fixline.visible = false
 		if(this._myBall && this._myBall.is_moving){
 			return
 		}
 
-		if(this._mainScenePanel.m_rotate_line.rotation == -1 * GameConst.MIN_DEGREE || this._mainScenePanel.m_rotate_line.rotation == -1 * GameConst.MAX_DEGREE)
+		if(this._mainScenePanel.m_fixline.rotation == -1 * GameConst.MIN_DEGREE || this._mainScenePanel.m_fixline.rotation == -1 * GameConst.MAX_DEGREE)
 		{
 			return
 		}
-		let rate_x = Math.cos(this._mainScenePanel.m_rotate_line.rotation * -1 / 180 * Math.PI)
-		let rate_y = Math.sin(this._mainScenePanel.m_rotate_line.rotation * -1 / 180 * Math.PI) * -1
+		let rate_x = Math.cos(this._mainScenePanel.m_fixline.rotation * -1 / 180 * Math.PI)
+		let rate_y = Math.sin(this._mainScenePanel.m_fixline.rotation * -1 / 180 * Math.PI) * -1
 
 		let speed_x = rate_x * GameConst.MY_BALL_SPEED
 		let speed_y = rate_y * GameConst.MY_BALL_SPEED
@@ -75,6 +87,7 @@ class GameLogicComponent extends BaseComponent {
 		this._myBall.speed_y = speed_y
 
 		this._myBall.is_moving = true
+		SoundManager.getInstance().playSound('touch_down_mp3')
 	}
 
 	public TryGenerateMultiLine():void
@@ -112,7 +125,8 @@ class GameLogicComponent extends BaseComponent {
 		let buttom_point = buttom_multi_line.localToGlobal(0, buttom_multi_line.height)
 		let dead_line_point = this._mainScenePanel.m_line.localToGlobal(0, 0)
 		if(buttom_point.y >= dead_line_point.y){
-			GameController.instance.GameOver()
+			GameNet.reqDeadEnd()
+			GameController.instance.OnClientOver()
 			return true
 		}
 		return false
@@ -164,6 +178,25 @@ class GameLogicComponent extends BaseComponent {
 		}
 	}
 
+	public onTimer():void
+	{
+		GameNet.reqScore(0, this.max_line, this.GetLineCountInVisible())
+	}
+
+	public GetLineCountInVisible():number
+	{
+		let cur_line = 0
+		for(let ball_line of this.all_lines)
+		{
+			if(ball_line.isVisible){
+				cur_line++
+			}else{
+				break
+			}
+		}
+		return cur_line
+	}
+
 	public OnStart():void
 	{
 		super.OnStart()
@@ -173,12 +206,6 @@ class GameLogicComponent extends BaseComponent {
 	public GenerateNextMyBall():void
 	{
 		this._myBall = new MyBall()
-	}
-
-	public Fail():void
-	{
-		//我输了
-		GameController.instance.GameOver()
 	}
 
 	public TestFindBall(sourceBall:Ball):void
@@ -217,5 +244,57 @@ class GameLogicComponent extends BaseComponent {
 		ball_line.y = this.all_lines[0].y + ball_line.height - circle_width / 2 * (1 - Math.cos(30 / 180 * Math.PI)) - 5
 		this.all_lines.unshift(ball_line)
 		return ball_line
+	}
+
+
+	public OnUseProp(data):void
+	{
+		let id = data['id'] || data['openid']
+		if(id == User.openId){
+			return
+		}
+		if(data['prop']){
+			if(data['prop'] == SKILL_PROP_TYPE.ADD_LINE){
+				this._add_line()
+			}else if(data['prop'] == SKILL_PROP_TYPE.INVALID_BALL){
+				this._invalid_ball()
+			}
+		}
+	}
+
+	private _add_line():void
+	{
+		let speed = GameConst.LINE_HEIGHT
+		for(let index = 0; index < this.all_lines.length; index++)
+		{
+			let line = this.all_lines[index]
+			line.MoveDown(speed)
+		}
+		this._mainScenePanel.ShowMoveDownSkillTips()
+	}
+
+	private _invalid_ball():void
+	{
+		let count = 0
+		for(let line of this.all_lines){
+			if(line.isVisible){
+				count ++
+			}
+		}
+		if(count <= 0){
+			return
+		}
+		let random_line_index = Math.floor(Math.random() * count)
+		let line = this.all_lines[random_line_index]
+		let valid_balls = []
+		for(let ball of line.all_balls){
+			if(ball.IsValid() && !ball.isMarkedSameColorClear){
+				valid_balls.push(ball)
+			}
+		}
+		let random_ball_index = Math.floor(Math.random() * valid_balls.length)
+		let ball:Ball= valid_balls[random_ball_index]
+		ball.SetBallType(BALL_TYPE.TYPE_7)
+		this._mainScenePanel.ShowValidBallSkillTips()
 	}
 }

@@ -10,6 +10,11 @@ enum BALL_TYPE{
 	MAX_TYPE = 7
 }
 
+enum SKILL_PROP_TYPE{
+	ADD_LINE = 1,
+	INVALID_BALL = 2
+}
+
 class GameConst {
 	public static LINE_COUNT:number = 5
 	public static LINE_BALL_COUNT:number = 19
@@ -19,8 +24,8 @@ class GameConst {
 	public static GENERATE_STEP_LINE_COUNT:number = 5
 
 	public static quick_ball_speed:number = 25
-	public static normal_ball_speed:number = 0.4
-	public static slow_ball_speed:number = 0.4
+	public static normal_ball_speed:number = 0.6
+	public static slow_ball_speed:number = 0.2
 
 	public static MY_BALL_SPEED:number = 80
 
@@ -29,6 +34,8 @@ class GameConst {
 
 	public static MIN_CLEAR_BALL_COUNT:number = 3
 	public static HIT_MOVE_DISTANCE:number = 20
+
+	public static LINE_HEIGHT:number = 72
 
 	public static Generate10LineConfig(type:BALL_TYPE = BALL_TYPE.TYPE_EMPTY):Array<number>
 	{

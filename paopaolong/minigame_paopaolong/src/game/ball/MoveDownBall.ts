@@ -11,7 +11,7 @@ class MoveDownBall extends Ball{
 
 	public PlayMoveDownAnimation():void
 	{
-		let global_buttom_line_point = GameController.instance.GetMainScenePanel().m_line.localToGlobal(0, 0)
+		let global_buttom_line_point = GameController.instance.GetMainScenePanel().m_floor.localToGlobal(0, 0)
 		let local_point = this.parent.globalToLocal(global_buttom_line_point.x, global_buttom_line_point.y)
 		let target_y = local_point.y - this.height
 		this._move_down_target_y = target_y
@@ -26,7 +26,8 @@ class MoveDownBall extends Ball{
 		this.y = Math.min(this.y, this._move_down_target_y)
 		if(this.y == this._move_down_target_y){
 			this._reach_target_times += 1
-			this._move_down_speed_y *= -0.3
+			this._move_down_speed_y *= -0.6
+			SoundManager.getInstance().playSound("hit_floor_up_mp3")
 		}
 		if(this._reach_target_times == 2){
 			this.visible = false

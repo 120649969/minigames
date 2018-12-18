@@ -45,5 +45,6 @@ class Ball extends eui.Component{
 		CommonUtils.performDelay(function(){
 			__this.SetBallType(BALL_TYPE.TYPE_EMPTY)
 		}, delay_time, this)
+		SoundManager.getInstance().playSound("ball_broken_mp3")
 	}
 }

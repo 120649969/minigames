@@ -38,6 +38,17 @@ class CommonUtils {
 		image.filters = [colorFilter];
 	}
 
+	public static GrayDisplayObject(displayobject:egret.DisplayObject){
+		var colorMatrix = [
+			0.3,0.6,0,0,0,
+			0.3,0.6,0,0,0,
+			0.3,0.6,0,0,0,
+			0,0,0,1,0
+		];
+		var colorFlilter = new egret.ColorMatrixFilter(colorMatrix);
+		displayobject.filters = [colorFlilter];
+	}
+
 	/**
      * 替换插槽
      * @param slotName 插槽名称 原材料

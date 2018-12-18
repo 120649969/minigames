@@ -11,6 +11,9 @@ class GameController {
 	private _gameLogicComponent:GameLogicComponent
 	private _commonUIComponent:CommonUIComponent
 
+	public is_win:boolean = false
+	public is_fail:boolean = false
+
 	public constructor() {
 	}
 
@@ -60,6 +63,7 @@ class GameController {
 		this.serverModel.left_time -= 1
 		this.serverModel.left_time = Math.max(this.serverModel.left_time, 0)
 		this._mainScenePanel.UpdateTime()
+		this._mainScenePanel.GetGameLogicComponent().onTimer()
 	}
 
 	private _clearGame():void
@@ -77,6 +81,14 @@ class GameController {
 		}
 	}
 
+	private _real_over():void
+	{
+		GamePlatform.onCalculating()
+		CommonUtils.performDelay(function(){
+			GamePlatform.onFinished()
+		}.bind(this), 2 * 1000, this)
+	}
+
 	public GameOver():void
 	{
 		if(this.is_game_over){
@@ -84,9 +96,14 @@ class GameController {
 		}
 		this.is_game_over = true
 		this._clearGame()
-		GamePlatform.onCalculating()
-		CommonUtils.performDelay(function(){
-			GamePlatform.onFinished()
-		}.bind(this), 2 * 1000, this)
+		let __this= this
+		this._mainScenePanel.PlayResultAnimation(function(){
+			__this._real_over()
+		})
+	}
+
+	public OnClientOver():void
+	{
+		this._clearGame()
 	}
 }

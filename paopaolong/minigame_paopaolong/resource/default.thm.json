@@ -20,6 +20,7 @@
 		"resource/eui_skins/BallSkin.exml",
 		"resource/eui_skins/ButtonSkin.exml",
 		"resource/eui_skins/DebugSkin.exml",
+		"resource/eui_skins/FixLineSkin.exml",
 		"resource/eui_skins/MainSceneSkin.exml",
 		"resource/eui_skins/TextInputSkin.exml"
 	],

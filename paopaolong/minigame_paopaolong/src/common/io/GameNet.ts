@@ -21,9 +21,12 @@ module io {
 			CMD_H5_SCORE_REQ:9,  //分数
 			CMD_H5_SCORE_RSP:10, //分数
 
-			CMD_H5_UPDATE_STATE_REQ:1001, //同步状态
-			CMD_H5_UPDATE_STATE_RSP:1002, //同步状态推送
-			CMD_H5_UPDATE_STATE_PUSH:10000, 
+			CMD_H5_PPL_SCORE_REQ:1001, //得分
+			CMD_H5_PPL_SCORE_RSP:1002, //同步状态推送
+			CMD_H5_PPL_PROP_REQ:1003,
+			CMD_H5_PPL_PROP_RSP:1004,
+			CMD_H5_PPL_DEADEND_REQ:1005, 
+			CMD_H5_PPL_DEADEND_RSP:1006,
 
 			CMD_H5_JOIN_PUSH: 100, //加入房间推送
 			CMD_H5_GAME_STATUS_PUSH: 102, //房间状态改变推送
@@ -32,6 +35,10 @@ module io {
 			CMD_H5_SCORE_PUSH: 108, //分数变化推送
 			CMD_H5_GAME_OVER_PUSH: 110, //游戏结束推送
 			CMD_H5_REENTER_PUSH: 112, //重进推送
+
+			CMD_H5_PPL_SCORE_PUSH:10000, //得分推送
+			CMD_H5_PPL_PROP_PUSH:10002, // 道具
+			CMD_H5_PPL_DEADEND_PUSH:10004 // 死局
 		};
 
 		public sessionKey:string;
@@ -135,18 +142,43 @@ module io {
 				});
 			});		
 		}
-		
-		public async reqUpdateState(total, curLine, clearLineCount){
+
+		public async reqScore(addScore:number, total_line:number, cur_line:number){
 			let self = this;
 			return new Promise((resolve, reject) => {
-				self.on(GameNet.GAME_PROTOCOL.CMD_H5_UPDATE_STATE_RSP, function (msgId, body) {
-					self.off(GameNet.GAME_PROTOCOL.CMD_H5_UPDATE_STATE_RSP);
+				self.on(GameNet.GAME_PROTOCOL.CMD_H5_PPL_SCORE_RSP, function (msgId, body) {
+					self.off(GameNet.GAME_PROTOCOL.CMD_H5_PPL_SCORE_RSP);
 					resolve(body);
 				});
-				self.send(GameNet.GAME_PROTOCOL.CMD_H5_UPDATE_STATE_REQ, {
-					total:total,
-					current:curLine,
-					add:clearLineCount
+				self.send(GameNet.GAME_PROTOCOL.CMD_H5_PPL_SCORE_REQ, {
+					score:addScore,
+					total:total_line,
+					current:cur_line
+				});
+			});		
+		}
+
+		public async reqUseProp(prop:number){
+			let self = this;
+			return new Promise((resolve, reject) => {
+				self.on(GameNet.GAME_PROTOCOL.CMD_H5_PPL_PROP_RSP, function (msgId, body) {
+					self.off(GameNet.GAME_PROTOCOL.CMD_H5_PPL_PROP_RSP);
+					resolve(body);
+				});
+				self.send(GameNet.GAME_PROTOCOL.CMD_H5_PPL_PROP_REQ, {
+					prop:prop
+				});
+			});		
+		}
+
+		public async reqDeadEnd(){
+			let self = this;
+			return new Promise((resolve, reject) => {
+				self.on(GameNet.GAME_PROTOCOL.CMD_H5_PPL_DEADEND_RSP, function (msgId, body) {
+					self.off(GameNet.GAME_PROTOCOL.CMD_H5_PPL_DEADEND_RSP);
+					resolve(body);
+				});
+				self.send(GameNet.GAME_PROTOCOL.CMD_H5_PPL_DEADEND_REQ, {
 				});
 			});		
 		}

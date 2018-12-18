@@ -27,6 +27,11 @@ class BaseComponent {
 		
 	}
 
+	public onTimer():void
+	{
+		
+	}
+
 	public OnStart():void
 	{
 		

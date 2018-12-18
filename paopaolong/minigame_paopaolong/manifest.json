@@ -33,6 +33,7 @@
 		"bin-debug/Platform.js",
 		"bin-debug/common/ui/WindowManager.js",
 		"bin-debug/game/DebugPanel.js",
+		"bin-debug/game/FixLine.js",
 		"bin-debug/game/GameConfig.js",
 		"bin-debug/game/GameConst.js",
 		"bin-debug/game/GameLogicComponent.js",

@@ -8,6 +8,8 @@ declare module skins{
 }
 declare class DebugSkin extends eui.Skin{
 }
+declare class FixLineSkin extends eui.Skin{
+}
 declare class MainSceneSkin extends eui.Skin{
 }
 declare module skins{
