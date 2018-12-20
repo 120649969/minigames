@@ -4,6 +4,7 @@ class GamePoint extends egret.DisplayObjectContainer{
 
 	public constructor() {
 		super()
+		GameController.instance.GetMainScenePanel().prop_container.addChild(this)
 	}
 
 	public Show(line_count:number):void
@@ -13,7 +14,7 @@ class GamePoint extends egret.DisplayObjectContainer{
 		let line_height = 0
 		for(let index = 0; index < line_count; index++)
 		{
-			let is_line_4 = Math.random() < 0.5
+			let is_line_4 = Math.random() < 1
 			let new_line:BaseGameBoxLine = null
 			if(is_line_4){
 				new_line = new GameBox4Line()

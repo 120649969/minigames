@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="MainSceneSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Group id="m_bg_layer1" width="720" height="1280" y="0" x="0" touchEnabled="false" touchChildren="false" locked="true">
-		<e:Image id="img_bag_1" source="beijing_dong_png" y="0" scaleX="1" scaleY="1" left="0" right="0"/>
-		<e:Image id="img_bag_2" source="beijing_dong_png" y="-1280" scaleX="1" scaleY="1" height="1280" left="0" right="0"/>
-		<e:Image id="img_bag_3" source="beijing_dong_png" y="-2560" scaleX="1" scaleY="1" left="0" right="0"/>
+	<e:Group id="m_bg_layer1" width="720" height="1280" y="0" x="0" touchEnabled="false" touchChildren="false">
+		<e:Group id="bg_container" scaleX="1" scaleY="1" left="0" right="0" height="1280" y="0">
+			<e:Image id="img_bg_1" source="beijing_dong_png" y="0" scaleX="1" scaleY="1" left="0" right="0" x="0"/>
+			<e:Image id="img_bg_2" source="beijing_dong_png" y="-1280" scaleX="1" scaleY="1" height="1280" left="0" right="0" x="0"/>
+			<e:Image id="img_bg_3" source="beijing_dong_png" y="-2560" scaleX="1" scaleY="1" left="0" right="0" x="0"/>
+		</e:Group>
+		<e:Group id="prop_container" scaleX="1" scaleY="1" width="720" height="1280" y="0" left="0" x="0"/>
+
+
+
 	</e:Group>
-	<e:Group id="m_bg_layer2" left="0" top="0" right="0" bottom="0" touchEnabled="false" touchChildren="false" locked="true">
+	<e:Group id="m_bg_layer2" left="0" top="0" right="0" bottom="0" touchEnabled="false" touchChildren="false">
 		<e:Image source="beijing_budong1_png" left="0" top="0" bottom="0" right="0"/>
 	</e:Group>
 	<e:Group id="m_head_layer" height="334" left="0" right="0" top="0" anchorOffsetY="0" touchChildren="false" touchEnabled="false">
@@ -28,5 +34,5 @@
 		<e:Image source="daojishi_png" y="84" horizontalCenter="0"/>
 		<e:BitmapLabel id="label_time" width="60" height="34" font="clock_fnt" text="90" anchorOffsetX="30" anchorOffsetY="17" horizontalCenter="0" y="115"/>
 	</e:Group>
-	<e:Image source="ren_png" horizontalCenter="0" bottom="200"/>
+	<e:Image id="m_player" source="ren_png" horizontalCenter="0" bottom="200"/>
 </e:Skin>

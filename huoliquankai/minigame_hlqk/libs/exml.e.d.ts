@@ -1,6 +1,6 @@
 declare class BoxLine3Skin extends eui.Skin{
 }
-declare class BoxLine4 extends eui.Skin{
+declare class BoxLine4Skin extends eui.Skin{
 }
 declare class BoxSkin extends eui.Skin{
 }

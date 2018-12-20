@@ -17,9 +17,19 @@ module ui {
 		private _gameLogicComponent:GameLogicComponent
 		private _commonUIComponent:CommonUIComponent
 
+		public m_bg_layer1:eui.Group
+		public all_img_bgs:Array<eui.Image> = []
+		public prop_container:eui.Group
+
+		public m_player:eui.Image
 		public constructor() {
 			super()
 			this.skinName = "MainSceneSkin"
+
+			for(let index = 0; index < GameConst.BG_IN_SCENE; index++)
+			{
+				this.all_img_bgs.push(this['img_bg_' + (index + 1)])
+			}
 		}
 
 		public UpdateTime():void
@@ -46,6 +56,7 @@ module ui {
 		public onOpen():void
 		{
 			super.onOpen()
+			
 			GameController.instance.SetMainScenePanel(this)
 			this._commonUIComponent = new CommonUIComponent()
 			this._gameLogicComponent = new GameLogicComponent()

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="BoxLine4" width="720" height="161" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*">
-	<ns1:GameBox height="161" width="194" skinName="BoxSkin" x="0" y="0"/>
-	<ns1:GameBox height="161" width="194" x="175.33333333333334" y="0" skinName="BoxSkin"/>
-	<ns1:GameBox height="161" width="194" x="350.6666666666667" y="0" skinName="BoxSkin"/>
-	<ns1:GameBox height="161" width="194" skinName="BoxSkin" x="526" y="0"/>
+<e:Skin class="BoxLine4Skin" width="720" height="161" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+	<ns1:GameBox id="box_1" height="161" width="194" skinName="BoxSkin" x="0" y="0"/>
+	<ns1:GameBox id="box_2" height="161" width="194" x="175.33333333333334" y="0" skinName="BoxSkin"/>
+	<ns1:GameBox id="box_3" height="161" width="194" x="350.6666666666667" y="0" skinName="BoxSkin"/>
+	<ns1:GameBox id="box_4" height="161" width="194" skinName="BoxSkin" x="526" y="0"/>
 </e:Skin>
