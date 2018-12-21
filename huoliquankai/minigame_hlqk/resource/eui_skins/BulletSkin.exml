@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="BulletSkin" width="50" height="50" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect id="hit_rect" width="5" height="5" horizontalCenter="0" verticalCenter="0"/>
+	<e:Image source="xing_png" x="0" y="0"/>
+</e:Skin>

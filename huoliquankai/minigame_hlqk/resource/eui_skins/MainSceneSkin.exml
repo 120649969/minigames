@@ -1,38 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="MainSceneSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Group id="m_bg_layer1" width="720" height="1280" y="0" x="0" touchEnabled="false" touchChildren="false">
-		<e:Group id="bg_container" scaleX="1" scaleY="1" left="0" right="0" height="1280" y="0">
-			<e:Image id="img_bg_1" source="beijing_dong_png" y="0" scaleX="1" scaleY="1" left="0" right="0" x="0"/>
-			<e:Image id="img_bg_2" source="beijing_dong_png" y="-1280" scaleX="1" scaleY="1" height="1280" left="0" right="0" x="0"/>
-			<e:Image id="img_bg_3" source="beijing_dong_png" y="-2560" scaleX="1" scaleY="1" left="0" right="0" x="0"/>
+<e:Skin class="MainSceneSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*">
+	<e:Group touchEnabled="false" touchChildren="false" height="1280" left="0" right="0" bottom="0" locked="true">
+		<e:Group id="m_bg_layer1" scaleX="1" scaleY="1" left="0" right="0" height="1280" y="0">
+			<e:Image id="img_bg_1" source="beijing_dong_png" scaleX="1" scaleY="1" left="0" right="0" x="0" y="0" width="720" height="1280" anchorOffsetY="0"/>
+			<e:Image id="img_bg_2" source="beijing_dong_png" y="-1280" scaleX="1" scaleY="1" height="1280" left="0" right="0" x="0" anchorOffsetY="0"/>
+			<e:Image id="img_bg_3" source="beijing_dong_png" y="-2560" scaleX="1" scaleY="1" left="0" right="0" x="0" anchorOffsetY="0"/>
 		</e:Group>
-		<e:Group id="prop_container" scaleX="1" scaleY="1" width="720" height="1280" y="0" left="0" x="0"/>
+
 
 
 
 	</e:Group>
-	<e:Group id="m_bg_layer2" left="0" top="0" right="0" bottom="0" touchEnabled="false" touchChildren="false">
+	<e:Group id="m_bg_layer2" left="0" top="0" right="0" bottom="0" touchEnabled="false" touchChildren="false" visible="false" locked="true">
 		<e:Image source="beijing_budong1_png" left="0" top="0" bottom="0" right="0"/>
 	</e:Group>
-	<e:Group id="m_head_layer" height="334" left="0" right="0" top="0" anchorOffsetY="0" touchChildren="false" touchEnabled="false">
-		<e:Group width="300" height="110" anchorOffsetX="0" anchorOffsetY="0" y="80">
-			<e:Image source="hei_di_png" x="273.44" scaleX="-1" bottom="32"/>
-			<e:Image source="wofang_2_png" x="38.76" y="6.56"/>
-			<e:Image source="wofang_png" y="0" left="0"/>
-			<e:Image id="m_other_icon" width="88" height="88" x="44" y="44.98" anchorOffsetX="44" anchorOffsetY="44"/>
-			<e:Label id="label_other_name" text="" x="94.33" y="44.33" textAlign="left" anchorOffsetX="0" width="169.33" height="30"/>
-			<e:BitmapLabel id="label_other_score" width="209.16" height="33.17" font="clock_fnt" text="1230000" anchorOffsetX="0" anchorOffsetY="16.58" y="26.53" x="87.2" scaleX="0.8" scaleY="0.8" textAlign="left" verticalAlign="center"/>
-		</e:Group>
-		<e:Group width="300" height="110" anchorOffsetX="0" anchorOffsetY="0" y="80" right="0">
-			<e:Image source="hei_di_png" x="26.68" scaleX="1" bottom="32"/>
-			<e:Image x="30.76" y="6.56" source="difang_2_png"/>
-			<e:Image y="0" source="difang_png" right="0"/>
-			<e:Image id="m_me_icon" width="88" height="88" y="45.33" anchorOffsetX="44" anchorOffsetY="44" right="0"/>
-			<e:Label id="label_my_name" text="" x="39" y="44" textAlign="right" anchorOffsetX="0" width="169.33" height="30"/>
-			<e:BitmapLabel id="label_my_score" width="210.83" height="29.01" font="clock_fnt" text="1230000" anchorOffsetX="0" anchorOffsetY="14.49" y="24.04" x="42" scaleX="0.8" scaleY="0.8" textAlign="right" verticalAlign="center"/>
-		</e:Group>
-		<e:Image source="daojishi_png" y="84" horizontalCenter="0"/>
-		<e:BitmapLabel id="label_time" width="60" height="34" font="clock_fnt" text="90" anchorOffsetX="30" anchorOffsetY="17" horizontalCenter="0" y="115"/>
+	<e:Image id="img_black_bg" source="beijing_budong2_png" left="0" top="0" right="0" bottom="0" visible="false" locked="true"/>
+	<e:Group id="m_prop_layer" left="0" right="0" height="1280" y="0" locked="true">
+		<e:Group id="prop_container" scaleX="1" scaleY="1" width="720" height="1280" y="0" left="0" x="0"/>
 	</e:Group>
-	<e:Image id="m_player" source="ren_png" horizontalCenter="0" bottom="200"/>
+	<e:Group id="m_bullet_layer" left="0" top="0" bottom="0" right="0" touchChildren="false" touchEnabled="false" locked="true">
+	</e:Group>
+	<e:Group id="m_touch_layer" left="0" top="0" bottom="0" right="0" locked="true"/>
+	<e:Group id="m_head_layer" height="334" left="0" right="0" top="0" anchorOffsetY="0" touchEnabled="false">
+		<e:Group width="300" height="110" anchorOffsetX="0" anchorOffsetY="0" y="138">
+		<e:Image source="hei_di_png" x="273.44" scaleX="-1" bottom="32"/>
+		<e:Image source="wofang_2_png" x="38.76" y="6.56"/>
+		<e:Image source="wofang_png" y="0" left="0"/>
+		<e:Image id="m_other_icon" width="88" height="88" x="44" y="44.98" anchorOffsetX="44" anchorOffsetY="44"/>
+		<e:Label id="label_other_name" text="" x="94.33" y="44.33" textAlign="left" anchorOffsetX="0" width="169.33" height="30"/>
+		<e:BitmapLabel id="label_other_score" width="209.16" height="33.17" font="clock_fnt" text="0" anchorOffsetX="0" anchorOffsetY="16.58" y="26.53" x="87.2" scaleX="0.8" scaleY="0.8" textAlign="left" verticalAlign="center"/>
+		</e:Group>
+		<e:Group width="300" height="110" anchorOffsetX="0" anchorOffsetY="0" y="138" right="0">
+		<e:Image source="hei_di_png" x="26.68" scaleX="1" bottom="32"/>
+		<e:Image x="30.76" y="6.56" source="difang_2_png"/>
+		<e:Image y="0" source="difang_png" right="0"/>
+		<e:Image id="m_me_icon" width="88" height="88" y="45.33" anchorOffsetX="44" anchorOffsetY="44" right="0"/>
+		<e:Label id="label_my_name" text="" x="39" y="44" textAlign="right" anchorOffsetX="0" width="169.33" height="30"/>
+		<e:BitmapLabel id="label_my_score" width="210.83" height="29.01" font="clock_fnt" text="0" anchorOffsetX="0" anchorOffsetY="14.49" y="24.04" x="42" scaleX="0.8" scaleY="0.8" textAlign="right" verticalAlign="center"/>
+		</e:Group>
+		<e:Image source="daojishi_png" y="142" horizontalCenter="0.5"/>
+		<e:BitmapLabel id="label_time" width="60" height="34" font="clock_fnt" text="90" anchorOffsetX="30" anchorOffsetY="17" horizontalCenter="0" y="173" textAlign="center"/>
+		<e:Button id="btn_help" label="" x="17.27" y="250.76" scaleX="1" scaleY="1" touchEnabled="true">
+			<e:skinName>
+				<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="wenhao_png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+				</e:Skin>
+			</e:skinName>
+		</e:Button>
+		<e:Image id="img_high" source="lingxian_png" x="51" y="140" anchorOffsetX="47" anchorOffsetY="53" visible="false"/>
+		<e:Group id="m_offline_tips" width="505" height="50" horizontalCenter="0.5" touchEnabled="false" y="472" visible="false">
+			<e:Rect width="505" height="50" horizontalCenter="0" verticalCenter="0" fillColor="0x302f2f" fillAlpha="0.5" x="0" y="0" scaleX="1" scaleY="1"/>
+			<e:Label text="توردىن ئازراق مەسىلە چىقتى ، سەل ساقلاڭ " x="31.360000000000014" y="10" scaleX="1" scaleY="1"/>
+		</e:Group>
+	</e:Group>
+
+	<ns1:GamePlayer id="m_player" width="182" height="164" x="270.85" y="953.12" skinName="PlayerSkin" locked="true"/>
+	<e:BitmapLabel id="label_broken_score" width="700" height="84" anchorOffsetX="350" anchorOffsetY="42" font="score_fnt" text="0+s" textAlign="center" horizontalCenter="0" verticalCenter="-126" visible="false"/>
+	<e:Image id="img_help" source="bangzu.jpg_png" x="43.64" y="224.18" anchorOffsetX="41" anchorOffsetY="48" visible="false"/>
 </e:Skin>

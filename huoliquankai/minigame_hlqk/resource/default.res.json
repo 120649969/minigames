@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,description_json,xing_png,beijing_budong1_png,beijing_budong2_png,beijing_dong_png,bing_di_png,bing1_png,bing2_png,daojishi_png,deng1_png,deng2_png,difang_png,difang_2_png,jiasu_png,ren_png,ren-di_png,san_png,wofang_png,wofang_2_png,clock_png,clock_fnt,lanse_png,hongse_fnt,hongse_png,lanse_fnt,hei_di_png,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,ready_go_mp3",
+			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,description_json,xing_png,beijing_budong1_png,beijing_budong2_png,beijing_dong_png,bing_di_png,bing1_png,bing2_png,daojishi_png,deng1_png,deng2_png,difang_png,difang_2_png,jiasu_png,ren_png,ren-di_png,san_png,wofang_png,wofang_2_png,clock_png,clock_fnt,lanse_png,hongse_fnt,hongse_png,lanse_fnt,hei_di_png,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,ready_go_mp3,lingxian_png,bangzu.jpg_png,wenhao_png,broken_tex_png,broken_ske_json,broken_tex_json,prop_tex_png,prop_ske_json,prop_tex_json,deng_tex_json,deng_tex_png,deng_ske_json,hit_tex_png,hit_ske_json,hit_tex_json,hit_fly_tex_png,hit_fly_ske_json,hit_fly_tex_json,score_png,score_fnt,broken_mp3,send_mp3,send2_mp3,hit_fly_mp3,prop_mp3,deng_mp3",
 			"name": "preload"
 		}
 	],
@@ -270,6 +270,136 @@
 			"name": "ready_go_mp3",
 			"type": "sound",
 			"url": "assets/music/ready_go.mp3"
+		},
+		{
+			"name": "lingxian_png",
+			"type": "image",
+			"url": "assets/lingxian.png"
+		},
+		{
+			"name": "bangzu.jpg_png",
+			"type": "image",
+			"url": "assets/bangzu.jpg.png"
+		},
+		{
+			"name": "wenhao_png",
+			"type": "image",
+			"url": "assets/wenhao.png"
+		},
+		{
+			"name": "broken_tex_png",
+			"type": "image",
+			"url": "assets/db/broken/broken_tex.png"
+		},
+		{
+			"name": "broken_ske_json",
+			"type": "json",
+			"url": "assets/db/broken/broken_ske.json"
+		},
+		{
+			"name": "broken_tex_json",
+			"type": "json",
+			"url": "assets/db/broken/broken_tex.json"
+		},
+		{
+			"name": "prop_tex_png",
+			"type": "image",
+			"url": "assets/db/prop/prop_tex.png"
+		},
+		{
+			"name": "prop_ske_json",
+			"type": "json",
+			"url": "assets/db/prop/prop_ske.json"
+		},
+		{
+			"name": "prop_tex_json",
+			"type": "json",
+			"url": "assets/db/prop/prop_tex.json"
+		},
+		{
+			"name": "deng_tex_json",
+			"type": "json",
+			"url": "assets/db/deng/deng_tex.json"
+		},
+		{
+			"name": "deng_tex_png",
+			"type": "image",
+			"url": "assets/db/deng/deng_tex.png"
+		},
+		{
+			"name": "deng_ske_json",
+			"type": "json",
+			"url": "assets/db/deng/deng_ske.json"
+		},
+		{
+			"name": "hit_tex_png",
+			"type": "image",
+			"url": "assets/db/hit/hit_tex.png"
+		},
+		{
+			"name": "hit_ske_json",
+			"type": "json",
+			"url": "assets/db/hit/hit_ske.json"
+		},
+		{
+			"name": "hit_tex_json",
+			"type": "json",
+			"url": "assets/db/hit/hit_tex.json"
+		},
+		{
+			"name": "hit_fly_tex_png",
+			"type": "image",
+			"url": "assets/db/hit_fly/hit_fly_tex.png"
+		},
+		{
+			"name": "hit_fly_ske_json",
+			"type": "json",
+			"url": "assets/db/hit_fly/hit_fly_ske.json"
+		},
+		{
+			"name": "hit_fly_tex_json",
+			"type": "json",
+			"url": "assets/db/hit_fly/hit_fly_tex.json"
+		},
+		{
+			"name": "score_png",
+			"type": "image",
+			"url": "assets/score.png"
+		},
+		{
+			"name": "score_fnt",
+			"type": "font",
+			"url": "assets/score.fnt"
+		},
+		{
+			"name": "broken_mp3",
+			"type": "sound",
+			"url": "assets/music/broken.mp3"
+		},
+		{
+			"name": "send_mp3",
+			"type": "sound",
+			"url": "assets/music/send.mp3"
+		},
+		{
+			"name": "send2_mp3",
+			"type": "sound",
+			"url": "assets/music/send2.mp3"
+		},
+		{
+			"name": "hit_fly_mp3",
+			"type": "sound",
+			"url": "assets/music/hit_fly.mp3"
+		},
+		{
+			"name": "prop_mp3",
+			"type": "sound",
+			"url": "assets/music/prop.mp3"
+		},
+		{
+			"name": "deng_mp3",
+			"type": "sound",
+			"url": "assets/music/deng.mp3"
 		}
 	]
 }

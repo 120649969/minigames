@@ -64,6 +64,12 @@ class GameController {
 		this.serverModel.left_time = Math.max(this.serverModel.left_time, 0)
 		this._mainScenePanel.UpdateTime()
 		this._mainScenePanel.GetGameLogicComponent().onTimer()
+		if(this.serverModel.left_time <= 0){
+			this.OnClientOver()
+			if(!GameNet.isConnected()){
+				GamePlatform.onFinished()
+			}
+		}
 	}
 
 	private _clearGame():void

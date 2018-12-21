@@ -2,6 +2,12 @@
 class BaseGameBoxLine extends eui.Component{
 	public all_boxs:Array<GameBox> = []
 	public line_index = 0
+	public hit_rect:eui.Rect
+
+	public point_line:GamePoint
+	public is_valid:boolean
+
+	
 	public constructor() {
 		super()
 	}
@@ -26,6 +32,7 @@ class GameBox3Line extends BaseGameBoxLine{
 	public constructor() {
 		super()
 		this.skinName = "BoxLine3Skin"
+		this.init()
 	}
 
 	public getBoxCount():number
@@ -39,6 +46,7 @@ class GameBox4Line extends BaseGameBoxLine{
 	public constructor() {
 		super()
 		this.skinName = "BoxLine4Skin"
+		this.init()
 	}
 
 	public getBoxCount():number

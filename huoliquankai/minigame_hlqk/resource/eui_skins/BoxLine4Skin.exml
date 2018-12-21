@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="BoxLine4Skin" width="720" height="161" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect id="hit_rect" left="0" top="0" bottom="0" right="0" visible="false"/>
 	<ns1:GameBox id="box_1" height="161" width="194" skinName="BoxSkin" x="0" y="0"/>
 	<ns1:GameBox id="box_2" height="161" width="194" x="175.33333333333334" y="0" skinName="BoxSkin"/>
 	<ns1:GameBox id="box_3" height="161" width="194" x="350.6666666666667" y="0" skinName="BoxSkin"/>

@@ -3,9 +3,16 @@ class GameLogicComponent extends BaseComponent{
 	public all_point_lines:Array<GamePoint> = []
 
 	private _mainScenePanel:ui.MainScenePanel
+	public mainPlayer:GamePlayer
+
+	public currentPropObject:GameProp
+	private _is_in_generate_cd:boolean = false
+
 	public constructor() {
 		super()
 		this._mainScenePanel = GameController.instance.GetMainScenePanel()
+		this.mainPlayer = this._mainScenePanel.m_player
+		this.mainPlayer.Init()
 	}
 
 	private _tryChangeBgPosition():void
@@ -20,12 +27,37 @@ class GameLogicComponent extends BaseComponent{
 		}
 	}
 
+	private _try_generate_new_prop():void
+	{
+		if(this.currentPropObject)
+		{
+			return
+		}
+		if(this._is_in_generate_cd){
+			return
+		}
+		this._is_in_generate_cd = true
+		let __this = this
+		CommonUtils.performDelay(function(){
+			__this._is_in_generate_cd = false
+		}, 1 * 1000, this)
+		let is_generate = Math.random() < 0.2
+		if(is_generate)
+		{
+			this.currentPropObject = new GameProp()
+			this._mainScenePanel.m_prop_layer.addChild(this.currentPropObject)
+			this.currentPropObject.x = Math.random() * (this._mainScenePanel.width - this.currentPropObject.width)
+			let top_point_line = this.all_point_lines[this.all_point_lines.length - 1]
+			this.currentPropObject.y = top_point_line.y - 500
+		}
+	}
+
 	private _try_generate_new_point_line():void
 	{
 		let cur_y = 0
 		if(this.all_point_lines.length < 5)
 		{
-			let is_two = Math.random() < 0.2
+			let is_two = Math.random() < 1
 			let line_count = 1
 			if(is_two){
 				line_count = 2
@@ -46,18 +78,117 @@ class GameLogicComponent extends BaseComponent{
 		}
 	}
 
+
+	private _try_recycle_point_line():void
+	{
+		let delete_point_lines = []
+		for(let point_line of this.all_point_lines)
+		{
+			let game_line:BaseGameBoxLine = point_line.all_lines[0]
+			let global_top_point = game_line.localToGlobal(0, 0)
+			if(global_top_point.y > GameController.instance.GetMainScenePanel().height + 400){
+				delete_point_lines.push(point_line)
+			}else{
+				break
+			}
+		}
+		
+		for(let index = 0; index < delete_point_lines.length; index++)
+		{
+			let point_line = delete_point_lines[index]
+			let index_of_point_line = this.all_point_lines.indexOf(point_line)
+			this.all_point_lines.splice(index_of_point_line, 1)
+		}
+	}
+
 	private _updateBgPosition():void
 	{
-		// for(let bg of this._mainScenePanel.all_img_bgs){
-		// 	bg.y += GameConst.BG_SPEED
-		// }
 		this._mainScenePanel.m_bg_layer1.y += GameConst.BG_SPEED
+		this._mainScenePanel.m_prop_layer.y += GameConst.BG_SPEED
 	}
 
 	public OnEnterFrame():void
 	{
+		this.mainPlayer.UpateBullet()
+		if(this.mainPlayer.is_stop){
+			return
+		}
+		
 		this._tryChangeBgPosition()
 		this._try_generate_new_point_line()
 		this._updateBgPosition()
+		this._try_recycle_point_line()
+		this._try_generate_new_prop()
+		if(this.currentPropObject)
+		{
+			this.currentPropObject.Update()
+		}
+		this.mainPlayer.Update()
+	}
+
+	public PlayFlyStarAnimation(box:GameBox):void
+	{
+		let star = new egret.Bitmap()
+		star.texture = RES.getRes('deng2_png')
+
+		this._mainScenePanel.addChild(star)
+
+		let global_point = box.img_deng.localToGlobal(0, 0)
+		let local_point = this._mainScenePanel.globalToLocal(global_point.x, global_point.y)
+		star.x = local_point.x
+		star.y = local_point.y
+
+		let __this = this
+		let global_player_point = this.mainPlayer.localToGlobal(this.mainPlayer.width / 2, this.mainPlayer.height / 2)
+		let local_player_point = this._mainScenePanel.globalToLocal(global_player_point.x, global_player_point.y)
+		egret.Tween.get(star).to({x:local_player_point.x - star.width / 2 * 0.5, y:local_player_point.y - star.height / 2 * 0.5, scaleX:0.5, scaleY:0.5}, 0.3 * 1000).call(function(){
+			star.parent.removeChild(star)
+			__this.mainPlayer.PlayDengAnimation()
+		})
+		SoundManager.getInstance().playSound("deng_mp3")
+	}
+
+	public PlayBrokenAnimation(box:GameBox):void
+	{
+		let armatureDisplay = CommonUtils.createDragonBones("broken_ske_json", "broken_tex_json", "broken_tex_png", "broken_armature")
+		this._mainScenePanel.addChild(armatureDisplay)
+		let global_point = box.localToGlobal(box.width / 2, box.height / 2)
+		let local_point = this._mainScenePanel.globalToLocal(global_point.x, global_point.y)
+		armatureDisplay.x = local_point.x
+		armatureDisplay.y = local_point.y
+		armatureDisplay.scaleX = box.width / armatureDisplay.width
+		armatureDisplay.scaleY = box.height / armatureDisplay.height
+		armatureDisplay.addDBEventListener(dragonBones.AnimationEvent.COMPLETE, function(){
+			armatureDisplay.visible = false
+			armatureDisplay.parent.removeChild(armatureDisplay)
+		}, this)
+		armatureDisplay.animation.play("broken_animation", 1)
+	}
+
+	public PlayHitAnimation(bullet:GameBullet):void
+	{
+		let armatureDisplay = CommonUtils.createDragonBones("hit_ske_json", "hit_tex_json", "hit_tex_png", "hit_armature")
+		this._mainScenePanel.addChild(armatureDisplay)
+		let global_point = bullet.localToGlobal(bullet.width / 2, bullet.height / 2)
+		let local_point = this._mainScenePanel.globalToLocal(global_point.x, global_point.y)
+		armatureDisplay.x = local_point.x
+		armatureDisplay.y = local_point.y
+		armatureDisplay.addDBEventListener(dragonBones.AnimationEvent.COMPLETE, function(){
+			armatureDisplay.visible = false
+			armatureDisplay.parent.removeChild(armatureDisplay)
+		}, this)
+		armatureDisplay.animation.play("hit_animation", 1)
+	}
+
+
+	public AddScore(score:number):void
+	{
+		GameController.instance.serverModel.myRole.score += score
+		if(!GameNet.isConnected()){
+			GameController.instance.offline_score += score
+		}else{
+			GameNet.reqChangeScore(score)
+		}
+		this._mainScenePanel.UpdateScore()
 	}
 }

@@ -4,6 +4,8 @@ declare class BoxLine4Skin extends eui.Skin{
 }
 declare class BoxSkin extends eui.Skin{
 }
+declare class BulletSkin extends eui.Skin{
+}
 declare module skins{
 	class ButtonSkin extends eui.Skin{
 	}
@@ -30,9 +32,13 @@ declare module skins{
 	class PanelSkin extends eui.Skin{
 	}
 }
+declare class PlayerSkin extends eui.Skin{
+}
 declare module skins{
 	class ProgressBarSkin extends eui.Skin{
 	}
+}
+declare class PropSkin extends eui.Skin{
 }
 declare module skins{
 	class RadioButtonSkin extends eui.Skin{
