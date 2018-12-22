@@ -12,12 +12,18 @@ class GameBullet extends eui.Component{
 		this.anchorOffsetY = this.height / 2
 	}
 
+	public ReSet():void
+	{
+		this.is_valid = true
+		this.visible = true
+	}
+
 	public Update():void
 	{
 		this.x += this.speed_x
 		this.y += this.speed_y
 		let global_rect_right_down = this.hit_rect.localToGlobal(this.hit_rect.width, this.hit_rect.height)
-		if(global_rect_right_down.y <= -500){
+		if(global_rect_right_down.y <= -100){
 			this.is_valid = false
 			this.visible = false
 			return
@@ -46,14 +52,14 @@ class GameBullet extends eui.Component{
 		{
 			let all_lines = point_line.all_lines
 			let top_line = all_lines[0]
-			let buttoom_line = point_line.GetButtomValidGameLine()
+			let buttom_line = point_line.GetButtomValidGameLine()
 
-			if(top_line && buttoom_line)
+			if(top_line && buttom_line && top_line.is_valid && buttom_line.is_valid)
 			{
 				let top_line_global_left_top = top_line.hit_rect.localToGlobal(0, 0)
 				let top_line_global_right_down = top_line.hit_rect.localToGlobal(top_line.hit_rect.width, top_line.hit_rect.height)
-				let buttom_line_global_left_top = buttoom_line.hit_rect.localToGlobal(0, 0)
-				let buttom_line_global_right_down = buttoom_line.hit_rect.localToGlobal(buttoom_line.hit_rect.width, buttoom_line.hit_rect.height)
+				let buttom_line_global_left_top = buttom_line.hit_rect.localToGlobal(0, 0)
+				let buttom_line_global_right_down = buttom_line.hit_rect.localToGlobal(buttom_line.hit_rect.width, buttom_line.hit_rect.height)
 
 				if(global_rect_left_top.y > buttom_line_global_right_down.y){ //在下方
 					return

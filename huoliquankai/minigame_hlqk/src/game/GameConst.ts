@@ -13,6 +13,13 @@ class GameConst {
 	public static SEND_TIME_INTERVAL:number = 5 //发射子弹间隔
 
 	public static PROP_DURATION:number = 10 * 1000
+
+	//0-10：0.2
+	//10-20：0.4
+	//20-30：0.3
+	//30-50: 0.1
+	public static Box_Scores = [1, 10, 20, 30, 50]
+	public static Box_Score_Rates = [0, 0.2, 0.4, 0.3, 0.1]
 }
 
 enum GamePropType{

@@ -2,14 +2,18 @@ class CommonUtils {
 	public constructor() {
 	}
 
+	private static _has_cache_ = {}
 	public static createDragonBones(skeleton_json:string, texture_json:string, texture_png:string, armature_name:string):dragonBones.EgretArmatureDisplay
 	{
-		var dragonbonesData = RES.getRes(skeleton_json);
-     	var textureData = RES.getRes(texture_json);
-        var texture = RES.getRes(texture_png);
-        var dragonbonesFactory: dragonBones.EgretFactory = dragonBones.EgretFactory.factory;
-       	dragonbonesFactory.parseDragonBonesData(dragonbonesData);  
-		dragonbonesFactory.parseTextureAtlasData(textureData, texture);
+		var dragonbonesFactory: dragonBones.EgretFactory = dragonBones.EgretFactory.factory;
+		if(!CommonUtils._has_cache_[skeleton_json]){
+			var dragonbonesData = RES.getRes(skeleton_json);
+			var textureData = RES.getRes(texture_json);
+			var texture = RES.getRes(texture_png);
+			dragonbonesFactory.parseDragonBonesData(dragonbonesData);  
+			dragonbonesFactory.parseTextureAtlasData(textureData, texture);
+			CommonUtils._has_cache_[skeleton_json] = true
+		}
 		let armatureDisplay: dragonBones.EgretArmatureDisplay = dragonbonesFactory.buildArmatureDisplay(armature_name);
 		return armatureDisplay
 	}

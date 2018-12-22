@@ -9,13 +9,15 @@ class GamePlayer extends eui.Component{
 	private img_avatar:eui.Image
 	public is_stop:boolean = false
 	private _is_first = true
-	public prop_type:GamePropType = GamePropType.None
+	public prop_type:GamePropType = GamePropType.SAN
 
+	private _current_hit_box:GameBox
+
+	private _all_cache_bullet:Array<GameBullet> = []
 	public constructor() {
 		super()
 		this.skinName = "PlayerSkin"
 	}
-
 
 	public Init():void
 	{
@@ -26,6 +28,7 @@ class GamePlayer extends eui.Component{
 	{
 		return this
 	}
+
 
 	public UpateBullet():void
 	{
@@ -40,6 +43,7 @@ class GamePlayer extends eui.Component{
 			if(!bullet.is_valid)
 			{
 				this.all_game_bullets.splice(index, 1)
+				this._all_cache_bullet.push(bullet)
 			}
 		}
 	}
@@ -78,6 +82,16 @@ class GamePlayer extends eui.Component{
 		return 1
 	}
 
+	private _get_or_create_bullet():GameBullet
+	{
+		if(this._all_cache_bullet.length > 0)
+		{
+			let bullet = this._all_cache_bullet.pop()
+			return bullet
+		}
+		return new GameBullet()
+	}
+
 	public Update():void
 	{
 		let global_top_center_point = this.hit_rect.localToGlobal(this.hit_rect.width / 2, 0)
@@ -93,7 +107,8 @@ class GamePlayer extends eui.Component{
 			let bullet_count = this._get_bullet_count()
 			for(let index = 0; index < bullet_count; index++)
 			{
-				let new_bullet = new GameBullet()
+				let new_bullet = this._get_or_create_bullet()
+				new_bullet.ReSet()
 				this._mainPanel.m_bullet_layer.addChild(new_bullet)
 				new_bullet.x = local_in_bullet_layer.x
 				new_bullet.y = local_in_bullet_layer.y - new_bullet.height / 2
@@ -103,11 +118,10 @@ class GamePlayer extends eui.Component{
 				new_bullet.speed_x = speed.x
 			}
 			if(bullet_count == 1){
-				SoundManager.getInstance().playSound("send_mp3")
+				SoundManager.getInstance().playSound("send2_mp3")
 			}else{
 				SoundManager.getInstance().playSound("send2_mp3")
 			}
-			
 		}
 
 		this._try_get_prop()
@@ -117,9 +131,6 @@ class GamePlayer extends eui.Component{
 			this.is_stop = true
 			let __this = this
 			this.PlayHitFlyAnimation()
-			// CommonUtils.performDelay(function(){
-			// 	__this.is_stop = false
-			// }, 1 * 1000, this)
 		}
 	}
 
@@ -177,13 +188,14 @@ class GamePlayer extends eui.Component{
 			this._hit_fly_display.addDBEventListener(dragonBones.AnimationEvent.COMPLETE, function(){
 				__this._hit_fly_display.visible = false
 				__this.img_avatar.visible = true
-				__this.is_stop = false
+				CommonUtils.performDelay(function(){
+					__this.is_stop = false
+				}, 0.5 * 1000, __this)
 			}, this)
 		}
 		this.img_avatar.visible = false
 		this._hit_fly_display.visible = true
 		this._hit_fly_display.animation.play('hit_fly', 1)
-
 		SoundManager.getInstance().playSound("hit_fly_mp3")
 	}
 
@@ -192,7 +204,7 @@ class GamePlayer extends eui.Component{
 		let prop_object = this._mainPanel.GetGameLogicComponent().currentPropObject
 		if(prop_object)
 		{
-			if(prop_object.getBounds().intersects(this.getTransformedBounds(prop_object))){
+			if(prop_object.getBounds().intersects(this.hit_rect.getTransformedBounds(prop_object))){
 				this.prop_type = prop_object.propType
 				prop_object.Remove()
 				this._playPropAnimation()
@@ -216,13 +228,13 @@ class GamePlayer extends eui.Component{
 		{
 			let all_lines = point_line.all_lines
 			let top_line = all_lines[0]
-			let buttoom_line = point_line.GetButtomValidGameLine()
-			if(top_line && buttoom_line)
+			let buttom_line = point_line.GetButtomValidGameLine()
+			if(top_line && buttom_line && top_line.is_valid && buttom_line.is_valid)
 			{
 				let top_line_global_left_top = top_line.hit_rect.localToGlobal(0, 0)
 				let top_line_global_right_down = top_line.hit_rect.localToGlobal(top_line.hit_rect.width, top_line.hit_rect.height)
-				let buttom_line_global_left_top = buttoom_line.hit_rect.localToGlobal(0, 0)
-				let buttom_line_global_right_down = buttoom_line.hit_rect.localToGlobal(buttoom_line.hit_rect.width, buttoom_line.hit_rect.height)
+				let buttom_line_global_left_top = buttom_line.hit_rect.localToGlobal(0, 0)
+				let buttom_line_global_right_down = buttom_line.hit_rect.localToGlobal(buttom_line.hit_rect.width, buttom_line.hit_rect.height)
 
 				if(global_player_left_top.y > buttom_line_global_right_down.y){ //在下方
 					return
@@ -242,8 +254,9 @@ class GamePlayer extends eui.Component{
 							let box =line.all_boxs[box_index]
 							if(box && box.is_valid)
 							{
-								if(box.hit_rect.getBounds().intersects(this.hit_rect.getTransformedBounds(box, null))){
+								if(box.hit_rect.getBounds().intersects(this.hit_rect.getTransformedBounds(box))){
 									point_line.RemoveGameLine(line)
+									this._current_hit_box = box
 									return true
 								}
 							}

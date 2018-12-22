@@ -148,35 +148,67 @@ class GameLogicComponent extends BaseComponent{
 		SoundManager.getInstance().playSound("deng_mp3")
 	}
 
-	public PlayBrokenAnimation(box:GameBox):void
+	private _cache_broken_displays:Array<dragonBones.EgretArmatureDisplay> = []
+	private _broken_width:number
+	private _broken_height:number
+	private _get_or_create_broken_display():dragonBones.EgretArmatureDisplay
 	{
+		if(this._cache_broken_displays.length > 0){
+			return this._cache_broken_displays.pop()
+		}
 		let armatureDisplay = CommonUtils.createDragonBones("broken_ske_json", "broken_tex_json", "broken_tex_png", "broken_armature")
 		this._mainScenePanel.addChild(armatureDisplay)
+
+		this._broken_width = armatureDisplay.width 
+		this._broken_height = armatureDisplay.height
+		let __this = this
+		armatureDisplay.addDBEventListener(dragonBones.AnimationEvent.COMPLETE, function(){
+			armatureDisplay.visible = false
+			armatureDisplay.scaleX = 1
+			armatureDisplay.scaleY = 1
+			__this._cache_broken_displays.push(armatureDisplay)
+		}, this)
+		return armatureDisplay
+	}
+
+	public PlayBrokenAnimation(box:GameBox):void
+	{
+		let armatureDisplay = this._get_or_create_broken_display()
+		armatureDisplay.visible = true
 		let global_point = box.localToGlobal(box.width / 2, box.height / 2)
 		let local_point = this._mainScenePanel.globalToLocal(global_point.x, global_point.y)
 		armatureDisplay.x = local_point.x
 		armatureDisplay.y = local_point.y
-		armatureDisplay.scaleX = box.width / armatureDisplay.width
-		armatureDisplay.scaleY = box.height / armatureDisplay.height
+		armatureDisplay.scaleX = box.width / this._broken_width
+		armatureDisplay.scaleY = box.height / this._broken_height
+		armatureDisplay.animation.play("broken_animation", 1)
+	}
+
+	private _cache_hit_displays:Array<dragonBones.EgretArmatureDisplay> = []
+	private _get_or_create_hit_display():dragonBones.EgretArmatureDisplay
+	{
+		if(this._cache_hit_displays.length > 0)
+		{
+			return this._cache_hit_displays.pop()
+		}
+		let armatureDisplay = CommonUtils.createDragonBones("hit_ske_json", "hit_tex_json", "hit_tex_png", "hit_armature")
+		this._mainScenePanel.addChild(armatureDisplay)
+		let __this = this
 		armatureDisplay.addDBEventListener(dragonBones.AnimationEvent.COMPLETE, function(){
 			armatureDisplay.visible = false
-			armatureDisplay.parent.removeChild(armatureDisplay)
+			__this._cache_hit_displays.push(armatureDisplay)
 		}, this)
-		armatureDisplay.animation.play("broken_animation", 1)
+		return armatureDisplay
 	}
 
 	public PlayHitAnimation(bullet:GameBullet):void
 	{
-		let armatureDisplay = CommonUtils.createDragonBones("hit_ske_json", "hit_tex_json", "hit_tex_png", "hit_armature")
-		this._mainScenePanel.addChild(armatureDisplay)
+		let armatureDisplay = this._get_or_create_hit_display()
+		armatureDisplay.visible = true
 		let global_point = bullet.localToGlobal(bullet.width / 2, bullet.height / 2)
 		let local_point = this._mainScenePanel.globalToLocal(global_point.x, global_point.y)
 		armatureDisplay.x = local_point.x
 		armatureDisplay.y = local_point.y
-		armatureDisplay.addDBEventListener(dragonBones.AnimationEvent.COMPLETE, function(){
-			armatureDisplay.visible = false
-			armatureDisplay.parent.removeChild(armatureDisplay)
-		}, this)
 		armatureDisplay.animation.play("hit_animation", 1)
 	}
 

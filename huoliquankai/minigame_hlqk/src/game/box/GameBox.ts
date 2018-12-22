@@ -20,11 +20,36 @@ class GameBox extends eui.Component{
 		this.ReSet()
 	}
 
+	//0-10：0.2
+	//10-20：0.4
+	//20-30：0.3
+	//30-50: 0.1
+
+	private _get_score():number
+	{
+		let random_value = Math.random()
+
+		let cur_rate = 0
+		let random_index = 0
+		for(let index = 0; index < GameConst.Box_Score_Rates.length; index++)
+		{
+			cur_rate += GameConst.Box_Score_Rates[index]
+			if(random_value <= cur_rate){
+				random_index = index
+				break
+			}
+		}
+		let start_value = GameConst.Box_Scores[random_index - 1]
+		let end_value = GameConst.Box_Scores[random_index]
+		
+		return start_value + Math.floor((end_value - start_value) * Math.random())
+	}
+
 	public ReSet():void
 	{
 		this.img_broken.visible = false
 		this.img_normal.visible = true
-		this.max_life = Math.ceil(Math.random() * 20)
+		this.max_life = this._get_score()
 		this.cur_life = 0
 		this.label_max.text = this.max_life.toString()
 		this.label_cur.text = this.cur_life.toString()
