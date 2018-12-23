@@ -23,7 +23,7 @@ class GameLogicComponent extends BaseComponent{
 		if(global_point.y >= this._mainScenePanel.height + 400){
 			this._mainScenePanel.all_img_bgs.splice(0, 1)
 			this._mainScenePanel.all_img_bgs.push(bg)
-			bg.y = lastbg.y - lastbg.height
+			bg.y = lastbg.y - lastbg.height + 2
 		}
 	}
 
@@ -57,14 +57,14 @@ class GameLogicComponent extends BaseComponent{
 		let cur_y = 0
 		if(this.all_point_lines.length < 5)
 		{
-			let is_two = Math.random() < 1
+			let is_two = Math.random() < 0.4
 			let line_count = 1
 			if(is_two){
 				line_count = 2
 			}
 			if(this.all_point_lines.length > 0){
 				cur_y = this.all_point_lines[this.all_point_lines.length - 1].y
-				cur_y -= GameConst.Standard_Distance
+				cur_y -= this._mainScenePanel.height / 2 + Math.ceil(Math.random() * 100) * CommonUtils.GetRandomPositive()
 			}else{
 				let global_player_point = this._mainScenePanel.m_player.localToGlobal(this._mainScenePanel.m_player.width / 2, this._mainScenePanel.m_player.height / 2)
 				let local_point = this._mainScenePanel.prop_container.globalToLocal(global_player_point.x, global_player_point.y)
