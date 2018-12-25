@@ -62,7 +62,7 @@ class GameCircle extends eui.Component{
 			let next_index_in_index = Math.floor(Math.random() * indexes.length)
 			let next_index = indexes[next_index_in_index]
 			indexes.splice(next_index_in_index, 1)
-			ret[next_index] = Math.floor(Math.random() * ShapeTypes.TYPE_MAX)
+			ret[next_index] = Math.ceil(Math.random() * ShapeTypes.TYPE_MAX)
 		}
 
 		return ret
@@ -71,8 +71,8 @@ class GameCircle extends eui.Component{
 	public Show(x, y):void
 	{
 		let valid_count = this._get_valid_circle_count()
+		
 		this.shapeTyps = this._get_circle_shape_types(valid_count)
-
 		for(let index = 0; index < GameConst.CIRCLE_COUNT; index++)
 		{
 			let shape_type = this.shapeTyps[index]
@@ -80,7 +80,7 @@ class GameCircle extends eui.Component{
 				this.circleShapes[index].visible = false
 			}else{
 				this.circleShapes[index].visible = true
-				this.circleShapes[index].source = "circle_" + ((index + 1) + "_" + shape_type) + "_png"
+				this.circleShapes[index].source = (shape_type + "_" + (index + 1)) + "_png"
 			}
 		}
 		this.init_x = x
@@ -91,6 +91,8 @@ class GameCircle extends eui.Component{
 		this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this)
 		this.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this)
 		this.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this)
+		this.addEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onTouchCancel, this)
+		this.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.onTouchCancel, this)
 	}
 
 	private onTouchBegin():void
@@ -111,6 +113,12 @@ class GameCircle extends eui.Component{
 		GameController.instance.GetMainScenePanel().GetGameLogicComponent().UpdateDragGameCircle(this, event.stageX, event.stageY)
 	}
 
+	private onTouchCancel(event:egret.TouchEvent):void
+	{
+		GameController.instance.GetMainScenePanel().GetGameLogicComponent().currentDragGameCircle = null
+		this.MoveBack()
+	}
+
 	public MoveBack():void
 	{
 		this.is_moving = true
@@ -118,11 +126,12 @@ class GameCircle extends eui.Component{
 		egret.Tween.get(this).to({x:this.init_x, y:this.init_y}, 0.1 * 1000).call(function(){
 			__this.is_moving = false
 		})
-		this.touchEnabled = false
+	}
 
-		this.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this)
-		this.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this)
-		this.removeEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this)
+	public UpdateTouchPosition(x, y):void
+	{
+		this.x = x - this.width / 2
+		this.y = y - this.height / 2
 	}
 
 	public AddGameCircle(gameCirlce:GameCircle):void
@@ -132,14 +141,16 @@ class GameCircle extends eui.Component{
 			let shapeType = gameCirlce.shapeTyps[index]
 			if(shapeType != ShapeTypes.TYPE_NONE){
 				this.shapeTyps[index] = shapeType
-				this.circleShapes[index].source = "circle_" + shapeType + "_png"
+				this.circleShapes[index].visible = true
+				this.circleShapes[index].source = (shapeType + "_" + (index + 1)) + "_png"
+				// this.circleShapes[index].source = "circle_" + shapeType + "_png"
 			}
 		}
 	}
 
 	public RemoveColor(color):void
 	{
-		for(let index = this.shapeTyps.length; index >= 0; index--)
+		for(let index = this.shapeTyps.length - 1; index >= 0; index--)
 		{
 			let shape = this.circleShapes[index]
 			let shapeType = this.shapeTyps[index]

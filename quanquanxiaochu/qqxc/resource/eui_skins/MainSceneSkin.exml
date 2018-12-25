@@ -21,7 +21,7 @@
 			<e:Rect width="505" height="50" horizontalCenter="0" verticalCenter="0" fillColor="0x302f2f" fillAlpha="0.5" x="0" y="0" scaleX="1" scaleY="1"/>
 			<e:Label text="توردىن ئازراق مەسىلە چىقتى ، سەل ساقلاڭ " x="31.360000000000014" y="10" scaleX="1" scaleY="1"/>
 		</e:Group>
-        <e:Button id="btn_help" label="" x="17.27" y="250.76" scaleX="1" scaleY="1" touchEnabled="true">
+        <e:Button id="btn_help" label="" x="5.27" y="172.8" scaleX="1" scaleY="1" touchEnabled="true">
 			<e:skinName>
 				<e:Skin states="up,down,disabled">
 				<e:Image width="100%" height="100%" source="wenhao_png"/>
@@ -30,33 +30,34 @@
 			</e:skinName>
 		</e:Button>
 	</e:Group>
-    <e:Image id="img_help" x="46.32" y="287.79" anchorOffsetX="17" anchorOffsetY="15" source="shuoming_png" visible="false"/>
-	<e:Group anchorOffsetX="0" anchorOffsetY="0" left="0" right="0" height="600" top="352" locked="true">
-		<e:Image source="bai_png" x="124" y="87" scaleX="1" scaleY="1"/>
-		<e:Image source="bai_png" x="344" y="87" scaleX="1" scaleY="1"/>
-		<e:Image source="bai_png" x="564" y="87" scaleX="1" scaleY="1"/>
-		<e:Image source="bai_png" x="124" y="287" scaleX="1" scaleY="1"/>
-		<e:Image source="bai_png" x="344" y="287" scaleX="1" scaleY="1"/>
-		<e:Image source="bai_png" x="564" y="287" scaleX="1" scaleY="1"/>
-		<e:Image source="bai_png" x="124" y="484" scaleX="1" scaleY="1"/>
-		<e:Image source="bai_png" x="344" y="484" scaleX="1" scaleY="1"/>
-		<e:Image source="bai_png" x="564" y="484" scaleX="1" scaleY="1"/>
+
+	<e:Group anchorOffsetX="0" anchorOffsetY="0" left="0" right="0" touchEnabled="false" bottom="249" height="600">
+		<e:Image source="bai_png" scaleX="1" scaleY="1" left="124" top="87"/>
+		<e:Image source="bai_png" scaleX="1" scaleY="1" top="87" horizontalCenter="0"/>
+		<e:Image source="bai_png" scaleX="1" scaleY="1" right="124" top="87"/>
+		<e:Image source="bai_png" scaleX="1" scaleY="1" verticalCenter="0" left="124"/>
+		<e:Image source="bai_png" scaleX="1" scaleY="1" verticalCenter="0" horizontalCenter="0"/>
+		<e:Image source="bai_png" scaleX="1" scaleY="1" right="124" verticalCenter="0"/>
+		<e:Image source="bai_png" scaleX="1" scaleY="1" left="124" bottom="84"/>
+		<e:Image source="bai_png" scaleX="1" scaleY="1" horizontalCenter="0" bottom="84"/>
+		<e:Image source="bai_png" scaleX="1" scaleY="1" right="124" bottom="84"/>
 	</e:Group>
-	<e:Group anchorOffsetX="0" anchorOffsetY="0" left="0" right="0" height="600" top="352" locked="true">
-		<e:Rect top="0" left="0" right="0" bottom="0" fillAlpha="0.2"/>
-		<ns1:GameCircle id="board_item_1" width="200" height="200" y="3" skinName="GameCircleSkin" x="40"/>
-		<ns1:GameCircle id="board_item_2" width="200" height="200" x="260" y="3" skinName="GameCircleSkin"/>
-		<ns1:GameCircle id="board_item_3" width="200" height="200" y="3" skinName="GameCircleSkin" x="480"/>
-		<ns1:GameCircle id="board_item_4" width="200" height="200" y="203" skinName="GameCircleSkin" x="40"/>
-		<ns1:GameCircle id="board_item_5" width="200" height="200" x="260" y="203" skinName="GameCircleSkin"/>
-		<ns1:GameCircle id="board_item_6" width="200" height="200" y="203" skinName="GameCircleSkin" x="480"/>
-		<ns1:GameCircle id="board_item_7" width="200" height="200" y="400" skinName="GameCircleSkin" x="40"/>
-		<ns1:GameCircle id="board_item_8" width="200" height="200" x="260" y="400" skinName="GameCircleSkin"/>
-		<ns1:GameCircle id="board_item_9" width="200" height="200" y="400" skinName="GameCircleSkin" x="480"/>
+	<e:Group anchorOffsetX="0" anchorOffsetY="0" left="0" right="0" height="600" touchEnabled="false" bottom="249">
+		<e:Rect top="0" left="0" right="0" bottom="0" fillAlpha="0.2" visible="false"/>
+		<ns1:GameBoardItem id="board_item_1" width="200" height="200" skinName="BoardItemSkin" left="40" top="0"/>
+		<ns1:GameBoardItem id="board_item_2" width="200" height="200" skinName="BoardItemSkin" horizontalCenter="0" top="0"/>
+		<ns1:GameBoardItem id="board_item_3" width="200" height="200" skinName="BoardItemSkin" top="0" right="40"/>
+		<ns1:GameBoardItem id="board_item_4" width="200" height="200" skinName="BoardItemSkin" verticalCenter="0" left="40"/>
+		<ns1:GameBoardItem id="board_item_5" width="200" height="200" skinName="BoardItemSkin" verticalCenter="0" horizontalCenter="0"/>
+		<ns1:GameBoardItem id="board_item_6" width="200" height="200" skinName="BoardItemSkin" verticalCenter="0" right="40"/>
+		<ns1:GameBoardItem id="board_item_7" width="200" height="200" skinName="BoardItemSkin" left="40" bottom="0"/>
+		<ns1:GameBoardItem id="board_item_8" width="200" height="200" skinName="BoardItemSkin" bottom="0" horizontalCenter="0"/>
+		<ns1:GameBoardItem id="board_item_9" width="200" height="200" skinName="BoardItemSkin" right="40" bottom="0"/>
 	</e:Group>
-	<e:Group height="200" anchorOffsetX="0" anchorOffsetY="0" left="40" bottom="10" right="40">
-		<e:Group id="init_circle_1" width="200" height="200" x="0" y="0"/>
-		<e:Group id="init_circle_2" width="200" height="200" x="220" y="0"/>
-		<e:Group id="init_circle_3" width="200" height="200" right="0" y="0"/>
+	<e:Group height="200" anchorOffsetX="0" anchorOffsetY="0" left="40" bottom="10" right="40" touchEnabled="false">
+		<e:Group id="init_circle_1" width="200" height="200" x="0" y="0" touchEnabled="false"/>
+		<e:Group id="init_circle_2" width="200" height="200" x="220" y="0" touchEnabled="false"/>
+		<e:Group id="init_circle_3" width="200" height="200" right="0" y="0" touchEnabled="false"/>
 	</e:Group>
+	<e:Image id="img_help" x="40.32" y="221.79" anchorOffsetX="17" anchorOffsetY="15" source="shuoming_png" visible="false"/>
 </e:Skin>

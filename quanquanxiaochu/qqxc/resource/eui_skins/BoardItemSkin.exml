@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="BoardItemSkin" width="200" height="200" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect id="hit_rect" width="144" height="136" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0" verticalCenter="0" visible="false"/>
+	<ns1:GameCircle id="gameCirlce" width="200" height="200" skinName="GameCircleSkin" horizontalCenter="0" verticalCenter="0"/>
+</e:Skin>

@@ -29,18 +29,21 @@ class GameLogicComponent extends BaseComponent{
 			this.currentDragGameCircle = gameCircle
 		}
 		let local_in_circle_parent = gameCircle.parent.globalToLocal(x, y)
-		gameCircle.x = local_in_circle_parent.x
-		gameCircle.y = local_in_circle_parent.y
+		// gameCircle.x = local_in_circle_parent.x
+		// gameCircle.y = local_in_circle_parent.y
+		gameCircle.UpdateTouchPosition(local_in_circle_parent.x,local_in_circle_parent.y)
 	}
 
 	public StopDragGameCircle(gameCircle:GameCircle):void
 	{
 		let is_success = false
 		let success_board_item:GameBoardItem = null
+		let is_hit_board_item = false
 		for(let boardItem of this.allBoardItems)
 		{
 			if(boardItem.CheckHitMoveCircle(gameCircle))
 			{
+				is_hit_board_item = true
 				if(boardItem.CanPutInCircle(gameCircle)){
 					is_success = true
 					boardItem.PutInCircle(gameCircle)
@@ -51,6 +54,10 @@ class GameLogicComponent extends BaseComponent{
 				break
 			}
 		}
+
+		if(!is_hit_board_item){
+			gameCircle.MoveBack()
+		}
 		
 		if(is_success && success_board_item)
 		{
@@ -60,7 +67,7 @@ class GameLogicComponent extends BaseComponent{
 
 			//横向
 			let start_line_index = row * GameConst.BOARD_ITEM_IN_LINE
-			let end_line_index = start_line_index + GameConst.BOARD_ITEM_IN_LINE
+			let end_line_index = start_line_index + GameConst.BOARD_ITEM_IN_LINE - 1
 			let same_color_indexs_row = []
 			let same_color_indexs_col = []
 			for(let type of gameCircle.shapeTyps)

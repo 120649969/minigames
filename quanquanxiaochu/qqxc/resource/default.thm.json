@@ -16,9 +16,10 @@
 	},
 	"autoGenerateExmlsList": true,
 	"exmls": [
+		"resource/eui_skins/GameCircleSkin.exml",
+		"resource/eui_skins/BoardItemSkin.exml",
 		"resource/eui_skins/ButtonSkin.exml",
 		"resource/eui_skins/CheckBoxSkin.exml",
-		"resource/eui_skins/GameCircleSkin.exml",
 		"resource/eui_skins/HScrollBarSkin.exml",
 		"resource/eui_skins/HSliderSkin.exml",
 		"resource/eui_skins/ItemRendererSkin.exml",

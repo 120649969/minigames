@@ -16,9 +16,11 @@ class GameBoardItem extends eui.Component{
 
 	public CanPutInCircle(gameCircle:GameCircle):boolean
 	{
-		for(let type of this.gameCirlce.shapeTyps)
+		for(let index = 0; index < GameConst.CIRCLE_COUNT; index++)
 		{
-			if(type != ShapeTypes.TYPE_NONE && gameCircle.shapeTyps.indexOf(type) >= 0)
+			let type1 = this.gameCirlce.shapeTyps[index]
+			let type2 = gameCircle.shapeTyps[index]
+			if(type1 != ShapeTypes.TYPE_NONE && type2 != ShapeTypes.TYPE_NONE)
 			{
 				return false
 			}
@@ -38,7 +40,7 @@ class GameBoardItem extends eui.Component{
 	}
 
 	public IsContain(shapeType:ShapeTypes):boolean
-	{
+	{7
 		return this.gameCirlce.shapeTyps.indexOf(shapeType) >= 0
 	}
 
