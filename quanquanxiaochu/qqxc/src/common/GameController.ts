@@ -14,6 +14,7 @@ class GameController {
 	public is_win:boolean = false
 	public is_fail:boolean = false
 
+	private _has_play_end_time_sound:boolean = false
 	public constructor() {
 	}
 
@@ -68,6 +69,18 @@ class GameController {
 			this.OnClientOver()
 			if(!GameNet.isConnected()){
 				GamePlatform.onFinished()
+			}
+		}
+		if(this.serverModel.left_time <= 5){
+			if(this._has_play_end_time_sound)
+			{
+				return
+			}
+			if(this.serverModel.left_time == 0){
+				this._has_play_end_time_sound = true
+				SoundManager.getInstance().playSound("last_one_second_mp3")
+			}else{
+				SoundManager.getInstance().playSound("dead_line_tips_mp3")
 			}
 		}
 	}

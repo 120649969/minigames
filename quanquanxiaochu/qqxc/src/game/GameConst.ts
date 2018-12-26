@@ -6,6 +6,13 @@ class GameConst {
 	public static BOARD_ITEM_IN_LINE:number = 3
 	public static MAX_LINE_COUNT:number = 3
 	public static MAX_BOARD_ITEM_COUNT:number = GameConst.BOARD_ITEM_IN_LINE * GameConst.MAX_LINE_COUNT
+
+	public static COLOR_COUNT:number = 4
+
+	public static CIRCLE_SOCRE:number = 10
+	public static TWO_COLOR_SCORE:number = 150
+	public static THREE_COLOR_SCORE:number = 300
+	public static CLEAR_SCORE:number = -100
 }
 
 enum ShapeTypes {

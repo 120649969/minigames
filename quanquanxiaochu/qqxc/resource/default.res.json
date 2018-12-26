@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,bg_jpg,egret_icon_png,description_json,6_3_png,1_1_png,1_2_png,1_3_png,2_1_png,2_2_png,2_3_png,3_1_png,3_2_png,3_3_png,4_1_png,4_2_png,4_3_png,5_1_png,5_2_png,5_3_png,6_1_png,6_2_png,beijing.png_jpg,xuehua_png,touxiang1_png,touxiang2_png,touxiang3_png,wenhao_png,shuoming_png,bai_png,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,ready_go_mp3,clock_png,clock_fnt",
+			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,bg_jpg,egret_icon_png,description_json,6_3_png,1_1_png,1_2_png,1_3_png,2_1_png,2_2_png,2_3_png,3_1_png,3_2_png,3_3_png,4_1_png,4_2_png,4_3_png,5_1_png,5_2_png,5_3_png,6_1_png,6_2_png,beijing.png_jpg,xuehua_png,touxiang1_png,touxiang2_png,touxiang3_png,wenhao_png,shuoming_png,bai_png,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,ready_go_mp3,clock_png,clock_fnt,touxiangdi_png,daojishi_png,mingzidi_png,put_down_mp3,down_score_mp3,clear_mp3,not_size_mp3,dead_line_tips_mp3,last_one_second_mp3,combo_png,combo_fnt",
 			"name": "preload"
 		}
 	],
@@ -295,6 +295,61 @@
 			"name": "clock_fnt",
 			"type": "font",
 			"url": "assets/clock.fnt"
+		},
+		{
+			"name": "touxiangdi_png",
+			"type": "image",
+			"url": "assets/touxiangdi.png"
+		},
+		{
+			"name": "daojishi_png",
+			"type": "image",
+			"url": "assets/daojishi.png"
+		},
+		{
+			"name": "mingzidi_png",
+			"type": "image",
+			"url": "assets/mingzidi.png"
+		},
+		{
+			"name": "put_down_mp3",
+			"type": "sound",
+			"url": "assets/music/put_down.mp3"
+		},
+		{
+			"name": "down_score_mp3",
+			"type": "sound",
+			"url": "assets/music/down_score.mp3"
+		},
+		{
+			"name": "clear_mp3",
+			"type": "sound",
+			"url": "assets/music/clear.mp3"
+		},
+		{
+			"name": "not_size_mp3",
+			"type": "sound",
+			"url": "assets/music/not_size.mp3"
+		},
+		{
+			"name": "dead_line_tips_mp3",
+			"type": "sound",
+			"url": "assets/music/dead_line_tips.mp3"
+		},
+		{
+			"name": "last_one_second_mp3",
+			"type": "sound",
+			"url": "assets/music/last_one_second.mp3"
+		},
+		{
+			"name": "combo_png",
+			"type": "image",
+			"url": "assets/combo.png"
+		},
+		{
+			"name": "combo_fnt",
+			"type": "font",
+			"url": "assets/combo.fnt"
 		}
 	]
 }

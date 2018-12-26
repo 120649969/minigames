@@ -3,6 +3,7 @@ class GameCircle extends eui.Component{
 	public circleShapes:Array<eui.Image> = []
 	public shapeTyps:Array<ShapeTypes> = []
 
+	public img_center:eui.Image
 	public isInStartPosition:boolean = true
 	public hit_rect:eui.Rect
 
@@ -18,6 +19,12 @@ class GameCircle extends eui.Component{
 			this.circleShapes.push(this['circle_' + (index + 1)])
 		}
 		this.ClearAll()
+		this.img_center = false
+	}
+
+	public MarkBoard():void
+	{
+		this.img_center.visible = true
 	}
 
 	public ClearAll():void
@@ -32,7 +39,7 @@ class GameCircle extends eui.Component{
 
 	private _get_valid_circle_count():number
 	{
-		let circle_rate_array = [0, 0.4, 0.5, 0.1]
+		let circle_rate_array = [0, 0.55, 0.4, 0.05]
 		let circle_count_array = [0, 1, 2, 3]
 		let random_rate = Math.random()
 		let cur_rate = 0
@@ -62,7 +69,7 @@ class GameCircle extends eui.Component{
 			let next_index_in_index = Math.floor(Math.random() * indexes.length)
 			let next_index = indexes[next_index_in_index]
 			indexes.splice(next_index_in_index, 1)
-			ret[next_index] = Math.ceil(Math.random() * ShapeTypes.TYPE_MAX)
+			ret[next_index] = GameController.instance.GetMainScenePanel().GetGameLogicComponent().RandomGetColor()
 		}
 
 		return ret
@@ -148,8 +155,9 @@ class GameCircle extends eui.Component{
 		}
 	}
 
-	public RemoveColor(color):void
+	public RemoveColor(color):number
 	{
+		let ret = 0
 		for(let index = this.shapeTyps.length - 1; index >= 0; index--)
 		{
 			let shape = this.circleShapes[index]
@@ -157,7 +165,39 @@ class GameCircle extends eui.Component{
 			if(shapeType == color){
 				this.shapeTyps[index] = ShapeTypes.TYPE_NONE
 				shape.visible = false
+				ret += 1
 			}
 		}
+		return ret
+	}
+
+	public CanPutInCircle(gameCircle:GameCircle):boolean
+	{
+		for(let index = 0; index < GameConst.CIRCLE_COUNT; index++)
+		{
+			let type1 = this.shapeTyps[index]
+			let type2 = gameCircle.shapeTyps[index]
+			if(type1 != ShapeTypes.TYPE_NONE && type2 != ShapeTypes.TYPE_NONE)
+			{
+				return false
+			}
+		}
+		return true
+	}
+	
+	public PutInCircle(gameCircle:GameCircle):void
+	{
+		this.AddGameCircle(gameCircle)
+		gameCircle.parent.removeChild(gameCircle)
+	}
+
+	public CheckHitMoveCircle(gameCircle:GameCircle):boolean
+	{
+		return this.hit_rect.getBounds().intersects(gameCircle.hit_rect.getTransformedBounds(this.hit_rect))
+	}
+
+	public IsContain(shapeType:ShapeTypes):boolean
+	{7
+		return this.shapeTyps.indexOf(shapeType) >= 0
 	}
 }

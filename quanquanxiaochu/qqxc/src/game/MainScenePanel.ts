@@ -20,6 +20,7 @@ module ui {
 		public allGameBoardItems:Array<GameBoardItem> = []
 		public init_circle_groups:Array<eui.Group> = []
 
+		private label_add_score:eui.BitmapLabel
 		public constructor() {
 			super()
 			this.skinName = "MainSceneSkin"
@@ -95,5 +96,18 @@ module ui {
 			this._gameLogicComponent.OnStart()
 		}
 
+		public ShowScoreAnimation(score:number):void
+		{
+			this.label_add_score.text = "+" + score.toString()
+			this.label_add_score.scaleX = this.label_add_score.scaleY = 5
+			this.label_add_score.visible = true
+			let __this = this
+			egret.Tween.removeTweens(this.label_add_score)
+			egret.Tween.get(this.label_add_score).to({scaleX:0.8, scaleY:0.8}, 0.2 * 1000).to({scaleX:1, scaleY:1}, 0.1 * 1000).call(function(){
+				CommonUtils.performDelay(function(){
+					__this.label_add_score.visible = false
+				}, 0.5 * 1000, this)
+			})
+		}
 	}
 }

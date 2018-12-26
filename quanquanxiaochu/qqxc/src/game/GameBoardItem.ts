@@ -44,8 +44,8 @@ class GameBoardItem extends eui.Component{
 		return this.gameCirlce.shapeTyps.indexOf(shapeType) >= 0
 	}
 
-	public RemoveColor(color):void
+	public RemoveColor(color):number
 	{
-		this.gameCirlce.RemoveColor(color)
+		return this.gameCirlce.RemoveColor(color)
 	}
 }
