@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "description_json,xingqiu2_png,xingqiu3_png,xingqiu4_png,xingqiu5_png,xingqiu6_png,xingqiu1_png,beijing_jpg,shuoming_png,wenhao_png,lixian_png,touxiangdi_png,touxiang1_png,touxiang2_png,touxiang3_png,clock_png,clock_fnt,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,ready_go_mp3,dead_line_tips_mp3,last_one_second_mp3,button_down_png,button_up_png,ppl_role_1_png",
+			"keys": "description_json,xingqiu2_png,xingqiu3_png,xingqiu4_png,xingqiu5_png,xingqiu6_png,xingqiu1_png,shuoming_png,wenhao_png,lixian_png,touxiangdi_png,touxiang1_png,touxiang2_png,touxiang3_png,clock_png,clock_fnt,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,ready_go_mp3,dead_line_tips_mp3,last_one_second_mp3,button_down_png,button_up_png,ppl_role_1_png,beijing_png,yun4_png,yun1_png,yun2_png,yun3_png",
 			"name": "preload"
 		}
 	],
@@ -40,11 +40,6 @@
 			"name": "xingqiu1_png",
 			"type": "image",
 			"url": "assets/xingqiu1.png"
-		},
-		{
-			"name": "beijing_jpg",
-			"type": "image",
-			"url": "assets/beijing.jpg"
 		},
 		{
 			"name": "shuoming_png",
@@ -135,6 +130,31 @@
 			"name": "ppl_role_1_png",
 			"type": "image",
 			"url": "assets/ppl_role_1.png"
+		},
+		{
+			"name": "beijing_png",
+			"type": "image",
+			"url": "assets/beijing.png"
+		},
+		{
+			"name": "yun4_png",
+			"type": "image",
+			"url": "assets/yun4.png"
+		},
+		{
+			"name": "yun1_png",
+			"type": "image",
+			"url": "assets/yun1.png"
+		},
+		{
+			"name": "yun2_png",
+			"type": "image",
+			"url": "assets/yun2.png"
+		},
+		{
+			"name": "yun3_png",
+			"type": "image",
+			"url": "assets/yun3.png"
 		}
 	]
 }

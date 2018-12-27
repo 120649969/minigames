@@ -23,8 +23,10 @@ class GameConst {
 	public static DISTANCE_OF_BOUNDARY:number = 40
 
 	//重力加速度
-	public static Gravity:number = 5
+	public static Gravity:number = 3
 
-	public static PLAYER_SPEED:number = 50
+	public static PLAYER_SPEED:number = 35
+
+	public static BG_NUM:number = 3
 
 }

@@ -287,9 +287,6 @@ var egret;
                     audio.autoplay = !0;
                     audio.muted = true;
                 }
-                if (ua.indexOf("edge") >= 0) {
-                    document.body.appendChild(audio);
-                }
                 audio.load();
                 this.originAudio = audio;
                 if (HtmlSound.clearAudios[this.url]) {
@@ -312,9 +309,6 @@ var egret;
                 function removeListeners() {
                     audio.removeEventListener("canplaythrough", onAudioLoaded);
                     audio.removeEventListener("error", onAudioError);
-                    if (ua.indexOf("edge") >= 0) {
-                        document.body.removeChild(audio);
-                    }
                 }
             };
             /**

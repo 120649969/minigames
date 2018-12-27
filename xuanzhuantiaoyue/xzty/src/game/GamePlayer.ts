@@ -10,12 +10,16 @@ class GamePlayer extends eui.Component{
 	public is_jumping:boolean = false
 	public is_dead:boolean = false
 	public touchJumpTimes:number = 0
-	public is_first_land = true
+	public is_top_down = true
+	public first_land_ball:GameBall = null
+
+	public gameLogicComponent:GameLogicComponent
 	public constructor() {
 		super()
 		this.skinName = "PlayerSkin"
 		this.anchorOffsetX = this.width / 2
 		this.anchorOffsetY = this.height
+		this.gameLogicComponent = GameController.instance.GetMainScenePanel().GetGameLogicComponent()
 	}
 
 	public Update():void
@@ -23,10 +27,17 @@ class GamePlayer extends eui.Component{
 		if(this.isLand || this.is_dead){
 			return
 		}
-		for(let index = 0; index < this.move_step_times; index++)
+		let move_speed = Math.sqrt(Math.pow(this.speedx, 2) + Math.pow(this.speedy, 2))
+		let move_times = move_speed / 5
+		for(let index = 0; index < move_times; index++)
 		{
-			this.x += this.speedx / this.move_step_times
-			this.y += this.speedy / this.move_step_times
+			let delta_x = this.speedx / move_times
+			let delta_y = this.speedy / move_times
+			this.x += delta_x
+			this.y += delta_y
+			if(this.is_jumping){
+				// GameController.instance.GetMainScenePanel().GetGameLogicComponent().MoveBg(delta_x, delta_y)
+			}
 			if(!this.is_jumping){
 				if(this._checkHitFirstBall()){
 					break
@@ -39,8 +50,11 @@ class GamePlayer extends eui.Component{
 		}
 
 		let global_player_center_point = this.localToGlobal(this.width / 2, this.height / 2)
-		if(global_player_center_point.y >= this.stage.stageHeight){
+		if(global_player_center_point.y >= this.stage.stageHeight + 40 || global_player_center_point.x >= this.stage.stageWidth + 20 || global_player_center_point.x <= -20){
 			this.is_dead = true
+			this.visible = false
+			this.gameLogicComponent.RelivePlayer(0.5)
+			return
 		}
 
 		this.speedy += GameConst.Gravity
@@ -61,7 +75,7 @@ class GamePlayer extends eui.Component{
 		ball.addChild(this)
 		this.x = local_in_ball_point.x
 		this.y = local_in_ball_point.y
-		if(this.is_first_land){
+		if(this.is_top_down){
 			this.rotation = -1 * ball.rotation
 		}else{
 			let global_rotation = 0
@@ -84,7 +98,11 @@ class GamePlayer extends eui.Component{
 			}
 			this.rotation = global_rotation - ball.rotation + 90
 		}
-		this.is_first_land = false
+		if(!this.is_top_down){
+			this.gameLogicComponent.RemoveCurrentRoundBall()
+			this.gameLogicComponent.MoveNextRound()
+		}
+		this.is_top_down = false
 		this.scaleX = this.scaleY = 1 / ball.scaleX
 	}
 
@@ -93,18 +111,30 @@ class GamePlayer extends eui.Component{
 		this.is_dead = false
 		this.is_jumping = false
 		this.isLand = false
+		this.is_top_down = true
 		let allBalls = GameController.instance.GetMainScenePanel().GetGameLogicComponent().allBalls
 		let firstBall = allBalls[0]
 		this.parent.removeChild(this)
 		GameController.instance.GetMainScenePanel().battleContainer.addChild(this)
+		this.scaleX = this.scaleY = 1
+		this.speedx = 0
+		this.speedy = 30
+		this.rotation = 0
 		this.x = firstBall.x
 		this.y = firstBall.y - GameController.instance.GetMainScenePanel().uiContainer.height
 		this.touchJumpTimes = 0
+		this.visible = true
 	}
 
 	public CanJump():boolean
 	{
-		if(this.isLand)
+		if(this.is_dead){
+			return false
+		}
+		if(this.isLand){
+			return true
+		}
+		if(this.is_jumping)
 		{
 			if(this.touchJumpTimes >= 2){
 				return false
@@ -116,9 +146,6 @@ class GamePlayer extends eui.Component{
 
 	public StartJump():void
 	{
-		if(this.is_jumping){
-			return
-		}
 		this.isLand = false
 		this.is_jumping = true
 		this.touchJumpTimes += 1
@@ -136,13 +163,12 @@ class GamePlayer extends eui.Component{
 			let parentBall = this.parent as GameBall
 			this.parent.removeChild(this)
 			this.rotation += parentBall.rotation
-			console.log("######旋转了####", this.rotation)
 			GameController.instance.GetMainScenePanel().battleContainer.addChild(this)
+			this.scaleX = this.scaleY = 1
 			this.x = local_in_battleContainer_point.x
 			this.y = local_in_battleContainer_point.y
-
 		}else{
-			this.speedy = -50
+			this.speedy *= -1
 		}
 	}
 

@@ -4,6 +4,7 @@ class GameLogicComponent extends BaseComponent{
 	private _mainPanel:ui.MainScenePanel
 	private _hasStartRound:boolean = false
 	public gamePlayer:GamePlayer
+	
 
 	public constructor() {
 		super()
@@ -104,13 +105,37 @@ class GameLogicComponent extends BaseComponent{
 		return returnPoint
 	}
 
-	public Test_Move_Round():void
+	public MoveBg(player_move_x:number, player_move_y:number):void
+	{
+		this._mainPanel.battleContainer.x += player_move_x * 0.2 * -1
+		this._mainPanel.battleContainer.y += player_move_y * 0.2
+	}
+
+	public MoveNextRound():void
 	{
 		let target_scale = this._try_get_next_round_scale()
 		let target_position = this._try_get_next_round_battleContainer_position()
 		if(this._hasStartRound){
+			let delta_x = target_position.x - this._mainPanel.battleContainer.x
 			egret.Tween.get(this._mainPanel.battleContainer).to({scaleX:target_scale, scaleY:target_scale, x:target_position.x, y:target_position.y}, 0.3 * 1000).call(function(){
 			})
+			
+			let __this = this
+			let bg_move_x = delta_x * 0.2
+			if(bg_move_x > 0){
+				bg_move_x *= -1
+			}
+			let target_bg_x = this._mainPanel.backgroundContainer.x + bg_move_x
+			egret.Tween.get(this._mainPanel.backgroundContainer).to({x:target_bg_x}, 0.3 * 1000).call(function(){
+				let first_bg = __this._mainPanel.backgrounds[0]
+				let global_right_pos = first_bg.localToGlobal(first_bg.width, 0)
+				if(global_right_pos.x <= 0){
+					__this._mainPanel.backgrounds.shift()
+					first_bg.x = __this._mainPanel.backgrounds[__this._mainPanel.backgrounds.length - 1].x + first_bg.width
+					__this._mainPanel.backgrounds.push(first_bg)
+				}
+			})
+
 		}else{
 			this._mainPanel.battleContainer.scaleX = this._mainPanel.battleContainer.scaleY = target_scale
 			this._mainPanel.battleContainer.x = target_position.x
@@ -118,15 +143,25 @@ class GameLogicComponent extends BaseComponent{
 
 			this.gamePlayer = new GamePlayer()
 			this._mainPanel.battleContainer.addChild(this.gamePlayer)
-			
 			this._hasStartRound = true
 			this.RelivePlayer()
 		}
 	}
 
+	public MoveBackRound():void
+	{
+		let target_scale = this._try_get_next_round_scale()
+		let target_position = this._try_get_next_round_battleContainer_position()
+		let __this = this
+
+		let delta_x = target_position.x - this._mainPanel.battleContainer.x
+		egret.Tween.get(this._mainPanel.battleContainer).to({scaleX:target_scale, scaleY:target_scale, x:target_position.x, y:target_position.y}, 0.3 * 1000).call(function(){
+			__this.gamePlayer.Relive()
+		})
+	}
+
 	public RelivePlayer(delay_time:number = 0):void
 	{
-		
 		if(delay_time == 0){
 			this.gamePlayer.Relive()
 			return
@@ -134,7 +169,7 @@ class GameLogicComponent extends BaseComponent{
 
 		let __this = this
 		CommonUtils.performDelay(function(){
-			__this.gamePlayer.Relive()
+			__this.MoveBackRound()
 		}, delay_time * 1000, this)
 	}
 
@@ -148,7 +183,7 @@ class GameLogicComponent extends BaseComponent{
 	public OnStart():void
 	{
 		this._try_generate_ball()
-		this.Test_Move_Round()
+		this.MoveNextRound()
 	}
 
 	public OnEnterFrame():void

@@ -5,16 +5,17 @@ module ui {
 		public battleContainer:eui.Group
 		public uiContainer:eui.Group
 		public btn_change:eui.Button
+		public backgroundContainer:eui.Group
 
+		public backgrounds:Array<eui.Group> = []
+		
 		public constructor() {
 			super()
 			this.skinName = "MainSceneSkin"
-
-			let __this = this
-			CommonUtils.Add_Btn_Click(this.btn_change, function(){
-				__this.GetGameLogicComponent().RemoveCurrentRoundBall()
-				__this.GetGameLogicComponent().Test_Move_Round()
-			}.bind(this), this)
+			for(let index = 0; index < GameConst.BG_NUM; index++)
+			{
+				this.backgrounds.push(this['background' + (index + 1)])
+			}
 		}
 
 		public GetGameLogicComponent():GameLogicComponent
@@ -44,5 +45,4 @@ module ui {
 			this.GetGameLogicComponent().OnTouchJump()
 		}
 	}
-
 }

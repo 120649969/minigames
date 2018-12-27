@@ -1,10 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="MainSceneSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-    <e:Image left="0" top="0" right="0" bottom="0" source="beijing_jpg"/>
-	<e:Group id="uiContainer" width="717.33" x="1" anchorOffsetX="0" anchorOffsetY="0" top="200" bottom="163" touchEnabled="false" touchChildren="false">
+    <e:Image left="0" top="0" right="0" bottom="0" source="beijing_png"/>
+	<e:Group id="backgroundContainer" top="0" width="720" x="0" bottom="0">
+		<e:Group id="background1" bottom="0" top="0" width="720" x="0">
+			<e:Image source="yun1_png" x="19" y="458.5"/>
+			<e:Image source="yun2_png" x="337" y="724"/>
+			<e:Image source="yun4_png" x="548" y="200"/>
+		</e:Group>
+		<e:Group bottom="0" top="0" width="720" x="720" id="background2">
+			<e:Image source="yun3_png" x="160" y="492"/>
+			<e:Image source="yun4_png" x="103" y="312"/>
+			<e:Image source="yun4_png" x="493.5" y="353.5"/>
+		</e:Group>
+		<e:Group id="background3" bottom="0" top="0" width="720" x="1440">
+			<e:Image source="yun4_png" x="252.5" y="312"/>
+			<e:Image source="yun2_png" x="65.16" y="490.5"/>
+			<e:Image source="yun1_png" x="252.5" y="560"/>
+		</e:Group>
+	</e:Group>
+	<e:Group id="uiContainer" width="717.33" x="1" anchorOffsetX="0" anchorOffsetY="0" top="200" bottom="163" touchEnabled="false" touchChildren="false" locked="true">
 		<e:Group id="battleContainer" width="717.33" x="0" height="917" y="0"/>
 	</e:Group>
-	<e:Group height="200" left="0" right="0" top="0">
+	<e:Group height="200" left="0" right="0" top="0" locked="true">
 		<e:Image scaleX="1" scaleY="1" horizontalCenter="0" top="90" source="touxiangdi_png"/>
         <e:Group id="m_other_group" width="206" height="93.5" anchorOffsetX="0" anchorOffsetY="0" y="96.45" x="96.66">
 		<e:Image source="touxiang1_png" verticalCenter="0" x="0"/>
@@ -39,5 +56,5 @@
 		<e:Image id="img_lingxian" source="lixian_png" x="96.03" y="46.35" visible="false"/>
 	</e:Group>
     <e:Image id="img_help" x="40.32" y="221.79" anchorOffsetX="17" anchorOffsetY="15" source="shuoming_png" visible="false"/>
-	<e:Button id="btn_change" label="点击切换场景" horizontalCenter="0" bottom="54"/>
+
 </e:Skin>

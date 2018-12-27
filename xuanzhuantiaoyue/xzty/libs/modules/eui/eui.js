@@ -984,13 +984,13 @@ var eui;
 /// <reference path="Validator.ts" />
 var eui;
 (function (eui) {
-    function getAssets(source, callback, thisObject) {
+    function getAssets(source, callback) {
         var adapter = egret.getImplementation("eui.IAssetAdapter");
         if (!adapter) {
             adapter = new eui.DefaultAssetAdapter();
         }
         adapter.getAsset(source, function (content) {
-            callback.call(thisObject, content);
+            callback(content);
         }, this);
     }
     eui.getAssets = getAssets;
@@ -10464,7 +10464,7 @@ var eui;
                 if (value == this.$fillMode) {
                     return;
                 }
-                _super.prototype.$setFillMode.call(this, value);
+                this.$fillMode = value;
                 this.invalidateDisplayList();
             },
             enumerable: true,
@@ -10528,23 +10528,24 @@ var eui;
          * 解析source
          */
         Image.prototype.parseSource = function () {
+            var _this = this;
             this.sourceChanged = false;
             var source = this._source;
             if (source && typeof source == "string") {
                 eui.getAssets(this._source, function (data) {
-                    if (source !== this._source)
+                    if (source !== _this._source)
                         return;
                     if (!egret.is(data, "egret.Texture")) {
                         return;
                     }
-                    this.$setTexture(data);
+                    _this.$setTexture(data);
                     if (data) {
-                        this.dispatchEventWith(egret.Event.COMPLETE);
+                        _this.dispatchEventWith(egret.Event.COMPLETE);
                     }
                     else if (true) {
                         egret.$warn(2301, source);
                     }
-                }, this);
+                });
             }
             else {
                 this.$setTexture(source);
@@ -14651,10 +14652,7 @@ var eui;
          * @param scrollPos
          */
         Scroller.prototype.horizontalUpdateHandler = function (scrollPos) {
-            var viewport = this.$Scroller[10 /* viewport */];
-            if (viewport) {
-                viewport.scrollH = scrollPos;
-            }
+            this.$Scroller[10 /* viewport */].scrollH = scrollPos;
             this.dispatchEventWith(egret.Event.CHANGE);
         };
         /**
@@ -14663,10 +14661,7 @@ var eui;
          * @param scrollPos
          */
         Scroller.prototype.verticalUpdateHandler = function (scrollPos) {
-            var viewport = this.$Scroller[10 /* viewport */];
-            if (viewport) {
-                viewport.scrollV = scrollPos;
-            }
+            this.$Scroller[10 /* viewport */].scrollV = scrollPos;
             this.dispatchEventWith(egret.Event.CHANGE);
         };
         /**
@@ -20812,12 +20807,13 @@ var eui;
          * 解析source
          */
         BitmapLabel.prototype.$parseFont = function () {
+            var _this = this;
             this.$fontChanged = false;
             var font = this.$fontForBitmapLabel;
             if (typeof font == "string") {
                 eui.getAssets(font, function (bitmapFont) {
-                    this.$setFontData(bitmapFont, font);
-                }, this);
+                    _this.$setFontData(bitmapFont, font);
+                });
             }
             else {
                 this.$setFontData(font);
