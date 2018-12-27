@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="BallSkin" width="196" height="196" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image id="img_ball" source="xingqiu1_png" x="0" y="0"/>
+	<e:Label id="label_index" text="" horizontalCenter="0.5" verticalCenter="0" verticalAlign="middle" textAlign="center" anchorOffsetX="0" width="199"/>
+</e:Skin>

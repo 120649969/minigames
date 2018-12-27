@@ -1,0 +1,140 @@
+{
+	"groups": [
+		{
+			"keys": "description_json,xingqiu2_png,xingqiu3_png,xingqiu4_png,xingqiu5_png,xingqiu6_png,xingqiu1_png,beijing_jpg,shuoming_png,wenhao_png,lixian_png,touxiangdi_png,touxiang1_png,touxiang2_png,touxiang3_png,clock_png,clock_fnt,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,ready_go_mp3,dead_line_tips_mp3,last_one_second_mp3,button_down_png,button_up_png,ppl_role_1_png",
+			"name": "preload"
+		}
+	],
+	"resources": [
+		{
+			"name": "description_json",
+			"type": "json",
+			"url": "config/description.json"
+		},
+		{
+			"name": "xingqiu2_png",
+			"type": "image",
+			"url": "assets/xingqiu2.png"
+		},
+		{
+			"name": "xingqiu3_png",
+			"type": "image",
+			"url": "assets/xingqiu3.png"
+		},
+		{
+			"name": "xingqiu4_png",
+			"type": "image",
+			"url": "assets/xingqiu4.png"
+		},
+		{
+			"name": "xingqiu5_png",
+			"type": "image",
+			"url": "assets/xingqiu5.png"
+		},
+		{
+			"name": "xingqiu6_png",
+			"type": "image",
+			"url": "assets/xingqiu6.png"
+		},
+		{
+			"name": "xingqiu1_png",
+			"type": "image",
+			"url": "assets/xingqiu1.png"
+		},
+		{
+			"name": "beijing_jpg",
+			"type": "image",
+			"url": "assets/beijing.jpg"
+		},
+		{
+			"name": "shuoming_png",
+			"type": "image",
+			"url": "assets/shuoming.png"
+		},
+		{
+			"name": "wenhao_png",
+			"type": "image",
+			"url": "assets/wenhao.png"
+		},
+		{
+			"name": "lixian_png",
+			"type": "image",
+			"url": "assets/lixian.png"
+		},
+		{
+			"name": "touxiangdi_png",
+			"type": "image",
+			"url": "assets/touxiangdi.png"
+		},
+		{
+			"name": "touxiang1_png",
+			"type": "image",
+			"url": "assets/touxiang1.png"
+		},
+		{
+			"name": "touxiang2_png",
+			"type": "image",
+			"url": "assets/touxiang2.png"
+		},
+		{
+			"name": "touxiang3_png",
+			"type": "image",
+			"url": "assets/touxiang3.png"
+		},
+		{
+			"name": "clock_png",
+			"type": "image",
+			"url": "assets/clock.png"
+		},
+		{
+			"name": "clock_fnt",
+			"type": "font",
+			"url": "assets/clock.fnt"
+		},
+		{
+			"name": "ready_go_ske_json",
+			"type": "json",
+			"url": "assets/db/ready_go/ready_go_ske.json"
+		},
+		{
+			"name": "ready_go_tex_json",
+			"type": "json",
+			"url": "assets/db/ready_go/ready_go_tex.json"
+		},
+		{
+			"name": "ready_go_tex_png",
+			"type": "image",
+			"url": "assets/db/ready_go/ready_go_tex.png"
+		},
+		{
+			"name": "ready_go_mp3",
+			"type": "sound",
+			"url": "assets/music/ready_go.mp3"
+		},
+		{
+			"name": "dead_line_tips_mp3",
+			"type": "sound",
+			"url": "assets/music/dead_line_tips.mp3"
+		},
+		{
+			"name": "last_one_second_mp3",
+			"type": "sound",
+			"url": "assets/music/last_one_second.mp3"
+		},
+		{
+			"name": "button_down_png",
+			"type": "image",
+			"url": "assets/Button/button_down.png"
+		},
+		{
+			"name": "button_up_png",
+			"type": "image",
+			"url": "assets/Button/button_up.png"
+		},
+		{
+			"name": "ppl_role_1_png",
+			"type": "image",
+			"url": "assets/ppl_role_1.png"
+		}
+	]
+}
