@@ -6,9 +6,13 @@ class GameLogicComponent extends BaseComponent{
 	public gamePlayer:GamePlayer
 	public allProps:Array<GameProp> = []
 
+	private _currentRound:number = 0
+
 	public constructor() {
 		super()
 		this._mainPanel = GameController.instance.GetMainScenePanel()
+		this.gamePlayer = new GamePlayer()
+		this._mainPanel.battleContainer.addChild(this.gamePlayer)
 	}
 
 	private _get_next_ball_x(last_x:number, ball_width:number):number
@@ -21,8 +25,8 @@ class GameLogicComponent extends BaseComponent{
 		let distance = min_random_width + Math.floor((max_random_width - min_random_width) * Math.random())
 		return distance + last_x
 	}
-
-	private _get_next_scale(ball1:GameBall, ball2:GameBall):number
+	//获取当这两个球同时显示的时候，场景的缩放比例
+	private _get_round_scale(ball1:GameBall, ball2:GameBall):number
 	{
 		let first_ball = ball1
 		let second_ball = ball2
@@ -43,12 +47,21 @@ class GameLogicComponent extends BaseComponent{
 		return new egret.Point((first_ball.x - first_ball.GetWidth() / 2 -  GameConst.DISTANCE_OF_BOUNDARY + second_ball.x + second_ball.GetWidth() / 2 +  GameConst.DISTANCE_OF_BOUNDARY) / 2, (first_ball.y + second_ball.y) / 2)
 	}
 
+	private _last_generate_barrel_round:number = 0
 	//生成炮筒
 	public Try_generate_barrel():void
 	{
 		if(this.allBalls.length <= 0){
 			return
 		}
+		if(this._currentRound - this._last_generate_barrel_round < 2){
+			return
+		}
+		let rate = Math.random()
+		if(rate > 0.3){
+			return 
+		}
+		this._last_generate_barrel_round = this._currentRound
 		let last_ball = this.allBalls[this.allBalls.length - 1]
 		let new_barrel = new GameBarrel()
 		let next_x = this._get_next_ball_x(last_ball.x, new_barrel.GetWidth())
@@ -64,6 +77,7 @@ class GameLogicComponent extends BaseComponent{
 		this._try_generate_prop()
 	}
 
+	//生成普通的球
 	private _try_generate_ball():void
 	{
 		let generate_count = GameConst.MIN_BALL_COUNT - this.allBalls.length
@@ -85,7 +99,7 @@ class GameLogicComponent extends BaseComponent{
 			new_ball.x = next_x
 
 			if(last_x != -1){
-				let scale_x = this._get_next_scale(new_ball, last_ball)
+				let scale_x = this._get_round_scale(new_ball, last_ball)
 				let max_scale_y = scale_x
 				let max_distace_y = this._mainPanel.uiContainer.height / max_scale_y
 				let cur_ball_height = new_ball.GetWidth()
@@ -115,7 +129,7 @@ class GameLogicComponent extends BaseComponent{
 		let first_ball = this.allBalls[0]
 		let second_ball = this.allBalls[1]
 
-		let scale = this._get_next_scale(first_ball, second_ball)
+		let scale = this._get_round_scale(first_ball, second_ball)
 		return scale
 	}
 
@@ -141,29 +155,47 @@ class GameLogicComponent extends BaseComponent{
 		return returnPoint
 	}
 
+	private _get_balls_distance_in_global(ball1:GameBall, ball2:GameBall):number
+	{
+		let last_scale = this._mainPanel.battleContainer.scaleX
+		let scale = this._get_round_scale(ball1, ball2)
+		this._mainPanel.battleContainer.scaleX = this._mainPanel.battleContainer.scaleY = scale
+		let global_ball1_point = ball1.localToGlobal(ball1.width / 2, ball1.height / 2)
+		let global_ball2_point = ball2.localToGlobal(ball2.width / 2, ball2.height / 2)
+		let distance = Math.sqrt(Math.pow(global_ball1_point.x - global_ball2_point.x, 2) + Math.pow(global_ball1_point.y - global_ball2_point.y, 2))
+		distance -= (ball1.GetWidth() / 2 + ball2.GetWidth() / 2 + this.gamePlayer.height) * scale
+		this._mainPanel.battleContainer.scaleX = this._mainPanel.battleContainer.scaleY = last_scale
+		return distance
+	}
+
+	private _last_generate_prop_round:number = -1
+	//生成道具
 	private _try_generate_prop():void
 	{
-		let rate = Math.random()
-		let is_generate = rate < 0.4
-		if(!is_generate){
+		if(this._currentRound - this._last_generate_prop_round <= 0){
 			return
 		}
-		
+		this._last_generate_prop_round = this._currentRound
+		let rate = Math.random()
+		let first_ball = this.allBalls[0]
+		let second_ball = this.allBalls[1]
 		
 		let last_ball_1 = this.allBalls[this.allBalls.length - 2]
 		let last_ball_2 = this.allBalls[this.allBalls.length - 1]
 
-		let global_ball1_point = last_ball_1.localToGlobal(last_ball_1.width / 2, last_ball_1.height / 2)
-		let global_ball2_point = last_ball_2.localToGlobal(last_ball_2.width / 2, last_ball_2.height / 2)
-		let distance = Math.sqrt(Math.pow(last_ball_1.x - last_ball_2.x, 2) + Math.pow(last_ball_1.y - last_ball_2.y, 2))
-		if(distance < 500){
+		let distance = this._get_balls_distance_in_global(last_ball_1, last_ball_2)
+		if(distance < 300){
 			return
 		}
 		
+		let is_generate = rate < 1
+		if(!is_generate){
+			return
+		}
 		
-		let max_count = 3 + Math.floor((distance - 500) / 150)
-		max_count = Math.min(max_count, 5)
-		let generate_count = Math.ceil(Math.random() * max_count)
+		let max_count = 1 + Math.floor((distance - 300) / 50)
+		let generate_count = Math.floor(Math.random() * max_count)
+		generate_count = Math.max(generate_count, 2)
 
 		let center_point = new egret.Point()
 		center_point.x = (last_ball_1.x + last_ball_2.x) / 2
@@ -173,7 +205,7 @@ class GameLogicComponent extends BaseComponent{
 		dir.normalize(1)
 
 		let start_x = center_point.x + dir.x * -1 * 100 * (generate_count - 1) / 2
-		let start_y = center_point.y + dir.y * -1 * 100 * (generate_count - 1) / 2
+		let start_y = center_point.y + dir.y * -1 * 100 * (generate_count - 1) / 2 - 20
 
 		for(let index = 0; index < generate_count; index++)
 		{
@@ -214,7 +246,7 @@ class GameLogicComponent extends BaseComponent{
 		dir.normalize(1)
 
 		let start_x = center_point.x + dir.x * -1 * 100 * (generate_count - 1) / 2
-		let start_y = center_point.y + dir.y * -1 * 100 * (generate_count - 1) / 2
+		let start_y = center_point.y + dir.y * -1 * 100 * (generate_count - 1) / 2 - 20
 
 		for(let index = 0; index < generate_count; index++)
 		{
@@ -270,10 +302,14 @@ class GameLogicComponent extends BaseComponent{
 			this._mainPanel.battleContainer.x = target_position.x
 			this._mainPanel.battleContainer.y = target_position.y
 
-			this.gamePlayer = new GamePlayer()
-			this._mainPanel.battleContainer.addChild(this.gamePlayer)
 			this._hasStartRound = true
+			this.gamePlayer.OnStart()
 			this.RelivePlayer()
+		}
+		this._currentRound += 1
+		this._try_generate_ball()
+		if(GameController.instance.serverModel.myRole.score > 100){
+			this.Try_generate_barrel()
 		}
 	}
 
@@ -306,7 +342,6 @@ class GameLogicComponent extends BaseComponent{
 	{
 		let ball = this.allBalls.shift()
 		ball.visible = false
-		this._try_generate_ball()
 	}
 
 	public OnStart():void

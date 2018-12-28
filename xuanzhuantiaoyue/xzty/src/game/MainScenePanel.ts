@@ -49,7 +49,9 @@ module ui {
 
 		private _onTouchBegin(event:egret.TouchEvent):void
 		{
-			this._commonUIComponent.OnTouchStart(event.stageX, event.stageY)
+			if(this._commonUIComponent.OnTouchStart(event.stageX, event.stageY)){
+				return
+			}
 			this.GetGameLogicComponent().OnTouchJump()
 		}
 

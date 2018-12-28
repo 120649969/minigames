@@ -1,5 +1,6 @@
 
 enum GamePlayerStatus{
+	Init			= 0, 		//初始化中
 	FreeFall 		= 1, 		//自由下落
 	LandOnBall 		= 2,		//落到球上
 	LandOnBarrel	= 3,		//落到炮筒上
@@ -30,8 +31,14 @@ class GamePlayer extends eui.Component{
 		this.skinName = "PlayerSkin"
 		this.anchorOffsetX = this.width / 2
 		this.anchorOffsetY = this.height
+		this.status = GamePlayerStatus.Init
+		this.visible = false
+	}
+
+	public OnStart():void
+	{
+		this.visible = true
 		this.gameLogicComponent = GameController.instance.GetMainScenePanel().GetGameLogicComponent()
-		this.status = GamePlayerStatus.FreeFall
 	}
 
 	//是否需要更新位置
@@ -74,7 +81,7 @@ class GamePlayer extends eui.Component{
 			return
 		}
 		let move_speed = Math.sqrt(Math.pow(this.speedx, 2) + Math.pow(this.speedy, 2))
-		let move_times = move_speed / 5
+		let move_times = move_speed / 2
 		for(let index = 0; index < move_times; index++)
 		{
 			let delta_x = this.speedx / move_times
