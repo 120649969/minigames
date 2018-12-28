@@ -17,7 +17,7 @@ class GameConst {
 
 	//两个球之间的距离范围
 	public static MIN_BALL_DISTANCE_X:number = 300
-	public static MAX_BALL_DISTANCE_X:number = 600
+	public static MAX_BALL_DISTANCE_X:number = 500
 
 	//球离边界的距离
 	public static DISTANCE_OF_BOUNDARY:number = 40
@@ -25,8 +25,13 @@ class GameConst {
 	//重力加速度
 	public static Gravity:number = 3
 
-	public static PLAYER_SPEED:number = 35
+	public static PLAYER_SPEED:number = 45
 
 	public static BG_NUM:number = 3
 
+
+	public static DIAMOND_SCORE:number = 2
+	public static STONE_SCORE:number = -3
+	public static JUMP_SUCCESS_SCORE:number = 5
+	public static JUMP_FAIL_SCORE:number = -3
 }

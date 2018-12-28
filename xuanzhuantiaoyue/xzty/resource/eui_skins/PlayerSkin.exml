@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="PlayerSkin" width="85" height="90" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Image id="img_player" source="ppl_role_1_png" horizontalCenter="0" verticalCenter="0" scaleX="1" scaleY="1"/>
+	<e:Rect id="hit_rect" width="80" height="80" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0" bottom="0" visible="false"/>
+	<e:Image id="img_player" source="ppl_role_1_png" horizontalCenter="0" verticalCenter="0" scaleX="1" scaleY="1" locked="true"/>
 </e:Skin>

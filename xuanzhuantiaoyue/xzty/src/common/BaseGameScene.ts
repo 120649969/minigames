@@ -2,7 +2,7 @@ module ui {
 	export class BaseGameScene extends ui.Window{
 
 		public m_offline_tips:eui.Group
-		private m_touch_layer:eui.Group
+		public m_touch_layer:eui.Group
 		public btn_help:eui.Button
 		public img_help:eui.Image
 		public label_time:eui.BitmapLabel

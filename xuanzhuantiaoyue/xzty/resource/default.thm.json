@@ -17,9 +17,11 @@
 	"autoGenerateExmlsList": true,
 	"exmls": [
 		"resource/eui_skins/BallSkin.exml",
+		"resource/eui_skins/BarrelSkin.exml",
 		"resource/eui_skins/ButtonSkin.exml",
 		"resource/eui_skins/MainSceneSkin.exml",
 		"resource/eui_skins/PlayerSkin.exml",
+		"resource/eui_skins/PropSkin.exml",
 		"resource/eui_skins/Test.exml"
 	],
 	"path": "resource/default.thm.json"

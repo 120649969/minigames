@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "description_json,xingqiu2_png,xingqiu3_png,xingqiu4_png,xingqiu5_png,xingqiu6_png,xingqiu1_png,shuoming_png,wenhao_png,lixian_png,touxiangdi_png,touxiang1_png,touxiang2_png,touxiang3_png,clock_png,clock_fnt,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,ready_go_mp3,dead_line_tips_mp3,last_one_second_mp3,button_down_png,button_up_png,ppl_role_1_png,beijing_png,yun4_png,yun1_png,yun2_png,yun3_png",
+			"keys": "description_json,xingqiu2_png,xingqiu3_png,xingqiu4_png,xingqiu5_png,xingqiu6_png,xingqiu1_png,shuoming_png,wenhao_png,lixian_png,touxiangdi_png,touxiang1_png,touxiang2_png,clock_png,clock_fnt,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,ready_go_mp3,dead_line_tips_mp3,last_one_second_mp3,button_down_png,button_up_png,ppl_role_1_png,beijing_png,yun4_png,yun1_png,yun2_png,yun3_png,shan_png,lvse_png,hongse_png,score_png,score_fnt,paotong2_png,shake_tex_png,shake_ske_json,shake_tex_json,lingxian_png,toumingqiu_png,prop_5_png,prop_1_png,prop_2_png,prop_3_png,prop_4_png,prop_mp3,stone_mp3,jump_mp3,fashe_mp3",
 			"name": "preload"
 		}
 	],
@@ -70,11 +70,6 @@
 			"name": "touxiang2_png",
 			"type": "image",
 			"url": "assets/touxiang2.png"
-		},
-		{
-			"name": "touxiang3_png",
-			"type": "image",
-			"url": "assets/touxiang3.png"
 		},
 		{
 			"name": "clock_png",
@@ -155,6 +150,106 @@
 			"name": "yun3_png",
 			"type": "image",
 			"url": "assets/yun3.png"
+		},
+		{
+			"name": "shan_png",
+			"type": "image",
+			"url": "assets/shan.png"
+		},
+		{
+			"name": "lvse_png",
+			"type": "image",
+			"url": "assets/lvse.png"
+		},
+		{
+			"name": "hongse_png",
+			"type": "image",
+			"url": "assets/hongse.png"
+		},
+		{
+			"name": "score_png",
+			"type": "image",
+			"url": "assets/score.png"
+		},
+		{
+			"name": "score_fnt",
+			"type": "font",
+			"url": "assets/score.fnt"
+		},
+		{
+			"name": "paotong2_png",
+			"type": "image",
+			"url": "assets/paotong2.png"
+		},
+		{
+			"name": "shake_tex_png",
+			"type": "image",
+			"url": "assets/db/shake/shake_tex.png"
+		},
+		{
+			"name": "shake_ske_json",
+			"type": "json",
+			"url": "assets/db/shake/shake_ske.json"
+		},
+		{
+			"name": "shake_tex_json",
+			"type": "json",
+			"url": "assets/db/shake/shake_tex.json"
+		},
+		{
+			"name": "lingxian_png",
+			"type": "image",
+			"url": "assets/lingxian.png"
+		},
+		{
+			"name": "toumingqiu_png",
+			"type": "image",
+			"url": "assets/toumingqiu.png"
+		},
+		{
+			"name": "prop_5_png",
+			"type": "image",
+			"url": "assets/prop_5.png"
+		},
+		{
+			"name": "prop_1_png",
+			"type": "image",
+			"url": "assets/prop_1.png"
+		},
+		{
+			"name": "prop_2_png",
+			"type": "image",
+			"url": "assets/prop_2.png"
+		},
+		{
+			"name": "prop_3_png",
+			"type": "image",
+			"url": "assets/prop_3.png"
+		},
+		{
+			"name": "prop_4_png",
+			"type": "image",
+			"url": "assets/prop_4.png"
+		},
+		{
+			"name": "prop_mp3",
+			"type": "sound",
+			"url": "assets/music/prop.mp3"
+		},
+		{
+			"name": "stone_mp3",
+			"type": "sound",
+			"url": "assets/music/stone.mp3"
+		},
+		{
+			"name": "jump_mp3",
+			"type": "sound",
+			"url": "assets/music/jump.mp3"
+		},
+		{
+			"name": "fashe_mp3",
+			"type": "sound",
+			"url": "assets/music/fashe.mp3"
 		}
 	]
 }

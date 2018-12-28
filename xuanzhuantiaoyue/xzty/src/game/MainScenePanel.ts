@@ -9,6 +9,9 @@ module ui {
 
 		public backgrounds:Array<eui.Group> = []
 		
+		private img_lingxian:eui.Image
+
+		private btn_debug:eui.Button
 		public constructor() {
 			super()
 			this.skinName = "MainSceneSkin"
@@ -16,6 +19,11 @@ module ui {
 			{
 				this.backgrounds.push(this['background' + (index + 1)])
 			}
+
+			let __this = this
+			CommonUtils.Add_Btn_Click(this.btn_debug, function(){
+				__this.GetGameLogicComponent().OnReceiveOtherStone()
+			}, this)
 		}
 
 		public GetGameLogicComponent():GameLogicComponent
@@ -36,13 +44,30 @@ module ui {
 		public StartGame():void
 		{
 			super.StartGame()
-			this.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onTouchBegin, this)
+			this.m_touch_layer.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onTouchBegin, this)
 		}
 
 		private _onTouchBegin(event:egret.TouchEvent):void
 		{
 			this._commonUIComponent.OnTouchStart(event.stageX, event.stageY)
 			this.GetGameLogicComponent().OnTouchJump()
+		}
+
+		public UpdateScore():void
+		{
+			let my_score = GameController.instance.serverModel.myRole.score
+			let other_score = GameController.instance.serverModel.otherRole.score
+			this.label_my_score.text = my_score.toString()
+			this.label_other_score.text = other_score.toString()
+			if(my_score == other_score){
+				this.img_lingxian.visible = false
+			}else if (my_score > other_score){
+				this.img_lingxian.visible = true
+				this.img_lingxian.x = this.width - this.img_lingxian.width
+			}else{
+				this.img_lingxian.visible = true
+				this.img_lingxian.x = 0
+			}
 		}
 	}
 }

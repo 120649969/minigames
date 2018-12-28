@@ -77,6 +77,10 @@ class CommonUtils {
 
 	public static GetRandomScope(minScope:number, maxScope:number):number
 	{
+		let min = minScope
+		let max = maxScope
+		minScope = Math.min(minScope, maxScope)
+		maxScope = Math.max(minScope, maxScope)
 		return Math.random() * (maxScope - minScope) + minScope
 	}
 
