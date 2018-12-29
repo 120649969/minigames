@@ -12,7 +12,9 @@ enum GamePlayerStatus{
 class GamePlayer extends eui.Component{
 
 	public img_player:eui.Image
+	public img_shadow:eui.Image
 	public hit_rect:eui.Rect
+	public hit_prop_rect:eui.Rect
 	public isLand:boolean = false
 
 	public speedx:number = 0
@@ -120,6 +122,10 @@ class GamePlayer extends eui.Component{
 	public SwitchStatus(new_status:GamePlayerStatus)
 	{
 		this.status = new_status
+		this.img_shadow.visible = false
+		if(this.status == GamePlayerStatus.LandOnBall){
+			this.img_shadow.visible = true
+		}
 	}
 
 	private _land_on_ball(ball:GameBall):void

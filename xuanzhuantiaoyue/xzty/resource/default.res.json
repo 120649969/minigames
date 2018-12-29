@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "description_json,xingqiu2_png,xingqiu3_png,xingqiu4_png,xingqiu5_png,xingqiu6_png,xingqiu1_png,shuoming_png,wenhao_png,lixian_png,touxiangdi_png,touxiang1_png,touxiang2_png,clock_png,clock_fnt,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,ready_go_mp3,dead_line_tips_mp3,last_one_second_mp3,button_down_png,button_up_png,ppl_role_1_png,beijing_png,yun4_png,yun1_png,yun2_png,yun3_png,shan_png,lvse_png,hongse_png,score_png,score_fnt,paotong2_png,shake_tex_png,shake_ske_json,shake_tex_json,lingxian_png,toumingqiu_png,prop_5_png,prop_1_png,prop_2_png,prop_3_png,prop_4_png,prop_mp3,stone_mp3,jump_mp3,fashe_mp3",
+			"keys": "description_json,xingqiu2_png,xingqiu3_png,xingqiu4_png,xingqiu5_png,xingqiu6_png,xingqiu1_png,shuoming_png,wenhao_png,lixian_png,touxiangdi_png,touxiang1_png,touxiang2_png,clock_png,clock_fnt,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,ready_go_mp3,dead_line_tips_mp3,last_one_second_mp3,button_down_png,button_up_png,ppl_role_1_png,beijing_png,yun4_png,yun1_png,yun2_png,yun3_png,shan_png,lvse_png,hongse_png,score_png,score_fnt,paotong2_png,shake_tex_png,shake_ske_json,shake_tex_json,lingxian_png,toumingqiu_png,prop_5_png,prop_1_png,prop_2_png,prop_3_png,prop_4_png,prop_mp3,stone_mp3,jump_mp3,fashe_mp3,prop_other_stone_png,prop_stone_png,prop_xuanzhuan_png,prop_bg_png,prop_hudun_png,shadow_png,stone_tex_png,stone_ske_json,stone_tex_json",
 			"name": "preload"
 		}
 	],
@@ -250,6 +250,51 @@
 			"name": "fashe_mp3",
 			"type": "sound",
 			"url": "assets/music/fashe.mp3"
+		},
+		{
+			"name": "prop_other_stone_png",
+			"type": "image",
+			"url": "assets/prop_other_stone.png"
+		},
+		{
+			"name": "prop_stone_png",
+			"type": "image",
+			"url": "assets/prop_stone.png"
+		},
+		{
+			"name": "prop_xuanzhuan_png",
+			"type": "image",
+			"url": "assets/prop_xuanzhuan.png"
+		},
+		{
+			"name": "prop_bg_png",
+			"type": "image",
+			"url": "assets/prop_bg.png"
+		},
+		{
+			"name": "prop_hudun_png",
+			"type": "image",
+			"url": "assets/prop_hudun.png"
+		},
+		{
+			"name": "shadow_png",
+			"type": "image",
+			"url": "assets/shadow.png"
+		},
+		{
+			"name": "stone_tex_png",
+			"type": "image",
+			"url": "assets/db/stone/stone_tex.png"
+		},
+		{
+			"name": "stone_ske_json",
+			"type": "json",
+			"url": "assets/db/stone/stone_ske.json"
+		},
+		{
+			"name": "stone_tex_json",
+			"type": "json",
+			"url": "assets/db/stone/stone_tex.json"
 		}
 	]
 }

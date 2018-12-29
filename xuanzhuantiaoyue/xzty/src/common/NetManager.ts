@@ -156,14 +156,17 @@ class NetManager {
 		let count = body['add']
 	}	
 
-	private onPPLScorePush(msgId, body):void
+	private onPropPush(msgId, body):void
 	{
-		this._serverModel.UpdateRoleScore(body)
-		this._mainScenePanel.UpdateScore()
-	}
-
-	private onPPLPropPush(msgId, body):void
-	{
+		let id = body['id'] || body['openid']
+		if(id == User.openId){
+			return
+		}
+		if(body['prop']){
+			if(body['prop'] == GamePropType.OtherStone){
+				GameController.instance.GetMainScenePanel().GetGameLogicComponent().OnReceiveOtherStone()
+			}
+		}
 	}
 
 	public StartConnectServer():void
@@ -181,8 +184,7 @@ class NetManager {
 		GameNet.on(protocol.CMD_H5_GAME_OVER_PUSH, this.onGameOverPush.bind(this)); //游戏结束推送
 		GameNet.on(protocol.CMD_H5_REENTER_PUSH, this.onGameReEnterPush.bind(this)); //游戏重进推送
 
-		GameNet.on(protocol.CMD_H5_PPL_SCORE_PUSH, this.onPPLScorePush.bind(this)); //得分推送
-		GameNet.on(protocol.CMD_H5_PPL_PROP_PUSH, this.onPPLPropPush.bind(this)); //得分推送
+		GameNet.on(protocol.CMD_H5_PROP_PUSH, this.onPropPush.bind(this)); //得分推送
 		GameNet.onDisconnected = this.onDisconnected.bind(this)
 
 		GamePlatform.onInit(); //onInit

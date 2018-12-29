@@ -6,12 +6,16 @@ module ui {
 		public uiContainer:eui.Group
 		public btn_change:eui.Button
 		public backgroundContainer:eui.Group
+		public effectContainer:eui.Group
+		public positionGroup:eui.Group
 
 		public backgrounds:Array<eui.Group> = []
 		
 		private img_lingxian:eui.Image
 
 		private btn_debug:eui.Button
+		public allPropTips:Array<GamePropTips> = []
+
 		public constructor() {
 			super()
 			this.skinName = "MainSceneSkin"
@@ -22,8 +26,18 @@ module ui {
 
 			let __this = this
 			CommonUtils.Add_Btn_Click(this.btn_debug, function(){
+				// __this.ShowPropTips(GamePropType.HuDun)
+				// __this.ShowPropTips(GamePropType.Stone)
+				// __this.ShowPropTips(GamePropType.OtherStone)
+				// __this.ShowPropTips(GamePropType.XuanZhuan)
 				__this.GetGameLogicComponent().OnReceiveOtherStone()
+				// ui.WindowManager.getInstance().open("TestCasePanel")
+				// __this.GetGameLogicComponent().Try_generate_barrel()
 			}, this)
+			this.btn_debug.visible = false
+			if(DEBUG){
+				this.btn_debug.visible = true
+			}
 		}
 
 		public GetGameLogicComponent():GameLogicComponent
@@ -70,6 +84,11 @@ module ui {
 				this.img_lingxian.visible = true
 				this.img_lingxian.x = 0
 			}
+		}
+
+		public ShowPropTips(propType:GamePropType):void
+		{
+			new GamePropTips(propType)
 		}
 	}
 }

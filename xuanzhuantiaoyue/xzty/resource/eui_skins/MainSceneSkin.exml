@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="MainSceneSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
     <e:Image left="0" top="0" right="0" bottom="0" source="beijing_png"/>
-	<e:Group id="backgroundContainer" top="0" width="720" x="0" bottom="0">
+	<e:Group id="backgroundContainer" top="0" width="720" x="0" bottom="0" locked="true">
 		<e:Group id="background1" bottom="0" top="0" width="720" x="0">
 			<e:Image source="yun1_png" x="19" y="458.5"/>
 			<e:Image source="yun2_png" x="337" y="724"/>
@@ -18,8 +18,8 @@
 			<e:Image source="yun1_png" x="252.5" y="560"/>
 		</e:Group>
 	</e:Group>
-	<e:Group id="m_touch_layer" left="0" top="0" right="0" bottom="0" touchEnabled="true"/>
-	<e:Group id="uiContainer" width="717.33" x="1" anchorOffsetX="0" anchorOffsetY="0" top="200" bottom="163" touchEnabled="false" touchChildren="false">
+	<e:Group id="m_touch_layer" left="0" top="0" right="0" bottom="0" touchEnabled="true" locked="true"/>
+	<e:Group id="uiContainer" width="717.33" x="1" anchorOffsetX="0" anchorOffsetY="0" top="200" bottom="163" touchEnabled="false" touchChildren="false" locked="true">
 		<e:Group id="battleContainer" width="717.33" x="0" height="917" y="0">
 		</e:Group>
 	</e:Group>
@@ -31,7 +31,7 @@
 		<e:Image id="m_other_icon" width="88" height="88" x="44" anchorOffsetX="44" anchorOffsetY="44" verticalCenter="0"/>
 
 		<e:BitmapLabel id="label_other_score" width="91.66" height="42.34" text="0" anchorOffsetX="0" anchorOffsetY="21.16" y="39.05" x="85.19" scaleX="0.8" scaleY="0.8" textAlign="center" font="score_fnt"/>
-					<e:Label id="label_other_name" text="hehhehhe" textAlign="left" anchorOffsetX="0" width="112.33" height="25" size="24" anchorOffsetY="0" scaleX="1" scaleY="1" horizontalCenter="0" bottom="-46.5"/>
+					<e:Label id="label_other_name" text="" textAlign="left" anchorOffsetX="0" width="112.33" height="25" size="24" anchorOffsetY="0" scaleX="1" scaleY="1" horizontalCenter="0" bottom="-46.5"/>
 
 
 		</e:Group>
@@ -42,11 +42,11 @@
 
 		<e:BitmapLabel id="label_my_score" width="91.47" height="40.68" text="0" anchorOffsetX="0" anchorOffsetY="20.32" y="39.24" x="46.01" scaleX="0.8" scaleY="0.8" textAlign="center" font="score_fnt"/>
 			<e:Image source="mingzidi_png" x="135.33" y="60.5" scaleX="-1" scaleY="1"/>
-			<e:Label id="label_my_name" text="hehhehhe2" textAlign="right" anchorOffsetX="0" width="117.66" height="25" size="24" scaleX="1" scaleY="1" horizontalCenter="0" bottom="-46"/>
+			<e:Label id="label_my_name" text="" textAlign="right" anchorOffsetX="0" width="117.66" height="25" size="24" scaleX="1" scaleY="1" horizontalCenter="0" bottom="-46"/>
 
 		</e:Group>
 		<e:Image source="daojishi_png" horizontalCenter="0" top="78"/>
-        <e:BitmapLabel id="label_time" width="120" height="39.33" font="clock_fnt" text="180" anchorOffsetX="60" anchorOffsetY="19.67" horizontalCenter="0" y="139.67" textAlign="center" scaleX="0.8" scaleY="0.8"/>
+        <e:BitmapLabel id="label_time" width="120" height="39.33" font="clock_fnt" text="90" anchorOffsetX="60" anchorOffsetY="19.67" horizontalCenter="0" y="157" textAlign="center" scaleX="0.8" scaleY="0.8"/>
         <e:Group id="m_offline_tips" width="505" height="50" horizontalCenter="0.5" touchEnabled="false" y="472" visible="false">
 			<e:Rect width="505" height="50" horizontalCenter="0" verticalCenter="0" fillColor="0x302f2f" fillAlpha="0.5" x="0" y="0" scaleX="1" scaleY="1"/>
 			<e:Label text="توردىن ئازراق مەسىلە چىقتى ، سەل ساقلاڭ " x="31.360000000000014" y="10" scaleX="1" scaleY="1"/>
@@ -61,9 +61,12 @@
 		</e:Button>
 		<e:Image id="img_lingxian" source="lingxian_png" y="217.95" scaleX="1" scaleY="1" x="0" visible="false"/>
 	</e:Group>
+	<e:Group id="effectContainer" left="0" top="0" right="0" bottom="0" touchChildren="false" touchEnabled="false">
+		<e:Group id="positionGroup" height="200" y="307.17" anchorOffsetX="0" left="6" right="0" touchChildren="false" touchEnabled="false"/>
+	</e:Group>
 
 	<e:Image source="shan_png" horizontalCenter="0" bottom="0" touchEnabled="false"/>
-	<e:Image id="img_help" x="40.32" y="241.79" anchorOffsetX="17" anchorOffsetY="15" source="shuoming_png" touchEnabled="true" visible="false"/>
+	<e:Image id="img_help" x="32.24" y="158.15" anchorOffsetX="17" anchorOffsetY="15" source="shuoming_png" touchEnabled="false" visible="false"/>
 	<e:Button id="btn_debug" label="Button" x="544" y="1177"/>
 
 </e:Skin>

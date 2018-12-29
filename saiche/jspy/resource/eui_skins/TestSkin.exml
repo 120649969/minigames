@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="TestSkin" width="2048" height="2048" xmlns:e="http://ns.egret.com/eui">
+	<e:Image source="di_png" left="0" top="0" right="0" bottom="0"/>
+	<e:Image source="zhi_png" y="1892" horizontalCenter="204"/>
+	<e:Image source="zhi_png" y="1752" horizontalCenter="204"/>
+	<e:Image source="zhi_png" y="1612" horizontalCenter="204"/>
+	<e:Image source="wan1_png" x="900" y="1613.52" rotation="-90"/>
+	<e:Image source="wan1_png" x="625.03" y="955.52" rotation="90"/>
+	<e:Image source="zhi_png" y="1098.52" horizontalCenter="-192" rotation="90"/>
+	<e:Image source="zhi_png" y="1098.52" horizontalCenter="-332" rotation="90"/>
+</e:Skin>

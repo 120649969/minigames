@@ -58,7 +58,7 @@ class GameLogicComponent extends BaseComponent{
 			return
 		}
 		let rate = Math.random()
-		if(rate > 0.3){
+		if(rate > 0.2){
 			return 
 		}
 		this._last_generate_barrel_round = this._currentRound
@@ -119,9 +119,8 @@ class GameLogicComponent extends BaseComponent{
 
 			last_x = next_x
 			last_ball = new_ball
+			this._try_generate_prop()
 		}
-
-		this._try_generate_prop()
 	}
 
 	private _try_get_next_round_scale():number
@@ -172,10 +171,9 @@ class GameLogicComponent extends BaseComponent{
 	//生成道具
 	private _try_generate_prop():void
 	{
-		if(this._currentRound - this._last_generate_prop_round <= 0){
+		if(this.allBalls.length <= 1){
 			return
 		}
-		this._last_generate_prop_round = this._currentRound
 		let rate = Math.random()
 		let first_ball = this.allBalls[0]
 		let second_ball = this.allBalls[1]
@@ -184,19 +182,21 @@ class GameLogicComponent extends BaseComponent{
 		let last_ball_2 = this.allBalls[this.allBalls.length - 1]
 
 		let distance = this._get_balls_distance_in_global(last_ball_1, last_ball_2)
-		if(distance < 300){
-			return
-		}
 		
-		let is_generate = rate < 1
+		let is_generate = rate < 0.9
 		if(!is_generate){
 			return
 		}
 		
-		let max_count = 1 + Math.floor((distance - 300) / 50)
+		let max_count = 1 + Math.floor((distance - 200) / 40)
 		let generate_count = Math.floor(Math.random() * max_count)
-		generate_count = Math.max(generate_count, 2)
-
+		if(distance > 300){
+			generate_count = Math.max(generate_count, 2)
+		}else{
+			generate_count = Math.max(generate_count, 1)
+		}
+		
+		// generate_count = Math.min(generate_count, 5)
 		let center_point = new egret.Point()
 		center_point.x = (last_ball_1.x + last_ball_2.x) / 2
 		center_point.y = (last_ball_1.y + last_ball_2.y) / 2
@@ -204,8 +204,9 @@ class GameLogicComponent extends BaseComponent{
 		let dir = new egret.Point(last_ball_2.x - last_ball_1.x, last_ball_2.y - last_ball_1.y)
 		dir.normalize(1)
 
-		let start_x = center_point.x + dir.x * -1 * 100 * (generate_count - 1) / 2
-		let start_y = center_point.y + dir.y * -1 * 100 * (generate_count - 1) / 2 - 20
+		let prop_distance = 60
+		let start_x = center_point.x + dir.x * -1 * prop_distance * (generate_count - 1) / 2
+		let start_y = center_point.y + dir.y * -1 * prop_distance * (generate_count - 1) / 2 - 20
 
 		for(let index = 0; index < generate_count; index++)
 		{
@@ -214,8 +215,8 @@ class GameLogicComponent extends BaseComponent{
 			new_prop.x = start_x
 			new_prop.y = start_y
 
-			start_x += dir.x * 100
-			start_y += dir.y * 100
+			start_x += dir.x * prop_distance
+			start_y += dir.y * prop_distance
 		}
 	}
 
@@ -231,11 +232,15 @@ class GameLogicComponent extends BaseComponent{
 
 		let global_ball1_point = last_ball_1.localToGlobal(last_ball_1.width / 2, last_ball_1.height / 2)
 		let global_ball2_point = last_ball_2.localToGlobal(last_ball_2.width / 2, last_ball_2.height / 2)
-		let distance = Math.sqrt(Math.pow(last_ball_1.x - last_ball_2.x, 2) + Math.pow(last_ball_1.y - last_ball_2.y, 2))
-		
-		let max_count = Math.floor(distance / 200)
+		let distance = this._get_balls_distance_in_global(last_ball_1, last_ball_2)
+
+		let max_count = 1
+		if(distance > 300){
+			max_count = 1 + Math.floor((distance - 300) / 50)
+		}
+
 		max_count = Math.max(max_count, 1)
-		max_count = Math.min(max_count, 4)
+		max_count = Math.min(max_count, 3)
 		let generate_count = Math.ceil(Math.random() * max_count)
 
 		let center_point = new egret.Point()
@@ -245,24 +250,38 @@ class GameLogicComponent extends BaseComponent{
 		let dir = new egret.Point(last_ball_2.x - last_ball_1.x, last_ball_2.y - last_ball_1.y)
 		dir.normalize(1)
 
+		let dot_dir1 = new egret.Point(dir.y, dir.x * -1)
+		let dot_dir2 = new egret.Point(dir.y * -1, dir.x)
+
 		let start_x = center_point.x + dir.x * -1 * 100 * (generate_count - 1) / 2
-		let start_y = center_point.y + dir.y * -1 * 100 * (generate_count - 1) / 2 - 20
+		let start_y = center_point.y + dir.y * -1 * 100 * (generate_count - 1) / 2 - 30
+
+		let line_distance = 100
+		let start_line1_x = start_x + dot_dir1.x * line_distance
+		let start_line1_y = start_y + dot_dir1.y * line_distance
+
+		let start_line2_x = start_x + dot_dir2.x * line_distance
+		let start_line2_y = start_y + dot_dir2.y * line_distance
 
 		for(let index = 0; index < generate_count; index++)
 		{
 			let new_prop = new GameProp(GamePropType.OtherStone)
 			this.allProps.push(new_prop)
-			new_prop.x = start_x
-			new_prop.y = start_y - 100
+			new_prop.x = start_line1_x
+			new_prop.y = start_line1_y
 
 			new_prop = new GameProp(GamePropType.OtherStone)
 			this.allProps.push(new_prop)
-			new_prop.x = start_x
-			new_prop.y = start_y + 100
+			new_prop.x = start_line2_x
+			new_prop.y = start_line2_y
 
-			start_x += dir.x * 100
-			start_y += dir.y * 100
+			start_line1_x += dir.x * 100
+			start_line1_y += dir.y * 100
+
+			start_line2_x += dir.x * 100
+			start_line2_y += dir.y * 100
 		}
+		this._mainPanel.ShowPropTips(GamePropType.OtherStone)
 	}
 
 	public MoveBg(player_move_x:number, player_move_y:number):void
@@ -371,5 +390,10 @@ class GameLogicComponent extends BaseComponent{
 		GameController.instance.serverModel.myRole.score += delta_score
 		GameController.instance.serverModel.myRole.score = Math.max(GameController.instance.serverModel.myRole.score, 0)
 		this._mainPanel.UpdateScore()
+		if(GameNet.isConnected()){
+			GameNet.reqChangeScore(delta_score)
+		}else{
+			GameController.instance.offline_score += delta_score
+		}
 	}
 }

@@ -39,7 +39,7 @@ class GameBall extends eui.Component{
 			this.scaleX = this.scaleY = random_scale
 		}
 		let rotate_time = 2 * 1000
-		if(CommonUtils.GetRandomPositive() > 0){
+		if(Math.random() < 0.3){
 			this._is_clock_wise = false
 			egret.Tween.get(this, {loop:true}).to({rotation:-180}, rotate_time).to({rotation:-360}, rotate_time)
 		}else{

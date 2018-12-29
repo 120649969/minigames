@@ -16,7 +16,7 @@
 		"bin-debug/common/BaseGameScene.js",
 		"bin-debug/common/io/Net.js",
 		"bin-debug/game/GameBall.js",
-		"bin-debug/common/ServerModel.js",
+		"bin-debug/common/User.js",
 		"bin-debug/Main.js",
 		"bin-debug/common/CommonUIComponent.js",
 		"bin-debug/common/CommonUtils.js",
@@ -26,8 +26,8 @@
 		"bin-debug/common/GameController.js",
 		"bin-debug/common/GamePlatform.js",
 		"bin-debug/common/NetManager.js",
+		"bin-debug/common/ServerModel.js",
 		"bin-debug/LoadingUI.js",
-		"bin-debug/common/User.js",
 		"bin-debug/common/Util.js",
 		"bin-debug/common/io/GameNet.js",
 		"bin-debug/Platform.js",
@@ -40,6 +40,8 @@
 		"bin-debug/game/GameLogicComponent.js",
 		"bin-debug/game/GamePlayer.js",
 		"bin-debug/game/GameProp.js",
-		"bin-debug/game/MainScenePanel.js"
+		"bin-debug/game/GamePropTips.js",
+		"bin-debug/game/MainScenePanel.js",
+		"bin-debug/game/TestCasePanel.js"
 	]
 }

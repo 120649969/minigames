@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="PropTipSkin" width="374" height="80" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image source="prop_bg_png" horizontalCenter="0" verticalCenter="0"/>
+	<e:Image id="img_prop" source="prop_1_png" x="307.5" y="9"/>
+	<e:Image id="img_wenzi" source="prop_hudun_png" y="26" right="77"/>
+</e:Skin>

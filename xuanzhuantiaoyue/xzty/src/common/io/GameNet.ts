@@ -20,6 +20,8 @@ module io {
 			CMD_H5_SURREND_RSP:8,
 			CMD_H5_SCORE_REQ:9,  //分数
 			CMD_H5_SCORE_RSP:10, //分数
+			CMD_H5_RPOP_REQ:13, //道具
+			CMD_H5_RPOP_RSP:14, //道具
 
 			CMD_H5_PPL_SCORE_REQ:1001, //得分
 			CMD_H5_PPL_SCORE_RSP:1002, //同步状态推送
@@ -35,6 +37,7 @@ module io {
 			CMD_H5_SCORE_PUSH: 108, //分数变化推送
 			CMD_H5_GAME_OVER_PUSH: 110, //游戏结束推送
 			CMD_H5_REENTER_PUSH: 112, //重进推送
+			CMD_H5_PROP_PUSH:116, //道具推送
 
 			CMD_H5_PPL_SCORE_PUSH:10000, //得分推送
 			CMD_H5_PPL_PROP_PUSH:10002, // 道具
@@ -161,11 +164,11 @@ module io {
 		public async reqUseProp(prop:number){
 			let self = this;
 			return new Promise((resolve, reject) => {
-				self.on(GameNet.GAME_PROTOCOL.CMD_H5_PPL_PROP_RSP, function (msgId, body) {
-					self.off(GameNet.GAME_PROTOCOL.CMD_H5_PPL_PROP_RSP);
+				self.on(GameNet.GAME_PROTOCOL.CMD_H5_RPOP_RSP, function (msgId, body) {
+					self.off(GameNet.GAME_PROTOCOL.CMD_H5_RPOP_RSP);
 					resolve(body);
 				});
-				self.send(GameNet.GAME_PROTOCOL.CMD_H5_PPL_PROP_REQ, {
+				self.send(GameNet.GAME_PROTOCOL.CMD_H5_RPOP_REQ, {
 					prop:prop
 				});
 			});		

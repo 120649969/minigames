@@ -12,5 +12,7 @@ declare class PlayerSkin extends eui.Skin{
 }
 declare class PropSkin extends eui.Skin{
 }
+declare class PropTipSkin extends eui.Skin{
+}
 declare class Test extends eui.Skin{
 }
