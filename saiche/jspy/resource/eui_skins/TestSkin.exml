@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="TestSkin" width="2048" height="2048" xmlns:e="http://ns.egret.com/eui">
+<e:Skin class="TestSkin" width="2000" height="2000" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*">
 	<e:Image source="di_png" left="0" top="0" right="0" bottom="0"/>
-	<e:Image source="zhi_png" y="1892" horizontalCenter="204"/>
-	<e:Image source="zhi_png" y="1752" horizontalCenter="204"/>
-	<e:Image source="zhi_png" y="1612" horizontalCenter="204"/>
-	<e:Image source="wan1_png" x="900" y="1613.52" rotation="-90"/>
-	<e:Image source="wan1_png" x="625.03" y="955.52" rotation="90"/>
-	<e:Image source="zhi_png" y="1098.52" horizontalCenter="-192" rotation="90"/>
-	<e:Image source="zhi_png" y="1098.52" horizontalCenter="-332" rotation="90"/>
+	<e:Group left="0" top="0" right="0" bottom="0">
+
+
+
+
+
+
+
+
+		<ns1:GameArcTrack width="492" height="490" x="380" y="1000" skinName="TrakeArcSkin"/>
+		<ns1:GameHeorizontalLineTrack width="326" height="140" x="380" y="860" skinName="TrakeVerticalLineSkin"/>
+		<ns1:GameHeorizontalLineTrack width="140" height="326" x="872" y="1000" skinName="TrakeHeorizontalLineSkin"/>
+
+	</e:Group>
+
+
+
+
+
+
+
 </e:Skin>

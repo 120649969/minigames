@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,bg_jpg,egret_icon_png,description_json,zhi_png,che_png,di_png,dian1_png,dian2_png,wan1_png",
+			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,bg_jpg,egret_icon_png,description_json,zhi_png,che_png,di_png,dian1_png,dian2_png,wan1_png,hongse_png,lvse_png,shuoming_png,touxiang1_png,touxiang2_png,touxiangdi_png,wenhao_png,lingxian_png,clock_png,clock_fnt,score_png,score_fnt,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,ready_go_mp3,dead_line_tips_mp3,last_one_second_mp3",
 			"name": "preload"
 		}
 	],
@@ -165,6 +165,96 @@
 			"name": "wan1_png",
 			"type": "image",
 			"url": "assets/wan1.png"
+		},
+		{
+			"name": "hongse_png",
+			"type": "image",
+			"url": "assets/hongse.png"
+		},
+		{
+			"name": "lvse_png",
+			"type": "image",
+			"url": "assets/lvse.png"
+		},
+		{
+			"name": "shuoming_png",
+			"type": "image",
+			"url": "assets/shuoming.png"
+		},
+		{
+			"name": "touxiang1_png",
+			"type": "image",
+			"url": "assets/touxiang1.png"
+		},
+		{
+			"name": "touxiang2_png",
+			"type": "image",
+			"url": "assets/touxiang2.png"
+		},
+		{
+			"name": "touxiangdi_png",
+			"type": "image",
+			"url": "assets/touxiangdi.png"
+		},
+		{
+			"name": "wenhao_png",
+			"type": "image",
+			"url": "assets/wenhao.png"
+		},
+		{
+			"name": "lingxian_png",
+			"type": "image",
+			"url": "assets/lingxian.png"
+		},
+		{
+			"name": "clock_png",
+			"type": "image",
+			"url": "assets/clock.png"
+		},
+		{
+			"name": "clock_fnt",
+			"type": "font",
+			"url": "assets/clock.fnt"
+		},
+		{
+			"name": "score_png",
+			"type": "image",
+			"url": "assets/score.png"
+		},
+		{
+			"name": "score_fnt",
+			"type": "font",
+			"url": "assets/score.fnt"
+		},
+		{
+			"name": "ready_go_ske_json",
+			"type": "json",
+			"url": "assets/db/ready_go/ready_go_ske.json"
+		},
+		{
+			"name": "ready_go_tex_json",
+			"type": "json",
+			"url": "assets/db/ready_go/ready_go_tex.json"
+		},
+		{
+			"name": "ready_go_tex_png",
+			"type": "image",
+			"url": "assets/db/ready_go/ready_go_tex.png"
+		},
+		{
+			"name": "ready_go_mp3",
+			"type": "sound",
+			"url": "assets/music/ready_go.mp3"
+		},
+		{
+			"name": "dead_line_tips_mp3",
+			"type": "sound",
+			"url": "assets/music/dead_line_tips.mp3"
+		},
+		{
+			"name": "last_one_second_mp3",
+			"type": "sound",
+			"url": "assets/music/last_one_second.mp3"
 		}
 	]
 }

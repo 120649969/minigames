@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="TrakeVerticalLineSkin" width="326" height="140" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image id="img_line" source="zhi_png" left="-23" right="-23" y="0"/>
+</e:Skin>
