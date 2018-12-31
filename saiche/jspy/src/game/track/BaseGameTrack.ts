@@ -14,11 +14,13 @@ enum TrackDirection{
 	Down = 4
 }
 
+
 class BaseGameTrack extends eui.Component{
 	public trackType:TrackType
 	public fromDirection:TrackDirection
 	public toDirection:TrackDirection
-
+	public label_step:eui.BitmapLabel
+	
 	public constructor() {
 		super()
 		GameController.instance.GetMainScenePanel().mapContainer.addChild(this)
@@ -48,5 +50,13 @@ class BaseGameTrack extends eui.Component{
 	public GetDeltaY():number
 	{
 		return 0
+	}
+
+	public static IsReverseDirection(direction1:TrackDirection, direction2:TrackDirection):boolean
+	{
+		if(Math.abs(direction1 - direction2) == 2){
+			return true
+		}
+		return false;
 	}
 }

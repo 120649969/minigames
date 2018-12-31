@@ -10,12 +10,93 @@ class GameArcTrack extends BaseGameTrack{
 		this.trackType = TrackType.Arc
 	}
 
+	private _get_next_top_down_direction():TrackDirection
+	{
+		let all_terrains = GameController.instance.GetMainScenePanel().GetGameLogicComponent().allTerrains
+		
+		//避免连续两次向下
+		for(let index = all_terrains.length - 1; index >= 0; index--)
+		{
+			let terrain:GameTerrain = all_terrains[index]
+			if(terrain.IsArcTerrain()){
+				let track:BaseGameTrack = terrain.allTracks[0] as BaseGameTrack
+				if(track.toDirection == TrackDirection.Top || track.toDirection == TrackDirection.Down){
+					if(track.toDirection == TrackDirection.Top){
+						break
+					}
+					return TrackDirection.Top
+				}
+			}
+		}
+		//避免环形
+		let last_arc_terrain:GameTerrain = null
+		let last_last_arc_terrain:GameTerrain = null
+		for(let index = all_terrains.length - 1; index >= 0; index--)
+		{
+			let terrain:GameTerrain = all_terrains[index]
+			if(terrain.IsArcTerrain()){
+				if(!last_arc_terrain){
+					last_arc_terrain = terrain
+				}else if(!last_last_arc_terrain){
+					last_last_arc_terrain = terrain
+					let track:BaseGameTrack = terrain.allTracks[0] as BaseGameTrack
+					if(BaseGameTrack.IsReverseDirection(track.fromDirection, this.fromDirection)){
+						return track.toDirection
+					}
+				}
+			}
+		}
+		return Math.random() < 0.6 ? TrackDirection.Top : TrackDirection.Down
+	}
+
+	private _get_next_left_right_direction():TrackDirection
+	{
+		let all_terrains = GameController.instance.GetMainScenePanel().GetGameLogicComponent().allTerrains
+
+		//避免连续两次向左
+		for(let index = all_terrains.length - 1; index >= 0; index--)
+		{
+			let terrain:GameTerrain = all_terrains[index]
+			if(terrain.IsArcTerrain()){
+				let track:BaseGameTrack = terrain.allTracks[0] as BaseGameTrack
+				if(track.toDirection == TrackDirection.Left || track.toDirection == TrackDirection.Right){
+					if(track.toDirection == TrackDirection.Right){
+						break
+					}
+					return TrackDirection.Right
+				}
+			}
+		}
+
+		//避免环形
+		let last_arc_terrain:GameTerrain = null
+		let last_last_arc_terrain:GameTerrain = null
+		for(let index = all_terrains.length - 1; index >= 0; index--)
+		{
+			let terrain:GameTerrain = all_terrains[index]
+			if(terrain.IsArcTerrain()){
+				if(!last_arc_terrain){
+					last_arc_terrain = terrain
+				}else if(!last_last_arc_terrain){
+					last_last_arc_terrain = terrain
+					let track:BaseGameTrack = terrain.allTracks[0] as BaseGameTrack
+					if(BaseGameTrack.IsReverseDirection(track.fromDirection, this.fromDirection)){
+						return track.toDirection
+					}
+					break
+				}
+			}
+		}
+
+		return Math.random() < 0.6 ? TrackDirection.Right : TrackDirection.Left
+	}
+
 	public InitWithLastTrack(last_track:BaseGameTrack):void
 	{
 		if(last_track.trackType == TrackType.HeorizontalLine){
 			if(last_track.toDirection == TrackDirection.Right){
 				this.fromDirection = TrackDirection.Left
-				this.toDirection = Math.random() < 0.5 ? TrackDirection.Top : TrackDirection.Down
+				this.toDirection = this._get_next_top_down_direction()
 				if(this.toDirection == TrackDirection.Top){
 					this.img_left_and_top.visible = true
 					this.x = last_track.x + last_track.width
@@ -27,7 +108,7 @@ class GameArcTrack extends BaseGameTrack{
 				}
 			}else if(last_track.toDirection == TrackDirection.Left){
 				this.fromDirection = TrackDirection.Right
-				this.toDirection = Math.random() < 0.5 ? TrackDirection.Top : TrackDirection.Down
+				this.toDirection = this._get_next_top_down_direction()
 				if(this.toDirection == TrackDirection.Top){
 					this.img_right_and_top.visible = true
 					this.x = last_track.x - this.width
@@ -43,7 +124,7 @@ class GameArcTrack extends BaseGameTrack{
 		}else if(last_track.trackType == TrackType.VerticalLine){
 			if(last_track.toDirection == TrackDirection.Down){
 				this.fromDirection = TrackDirection.Top
-				this.toDirection = Math.random() < 0.5 ? TrackDirection.Left : TrackDirection.Right
+				this.toDirection = this._get_next_left_right_direction()
 				if(this.toDirection == TrackDirection.Left){
 					this.img_left_and_top.visible = true
 					this.x = last_track.x - (this.width - last_track.width)
@@ -55,7 +136,7 @@ class GameArcTrack extends BaseGameTrack{
 				}
 			}else if(last_track.toDirection == TrackDirection.Top){
 				this.fromDirection = TrackDirection.Down
-				this.toDirection = Math.random() < 0.5 ? TrackDirection.Left : TrackDirection.Right
+				this.toDirection = this._get_next_left_right_direction()
 				if(this.toDirection == TrackDirection.Left){
 					this.img_left_and_down.visible = true
 					this.x = last_track.x - (this.width - last_track.width)

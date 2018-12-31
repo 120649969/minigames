@@ -4,4 +4,5 @@
 	<e:Image id="img34" source="wan1_png" x="491.8" y="491.94" scaleX="-1" scaleY="-1" visible="false"/>
 	<e:Image id="img14" source="wan1_png" x="488.8" y="491.94" scaleY="-1"/>
 	<e:Image id="img23" source="wan1_png" x="491.8" y="489.94" scaleX="-1"/>
+	<e:BitmapLabel width="101.33" height="45.33" x="841.66" y="82.34" font="score_fnt" anchorOffsetX="0" anchorOffsetY="0" text="200" id="label_step"/>
 </e:Skin>

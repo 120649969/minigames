@@ -2,7 +2,7 @@ class GameVerticalLineTrack extends BaseGameTrack{
 	public constructor() {
 		super()
 		this.skinName = "TrakeVerticalLineSkin"
-		this.trackType = TrackType.HeorizontalLine
+		this.trackType = TrackType.VerticalLine
 	}
 
 	public InitWithLastTrack(last_track:BaseGameTrack):void
@@ -29,7 +29,7 @@ class GameVerticalLineTrack extends BaseGameTrack{
 		this.toDirection = last_track.toDirection
 		if(last_track.fromDirection == TrackDirection.Left && last_track.toDirection == TrackDirection.Top){
 			this.x = last_track.x + (last_track.width - this.width)
-			this.y = last_track.y + this.height
+			this.y = last_track.y - this.height
 			this.fromDirection = TrackDirection.Down
 		}else if(last_track.fromDirection == TrackDirection.Left && last_track.toDirection == TrackDirection.Down){
 			this.x = last_track.x + (last_track.width - this.width)

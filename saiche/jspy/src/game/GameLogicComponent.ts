@@ -11,13 +11,14 @@ class GameLogicComponent extends BaseComponent{
 		let first_vertical_terrain = new GameTerrain()
 		first_vertical_terrain.build_first_line_terrain()
 		this.allTerrains.push(first_vertical_terrain)
-
+		first_vertical_terrain.UpdateStep()
 		let max_terrain_count = 40
 		for(let index = 0; index < max_terrain_count; index++)
 		{
 			let new_terrain = new GameTerrain()
 			new_terrain.buildTerrain()
 			this.allTerrains.push(new_terrain)
+			new_terrain.UpdateStep()
 		}
 	}
 

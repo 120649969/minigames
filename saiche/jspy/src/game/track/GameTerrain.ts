@@ -23,6 +23,20 @@ class GameTerrain {
 		return config_infos[0][1]
 	}
 
+	public IsArcTerrain():boolean
+	{
+		return this.allTracks.length == 1 &&  this.allTracks[0].GetTrackType() == TrackType.Arc
+	}
+
+	public UpdateStep():void
+	{
+		let terrain_index = this._gameLogicComponent.allTerrains.indexOf(this)
+		for(let track of this.allTracks)
+		{
+			track.label_step.text = terrain_index.toString()
+		}
+	}
+
 	public build_first_line_terrain():void
 	{
 		let clz = GameVerticalLineTrack
