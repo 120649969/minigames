@@ -53,6 +53,10 @@ class CommonUtils {
 		displayobject.filters = [colorFlilter];
 	}
 
+	public static ClearFilter(displayobject:egret.DisplayObject){
+		displayobject.filters = []
+	}
+
 	/**
      * 替换插槽
      * @param slotName 插槽名称 原材料

@@ -23,7 +23,13 @@ class BaseGameTrack extends eui.Component{
 	
 	public constructor() {
 		super()
-		GameController.instance.GetMainScenePanel().mapContainer.addChild(this)
+		if(ui.WindowManager.getInstance().getWindow('DebugPanel')){
+			let debugPanel:ui.DebugPanel = ui.WindowManager.getInstance().getWindow('DebugPanel') as ui.DebugPanel
+			debugPanel.mapContainer.addChild(this)
+		}else{
+			GameController.instance.GetMainScenePanel().mapContainer.addChild(this)
+		}
+		
 	}
 
 	public GetTrackType():TrackType

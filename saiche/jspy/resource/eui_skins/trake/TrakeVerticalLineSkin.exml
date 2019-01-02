@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="TrakeVerticalLineSkin" width="326" height="140" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Image id="img_line" source="zhi_png" left="-23" right="-23" y="0"/>
-	<e:BitmapLabel width="101.33" height="45.33" x="224.67" y="13.67" font="score_fnt" anchorOffsetX="0" anchorOffsetY="0" text="200" id="label_step"/>
+<e:Skin class="TrakeVerticalLineSkin" width="326" height="138" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image id="img_line" source="zhi_png" left="-23" right="-23" verticalCenter="0"/>
+	<e:BitmapLabel width="101.33" height="45.33" x="224.67" y="13.67" font="score_fnt" anchorOffsetX="0" anchorOffsetY="0" text="200" id="label_step" visible="false"/>
 </e:Skin>

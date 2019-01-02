@@ -17,13 +17,15 @@
 	"autoGenerateExmlsList": true,
 	"exmls": [
 		"resource/eui_skins/system/ButtonSkin.exml",
-		"resource/eui_skins/MainSceneSkin.exml",
 		"resource/eui_skins/system/TextInputSkin.exml",
-		"resource/eui_skins/trake/TrakeArcSkin.exml",
-		"resource/eui_skins/trake/TrakeVerticalLineSkin.exml",
+		"resource/eui_skins/DebugPanelSkin.exml",
+		"resource/eui_skins/DebugSelectTrackSkin.exml",
+		"resource/eui_skins/MainSceneSkin.exml",
 		"resource/eui_skins/trake/TrakeHeorizontalLineSkin.exml",
+		"resource/eui_skins/trake/TrakeThreeArcSkin.exml",
+		"resource/eui_skins/trake/TrakeVerticalLineSkin.exml",
 		"resource/eui_skins/TestSkin.exml",
-		"resource/eui_skins/trake/TrakeThreeArcSkin.exml"
+		"resource/eui_skins/trake/TrakeArcSkin.exml"
 	],
 	"path": "resource/default.thm.json"
 }

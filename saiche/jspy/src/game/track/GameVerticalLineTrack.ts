@@ -58,6 +58,29 @@ class GameVerticalLineTrack extends BaseGameTrack{
 
 	private initWithThreeArcTrack(last_track:BaseGameTrack):void
 	{
+		this.toDirection = last_track.toDirection
+		if(this.toDirection == TrackDirection.Top){
+			this.fromDirection = TrackDirection.Down
+		}else if(this.toDirection == TrackDirection.Down){
+			this.fromDirection = TrackDirection.Top
+		}
 
+		if(last_track.fromDirection == TrackDirection.Left){
+			if(this.toDirection == TrackDirection.Top){
+				this.x = last_track.x
+				this.y = last_track.y + last_track.height /2 - this.height
+			}else{
+				this.x = last_track.x
+				this.y = last_track.y + last_track.height / 2
+			}
+		}else if(last_track.fromDirection == TrackDirection.Right){
+			if(this.toDirection == TrackDirection.Top){
+				this.x = last_track.x + last_track.width - this.width
+				this.y = last_track.y + last_track.height / 2 - this.height
+			}else{
+				this.x = last_track.x + last_track.width - this.width
+				this.y = last_track.y + last_track.height / 2
+			}
+		}
 	}
 }

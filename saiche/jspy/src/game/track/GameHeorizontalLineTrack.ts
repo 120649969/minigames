@@ -49,6 +49,30 @@ class GameHeorizontalLineTrack extends BaseGameTrack{
 
 	private initWithThreeArcTrack(last_track:BaseGameTrack):void
 	{
+		this.toDirection = last_track.toDirection
+		if(this.toDirection == TrackDirection.Left){
+			this.fromDirection = TrackDirection.Right
+		}else if(this.toDirection == TrackDirection.Right){
+			this.fromDirection = TrackDirection.Left
+		}
 
+		if(last_track.fromDirection == TrackDirection.Top){
+			if(this.toDirection == TrackDirection.Left){
+				this.x = last_track.x + last_track.width / 2 - this.width
+				this.y = last_track.y
+			}else{
+				this.x = last_track.x + last_track.width / 2
+				this.y = last_track.y
+			}
+		}else if(last_track.fromDirection == TrackDirection.Down){
+			if(this.toDirection == TrackDirection.Left){
+				this.x = last_track.x + last_track.width / 2 - this.width
+				this.y = last_track.y + last_track.height - this.height
+			}else{
+				this.x = last_track.x + last_track.width / 2
+				this.y = last_track.y + last_track.height - this.height
+			}
+		}
+		
 	}
 }

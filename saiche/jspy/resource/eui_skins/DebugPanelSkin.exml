@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="DebugPanelSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image source="di_png" left="0" top="0" right="0" bottom="0" locked="true"/>
+	<e:Group id="mapContainer" width="720" height="1280" x="0" y="0">
+	</e:Group>
+	<e:Group left="0" top="0" bottom="0" right="0" touchEnabled="false">
+		<e:Button id="btn_export" label="导出地形配置" skinName="skins.ButtonSkin" x="325.15" y="84" scaleX="1" scaleY="1"/>
+		<e:Button id="btn_load" label="载入地形配置" skinName="skins.ButtonSkin" x="518.4800000000001" y="84" scaleX="1" scaleY="1"/>
+		<e:Button id="btn_delete" label="删除地形" skinName="skins.ButtonSkin" x="187.76" y="84" scaleX="1" scaleY="1"/>
+		<e:Button id="btn_add" label="添加地形" skinName="skins.ButtonSkin" x="49.00000000000001" y="84" scaleX="1" scaleY="1"/>
+		<e:Button id="btn_close" label="关闭" skinName="skins.ButtonSkin" scaleX="1" scaleY="1" right="12" top="7"/>
+		<e:TextInput id="dataInput" height="127.58" left="0" right="0" bottom="0" anchorOffsetY="0" skinName="skins.TextInputSkin"/>
+	</e:Group>
+</e:Skin>

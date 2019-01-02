@@ -10,9 +10,14 @@
 
 
 
-		<ns1:GameArcTrack width="492" height="490" x="380" y="1000" skinName="TrakeArcSkin"/>
-		<ns1:GameHeorizontalLineTrack width="326" height="140" x="380" y="860" skinName="TrakeVerticalLineSkin"/>
-		<ns1:GameHeorizontalLineTrack width="140" height="326" x="872" y="1000" skinName="TrakeHeorizontalLineSkin"/>
+
+
+		<ns1:GameHeorizontalLineTrack width="140" height="326" x="438.5" y="1344.07" skinName="TrakeHeorizontalLineSkin"/>
+		<ns1:GameThreeArcTrack width="978" height="980" x="1053.94" y="170.37" skinName="TrakeThreeArcSkin"/>
+		<ns1:GameHeorizontalLineTrack width="326" height="140" x="743" y="1040.5" skinName="TrakeVerticalLineSkin"/>
+		<e:Image source="wan1_png" x="577" y="1179"/>
+		<e:Image source="zhi_png" x="143" y="160"/>
+		<e:Image source="wan1_png" x="0" y="300" rotation="0"/>
 
 	</e:Group>
 

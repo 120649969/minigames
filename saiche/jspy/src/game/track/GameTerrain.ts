@@ -90,7 +90,7 @@ class GameTerrain {
 		}
 	}
 
-	private _generate_arc_track_with_last_line_track(last_track:BaseGameTrack)
+	protected _generate_arc_track_with_last_line_track(last_track:BaseGameTrack)
 	{
 		let new_track = new GameArcTrack()
 		new_track.InitWithLastTrack(last_track)
@@ -98,7 +98,7 @@ class GameTerrain {
 	}
 
 	//根据上一个半弧生成直线
-	private _generate_line_track_with_last_arc_track(last_track:BaseGameTrack)
+	protected _generate_line_track_with_last_arc_track(last_track:BaseGameTrack)
 	{
 		let next_track_type = last_track.GetNextTrackType()
 		let clz = null
@@ -135,5 +135,17 @@ class GameTerrain {
 	{
 		let first_track:BaseGameTrack = this.allTracks[0]
 		return first_track.GetTrackType()
+	}
+
+	public GetTrackFromDirection():TrackDirection
+	{
+		let first_track:BaseGameTrack = this.allTracks[0]
+		return first_track.fromDirection
+	}
+
+	public GetTrackToDirection():TrackDirection
+	{
+		let first_track:BaseGameTrack = this.allTracks[0]
+		return first_track.toDirection
 	}
 }

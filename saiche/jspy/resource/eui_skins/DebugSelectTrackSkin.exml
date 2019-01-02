@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="DebugSelectTrackSkin" width="720" height="562" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect left="0" top="0" bottom="0" fillColor="0xed1212" right="0"/>
+	<e:Group id="trackContainer" height="441" y="16" anchorOffsetX="0" anchorOffsetY="0" width="720" x="0">
+	</e:Group>
+	<e:Button id="btn_close" label="关闭" skinName="skins.ButtonSkin" anchorOffsetY="0" height="42" right="0" top="0"/>
+	<e:Label text="个数：" x="260.83" y="507.82"/>
+	<e:TextInput id="numInput" width="109.5" height="34.5" x="337.33" y="506.5" anchorOffsetY="0" anchorOffsetX="0" skinName="skins.TextInputSkin"/>
+	<e:Button id="btn_ok" label="确定" x="620" y="516.82" skinName="skins.ButtonSkin" anchorOffsetY="0" height="42"/>
+</e:Skin>

@@ -4,6 +4,7 @@ module ui {
 		public mapContainer:eui.Group
 		private btn_debug1:eui.Button
 		private btn_debug2:eui.Button
+		private btn_debug3:eui.Button
 
 		public constructor() {
 			super()
@@ -24,11 +25,18 @@ module ui {
 				__this.mapContainer.scaleX = __this.mapContainer.scaleY = cur_scale_x * 0.5
 
 			}, this)
+
+			CommonUtils.Add_Btn_Click(this.btn_debug3, function(){
+				ui.WindowManager.getInstance().open("DebugPanel")
+			}, this)
+
 			this.btn_debug1.visible = false
 			this.btn_debug2.visible = false
+			this.btn_debug3.visible = true
 			if(DEBUG){
 				this.btn_debug1.visible = true
 				this.btn_debug2.visible = true
+				this.btn_debug3.visible = true
 			}
 		}
 
@@ -50,20 +58,6 @@ module ui {
 		public StartGame():void
 		{
 			super.StartGame()
-
-			let __this = this
-			document.addEventListener("keydown",function(evt:any){
-				console.log(evt.keyCode)
-				if(evt.keyCode == 37){  //left
-					__this._move_left()
-				}else if(evt.keyCode == 38){  //top
-					__this._move_top()
-				}else if(evt.keyCode == 39){  //right
-					__this._move_right()
-				}else if(evt.keyCode == 40){  //down
-					__this._move_down()
-				}
-			})
 		}
 
 		private _move_left():void

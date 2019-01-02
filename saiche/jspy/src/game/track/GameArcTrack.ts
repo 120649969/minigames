@@ -91,6 +91,53 @@ class GameArcTrack extends BaseGameTrack{
 		return Math.random() < 0.6 ? TrackDirection.Right : TrackDirection.Left
 	}
 
+	public InitWithLastTrackAndDirection(last_track:BaseGameTrack, fromDirection:TrackDirection, toDirection:TrackDirection):void
+	{
+		this.fromDirection = fromDirection
+		this.toDirection = toDirection
+		if(this.fromDirection == TrackDirection.Left){
+			if(this.toDirection == TrackDirection.Top){
+				this.img_left_and_top.visible = true
+				this.x = last_track.x + last_track.width
+				this.y = last_track.y - (this.height - last_track.height)
+			}else{
+				this.img_left_and_down.visible = true
+				this.x = last_track.x + last_track.width
+				this.y = last_track.y
+			}
+		}else if(this.fromDirection == TrackDirection.Right){
+			if(this.toDirection == TrackDirection.Top){
+				this.img_right_and_top.visible = true
+				this.x = last_track.x - this.width
+				this.y = last_track.y - (this.height - last_track.height)
+			}else{
+				this.img_right_and_down.visible = true
+				this.x = last_track.x - this.width
+				this.y = last_track.y
+			}
+		}else if(this.fromDirection == TrackDirection.Top){
+			if(this.toDirection == TrackDirection.Left){
+				this.img_left_and_top.visible = true
+				this.x = last_track.x - (this.width - last_track.width)
+				this.y = last_track.y + last_track.height
+			}else{
+				this.img_right_and_top.visible = true
+				this.x = last_track.x
+				this.y = last_track.y + last_track.height
+			}
+		}else if(this.fromDirection == TrackDirection.Down){
+			if(this.toDirection == TrackDirection.Left){
+				this.img_left_and_down.visible = true
+				this.x = last_track.x - (this.width - last_track.width)
+				this.y = last_track.y - this.height
+			}else{
+				this.img_right_and_down.visible = true
+				this.x = last_track.x
+				this.y = last_track.y - this.height
+			}
+		}
+	}
+
 	public InitWithLastTrack(last_track:BaseGameTrack):void
 	{
 		if(last_track.trackType == TrackType.HeorizontalLine){

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="MainSceneSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
 	<e:Image source="di_png" left="0" top="0" right="0" bottom="0"/>
-	<e:Group id="mapContainer" anchorOffsetX="360" anchorOffsetY="640" width="720" height="1280" x="360" y="640">
+	<e:Group id="mapContainer" anchorOffsetX="360" anchorOffsetY="640" width="720" height="1280" x="360" y="640" locked="true">
 	</e:Group>
-    <e:Group height="200" left="0" right="0" top="0">
+    <e:Group height="200" left="0" right="0" top="0" locked="true">
 		<e:Image scaleX="1" scaleY="1" horizontalCenter="0" top="90" source="touxiangdi_png"/>
         <e:Group id="m_other_group" width="206" height="75.5" anchorOffsetX="0" anchorOffsetY="0" y="120.95" x="96.66">
 					<e:Image source="lvse_png" x="23" y="11"/>
@@ -43,4 +43,5 @@
     <e:Image id="img_help" x="32.24" y="158.15" anchorOffsetX="17" anchorOffsetY="15" source="shuoming_png" touchEnabled="false" visible="false"/>
 	<e:Button id="btn_debug1" label="变大" x="544" y="1177" skinName="skins.ButtonSkin"/>
 	<e:Button id="btn_debug2" label="变小" x="408" y="1180" skinName="skins.ButtonSkin"/>
+	<e:Button id="btn_debug3" label="调试" x="30" y="1170" skinName="skins.ButtonSkin"/>
 </e:Skin>
