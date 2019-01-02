@@ -37,16 +37,21 @@ class GameTerrain {
 		}
 	}
 
+	//构建最开始的轨道
 	public build_first_line_terrain():void
 	{
+		let allTerrainConfigs =  this.GetTerrainConfigs()
+		let terrainConfig:TerrainConfig = allTerrainConfigs[0]
+
 		let clz = GameVerticalLineTrack
 
-		let cur_x = GameController.instance.GetMainScenePanel().mapContainer.width / 2
-		let cur_y = GameController.instance.GetMainScenePanel().mapContainer.height
-		let track_count = GameConst.MIN_LINE_COUNT + Math.floor((GameConst.MAX_LINE_COUNT - GameConst.MIN_LINE_COUNT) * Math.random())
+		let cur_x = this.GetMapContainer().width / 2
+		let cur_y = this.GetMapContainer().height
+		let track_count = terrainConfig.trackCount
 		
 		let first_line_track = new clz()
-		first_line_track.InitWithLastTrack(null)
+		first_line_track.fromDirection = terrainConfig.fromDirection
+		first_line_track.toDirection = terrainConfig.toDirection
 		first_line_track.x = cur_x - first_line_track.width / 2
 		first_line_track.y = cur_y - first_line_track.height
 		this.allTracks.push(first_line_track)
@@ -66,51 +71,69 @@ class GameTerrain {
 		}
 	}
 
-	public buildTerrain():void
+	//1/4弧形地形
+	public buildArcTerrain():void
 	{
-		if(this._gameLogicComponent.allTerrains.length <= 0){
+		let allTerrains = this.GetTerrains()
+		if(allTerrains.length <= 0){
 			return
 		}
-		let last_terrain = this._gameLogicComponent.allTerrains[this._gameLogicComponent.allTerrains.length - 1]
-		//横着的直线和竖着的直线 它们的下一个轨道类型是一样的，肯定是1/4弧线和3/4弧线
-		if(last_terrain.GetTrackType() == TrackType.HeorizontalLine || last_terrain.GetTrackType() == TrackType.VerticalLine){
-			let infos = GameConst.Track_Type_2_Next_Track_Infos[last_terrain.GetTrackType()]
-			let next_track_type = this._get_next_track_type(infos)
-			if(next_track_type == TrackType.Arc){
-				this._generate_arc_track_with_last_line_track(last_terrain.allTracks[last_terrain.allTracks.length - 1])
-			} else if(next_track_type == TrackType.ThreeArc){
-				let new_track = new GameThreeArcTrack()
-				new_track.InitWithLastTrack(last_terrain.allTracks[last_terrain.allTracks.length - 1])
-				this.allTracks.push(new_track)
+		let allTerrainConfigs =  this.GetTerrainConfigs()
+		let last_terrain_config = allTerrainConfigs[allTerrainConfigs.length - 2]
+		if(last_terrain_config){
+			if(last_terrain_config.trackType == TrackType.HeorizontalLine || last_terrain_config.trackType == TrackType.VerticalLine){
+				let last_terrain = allTerrains[allTerrains.length - 1]
+				this._generate_arc_track_with_config(last_terrain.allTracks[last_terrain.allTracks.length - 1])
 			}
-		}else if (last_terrain.GetTrackType() == TrackType.Arc){
-			//半弧的下一个轨道类型也是固定的，肯定为直线，但是具体是横着的直线还是竖着的直线，需要根据半弧的方向确定
-			let last_track = last_terrain.allTracks[last_terrain.allTracks.length - 1]
-			this._generate_line_track_with_last_arc_track(last_track)
 		}
 	}
 
-	protected _generate_arc_track_with_last_line_track(last_track:BaseGameTrack)
+	//3/4弧形地形
+	public buildThreeArcTerrain():void
 	{
-		let new_track = new GameArcTrack()
-		new_track.InitWithLastTrack(last_track)
+		let allTerrains = this.GetTerrains()
+		if(allTerrains.length <= 0){
+			return
+		}
+		let allTerrainConfigs =  this.GetTerrainConfigs()
+		let last_terrain_config = allTerrainConfigs[allTerrainConfigs.length - 2]
+		if(last_terrain_config){
+			if(last_terrain_config.trackType == TrackType.HeorizontalLine || last_terrain_config.trackType == TrackType.VerticalLine){
+				let last_terrain = allTerrains[allTerrains.length - 1]
+				this._generate_three_arc_track_with_config(last_terrain.allTracks[last_terrain.allTracks.length - 1])
+			}
+		}
+	}
+
+	private _generate_three_arc_track_with_config(last_track:BaseGameTrack)
+	{
+		let allTerrainConfigs =  this.GetTerrainConfigs()
+		let last_terrain_config = allTerrainConfigs[allTerrainConfigs.length - 1]
+		let new_track = new GameThreeArcTrack()
+		new_track.InitWithLastTrackAndDirection(last_track, last_terrain_config.fromDirection, last_terrain_config.toDirection)
 		this.allTracks.push(new_track)
 	}
 
-	//根据上一个半弧生成直线
-	protected _generate_line_track_with_last_arc_track(last_track:BaseGameTrack)
+	protected _generate_arc_track_with_config(last_track:BaseGameTrack)
 	{
+		let allTerrainConfigs =  this.GetTerrainConfigs()
+		let last_terrain_config = allTerrainConfigs[allTerrainConfigs.length - 1]
+		let new_track = new GameArcTrack()
+		new_track.InitWithLastTrackAndDirection(last_track, last_terrain_config.fromDirection, last_terrain_config.toDirection)
+		this.allTracks.push(new_track)
+	}
+
+	protected _generate_Heorizontal_line_track_with_last_arc_track(last_track:BaseGameTrack)
+	{
+		let allTerrainConfigs =  this.GetTerrainConfigs()
+		let last_terrain_config = allTerrainConfigs[allTerrainConfigs.length - 1]
+
 		let next_track_type = last_track.GetNextTrackType()
-		let clz = null
-		if(next_track_type == TrackType.HeorizontalLine){
-			clz = GameHeorizontalLineTrack
-		}else{
-			clz = GameVerticalLineTrack
-		}
+		let clz = GameHeorizontalLineTrack
 
 		let cur_x = last_track.x
 		let cur_y = last_track.y
-		let track_count = GameConst.MIN_LINE_COUNT + Math.floor((GameConst.MAX_LINE_COUNT - GameConst.MIN_LINE_COUNT) * Math.random())
+		let track_count = last_terrain_config.trackCount
 		let first_line_track = new clz()
 		first_line_track.InitWithLastTrack(last_track)
 		this.allTracks.push(first_line_track)
@@ -130,6 +153,157 @@ class GameTerrain {
 		}
 	}
 
+	protected _generate_Heorizontal_line_track_with_last_three_arc_track(last_track:BaseGameTrack)
+	{
+		let allTerrainConfigs = this.GetTerrainConfigs()
+		let last_terrain_config = allTerrainConfigs[allTerrainConfigs.length - 1]
+
+		let next_track_type = last_track.GetNextTrackType()
+		let clz = GameHeorizontalLineTrack
+
+		let cur_x = last_track.x
+		let cur_y = last_track.y
+		let track_count = last_terrain_config.trackCount
+		let first_line_track = new clz()
+		first_line_track.InitWithLastTrack(last_track)
+		this.allTracks.push(first_line_track)
+
+		let last_sub_track:BaseGameTrack = first_line_track
+		let deltaX = first_line_track.GetDeltaX()
+		let deltaY = first_line_track.GetDeltaY()
+		for(let index = 0; index < track_count - 1; index++)
+		{
+			let new_track = new clz()
+			new_track.fromDirection = first_line_track.fromDirection
+			new_track.toDirection = first_line_track.toDirection
+			new_track.x = last_sub_track.x + deltaX
+			new_track.y = last_sub_track.y + deltaY
+			this.allTracks.push(new_track)
+			last_sub_track = new_track
+		}
+	}
+
+	protected _generate_Vertical_line_track_with_last_arc_track(last_track:BaseGameTrack)
+	{
+		let allTerrainConfigs = this.GetTerrainConfigs()
+		let last_terrain_config = allTerrainConfigs[allTerrainConfigs.length - 1]
+
+		let next_track_type = last_track.GetNextTrackType()
+		let clz = GameVerticalLineTrack
+
+		let cur_x = last_track.x
+		let cur_y = last_track.y
+		let track_count = last_terrain_config.trackCount
+		let first_line_track = new clz()
+		first_line_track.InitWithLastTrack(last_track)
+		this.allTracks.push(first_line_track)
+
+		let last_sub_track:BaseGameTrack = first_line_track
+		let deltaX = first_line_track.GetDeltaX()
+		let deltaY = first_line_track.GetDeltaY()
+		for(let index = 0; index < track_count - 1; index++)
+		{
+			let new_track = new clz()
+			new_track.fromDirection = first_line_track.fromDirection
+			new_track.toDirection = first_line_track.toDirection
+			new_track.x = last_sub_track.x + deltaX
+			new_track.y = last_sub_track.y + deltaY
+			this.allTracks.push(new_track)
+			last_sub_track = new_track
+		}
+	}
+
+	protected _generate_Vertical_line_track_with_last_three_arc_track(last_track:BaseGameTrack)
+	{
+		let allTerrainConfigs =  this.GetTerrainConfigs()
+		let last_terrain_config = allTerrainConfigs[allTerrainConfigs.length - 1]
+
+		let next_track_type = last_track.GetNextTrackType()
+		let clz = GameVerticalLineTrack
+
+		let cur_x = last_track.x
+		let cur_y = last_track.y
+		let track_count = last_terrain_config.trackCount
+		let first_line_track = new clz()
+		first_line_track.InitWithLastTrack(last_track)
+		this.allTracks.push(first_line_track)
+
+		let last_sub_track:BaseGameTrack = first_line_track
+		let deltaX = first_line_track.GetDeltaX()
+		let deltaY = first_line_track.GetDeltaY()
+		for(let index = 0; index < track_count - 1; index++)
+		{
+			let new_track = new clz()
+			new_track.fromDirection = first_line_track.fromDirection
+			new_track.toDirection = first_line_track.toDirection
+			new_track.x = last_sub_track.x + deltaX
+			new_track.y = last_sub_track.y + deltaY
+			this.allTracks.push(new_track)
+			last_sub_track = new_track
+		}
+	}
+
+	public buildHeorizontalTerrain():void
+	{
+		let allTerrains = this.GetTerrains()
+		if(allTerrains.length <= 0){
+			return
+		}
+		let allTerrainConfigs = this.GetTerrainConfigs()
+		let last_terrain_config = allTerrainConfigs[allTerrainConfigs.length - 2]
+		if(last_terrain_config){
+			if(last_terrain_config.trackType == TrackType.Arc){
+				let last_terrain = allTerrains[allTerrains.length - 1]
+				this._generate_Heorizontal_line_track_with_last_arc_track(last_terrain.allTracks[last_terrain.allTracks.length - 1])
+			}else if(last_terrain_config.trackType == TrackType.ThreeArc){
+				let last_terrain = allTerrains[allTerrains.length - 1]
+				this._generate_Heorizontal_line_track_with_last_three_arc_track(last_terrain.allTracks[last_terrain.allTracks.length - 1])
+			}
+		}
+	}
+
+	public buildVerticalTerrain():void
+	{
+		let allTerrains = this.GetTerrains()
+		if(allTerrains.length <= 0){
+			return
+		}
+		let allTerrainConfigs = this.GetTerrainConfigs()
+		let last_terrain_config = allTerrainConfigs[allTerrainConfigs.length - 2]
+		if(last_terrain_config){
+			if(last_terrain_config.trackType == TrackType.Arc){
+				let last_terrain = allTerrains[allTerrains.length - 1]
+				this._generate_Vertical_line_track_with_last_arc_track(last_terrain.allTracks[last_terrain.allTracks.length - 1])
+			}else if(last_terrain_config.trackType == TrackType.ThreeArc){
+				let last_terrain = allTerrains[allTerrains.length - 1]
+				this._generate_Vertical_line_track_with_last_three_arc_track(last_terrain.allTracks[last_terrain.allTracks.length - 1])
+			}
+		}
+	}
+
+	public GetMapContainer():eui.Group
+	{
+		if(ui.WindowManager.getInstance().isWindowOpening("DebugPanel")){
+			return (window['debugPanel'] as ui.DebugPanel).mapContainer
+		}
+		return GameController.instance.GetMainScenePanel().mapContainer
+	}
+
+	public GetTerrainConfigs():Array<TerrainConfig>
+	{
+		if(ui.WindowManager.getInstance().isWindowOpening("DebugPanel")){
+			return (window['debugPanel'] as ui.DebugPanel).allTerrainConfigs
+		}
+		return GameController.instance.GetMainScenePanel().GetGameLogicComponent().allTerrainConfigs
+	}
+
+	public GetTerrains():Array<GameTerrain>
+	{
+		if(ui.WindowManager.getInstance().isWindowOpening("DebugPanel")){
+			return (window['debugPanel'] as ui.DebugPanel).allTerrains
+		}
+		return GameController.instance.GetMainScenePanel().GetGameLogicComponent().allTerrains
+	}
 
 	public GetTrackType():TrackType
 	{
@@ -148,4 +322,6 @@ class GameTerrain {
 		let first_track:BaseGameTrack = this.allTracks[0]
 		return first_track.toDirection
 	}
+
+	
 }

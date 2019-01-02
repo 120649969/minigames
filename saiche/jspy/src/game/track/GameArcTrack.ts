@@ -8,6 +8,11 @@ class GameArcTrack extends BaseGameTrack{
 		super()
 		this.skinName = "TrakeArcSkin"
 		this.trackType = TrackType.Arc
+
+		this.img_left_and_top.visible = false
+		this.img_left_and_down.visible = false
+		this.img_right_and_top.visible = false
+		this.img_right_and_down.visible = false
 	}
 
 	private _get_next_top_down_direction():TrackDirection

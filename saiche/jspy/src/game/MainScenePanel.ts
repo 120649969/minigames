@@ -53,6 +53,32 @@ module ui {
 			this._commonUIComponent = new CommonUIComponent()
 			this._gameLogicComponent = new GameLogicComponent()
 			NetManager.instance.StartConnectServer()
+
+			let __this = this
+			document.addEventListener("keydown",function(evt:any){
+				console.log(evt.keyCode)
+				if(evt.keyCode == 37){  //left
+					if(ui.WindowManager.getInstance().isWindowOpening("DebugPanel")){
+						return (window['debugPanel'] as ui.DebugPanel)._move_left()
+					}
+					__this._move_left()
+				}else if(evt.keyCode == 38){  //top
+					if(ui.WindowManager.getInstance().isWindowOpening("DebugPanel")){
+						return (window['debugPanel'] as ui.DebugPanel)._move_top()
+					}
+					__this._move_top()
+				}else if(evt.keyCode == 39){  //right
+					if(ui.WindowManager.getInstance().isWindowOpening("DebugPanel")){
+						return (window['debugPanel'] as ui.DebugPanel)._move_right()
+					}
+					__this._move_right()
+				}else if(evt.keyCode == 40){  //down
+					if(ui.WindowManager.getInstance().isWindowOpening("DebugPanel")){
+						return (window['debugPanel'] as ui.DebugPanel)._move_down()
+					}
+					__this._move_down()
+				}
+			})
 		}
 
 		public StartGame():void

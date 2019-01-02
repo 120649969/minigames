@@ -10,7 +10,7 @@ module ui {
 
 		public mapContainer:eui.Group
 		public allTerrainConfigs:Array<TerrainConfig> = []
-		public allTerrains:Array<GameDebugTerrain> = []
+		public allTerrains:Array<GameTerrain> = []
 
 		private dataInput:eui.TextInput
 		public constructor() {
@@ -39,27 +39,27 @@ module ui {
 			})
 		}
 			
-		private _move_left():void
+		public _move_left():void
 		{
 			this.mapContainer.x += 50
 		}
 
-		private _move_top():void
+		public _move_top():void
 		{
 			this.mapContainer.y += 50
 		}
 
-		private _move_right():void
+		public _move_right():void
 		{
 			this.mapContainer.x -= 50
 		}
 
-		private _move_down():void
+		public _move_down():void
 		{
 			this.mapContainer.y -= 50
 		}
 
-		private onClickAdd():void
+		public onClickAdd():void
 		{
 			ui.WindowManager.getInstance().open("DebugSelectTrackPanel")
 		}
@@ -94,6 +94,9 @@ module ui {
 		private onClickLoad():void
 		{
 			let inputTxt = this.dataInput.text
+			if(!inputTxt){
+				return
+			}
 			let result = JSON.parse(inputTxt)
 			if(!result){
 				return
@@ -120,24 +123,24 @@ module ui {
 		{
 			this.allTerrainConfigs.push(terrainConfig)
 			if(this.allTerrainConfigs.length == 1){
-				let new_debug_terrain = new GameDebugTerrain()
+				let new_debug_terrain = new GameTerrain()
 				new_debug_terrain.build_first_line_terrain()
 				this.allTerrains.push(new_debug_terrain)
 			}else{
 				if(terrainConfig.trackType == TrackType.Arc){
-					let new_debug_terrain = new GameDebugTerrain()
+					let new_debug_terrain = new GameTerrain()
 					new_debug_terrain.buildArcTerrain()
 					this.allTerrains.push(new_debug_terrain)
 				}else if(terrainConfig.trackType == TrackType.HeorizontalLine){
-					let new_debug_terrain = new GameDebugTerrain()
+					let new_debug_terrain = new GameTerrain()
 					new_debug_terrain.buildHeorizontalTerrain()
 					this.allTerrains.push(new_debug_terrain)
 				}else if(terrainConfig.trackType == TrackType.VerticalLine){
-					let new_debug_terrain = new GameDebugTerrain()
+					let new_debug_terrain = new GameTerrain()
 					new_debug_terrain.buildVerticalTerrain()
 					this.allTerrains.push(new_debug_terrain)
 				}else if(terrainConfig.trackType == TrackType.ThreeArc){
-					let new_debug_terrain = new GameDebugTerrain()
+					let new_debug_terrain = new GameTerrain()
 					new_debug_terrain.buildThreeArcTerrain()
 					this.allTerrains.push(new_debug_terrain)
 				}

@@ -15,8 +15,8 @@
 		"bin-debug/common/BaseGameScene.js",
 		"bin-debug/common/io/Net.js",
 		"bin-debug/game/track/BaseGameTrack.js",
-		"bin-debug/game/track/GameTerrain.js",
 		"bin-debug/common/Util.js",
+		"bin-debug/Main.js",
 		"bin-debug/common/CommonUIComponent.js",
 		"bin-debug/common/CommonUtils.js",
 		"bin-debug/common/Config.js",
@@ -38,11 +38,10 @@
 		"bin-debug/game/MainScenePanel.js",
 		"bin-debug/game/debug/DebugPanel.js",
 		"bin-debug/game/debug/DebugSelectTrackPanel.js",
-		"bin-debug/game/debug/GameDebugTerrain.js",
 		"bin-debug/AssetAdapter.js",
 		"bin-debug/game/track/GameArcTrack.js",
 		"bin-debug/game/track/GameHeorizontalLineTrack.js",
-		"bin-debug/Main.js",
+		"bin-debug/game/track/GameTerrain.js",
 		"bin-debug/game/track/GameThreeArcTrack.js",
 		"bin-debug/game/track/GameVerticalLineTrack.js"
 	]
