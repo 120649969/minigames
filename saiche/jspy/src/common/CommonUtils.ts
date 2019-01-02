@@ -116,7 +116,8 @@ class CommonUtils {
 		btn.addEventListener(egret.TouchEvent.TOUCH_TAP, function(event:egret.Event){
 			if(callback)
 			{
-				callback.apply(callbackThisObject)
+				callback.call(callbackThisObject, event)
+				// callback.apply(callbackThisObject, event)
 			}
 		}, callbackThisObject)
 	}
@@ -172,5 +173,11 @@ class CommonUtils {
 				arr1.push(data)
 			}
 		}
+	}
+
+	public static GetDistance(point1:egret.Point, point2:egret.Point)
+	{
+		let distance = Math.sqrt(Math.pow(point1.x - point2.x, 2) + Math.pow(point1.y - point2.y, 2))
+		return distance
 	}
 }

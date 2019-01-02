@@ -5,6 +5,9 @@ module ui {
 		private btn_debug1:eui.Button
 		private btn_debug2:eui.Button
 		private btn_debug3:eui.Button
+		public roleContainer:eui.Group
+		public moveContainer:eui.Group
+		public moveCar:GameMoveCar
 
 		public constructor() {
 			super()
@@ -23,11 +26,11 @@ module ui {
 				__this.mapContainer.anchorOffsetY = win_center_in_local_point.y
 				let  cur_scale_x = __this.mapContainer.scaleX
 				__this.mapContainer.scaleX = __this.mapContainer.scaleY = cur_scale_x * 0.5
-
 			}, this)
 
 			CommonUtils.Add_Btn_Click(this.btn_debug3, function(){
-				ui.WindowManager.getInstance().open("DebugPanel")
+				// ui.WindowManager.getInstance().open("DebugPanel")
+				ui.WindowManager.getInstance().open("TestPanel")
 			}, this)
 
 			this.btn_debug1.visible = false
@@ -38,6 +41,7 @@ module ui {
 				this.btn_debug2.visible = true
 				this.btn_debug3.visible = true
 			}
+			this.moveCar.visible = false
 		}
 
 		public GetGameLogicComponent():GameLogicComponent
@@ -88,22 +92,22 @@ module ui {
 
 		private _move_left():void
 		{
-			this.mapContainer.x += 50
+			this.moveContainer.x += 50
 		}
 
 		private _move_top():void
 		{
-			this.mapContainer.y += 50
+			this.moveContainer.y += 50
 		}
 
 		private _move_right():void
 		{
-			this.mapContainer.x -= 50
+			this.moveContainer.x -= 50
 		}
 
 		private _move_down():void
 		{
-			this.mapContainer.y -= 50
+			this.moveContainer.y -= 50
 		}
 
 	}

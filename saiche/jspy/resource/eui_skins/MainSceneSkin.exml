@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="MainSceneSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+<e:Skin class="MainSceneSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*">
 	<e:Image source="di_png" left="0" top="0" right="0" bottom="0"/>
-	<e:Group id="mapContainer" anchorOffsetX="360" anchorOffsetY="640" width="720" height="1280" x="360" y="640" locked="true">
+	<e:Group id="moveContainer" anchorOffsetX="0" anchorOffsetY="0" width="720" height="1280" y="0" x="0">
+		<e:Group id="mapContainer" width="720" x="0" height="1280" y="0"/>
+		<e:Group id="roleContainer" width="720" x="0" height="1280" y="0">
+			<ns1:GameMoveCar id="moveCar" width="50" height="100" skinName="MoveCarSkin" y="1052" anchorOffsetX="25" anchorOffsetY="50" x="360"/>
+		</e:Group>
 	</e:Group>
     <e:Group height="200" left="0" right="0" top="0" locked="true">
 		<e:Image scaleX="1" scaleY="1" horizontalCenter="0" top="90" source="touxiangdi_png"/>

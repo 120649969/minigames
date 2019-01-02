@@ -322,6 +322,64 @@ class GameTerrain {
 		let first_track:BaseGameTrack = this.allTracks[0]
 		return first_track.toDirection
 	}
-
 	
+	//车是否在这个terrain范围内
+	public IsCardInBoard():boolean
+	{
+		let bounds = this.GetBoundInMapContainer()
+		let carBoundInMapCoordinate = GameController.instance.GetMainScenePanel().moveCar.getTransformedBounds(GameController.instance.GetMainScenePanel().mapContainer)
+		if(bounds.intersects(carBoundInMapCoordinate)){
+			return true
+		}
+		return false
+	}
+
+	private _mapScopeBound:egret.Rectangle  = null
+	public GetBoundInMapContainer():egret.Rectangle
+	{
+		if(this._mapScopeBound){
+			return this._mapScopeBound
+		}
+		if(this.allTracks.length == 1){
+			this._mapScopeBound = this.allTracks[0].getTransformedBounds(GameController.instance.GetMainScenePanel().mapContainer)
+		}else{  //直线轨道
+			let first_track:BaseGameTrack = this.allTracks[0]
+			let last_track:BaseGameTrack = this.allTracks[this.allTracks.length - 1]
+			if(first_track.toDirection == TrackDirection.Right){
+				this._mapScopeBound.x = first_track.x
+				this._mapScopeBound.y = first_track.y
+				this._mapScopeBound.width = this.allTracks.length * first_track.width
+				this._mapScopeBound.height = first_track.height
+			}else if(first_track.toDirection == TrackDirection.Left){
+				this._mapScopeBound.x = last_track.x
+				this._mapScopeBound.y = last_track.y
+				this._mapScopeBound.width = this.allTracks.length * first_track.width
+				this._mapScopeBound.height = first_track.height
+			}else if(first_track.toDirection == TrackDirection.Top){
+				this._mapScopeBound.x = last_track.x
+				this._mapScopeBound.y = last_track.y
+				this._mapScopeBound.width = first_track.width
+				this._mapScopeBound.height = this.allTracks.length * first_track.height
+			}else if(first_track.toDirection == TrackDirection.Down){
+				this._mapScopeBound.x = last_track.x
+				this._mapScopeBound.y = first_track.y
+				this._mapScopeBound.width = first_track.width
+				this._mapScopeBound.height = this.allTracks.length * first_track.height
+			}
+		}
+		return this._mapScopeBound
+	}
+	
+
+	public IsLine():boolean
+	{
+		if(this.allTracks.length > 1){
+			return true
+		}
+		let first_track = this.allTracks[0]
+		if(first_track.trackType == TrackType.HeorizontalLine || first_track.trackType == TrackType.VerticalLine){
+			return true
+		}
+		return false
+	}
 }

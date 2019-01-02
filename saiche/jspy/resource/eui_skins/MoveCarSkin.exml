@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="MoveCarSkin" width="50" height="100" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image source="che_png" anchorOffsetX="0" anchorOffsetY="0" left="0" top="0" right="0" bottom="0" locked="true"/>
+</e:Skin>

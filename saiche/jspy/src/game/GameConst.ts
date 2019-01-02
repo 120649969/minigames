@@ -17,4 +17,6 @@ class GameConst {
 	// public static MAX_LINE_COUNT:number = 20
 	public static MIN_LINE_COUNT:number = 3
 	public static MAX_LINE_COUNT:number = 10
+
+	public static Car_Move_Speed:number = 20
 }
