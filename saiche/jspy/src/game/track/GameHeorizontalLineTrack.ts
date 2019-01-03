@@ -1,7 +1,8 @@
 class GameHeorizontalLineTrack extends BaseGameTrack{
 
-	public constructor() {
-		super()
+	public hit_rect:eui.Rect
+	public constructor(customParent:egret.DisplayObjectContainer = null) {
+		super(customParent)
 		this.skinName = "TrakeHeorizontalLineSkin"
 		this.trackType = TrackType.HeorizontalLine
 	}
@@ -73,6 +74,13 @@ class GameHeorizontalLineTrack extends BaseGameTrack{
 				this.y = last_track.y + last_track.height - this.height
 			}
 		}
-		
+	}
+
+	public CopySelf():BaseGameTrack
+	{
+		let new_track = new GameHeorizontalLineTrack(GameController.instance.GetMainScenePanel().copyContainer)
+		new_track.x = this.x
+		new_track.y = this.y
+		return new_track
 	}
 }

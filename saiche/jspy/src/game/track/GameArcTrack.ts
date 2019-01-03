@@ -4,8 +4,11 @@ class GameArcTrack extends BaseGameTrack{
 	public img_right_and_top:eui.Image
 	public img_right_and_down:eui.Image
 
-	public constructor() {
-		super()
+	public hit_small_rect:eui.Rect
+	public hit_big_rect:eui.Rect
+	
+	public constructor(customParent:egret.DisplayObjectContainer = null) {
+		super(customParent)
 		this.skinName = "TrakeArcSkin"
 		this.trackType = TrackType.Arc
 
@@ -66,6 +69,11 @@ class GameArcTrack extends BaseGameTrack{
 		return this._local_center_point
 	}
 
+	public GetArcHalfWidth():number
+	{
+		return this.width
+	}
+
 	public InitWithLastTrackAndDirection(last_track:BaseGameTrack, fromDirection:TrackDirection, toDirection:TrackDirection):void
 	{
 		this.fromDirection = fromDirection
@@ -111,6 +119,18 @@ class GameArcTrack extends BaseGameTrack{
 				this.y = last_track.y - this.height
 			}
 		}
+	}
+
+	public CopySelf():BaseGameTrack
+	{
+		let new_track = new GameArcTrack(GameController.instance.GetMainScenePanel().copyContainer)
+		new_track.x = this.x
+		new_track.y = this.y
+		new_track.img_left_and_down.visible = this.img_left_and_down.visible
+		new_track.img_left_and_top.visible = this.img_left_and_top.visible
+		new_track.img_right_and_down.visible = this.img_right_and_down.visible
+		new_track.img_right_and_top.visible = this.img_right_and_top.visible
+		return new_track
 	}
 
 	//获取下一个轨道类型

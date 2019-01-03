@@ -7,7 +7,9 @@ module ui {
 		private btn_debug3:eui.Button
 		public roleContainer:eui.Group
 		public moveContainer:eui.Group
+		public copyContainer:eui.Group
 		public moveCar:GameMoveCar
+		public m_start_line:eui.Image
 
 		public constructor() {
 			super()
@@ -29,8 +31,8 @@ module ui {
 			}, this)
 
 			CommonUtils.Add_Btn_Click(this.btn_debug3, function(){
-				// ui.WindowManager.getInstance().open("DebugPanel")
-				ui.WindowManager.getInstance().open("TestPanel")
+				ui.WindowManager.getInstance().open("DebugPanel")
+				// ui.WindowManager.getInstance().open("TestPanel")
 			}, this)
 
 			this.btn_debug1.visible = false
@@ -83,12 +85,32 @@ module ui {
 					__this._move_down()
 				}
 			})
+
+			this.m_start_line.y = this.stage.stageHeight - this.m_start_line.height
 		}
 
 		public StartGame():void
 		{
 			super.StartGame()
+
+			this.m_touch_layer.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onTouchBegin, this)
+			this.m_touch_layer.addEventListener(egret.TouchEvent.TOUCH_END, this._onTouchEnd, this)
 		}
+
+		private is_touching:boolean
+
+		private _onTouchBegin(event:egret.TouchEvent):void
+		{
+			this.is_touching = true
+			this._gameLogicComponent.OnTouchStart(event.stageX, event.stageY)
+		}
+
+		private _onTouchEnd(event:egret.TouchEvent):void
+		{
+			this.is_touching = false
+			this._gameLogicComponent.OnTouchEnd(event.stageX, event.stageY)
+		}
+
 
 		private _move_left():void
 		{

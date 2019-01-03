@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,bg_jpg,egret_icon_png,description_json,zhi_png,che_png,di_png,dian1_png,dian2_png,wan1_png,hongse_png,lvse_png,shuoming_png,touxiang1_png,touxiang2_png,touxiangdi_png,wenhao_png,lingxian_png,clock_png,clock_fnt,score_png,score_fnt,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,ready_go_mp3,dead_line_tips_mp3,last_one_second_mp3,data_json",
+			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,egret_icon_png,description_json,zhi_png,che_png,di_png,dian1_png,dian2_png,wan1_png,hongse_png,lvse_png,shuoming_png,touxiang1_png,touxiang2_png,touxiangdi_png,wenhao_png,lingxian_png,clock_png,clock_fnt,score_png,score_fnt,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,ready_go_mp3,dead_line_tips_mp3,last_one_second_mp3,data_json,wan2_png,zhi2_png,jindu12_png,jindu1_png,jindu13_png,jindu14_png,xian_png,qibaoxian_png",
 			"name": "preload"
 		}
 	],
@@ -122,144 +122,179 @@
 			"name": "track_sb_png"
 		},
 		{
-			"url": "assets/bg.jpg",
-			"type": "image",
-			"name": "bg_jpg"
-		},
-		{
 			"url": "assets/egret_icon.png",
 			"type": "image",
 			"name": "egret_icon_png"
 		},
 		{
-			"name": "description_json",
+			"url": "config/description.json",
 			"type": "json",
-			"url": "config/description.json"
+			"name": "description_json"
 		},
 		{
-			"name": "zhi_png",
+			"url": "assets/zhi.png",
 			"type": "image",
-			"url": "assets/zhi.png"
+			"name": "zhi_png"
 		},
 		{
-			"name": "che_png",
+			"url": "assets/che.png",
 			"type": "image",
-			"url": "assets/che.png"
+			"name": "che_png"
 		},
 		{
-			"name": "di_png",
+			"url": "assets/di.png",
 			"type": "image",
-			"url": "assets/di.png"
+			"name": "di_png"
 		},
 		{
-			"name": "dian1_png",
+			"url": "assets/dian1.png",
 			"type": "image",
-			"url": "assets/dian1.png"
+			"name": "dian1_png"
 		},
 		{
-			"name": "dian2_png",
+			"url": "assets/dian2.png",
 			"type": "image",
-			"url": "assets/dian2.png"
+			"name": "dian2_png"
 		},
 		{
-			"name": "wan1_png",
+			"url": "assets/wan1.png",
 			"type": "image",
-			"url": "assets/wan1.png"
+			"name": "wan1_png"
 		},
 		{
-			"name": "hongse_png",
+			"url": "assets/hongse.png",
 			"type": "image",
-			"url": "assets/hongse.png"
+			"name": "hongse_png"
 		},
 		{
-			"name": "lvse_png",
+			"url": "assets/lvse.png",
 			"type": "image",
-			"url": "assets/lvse.png"
+			"name": "lvse_png"
 		},
 		{
-			"name": "shuoming_png",
+			"url": "assets/shuoming.png",
 			"type": "image",
-			"url": "assets/shuoming.png"
+			"name": "shuoming_png"
 		},
 		{
-			"name": "touxiang1_png",
+			"url": "assets/touxiang1.png",
 			"type": "image",
-			"url": "assets/touxiang1.png"
+			"name": "touxiang1_png"
 		},
 		{
-			"name": "touxiang2_png",
+			"url": "assets/touxiang2.png",
 			"type": "image",
-			"url": "assets/touxiang2.png"
+			"name": "touxiang2_png"
 		},
 		{
-			"name": "touxiangdi_png",
+			"url": "assets/touxiangdi.png",
 			"type": "image",
-			"url": "assets/touxiangdi.png"
+			"name": "touxiangdi_png"
 		},
 		{
-			"name": "wenhao_png",
+			"url": "assets/wenhao.png",
 			"type": "image",
-			"url": "assets/wenhao.png"
+			"name": "wenhao_png"
 		},
 		{
-			"name": "lingxian_png",
+			"url": "assets/lingxian.png",
 			"type": "image",
-			"url": "assets/lingxian.png"
+			"name": "lingxian_png"
 		},
 		{
-			"name": "clock_png",
+			"url": "assets/clock.png",
 			"type": "image",
-			"url": "assets/clock.png"
+			"name": "clock_png"
 		},
 		{
-			"name": "clock_fnt",
+			"url": "assets/clock.fnt",
 			"type": "font",
-			"url": "assets/clock.fnt"
+			"name": "clock_fnt"
 		},
 		{
-			"name": "score_png",
+			"url": "assets/score.png",
 			"type": "image",
-			"url": "assets/score.png"
+			"name": "score_png"
 		},
 		{
-			"name": "score_fnt",
+			"url": "assets/score.fnt",
 			"type": "font",
-			"url": "assets/score.fnt"
+			"name": "score_fnt"
 		},
 		{
-			"name": "ready_go_ske_json",
+			"url": "assets/db/ready_go/ready_go_ske.json",
 			"type": "json",
-			"url": "assets/db/ready_go/ready_go_ske.json"
+			"name": "ready_go_ske_json"
 		},
 		{
-			"name": "ready_go_tex_json",
+			"url": "assets/db/ready_go/ready_go_tex.json",
 			"type": "json",
-			"url": "assets/db/ready_go/ready_go_tex.json"
+			"name": "ready_go_tex_json"
 		},
 		{
-			"name": "ready_go_tex_png",
+			"url": "assets/db/ready_go/ready_go_tex.png",
 			"type": "image",
-			"url": "assets/db/ready_go/ready_go_tex.png"
+			"name": "ready_go_tex_png"
 		},
 		{
-			"name": "ready_go_mp3",
+			"url": "assets/music/ready_go.mp3",
 			"type": "sound",
-			"url": "assets/music/ready_go.mp3"
+			"name": "ready_go_mp3"
 		},
 		{
-			"name": "dead_line_tips_mp3",
+			"url": "assets/music/dead_line_tips.mp3",
 			"type": "sound",
-			"url": "assets/music/dead_line_tips.mp3"
+			"name": "dead_line_tips_mp3"
 		},
 		{
-			"name": "last_one_second_mp3",
+			"url": "assets/music/last_one_second.mp3",
 			"type": "sound",
-			"url": "assets/music/last_one_second.mp3"
+			"name": "last_one_second_mp3"
 		},
 		{
-			"name": "data_json",
+			"url": "config/data.json",
 			"type": "json",
-			"url": "config/data.json"
+			"name": "data_json"
+		},
+		{
+			"url": "assets/wan2.png",
+			"type": "image",
+			"name": "wan2_png"
+		},
+		{
+			"url": "assets/zhi2.png",
+			"type": "image",
+			"name": "zhi2_png"
+		},
+		{
+			"name": "jindu12_png",
+			"type": "image",
+			"url": "assets/jindu12.png"
+		},
+		{
+			"name": "jindu1_png",
+			"type": "image",
+			"url": "assets/jindu1.png"
+		},
+		{
+			"name": "jindu13_png",
+			"type": "image",
+			"url": "assets/jindu13.png"
+		},
+		{
+			"name": "jindu14_png",
+			"type": "image",
+			"url": "assets/jindu14.png"
+		},
+		{
+			"name": "xian_png",
+			"type": "image",
+			"url": "assets/xian.png"
+		},
+		{
+			"name": "qibaoxian_png",
+			"type": "image",
+			"url": "assets/qibaoxian.png"
 		}
 	]
 }

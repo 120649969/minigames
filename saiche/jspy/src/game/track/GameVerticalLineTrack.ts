@@ -1,6 +1,7 @@
 class GameVerticalLineTrack extends BaseGameTrack{
-	public constructor() {
-		super()
+	public hit_rect:eui.Rect
+	public constructor(customParent:egret.DisplayObjectContainer = null) {
+		super(customParent)
 		this.skinName = "TrakeVerticalLineSkin"
 		this.trackType = TrackType.VerticalLine
 	}
@@ -82,5 +83,13 @@ class GameVerticalLineTrack extends BaseGameTrack{
 				this.y = last_track.y + last_track.height / 2
 			}
 		}
+	}
+
+	public CopySelf():BaseGameTrack
+	{
+		let new_track = new GameVerticalLineTrack(GameController.instance.GetMainScenePanel().copyContainer)
+		new_track.x = this.x
+		new_track.y = this.y
+		return new_track
 	}
 }

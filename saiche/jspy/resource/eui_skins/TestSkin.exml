@@ -1,10 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="TestSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+<e:Skin class="TestSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing" xmlns:tween="egret.tween.*">
+	<w:Declarations>
+		<tween:TweenGroup id="asdf">
+			<tween:TweenItem target="{img_car}">
+				<tween:Set>
+					<tween:props>
+						<e:Object x="{220}" y="{757.45}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:Wait duration="450"/>
+				<tween:Set>
+					<tween:props>
+						<e:Object x="{358}" y="{505}"/>
+					</tween:props>
+				</tween:Set>
+			</tween:TweenItem>
+		</tween:TweenGroup>
+	</w:Declarations>
 	<e:Rect left="0" top="0" bottom="0" right="0" fillColor="0x666464"/>
 	<e:Rect id="startDot" width="5" height="5" fillColor="0xfc0707" horizontalCenter="0" verticalCenter="0"/>
-	<ns1:GameHandle id="gameHandle" width="100" height="5" x="204" y="500" skinName="GameHandleSkin"/>
+	<ns1:DragCarHandle id="gameHandle" width="100" height="5" x="204" y="500" skinName="GameHandleSkin"/>
 	<e:Group id="touchLayer" left="0" top="0" bottom="0" right="0" touchEnabled="true">
-		<e:Image id="img_car" source="che_png" x="87.67" y="762"/>
+		<e:Image id="img_car" source="che_png" x="304" y="587.76" anchorOffsetX="42" anchorOffsetY="86"/>
 	</e:Group>
 
 

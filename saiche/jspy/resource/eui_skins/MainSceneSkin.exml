@@ -3,32 +3,36 @@
 	<e:Image source="di_png" left="0" top="0" right="0" bottom="0"/>
 	<e:Group id="moveContainer" anchorOffsetX="0" anchorOffsetY="0" width="720" height="1280" y="0" x="0">
 		<e:Group id="mapContainer" width="720" x="0" height="1280" y="0"/>
+		<e:Image id="m_start_line" source="qibaoxian_png" scaleX="1" scaleY="1" horizontalCenter="0" y="1180"/>
 		<e:Group id="roleContainer" width="720" x="0" height="1280" y="0">
 			<ns1:GameMoveCar id="moveCar" width="50" height="100" skinName="MoveCarSkin" y="1052" anchorOffsetX="25" anchorOffsetY="50" x="360"/>
+		</e:Group>
+		<e:Group id="copyContainer" scaleX="1" scaleY="1" width="720" height="1280" y="0" x="0">
 		</e:Group>
 	</e:Group>
     <e:Group height="200" left="0" right="0" top="0" locked="true">
 		<e:Image scaleX="1" scaleY="1" horizontalCenter="0" top="90" source="touxiangdi_png"/>
-        <e:Group id="m_other_group" width="206" height="75.5" anchorOffsetX="0" anchorOffsetY="0" y="120.95" x="96.66">
-					<e:Image source="lvse_png" x="23" y="11"/>
+        <e:Group id="m_other_group" width="206" height="75.5" anchorOffsetX="0" anchorOffsetY="0" y="100" x="96.66">
+
 		<e:Image source="touxiang1_png" verticalCenter="0" x="44" anchorOffsetX="44" anchorOffsetY="44"/>
 		<e:Image id="m_other_icon" width="88" height="88" x="44" anchorOffsetX="44" anchorOffsetY="44" verticalCenter="0"/>
 
-		<e:BitmapLabel id="label_other_score" width="91.66" height="42.34" text="0" anchorOffsetX="0" anchorOffsetY="21.16" y="39.05" x="85.19" scaleX="0.8" scaleY="0.8" textAlign="center" font="score_fnt"/>
-					<e:Label id="label_other_name" text="" textAlign="left" anchorOffsetX="0" width="112.33" height="25" size="24" anchorOffsetY="0" scaleX="1" scaleY="1" horizontalCenter="0" bottom="-46.5"/>
+
+					<e:Label id="label_other_name" text="" textAlign="left" anchorOffsetX="0" width="93.83" height="25" size="24" anchorOffsetY="0" scaleX="1" scaleY="1" horizontalCenter="31" bottom="43.5"/>
+					<e:Label id="label_other_score" text="0" x="97.84" y="44" anchorOffsetX="0" width="73" verticalAlign="middle" textAlign="center" textColor="0x054166"/>
 
 
 		</e:Group>
-		<e:Group id="m_me_group" width="210" height="77" anchorOffsetX="0" anchorOffsetY="0" y="120.81" right="92">
-			<e:Image source="hongse_png" x="24" y="11.69"/>
+		<e:Group id="m_me_group" width="210" height="77" anchorOffsetX="0" anchorOffsetY="0" y="100" right="92">
+
 		<e:Image source="touxiang2_png" anchorOffsetX="44" anchorOffsetY="44" x="162" verticalCenter="0"/>
 		<e:Image id="m_me_icon" width="88" height="88" anchorOffsetX="44" anchorOffsetY="44" verticalCenter="0" x="162"/>
 
-		<e:BitmapLabel id="label_my_score" width="91.47" height="40.68" text="0" anchorOffsetX="0" anchorOffsetY="20.32" y="39.24" x="46.01" scaleX="0.8" scaleY="0.8" textAlign="center" font="score_fnt"/>
-			<e:Label id="label_my_name" text="" textAlign="right" anchorOffsetX="0" width="117.66" height="25" size="24" scaleX="1" scaleY="1" horizontalCenter="0" bottom="-46"/>
+			<e:Label id="label_my_score" text="0" x="40" y="41" anchorOffsetX="0" width="73" verticalAlign="middle" textAlign="center" textColor="0x6c0e22"/>
+			<e:Label id="label_my_name" text="" textAlign="right" anchorOffsetX="0" width="92.66" height="25" size="24" scaleX="1" scaleY="1" horizontalCenter="-30.5" bottom="44"/>
 
 		</e:Group>
-        <e:BitmapLabel id="label_time" width="120" height="39.33" font="clock_fnt" text="90" anchorOffsetX="60" anchorOffsetY="19.67" horizontalCenter="0" y="157" textAlign="center" scaleX="0.8" scaleY="0.8"/>
+
         <e:Group id="m_offline_tips" width="505" height="50" horizontalCenter="0.5" touchEnabled="false" y="472" visible="false">
 			<e:Rect width="505" height="50" horizontalCenter="0" verticalCenter="0" fillColor="0x302f2f" fillAlpha="0.5" x="0" y="0" scaleX="1" scaleY="1"/>
 			<e:Label text="توردىن ئازراق مەسىلە چىقتى ، سەل ساقلاڭ " x="31.360000000000014" y="10" scaleX="1" scaleY="1"/>
@@ -42,10 +46,15 @@
 			</e:skinName>
 		</e:Button>
 		<e:Image id="img_lingxian" source="lingxian_png" y="217.95" scaleX="1" scaleY="1" x="0" visible="false"/>
+			<e:Image source="jindu1_png" x="273" y="44" locked="true"/>
+			<e:Image source="jindu12_png" y="43.63" horizontalCenter="0.5" locked="true"/>
+			<e:Image source="jindu13_png" y="134.5" horizontalCenter="0" anchorOffsetX="89" anchorOffsetY="91" rotation="0"/>
+			<e:Image source="jindu14_png" y="48.6" horizontalCenter="0"/>
+			<e:Label id="label_time" text="60" y="167.99" horizontalCenter="3.5" anchorOffsetX="0" width="95.33" verticalAlign="middle" textAlign="center" textColor="0x97ff00"/>
 	</e:Group>
     <e:Group id="m_touch_layer" left="0" top="0" right="0" bottom="0" touchEnabled="true" locked="true"/>
     <e:Image id="img_help" x="32.24" y="158.15" anchorOffsetX="17" anchorOffsetY="15" source="shuoming_png" touchEnabled="false" visible="false"/>
-	<e:Button id="btn_debug1" label="变大" x="544" y="1177" skinName="skins.ButtonSkin"/>
-	<e:Button id="btn_debug2" label="变小" x="408" y="1180" skinName="skins.ButtonSkin"/>
-	<e:Button id="btn_debug3" label="调试" x="30" y="1170" skinName="skins.ButtonSkin"/>
+	<e:Button id="btn_debug1" label="变大" skinName="skins.ButtonSkin" bottom="25" right="0"/>
+	<e:Button id="btn_debug2" label="变小" skinName="skins.ButtonSkin" right="0" bottom="128"/>
+	<e:Button id="btn_debug3" label="调试" skinName="skins.ButtonSkin" left="0" bottom="0"/>
 </e:Skin>

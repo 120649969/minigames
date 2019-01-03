@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="TrakeArcSkin" width="514" height="514" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Image id="img_left_and_top" source="wan1_png" left="0" top="0"/>
-	<e:Image id="img_right_and_top" source="wan1_png" scaleX="-1" right="0" top="0" visible="false"/>
-	<e:Image id="img_left_and_down" source="wan1_png" scaleX="1" scaleY="-1" bottom="0" left="0" visible="false"/>
-	<e:Image id="img_right_and_down" source="wan1_png" scaleX="-1" scaleY="-1" bottom="-1" right="-1" visible="false"/>
+<e:Skin class="TrakeArcSkin" width="420" height="420" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect id="hit_small_rect" width="140" height="140" x="0" y="0" anchorOffsetX="0" anchorOffsetY="0" visible="false"/>
+	<e:Rect id="hit_big_rect" width="400" height="400" x="1" y="0" anchorOffsetX="0" anchorOffsetY="0" visible="false"/>
+	<e:Image id="img_left_and_top" left="0" top="0" source="wan2_png" scaleX="-1" scaleY="-1" visible="false"/>
+	<e:Image id="img_right_and_top" scaleX="1" right="0" top="0" source="wan2_png" scaleY="-1" visible="false"/>
+	<e:Image id="img_left_and_down" scaleX="-1" scaleY="1" bottom="0" left="0" source="wan2_png" visible="false"/>
+	<e:Image id="img_right_and_down" scaleX="1" scaleY="1" bottom="0" right="0" source="wan2_png"/>
 	<e:BitmapLabel id="label_step" width="101.33" height="45.33" x="380.33" y="199.67" font="score_fnt" anchorOffsetX="0" anchorOffsetY="0" text="200" visible="false"/>
 </e:Skin>

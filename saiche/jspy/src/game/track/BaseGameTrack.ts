@@ -21,20 +21,43 @@ class BaseGameTrack extends eui.Component{
 	public toDirection:TrackDirection
 	public label_step:eui.BitmapLabel
 	
-	public constructor() {
+	public constructor(customParent:egret.DisplayObjectContainer = null) {
 		super()
-		if(ui.WindowManager.getInstance().getWindow('DebugPanel')){
-			let debugPanel:ui.DebugPanel = ui.WindowManager.getInstance().getWindow('DebugPanel') as ui.DebugPanel
-			debugPanel.mapContainer.addChild(this)
+		if(customParent){
+			customParent.addChild(this)
 		}else{
-			GameController.instance.GetMainScenePanel().mapContainer.addChild(this)
+			if(ui.WindowManager.getInstance().getWindow('DebugPanel')){
+				let debugPanel:ui.DebugPanel = ui.WindowManager.getInstance().getWindow('DebugPanel') as ui.DebugPanel
+				debugPanel.mapContainer.addChild(this)
+			}else{
+				GameController.instance.GetMainScenePanel().mapContainer.addChild(this)
+			}
 		}
-		
+	}
+
+	public CopySelf():BaseGameTrack
+	{
+		return null
 	}
 
 	public GetTrackType():TrackType
 	{
 		return this.trackType
+	}
+
+	public GetCenterPointInMapContainer():egret.Point
+	{
+		return null
+	}
+
+	public GetArcHalfWidth():number
+	{
+		return 0
+	}
+
+	public GetRotateRate():number
+	{
+		return 1
 	}
 
 	public InitWithLastTrack(last_track:BaseGameTrack):void
