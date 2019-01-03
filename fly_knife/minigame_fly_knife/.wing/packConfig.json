@@ -1,9 +1,1 @@
-{
-    "useClip": false,
-    "maxImageWidth": 2048,
-    "maxImageHeight": 2048,
-    "defaultResPath": "c:\\zhipin\\minigames\\fly_knife\\minigame_fly_knife\\resource\\default.res.json",
-    "packGroups": {
-        "preload": true
-    }
-}
+e930f15054e54af510f87929dc969f852c6c5ede04eba352cc2ec403c39b613cfa056f9ee15d0c5d41c4a4fed38d48fc6028d77809db791461f08c56e013b999c64f651218fea39e916eaae85e5c3464d5bcb74d3cf4d6c1665cec2ee48d5d2b4ca8da4596a14908673b45bba2e5dd960893cb64a8e5a0345f548b1e36f51bbd52a7eb2640d5aaebdf6a6484d535e79f01c3a4b2697ade7041bb5628157461a3ea1828225562b37994a50229396ce79e627a0a3a0c7a973f10decc6653b2179287207b821ab3fce1106540d79bc95581746adba557a81587127dd1aa9fef2a35f91bdb2afa3d8b1e81b8d32969e5fa58

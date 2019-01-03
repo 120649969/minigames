@@ -1,5 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="PropSkin" width="98" height="56" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Rect id="behit_rect" left="0" top="0" bottom="0" right="0" visible="false"/>
-	<e:Image id="img" source="prop2_png" height="56" y="56" width="98" x="0" scaleY="-1"/>
-</e:Skin>
+c5dd9d7c333099d4995ea45e8c72fb80485fa4bfe551f74b4df40c8375e256461044acda2f7e32c560d1cba50709d9978ff612d694dc09df2b6eacb8ddc8138bd163973a1a68625e391d7623d8631e1932ceb4eab12cb7207c911735612d3b084228219d6aaaf116430946232c957afbcb76163c8c579a60b1589a92dd80db6623e408c173737ae6c3d0523c3f8d4230a1aeff14f4e3fe4f28b6af59a65f80098a300f558fac5c6b47dd2fae896424bd47a645e17a290084fa9d2ac7909226fd384ce440d465cb1cb893e53bb4d987d228ecc7961c269e3f306c0340efa27baa552ebdb1df036c070c7d727d68a6fa59017c4614af15b6949a2075e86b3164bd81657d7d4f51b332eb3a31d28c9654ed2fea69ff7eaf0378be20e9ec5ce605d44948fd18714f90acdb824a34c7790d06569e915f00d0f79004f1ca44fb8227dcb8aaeae4c3c7e83334efa88a987394b0

@@ -1,9 +1,1 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<e:Skin class="skins.ItemRendererSkin" states="up,down,disabled" minHeight="50" minWidth="100" xmlns:e="http://ns.egret.com/eui">
-    <e:Image width="100%" height="100%" scale9Grid="1,3,8,8" alpha.disabled="0.5"
-             source="button_up_png"
-             source.down="button_down_png"/>
-    <e:Label id="labelDisplay" top="8" bottom="8" left="8" right="8"
-             size="20" fontFamily="Tahoma"
-             textColor="0xFFFFFF" text="{data}" verticalAlign="middle" textAlign="center"/>
-</e:Skin>
+fb238485744953bc5835797dd35eaf7f92410086a8823a906f32b588d2a672ff63db319a88451757185a55a8a2be98af4a0093f480ac619c5f7c79ccb20efe4894877f55027990acb66bf114fc18102a3e21831be1ea1500263260e12ba3c0cfaa4d6cc6fc48b826a88a521e128fb55f4c8c80f8c6c1ff500faaddc272e9e9debd19cd0f9422e0dc78b9b92b31fc5c0a7f3f640926cb32f28f99016efa970ba020777635d5a8cbe06558f55d653bd66d14da4e3748514b47942b6cc1f3a54f247abbc5d799680e8d88169e112da3bd4431cd77f42265c06d21a98e7342268a8e31e9a7d5188b3948e45b6f53b1e586700aed435357e2bcba794d84f88fa9a7e3af7b22f59fb59015d403790bddd9068e2c7aa5567dfda5a69c9bea32fc130d2570ddda851243b38ba7027f43bf151c3aa253b115be82087d384a51b02ef1c3348498cc539e6a54737564bbea5a50b88aa83f4f47efac45b8fb4ce6884c6fa3e49a17b3b8cece68f19923367f95838e06af5dfc3597cb40b375b9658392667b3af1e0faddf197f3b37165c6f7ecf658add7169c13484565178f492bc6c54fb594fb5377039743a357daa5808e660119cc0b46e4417291bd5256ea5393200eb58e49b7a472a5a2dc0258acf269df01424d1cc7323014e2203e1dfeec6b8a9f53b06c0af1a6a4f264e2e92cb213442adce9f959cc3fa9accddf67d76f7906470842be6028cb4972c015a9e46ed80783399c8827b0c5677c891866eaeb029abf5e9b149bcd383ee16861eac98d428b556fb3
