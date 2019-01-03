@@ -1,9 +1,1 @@
-{
-    "useClip": false,
-    "maxImageWidth": 2048,
-    "maxImageHeight": 2048,
-    "defaultResPath": "c:\\zhipin\\minigames\\basketball_hot\\minigame_basketball_hot\\resource\\default.res.json",
-    "packGroups": {
-        "preload": true
-    }
-}
+e930f15054e54af510f87929dc969f852c6c5ede04eba352cc2ec403c39b613cfa056f9ee15d0c5d41c4a4fed38d48fc6028d77809db791461f08c56e013b999c64f651218fea39e916eaae85e5c3464d5bcb74d3cf4d6c1665cec2ee48d5d2b4ca8da4596a14908673b45bba2e5dd96e3a692aa33b217bee43b23e65b8398ec32c7fea62bc55212c3c7c0a043b85ae436be215cc32ed0f02e5d951c45d13850896b501781b897e08b9d254b5e3398b79d4ddedd26c21463118fb332b634b995d8c6021b209319d7cee6622b448f84bb9c360ad8591288c661dbd951413e3d6477f338d64faa9c83ce31832dd47f402a5f9c91a26220a440d00c9cb79320f0f5

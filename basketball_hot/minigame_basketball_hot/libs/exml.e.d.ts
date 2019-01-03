@@ -1,8 +1,1 @@
-declare class MainScene extends eui.Skin{
-}
-declare class Setting extends eui.Skin{
-}
-declare module skins{
-	class TextInputSkin extends eui.Skin{
-	}
-}
+84451fb7a1ac4071ebad1efba9bd04559f005fd05131ad260aa0ed401807eb3fcf242abec5af4381a9f8e4988cf6592d27d2e6fc3132b992bb5082d37e5a986590ce00766831b32c37f49acc7e2961b6dbefae1ab7904d44906fe3a21e96e8c059b464fd5cd7feeeb913d44debeced907705afce90f453d6cc687a5f8b0e72505ed68e9baaa056e9ef4daff90665d8ccd942a6d583a2d24a5c2c72ec19715c57
