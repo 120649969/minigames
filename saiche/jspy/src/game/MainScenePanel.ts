@@ -93,8 +93,8 @@ module ui {
 		{
 			super.StartGame()
 
-			this.m_touch_layer.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onTouchBegin, this)
-			this.m_touch_layer.addEventListener(egret.TouchEvent.TOUCH_END, this._onTouchEnd, this)
+			this.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onTouchBegin, this)
+			this.stage.addEventListener(egret.TouchEvent.TOUCH_END, this._onTouchEnd, this)
 		}
 
 		private is_touching:boolean
