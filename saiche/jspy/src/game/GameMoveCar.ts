@@ -45,11 +45,20 @@ class GameMoveCar extends eui.Component{
 				target_rotate_degree = 0
 			}
 			if((this.rotation + 360) % 360 != (target_rotate_degree + 360) % 360){
+				let delta_degree = Math.abs((this.rotation + 360) % 360 - (target_rotate_degree + 360) % 360)
+
 				let __this = this
 				let origin_rotation = this.rotation
-				egret.Tween.get(this).to({rotation:target_rotate_degree}, 0.2 * 1000).call(function(){
-					__this.ChangeStatus(CarStatus.Moving)
-				})
+				if(delta_degree < 20){
+					egret.Tween.get(this).to({rotation:target_rotate_degree}, 0.2 * 1000).call(function(){
+						__this.ChangeStatus(CarStatus.Moving)
+					})
+				}else{
+					
+					egret.Tween.get(this).to({rotation:target_rotate_degree}, 0.5 * 1000,egret.Ease.bounceIn).call(function(){
+						__this.ChangeStatus(CarStatus.Moving)
+					})
+				}
 				console.log("######自动调整角度###", origin_rotation, target_rotate_degree)
 			}
 		}

@@ -67,14 +67,17 @@ class GameLogicComponent extends BaseComponent{
 
 	private _begin_move_car():void
 	{
-		let global_center = new egret.Point(this._mainPanel.stage.stageWidth / 2, this._mainPanel.stage.stageHeight / 2)
+		
+		let global_center = new egret.Point(this._mainPanel.stage.stageWidth / 2, this._mainPanel.stage.stageHeight - this._mainPanel.m_start_line.height - this._mainPanel.moveCar.height / 2 - 20)
 		let local_in_role_container = this._mainPanel.roleContainer.globalToLocal(global_center.x, global_center.y)
 		this._mainPanel.moveCar.x = local_in_role_container.x
-		this._mainPanel.moveCar.y = local_in_role_container.y + this._mainPanel.moveCar.height + 200
+		this._mainPanel.moveCar.y = local_in_role_container.y
 
+		let target_point = new egret.Point(this._mainPanel.stage.stageWidth / 2, this._mainPanel.stage.stageHeight / 2)
+		let target_local_point = this._mainPanel.roleContainer.globalToLocal(target_point.x, target_point.y)
 		this._mainPanel.moveCar.visible = true
 		let __this = this
-		egret.Tween.get(this._mainPanel.moveCar).to({y:local_in_role_container.y}, 0.5 * 1000).call(function(){
+		egret.Tween.get(this._mainPanel.moveCar).to({y:target_local_point.y}, 0.5 * 1000).call(function(){
 			__this.On_Move_Begin_Move_Car_End()
 		})
 	}
