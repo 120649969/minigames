@@ -1,8 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="BoxLine4Skin" width="720" height="161" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
-	<e:Rect id="hit_rect" left="0" top="0" bottom="0" right="0" visible="false"/>
-	<ns1:GameBox id="box_1" height="161" width="194" skinName="BoxSkin" x="0" y="0"/>
-	<ns1:GameBox id="box_2" height="161" width="194" x="175.33333333333334" y="0" skinName="BoxSkin"/>
-	<ns1:GameBox id="box_3" height="161" width="194" x="350.6666666666667" y="0" skinName="BoxSkin"/>
-	<ns1:GameBox id="box_4" height="161" width="194" skinName="BoxSkin" x="526" y="0"/>
-</e:Skin>
+c5dd9d7c333099d4995ea45e8c72fb80485fa4bfe551f74b4df40c8375e256461044acda2f7e32c560d1cba50709d9979b16e01a67e6770291314c4e60c14c7674b6a07fee6fe71ccc616957d3be15cc50300ae51c93b4fb09a044982752ffc33fbab3a30343fbba2745b21d562263b43a29a0fdf1698428667309199e887286ac2919420ccb1595afa42239b8b7f2d79c36932f7a5dcf759d57fff3f92475ebba02165fe9925a1abcc82824af0c7e72e1085e0e92b1c8b25c9741ac37f2afe82b5df408ae7954574c49d80acab3f2a5519f5a471d07c0270512a49af32ac778dc2187148f35e6ff97fb85b0a1efd801bb3987eae3ce3f83f6ddf68fd0f2df29a864bfba7e15482795bf17fc9460abfc6297ce6cafd2de164da200eb187202dd5bf63390a430686dbd39fbff36cdfa878b353a4eafb6eca67503eb7115fd188975d01105507cb28b1ef7221dc51ac04c42c760f32f0ed648862facac88b271ec0940e6096c0aedd2f039212e36898c88e82d8cd67d5da34708461c4be2dc3826f80b4ea80c1b9fbd417028e3e14a9c563d35efecba769ea8852571469c420370bfb0ba5166c1899b0bee344299ea4ce98f51c1d2fecf27ac2bd0de902116c551123a9ecadf69e4a3c5b607cdd7d287dcfcb891500a1cf7d7ccde7a17a8576df767199604f26fa3214bbba15a9ac986179d5281a11dd38b9d8a8613acc2e79a3d9500778bc6a87b4d48ed8a23ef875f32f2d2716a6ad726b164b2350230b779aeb61d8c7ded40b9d374edae4c7f8ffcc408ed2c5a1c683dbb035cd7c46abdef63600729974d6d6fd4a7f6cbc66ff0465d08623cb00d62803d703f97d7cbd8b0efe970dfe29dbc80076bd48b1dbb7efef13127336f586949eae7612bd68c2a16a1

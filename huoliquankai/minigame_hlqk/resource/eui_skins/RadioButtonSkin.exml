@@ -1,16 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="skins.RadioButtonSkin" states="up,down,disabled,upAndSelected,downAndSelected,disabledAndSelected" xmlns:e="http://ns.egret.com/eui">
-    <e:Group width="100%" height="100%">
-        <e:layout>
-            <e:HorizontalLayout verticalAlign="middle"/>
-        </e:layout>
-        <e:Image fillMode="scale" alpha="1" alpha.disabled="0.5" alpha.down="0.7"
-                 source="radiobutton_unselect_png"
-                 source.upAndSelected="radiobutton_select_up_png"
-                 source.downAndSelected="radiobutton_select_down_png"
-                 source.disabledAndSelected="radiobutton_select_disabled_png"/>
-        <e:Label id="labelDisplay" size="20" textColor="0x707070"
-                 textAlign="center" verticalAlign="middle"
-                 fontFamily="Tahoma"/>
-    </e:Group>
-</e:Skin>
+c5dd9d7c333099d4995ea45e8c72fb80485fa4bfe551f74b4df40c8375e256461044acda2f7e32c560d1cba50709d99725d783a50d68a9588f7805672fa6671bba516a7801bed52d67baf306e56ee4ed9cd953df096db246c0472bbb789fea6f0405b0819033c7c5150a2089f32b2eaa14083d8747b1b97c9e100d93103dbce3cd60822744b93f9b209f7fc77ee27c95db07efed316fde4401b76ae75c319a0f865c5f11f532c29a42e977601a49a9576cef92273733639f2eac34ef69b3c417dd0594ec04cb1cff78ba53499d214cc192c0c10e8b2693741b2e67256d870737426c02016ea5f4ac05774e3fc1726732be45f7d22e6ccc86fa7aaad52fd87b3e0f9f85d2979f30cf26cfa29129b54872142f86871817bf413448d3624baed53a371dda702a5c0c229a82ebce824e8ee7c1fe83b1223d06fbd6fce35e691346b019820e610a39b9564b96429607c1621dd2ee9a73eabe9353226d6863a56b68ecfacd6a1e4e017032067b4796460a90320a63936bbdf7b30bee1fcfdc33018e40d9c1bdd9c5878990440e7449b07594216f7b3204700581820b5e04700cc70da9b128a3f34cad0bf0bc7c1781e5dbd49027d8e842b53af981f981b7ef16efd3ac10c41db71ec992cb0d7c2e5fb8595fb986cdd599b524dff724115db0d12b0e48618bd5a7f9cb421599424becfa6fd1e1040d04e5e93ba0a8b4b848a6c6c1df407531d040640496ead73293f0ffa27dfa8036f3ad904f9c13c0ad1a93d8aa5a17bcffdedb590bb16298e34aa7e40d40f031cbd93701bcd8b9cb3439c259fc1bc6b565a72f659a9f3436552e5228ee174902b7ed99dd34990cd7d38cd409e62537b8cd7ed5c4227747207f735a420a8f4aacc95f6ad8f05b8997e7e6aea74fb37ce75ac827bfdf3498fcdd22639d8f74b955e64834fc923ec4ddc27688a703768d61a7d8f737d5e04ce10cb4f5e3931e99d158f1c534000aea4b27c6a0e0a512e662b2edad998c150f62ffb660a678daa0b387f298736db883fabaa852cdd6d4d3993c8327f94f7df9bcabb5e759d5fc3ed5b99e5f897a16da141c642bebb35a68825829e237e30a5a95ba582ea8fd1d89ac7a1ac013cca0ed12a85813fc0af7aab9ab4f2fdbe0ea87fff9793c38574764285bf63e5c01f734476a4f892ef48d1ec6f733eb48725d74729640041c67970cf708cdb5d5e6ed10144c1dbc1ca353d2

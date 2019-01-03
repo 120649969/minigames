@@ -1,5 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="PlayerSkin" width="182" height="164" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Rect id="hit_rect" width="109" height="91.33" x="35.66" y="9" anchorOffsetX="0" anchorOffsetY="0" visible="false"/>
-	<e:Image id="img_avatar" source="ren_png" horizontalCenter="0" verticalCenter="0"/>
-</e:Skin>
+c5dd9d7c333099d4995ea45e8c72fb80485fa4bfe551f74b4df40c8375e256461044acda2f7e32c560d1cba50709d997effc149c8b602ab39889a03435b2feea190405d85cd3adbbdc8bff55c81944a01360a16056b9ec5c052cec045b0026ef00fcc86a11e2db13a3443461e26110fd113acd726c51d5ecbcafd83562d92d83d4efc6bdac07bb770d8fde9256a380842977ecb7923d0e38aa98c07534c0071bae4b2a34efaf208c1a796ed7f9e13e8a77cd1ae6ba6360860fa401f70195532db0740cd5a459bf6080a56323834dffacab769f42f11155537c618d915ec90758a147e7e524034f39330e70f6268afe3cba8eac5dc0f999031fee9315cf66f27faa5e63300557e7fcec5f68e24894e271b608a770fe1235575c780716b7fda8ca0190b2221befb8b7c8401759d31625e4d49a4ee35efab89ed60f5dff3f1e96d7d345f0da1384634f90f749cd98ce94e53c3b132293353d3d67f4d6f559add667555ef265655f66ad3d469659bbdd4c112aaf9d367c048896e3fcb4770d2195a2

@@ -1,4 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="PropSkin" width="160" height="160" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Image id="img_prop" source="jiasu_png" horizontalCenter="0" verticalCenter="0"/>
-</e:Skin>
+c5dd9d7c333099d4995ea45e8c72fb80485fa4bfe551f74b4df40c8375e256461044acda2f7e32c560d1cba50709d9978ff612d694dc09df2b6eacb8ddc8138b4d3a98a0c892ce9796a031540490e48ed428952bf57a30c5e8b98be1bd87c673354e9dfeb55c1262edbc1ea353ef37cc63226d4a1c784ba620889e03404d76ea8d6cc8fb709cecd5e213d20d3ddb64497b1d1fd9af99c4cd3f8a496da333b395459016480e905871cea8d521a5c10ee9d8982c17ef6382a41c1407ad5eba0527da0cc3527a512c13dc990fcb2c7723c8dabb947cdc587f1602c5a774b84afed9ab5308d7542a17721d706869088fb5a214e0f4002dcdf7c450aecaa9bcc16e1d

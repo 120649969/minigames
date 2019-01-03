@@ -1,9 +1,1 @@
-{
-    "useClip": false,
-    "maxImageWidth": 2048,
-    "maxImageHeight": 2048,
-    "defaultResPath": "c:\\zhipin\\minigames\\huoliquankai\\minigame_hlqk\\resource\\default.res.json",
-    "packGroups": {
-        "preload": true
-    }
-}
+e930f15054e54af510f87929dc969f852c6c5ede04eba352cc2ec403c39b613cfa056f9ee15d0c5d41c4a4fed38d48fc6028d77809db791461f08c56e013b999c64f651218fea39e916eaae85e5c3464d5bcb74d3cf4d6c1665cec2ee48d5d2b4ca8da4596a14908673b45bba2e5dd96d7612051c2cd11dde459a6dcb747c7e985ba28bbfe2c2835c32188b24c163d22bc93b54c1ed631c5d6fd99c16541fc38fa1058fe0fcae45ce044e3fc00f401035cae88f65d12381c2dc2c5bfad367099e75f9bb0398f6af758b810d7abd924ad05f8507697b05b729fc4176aebdd4e406385806178629d7d1a26bda6f03b33cd

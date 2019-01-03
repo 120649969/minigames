@@ -1,13 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="skins.ToggleSwitchSkin" states="up,down,disabled,upAndSelected,downAndSelected,disabledAndSelected" xmlns:e="http://ns.egret.com/eui">
-    <e:Image source="on_png"
-             source.up="off_png"
-             source.down="off_png"
-             source.disabled="off_png"/>
-    <e:Image source="handle_png"
-             horizontalCenter="-18"
-             horizontalCenter.upAndSelected="18"
-             horizontalCenter.downAndSelected="18"
-             horizontalCenter.disabledAndSelected="18"
-             verticalCenter="0"/>
-</e:Skin>
+c5dd9d7c333099d4995ea45e8c72fb80485fa4bfe551f74b4df40c8375e256461044acda2f7e32c560d1cba50709d997b53440da460f15d9b4b4cc0f569899aa93d91a2cdc6650dddc42140d22e187e471045c8e2269942b17d77cd58cb166320c847a72fcd6601c18c816ee7bad86202a7c163ec7cbfbd0388fc83808feb93d46d117d41cf2fbbf89d888fe9c6485c58336ba2a84d926ec4b319ad52f487c81a6b48c6188444bf04a2692f2e91b349dd84f34ab06297e0daae73358d5b5511bdb2360b9c911f2a7681494ed7a36857ddb5e213979b63d9a960db1013daaf23230a1429831172086b90ba50a1a3cab7dd05d24226b59b44b50b0c69ef893fd28002378ff54b46e8164a042890f95bfa6eedd3a786b4aca5f7dd473a2fc294456d5669cda2a74dafcf1b3cba0dffb6a3b32842dbd0383b8146f01f69477dc26c9631558c4e23413e291955f5f39d710059f1b242f2644e6ef60f5845fea472699cea595deff4958f5bf90a1ebb417feed8b9b816f2804cecb2f838945a2a3108df7e3b42c5f507ac44353a2ca18c7b6ff32d571628a2636d4a272daa1d414012dcd4294a3d8b149e56e2f3a3a58a71c2eb726ee09bd1ff9d55101174240168440660344c81fcb19d8baaa9d6971080ea8c41387baff18df93ccbbdfdbe255e9bad2aa9ec1f75d0c8ce0e2be004ad36d34c5f97a73f79edb3ee67680738505786ddb22b519df619479349f13834d80cf9269293506126e2aaf54cdcabbff4f6f8fea177b101778fff03ad72c77f076b9094ac33158a343bc8e4023442f83738ebb5ce0eef7357c574cea4710973372587bc3eade89634a278a82c294c8c5a24d9d

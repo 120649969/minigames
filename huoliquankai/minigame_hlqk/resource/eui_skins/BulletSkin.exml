@@ -1,5 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="BulletSkin" width="50" height="50" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Rect id="hit_rect" width="5" height="5" horizontalCenter="0" verticalCenter="0"/>
-	<e:Image source="xing_png" x="0" y="0"/>
-</e:Skin>
+c5dd9d7c333099d4995ea45e8c72fb80485fa4bfe551f74b4df40c8375e256461044acda2f7e32c560d1cba50709d9977e2038553a7dc4190352acba2750f0998e6bc03255692c10565bf01840602ad1688733865c4a5ff9341a0fd142c070b8b37d305c6b9891505ef9101cfcb9a11ae1ad206f9caaa5ad9d367d3ccb294e58b91ce2c99ddda4438af123c80fd4de93ee2fb48bff8785afecfc433cea1a5569de32e5f33e2c91576fb8d033cbfd98a46aeaaaaeb9c308145bdd776de3e37a543931e55ee2d38e52d3331d431c9b5615d80cef6987967e832de4668aad8769c7b972ba497eb2229517ee8a21afd22fd1c12a7856ab850a47d9f6bc20c4b09d4c560e8cfda9a791aabf511038a000e531e0fc128fd7ca471ae97f465b547e72702e2e027218f27b474cf890a833ccfde4

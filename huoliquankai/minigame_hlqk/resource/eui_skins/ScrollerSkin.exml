@@ -1,5 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="skins.ScrollerSkin" minWidth="20" minHeight="20" xmlns:e="http://ns.egret.com/eui">
-    <e:HScrollBar id="horizontalScrollBar" width="100%" bottom="0"/>
-    <e:VScrollBar id="verticalScrollBar" height="100%" right="0"/>
-</e:Skin>
+c5dd9d7c333099d4995ea45e8c72fb80485fa4bfe551f74b4df40c8375e256461044acda2f7e32c560d1cba50709d997b74a10856c36583b6f475febb9a9c4d03338f30924c909a96728616565a02b18eae5a0a2ce00ffc26dd7e26eeae6a4250375f0b93809cd17fc372f50d35d18275d8e3be6af91a719a48b0a4d6f4ba7f3ea1c9d6104f71c1167cc880a42580015b9814175ca6206cb79217e441f1a69ad2a136ae4c9cf602581337cbac362b7695ce9cebe183e1983242a243d98dafc91252948a728f634b7fec57095286458657111deb0b6192a1fe04e33e37a4d7721f4d2cc6c97019838e0e07740b1c67c8f6fb6e099d0451492e53eca3d2e16d5efd656a9a97eec6db038682bf0457580ab2cefb33a45fd213d7b74e6b3f37df39e
