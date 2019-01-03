@@ -1,8 +1,1 @@
-require("launcher/native_require.js");
-
-egret_native.egtMain = function () {
-    egret_native.nativeType = "native";
-
-    egret_native.egretInit();
-    egret_native.egretStart();
-};
+09d90af878ef5e78fadff04c87f4f04f2cfbb98c6daf1dded2f1643f01fb84f0ad0fbef6d5834c6779f834e9a0d5aaae80807af786104c68ed72a2f243931cc9ca1f0364a5134f08fbc80418c928e4a5817676f7f1e4190a0755ad4b210bfb727878925a2d18618f30c0c7fc8d3c146edbc9ef232194957aa4bad60e8db822455ea7e5580c073ac6b19689de00e35852c923dc9e379ad3ed4f8ff4378ea542742c9774079e4bcf6551c8c14f3e693a7158a95662b39d8d0faf42c77e090b6632

@@ -1,6 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="skins.HSliderSkin" minWidth="20" minHeight="8" xmlns:e="http://ns.egret.com/eui">
-    <e:Image id="track" source="track_sb_png" scale9Grid="1,1,4,4" width="100%"
-             height="6" verticalCenter="0"/>
-    <e:Image id="thumb" source="thumb_png" verticalCenter="0"/>
-</e:Skin>
+c5dd9d7c333099d4995ea45e8c72fb80485fa4bfe551f74b4df40c8375e256461044acda2f7e32c560d1cba50709d9978ca110044ed51368ad3f33e935efa034d69944c0980968797243aece6a732993404c9972ca84e0b8de956a4af9878f533b6e04da6257af5dad254a175f1673de7a15b831e670885f581dfb5613733201c89e9575c0746e9af9bc7098e0f855a60a672a881c59c0b9613076ffa69d187a291b0bb0128c01dcbed9f0c2df8e67d2755c898300075726987d1037e2462c730a6e57b64b700cd97296ed1cd6f0e5b3688783d0a52dfc85d0ca99f27e18a51eeeb0466f9707237014145b95f868fbf22af5c78b80310a3ed1f6ab81b8efc6d3bf69c98eeede7e2a774bbacdf0d4171bca3cedef067b0e91c0ec04b64c142558ad13736923263e2ccca2956da4c128df63b6079418612d4c32d5782708afa651e6652003e6a3e421a3393b99f755961f

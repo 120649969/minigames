@@ -1,6 +1,1 @@
-{
-	"search.exclude": {
-		"**/bin-debug": true,
-		"**/bin-release": true
-	}
-}
+df9cf9b67b04d9794e95cc9ed6808fc22fd850c6ac5c80dac5d3fed7c1c8410ec1c73f265b08ceffca45c1a2d5b769799729b9128269fda40d126233239393ee7e81dcca727cda34a00c5caff5b3ba9d

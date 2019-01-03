@@ -1,4 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="skins.VScrollBarSkin" minWidth="8" minHeight="20" xmlns:e="http://ns.egret.com/eui">
-    <e:Image id="thumb" source="roundthumb_png" scale9Grid="3,3,2,2" height="30" width="8" horizontalCenter="0"/>
-</e:Skin>
+c5dd9d7c333099d4995ea45e8c72fb80485fa4bfe551f74b4df40c8375e256461044acda2f7e32c560d1cba50709d9974fea68f6c45796bfb5556c4c02c7f9e3b6b12c7919acde1d2182d74136e2bf30cb655c14bdc36c12c408e0ef34a875c06a1fa5d47cd2340a43fc20b6b2b5cd3e40af6bf884b96daa3dc51c96f86762d1a73311cfa76ffdc6472db86e315b2fe17c58b937810b1e02066c7ccca3a75bc5189a1793b16584aad64429b2714875308bd2e5ea3406bdec339886643b84efc86e610f30ae119492dba0b81b66eeec489ed18f9004a3688289aab7aa5e241fa840cf1f7d32b837fa2abbf30dba089575a29b3870eceef7453037b1a47362e17b8e4da569ca8e592773045c8c5f730ff7

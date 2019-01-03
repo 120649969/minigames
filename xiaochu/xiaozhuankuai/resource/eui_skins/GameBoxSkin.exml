@@ -1,5 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="GameBoxSkin" width="175" height="123" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Rect left="0" top="0" bottom="0" right="0" visible="false"/>
-	<e:Image id="imgBox" source="normal_png" horizontalCenter="0" verticalCenter="0"/>
-</e:Skin>
+c5dd9d7c333099d4995ea45e8c72fb80485fa4bfe551f74b4df40c8375e256461044acda2f7e32c560d1cba50709d997c764b41a4e445559fd4b234bd53f5d3521d03fec444635ec36fa98b09befc083d0f77638eaa8a29a078aa0265a6bed414cd4161b736f4cb7659b19464f92a1a69e736890893e8a29bef2f828f972478df9051e3ab7865233d5947e53e4615dd059ec60b53ede56000201413dff2acc205309bd485ee9e7fa8bab2acdc9ed4020ab1cc970d2fc96e72b96058feab414cac7b98074e58364eb38be44f7d19c18f62716cce72f51fb03de4e0fbbaf814cf79ce0726aba36a2f34493f2b714789e992a0603c971469a23474dcc400acde7496d226a00e9d06b94aa3d86d7bd616b4680b62f98174497f7ee48b710036de35d75d19fc936a45d603dd8b463a947af6f29fd9636a7633870f3cba988e54580d6a6fe7fda224a58ea6717f2451fe8b6ee

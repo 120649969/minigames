@@ -1,9 +1,1 @@
-{
-    "useClip": false,
-    "maxImageWidth": 2048,
-    "maxImageHeight": 2048,
-    "defaultResPath": "e:\\gitclient\\minigames\\tiaobingxiang\\minigame_tiaobingxiang\\resource\\default.res.json",
-    "packGroups": {
-        "preload": true
-    }
-}
+e930f15054e54af510f87929dc969f852c6c5ede04eba352cc2ec403c39b613cfa056f9ee15d0c5d41c4a4fed38d48fc6028d77809db791461f08c56e013b999c64f651218fea39e916eaae85e5c3464d5bcb74d3cf4d6c1665cec2ee48d5d2b01290a7548f6d62d6e6d497e3db884a2158ca283b5b2b9e5774bb70b9a289f7c98486f7535e467affa15da142f24403a46b9492ff405e4875f3d369bb2a27525495878938c1aa0d54c45cdaf063fed6e282e73fb5f3d42dcac8e6a4244f1c6b783a4bb84707e419dfb80a80df0c28136a6d8221213bf92ea6c1a31e947e5d0693810050780c56562cba1713a55857928ba81b9030080153220d43b5d15cc9219

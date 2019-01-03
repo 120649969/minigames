@@ -1,9 +1,1 @@
-{
-    "useClip": false,
-    "maxImageWidth": 2048,
-    "maxImageHeight": 2048,
-    "defaultResPath": "c:\\zhipin\\minigames\\xuanzhuantiaoyue\\xzty\\resource\\default.res.json",
-    "packGroups": {
-        "preload": true
-    }
-}
+e930f15054e54af510f87929dc969f852c6c5ede04eba352cc2ec403c39b613cfa056f9ee15d0c5d41c4a4fed38d48fc6028d77809db791461f08c56e013b999c64f651218fea39e916eaae85e5c3464d5bcb74d3cf4d6c1665cec2ee48d5d2b4ca8da4596a14908673b45bba2e5dd969aaccea2d5c136c4fea5b328b3baf1035ccae4cf32ad41ad843e94c31287eb5b219c46712c016e05e4c1c31c310a1ccaa1a4c5d46b31d1231ade6aee7c3bd0f6eab2aecd75f9d6715f271ab3c0a65975da80e8bd3364ea5f070d458bceafc31a4e9bbb19d20e5c297bbc8dde558b4b8e636e366ade954d2b6066c2ac18625c8e

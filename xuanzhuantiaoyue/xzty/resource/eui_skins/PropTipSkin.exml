@@ -1,6 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="PropTipSkin" width="374" height="80" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Image source="prop_bg_png" horizontalCenter="0" verticalCenter="0"/>
-	<e:Image id="img_prop" source="prop_1_png" x="307.5" y="9"/>
-	<e:Image id="img_wenzi" source="prop_hudun_png" y="26" right="77"/>
-</e:Skin>
+c5dd9d7c333099d4995ea45e8c72fb80485fa4bfe551f74b4df40c8375e256461044acda2f7e32c560d1cba50709d9978a8358f0b996ce830e82f62191f101ac55a02817f9ecdb91f9c890a01e91e678cac8e90b9b8fc8fa6a4e42a6ce86c94a3db30c36d2187c24f1d54a6e82d78f814b596bc29b34265cea051488513eec76d7c96819191b8abb48e6b03dc30db1b11c7c934b95166a8d5f0781112f841cde900def728ee93f13ac71d4f13be536110e0c755acdcf55fb4e1763e4a25d6697b9fefe36b62e55229df12b408df185a157ae38ce56d585f1386e1ecd380ba9b408c27bd358a8aa43f6d04e7f3926f462476efc9a4b228c007167b11b5128f4a8b2a0f2d4957d6a129621d881236614ab01fb41b305be032058006389fa68f5e610f7463d62b2bb3ddd8f8a06b89f9def5d6b255a43574e2ee410cd4671d9e6b41f68dbdf0490a14bf40f53a83ce447488445f89fa0be008562cecf0a546a84756ee20dad8b97a2843b9c3da1881e14c6111b6d4c497a182be67db57f9a680b47

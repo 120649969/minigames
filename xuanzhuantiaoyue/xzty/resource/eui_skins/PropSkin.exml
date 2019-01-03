@@ -1,5 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="PropSkin" width="40" height="40" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Image id="img_prop" source="prop_1_png" left="0" right="0" top="0" bottom="0"/>
-	<e:Image id="img_bg" source="toumingqiu_png" left="0" right="0" top="0" bottom="0"/>
-</e:Skin>
+c5dd9d7c333099d4995ea45e8c72fb80485fa4bfe551f74b4df40c8375e256461044acda2f7e32c560d1cba50709d9978ff612d694dc09df2b6eacb8ddc8138b161234fa28afb38526021a994ee7233c1fb0d2a99d51bf2fa92e4efacd477ee42be463fa6edc915f9d20fc7a439a5adb5eaf970eb8aaaab51e11ebac1d2f74202ba66b75bd460fd4b9ca1380519460021125d98e94559a5ed9b6511485fc194db25d73ebbc8ad0d57ebe8ba99d618879225bfdfadaad510a57108d1314de5d64569aa283206ccd16c2fd6ac8a3bffcb4190c843d948e1f411d2081239f039c5c89d2ef5df8701ca9a4790b2e2cf69afaa700dc9ef70055324cccc848fa2437c1b2a9f504aaea3bca7690537c521c58f5f0d044357526df3853791fbfe50c042b9cf1be69e762de29ff4e527d438327975621622386dd2304246d8ffab618379c410b12228645613e071b1860dffb2a037a7c146d61c4e003882b36c0418cf9f0

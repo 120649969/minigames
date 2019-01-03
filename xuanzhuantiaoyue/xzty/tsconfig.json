@@ -1,17 +1,1 @@
-{
-    "compilerOptions": {
-        "target": "es5",
-        "outDir": "bin-debug",
-        "experimentalDecorators": true,
-        "lib": [
-            "es5",
-            "dom",
-            "es2015.promise"
-        ],
-        "types": []
-    },
-    "include": [
-        "src",
-        "libs"
-    ]
-}
+dc65842d9758433e1661055c034121e3f7db020e6a186a2986d2a40f2379b0f519eb23844e04307eb82e0f933c6f44f398d50a4a66d8963f3154c2e3e0f3c6a8f98be9f0edee2793bc66b7418dee4802fce0cca3d8946d49ffc37b1f37bd57119628aa2a9dfbb8c837606c11ae065660e8f821b9630a13913839970ef6d3ef54b0d5a441857c9ec2b0ce14dc3a3b0b3e79d7e2a8050b5c72473479e1d41c2af26683c16960eba36f2d9f226d12865841c9a0a7a64e58f49e3e890bcad835dd74717ee1b8c9774887116788594cdd2cac63f53d66d906d856c6d912362905c59f45f432e59ad162441a30b90a5b17a9a7b99456164637046d0098b3505bf26d917e4c418ee1d01986ef995fa14aa093fff8ade94da1b7e542dae76aab150a16d09dae2f9f8a475dfce46981e4c8d1c208

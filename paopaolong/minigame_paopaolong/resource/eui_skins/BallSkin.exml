@@ -1,6 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="BallSkin" width="72" height="72" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Rect id="hit_rect" touchEnabled="false" left="0" top="0" bottom="0" right="0" fillAlpha="0.5" visible="false"/>
-	<e:Image id="img_ball" source="ball1_png" width="72" height="72" x="0" y="0"/>
-
-</e:Skin>
+c5dd9d7c333099d4995ea45e8c72fb80485fa4bfe551f74b4df40c8375e256461044acda2f7e32c560d1cba50709d997ebd4da0387b5def09a0a2422b761a4bfa06914b82939ea582937fa84aaddc69224b36bfcb19e9dadd9da12524ea0f9ad5aefee56fc4a84181313d936a8ce1d9c6eb19b6c11f477383e5c8cc014bde230f3f1ff6f075df9c59f67c180f4b4ccc84fc1f87e39e01c0bf9659c888f08921e6aacc73f7fac6721c02e142e7e1e12c9a00edbee59b57fa73b0335e5ad9a54f88185c0e18d8c3876e596162dfc98fd2c696149d06db7372a6abd347867e362743ecbd956b4bf32b58fb9babdd3fba32124a88986569a502444ce144cac0aa53f3bc37a2f0bc40a41496c2274489bd87af67d946ee72f2bedb1015aeaa13a60af31dc79feef473ca90a29159b76c5a6590f1f56d616b25ba00a4808ece6f2e6a0f6073d44224fc17a271d664915051320202b861786a903b98fcff2cd4dc747f990e1a9a674ea9e8ed6dec3dc0098df01

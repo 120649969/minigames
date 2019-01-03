@@ -1,15 +1,1 @@
-class EventEmitter extends egret.EventDispatcher {
-	private static instance:EventEmitter = null;
-
-	public constructor() {
-		super();
-	}
-
-	public static getInstance():EventEmitter {
-		if (!EventEmitter.instance) {
-			this.instance = new EventEmitter();
-		}
-
-		return this.instance;
-	}
-}
+2bc201db20296e9ff085aa1e784bd28673e3adac92718f9ed62786c0b5912058ac2109fe30208cb90a48b20ce62ae4b3071013746e412598793b693be87060fd0229d0cab4ac185dc65bdac4372b9817debe3f1524de471666e20bb6a8bfcd672e60c7101ea766f2f922ef1d523fe043b1f64cc5e318dd83f9c85d813bc2f3b9a5c0f6bf3a80e75fcec81645fd9d0c3fd795f2665e8aa3e43d9235fecee432ce5d0c774d679657ce37eecc8475f46d660c1536eb21dd65240da5c8e0a78fc9650c62d6e1ea07deb624431e702d9e5f0d48558db03d0b8935bed745b2474a8e98975ab1d2f091a32cff3755866b0ce27eb0c233313213b1d849d0623102181b9480c961f618f5b3a57a8a2293688b4670ef8b7f187357d0959e18e24d788c3c92

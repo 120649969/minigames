@@ -1,10 +1,1 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<e:Skin class="skins.ButtonSkin" states="up,down,disabled" minHeight="50" minWidth="100" xmlns:e="http://ns.egret.com/eui">
-    <e:Image width="100%" height="100%" scale9Grid="1,3,8,8" alpha.disabled="0.5"
-             source="button_up_png"
-             source.down="button_down_png"/>
-    <e:Label id="labelDisplay" top="8" bottom="8" left="8" right="8"
-             size="20"
-             textColor="0xFFFFFF" verticalAlign="middle" textAlign="center"/>
-    <e:Image id="iconDisplay" horizontalCenter="0" verticalCenter="0"/>
-</e:Skin>
+fb238485744953bc5835797dd35eaf7f92410086a8823a906f32b588d2a672ff63db319a88451757185a55a8a2be98af4a0093f480ac619c5f7c79ccb20efe4832f524f9c56a99773f262aa5548cc8b5001403330089a656a12722502382fd941370a264db63b6c2172365c32df4e12320770cfbd7ee8f11cf84a0c5ce03dae45d593a4debc56e1185136c7ff595e0d7b7a7ac8cccd5c9b3717c2c7230183de6f1a9cb6c87627e462d7cb51d8ad3534d2ec61d4c8af2db98c7f4bf4fa50de05ba193c82ccdd59397c21a7f896be575cb720852d9833a03adc98458ba6f93077ec814b993cd29247aee91bf8e7ed1aab6f03ed0a9841e68f4502df1e31a17cc3202003260f3251e02b69d52d6e54fba4a0094eedd4cc0ea6b4ac8513acb2f774f1e05d4da3b93dbc7905d851c15260ee2e90b9e0fa9eda8e9e5d48c5897ea11f2d5b40abb1412bb95faaa3d2709f9703beebd79e93d161e8e8cd38e4767d5ba247f87753adf4b9b7032430f90bcb8a7b9b0462f16f8826ada9ee5618c552845551d06cc83138cc3e4a7387a02e82a2da9743fcc71a62e3e458ac362c8aff86163e2a7f3fcf5977c00e11dce0a40b401cedba2eb13e68e31cea16d4db8b51c1c878b8793b492e4220e9db258a584e69f8ad953dd725c388299c8e5ca41a26c4d340da767ce6e0d0d88930c0624a7b5b0d33e8e643c6760215aa1f654f45d1123ae661ef1278933285057ce308e537800735cca99955bbf33747bcff60186e7101b8821075a02ed88d24bef1521984b1b40c62cb1d6e85f416df124dc53aa9774183c1281ef8b866a0b900d971face216ce

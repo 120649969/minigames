@@ -1,16 +1,1 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="skins.CheckBoxSkin" states="up,down,disabled,upAndSelected,downAndSelected,disabledAndSelected" xmlns:e="http://ns.egret.com/eui">
-    <e:Group width="100%" height="100%">
-        <e:layout>
-            <e:HorizontalLayout verticalAlign="middle"/>
-        </e:layout>
-        <e:Image fillMode="scale" alpha="1" alpha.disabled="0.5" alpha.down="0.7"
-                 source="checkbox_unselect_png"
-                 source.upAndSelected="checkbox_select_up_png"
-                 source.downAndSelected="checkbox_select_down_png"
-                 source.disabledAndSelected="checkbox_select_disabled_png"/>
-        <e:Label id="labelDisplay" size="20" textColor="0x707070"
-                 textAlign="center" verticalAlign="middle"
-                 fontFamily="Tahoma"/>
-    </e:Group>
-</e:Skin>
+fb238485744953bc5835797dd35eaf7f92410086a8823a906f32b588d2a672ff3205acb9a741e59770a6f9addc48139ce2550b7500e85cfbd55bc06fafe6dd11b6d73bf1425575047ea2a6dfc6f2d8eb95cc0e902361820b7a5c23a51d3b4798db1f86ee94d08ce5ecaa92039379864df8460113ebef5804b055f2908f1bce273d2d1d202167db56b2ff3d2d18a16cca7335dd3947eab322d556e0d041170b51558ba196f0dacc26468a869162bb31a9f310aa049d031c5ec3355e58ec21aae1827232524dcd0f103f84d0ba80a5e74dbfe116bbe91ca300de5af85bdbfe82274904c35b9cd2cb6176dc52672d2066a75eb66d6e241641c5c35f9ed9a573c05d15ecff5041681a0b565c6a6fb3faba50cdb5e1845d1af2971956811a049fe37a72656d476a6b689cfc6f63c6eda724523290d4adc4b7f10bf2ec5832f8e727e4e4d2d6840d7b26c11b7666f55d52ab6da8b11a16c56f56476312b59846fcb256818d9e38f76606fce980506f73f1bb36b27be53e95d907fe4fef4b9f2b86914f20811cdf845a1027a1b9f2bc0289924f16cda34989924ab155f383bf1aa4429cc00f0079113c2aea477b9f70b136de70f6f53144c94111cdf5d0bc0b52fb142de4f2ab72eeb84f507c65a6cd2aa2af5237fd3225a8d188ee60b810800d3256aada6a2478f8885fdaf1bf11f585be9632a8e88f5ff4980e69b644b4c16ce9022a09ee9d0297bf8c60a182051acdc96c8a4a510690d437711ff26eb0b96efa1da058f0270e8439cebe5105a0bae79d6aa660b158814d9a8976577fd979954ae7f32a748a2c75f31fb301eda0994e5f85d86d3482d6a1df0412eccd175ea93428325f67d4dd5df530b063e38b0d7059a81b61f0a3af6d2921598c1a9d333c951b28a3632550c8bd6da235ec8b16a5d19c838f1cad6c3d13f3620c8bc501d7d8ec1b52a078123ad19b81ad48864385441ce09ea4efa876694fab4f375db636e6c0db5b1051828e214830beba275996d0651c372942270b738675b179b1f271cacf9a73dfdfa2366455d798381b5d2b5bd05cc4bf095a3bc82098b04b400e437e1533c472057fdf0c414fd63c0a67d32cda4b9b4c73b1ab04f21004882bdda2ec04e14c22bc3254f846039495ca628001e63a6d6f177bde1f45087a83960f9fbc1e4d54aa2593f6a1fb5e009c92906b4173ed54093aebfb88a3aa6f6b0c267262d687

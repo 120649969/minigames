@@ -1,6 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="Test" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Image source="beijing_png" left="0" top="0" right="0" bottom="0"/>
-	<e:Rect id="test1" width="20" height="20" anchorOffsetX="10" anchorOffsetY="10" left="42" verticalCenter="139"/>
-	<e:Rect id="test2" height="20" anchorOffsetX="10" anchorOffsetY="10" verticalCenter="-62" right="311" width="20"/>
-</e:Skin>
+c5dd9d7c333099d4995ea45e8c72fb80485fa4bfe551f74b4df40c8375e256461044acda2f7e32c560d1cba50709d997f3efa0c3d56bbe6e9b6ce9d469d867ea273bd5327b8084aca30e3e19212e2cffaf95eab48b9b5411c73c53c3d9f0fc1872d86ce2acc25f54d53751d419acb72420d60333d5d9cc819f62c2a83deabe28dab54168eb7bd0a47a83c5faf45408d80f0c860311ab7b75d6a63bab26872a3c0baea42c91a0c2a0046875eac212b2b7558c952d33e1db670f634488fecf98864f6f34d273f54180386b3769e41896cd89c57d06d6f443ac60d5f38510dd8118ac387bb49a176e6f1ce50fec6570ee7cae9539a1907793dae20a86c5489f5ab67cb748ba13e3cd2469fa61e641a6737c35ea0a42444f5f36502eaaa58d92a5fe5bd2303bfd29d246580689ed2d0a2f0e9fabc50e3bfe76c37647dd536ede6c30980119b8b27fce9450bf04467bd900a0cdb9126f7d0b1349e9b89ecfd0e2dd0661513e52017168dee3c875cc5f23149d5898a62a765f5776f225b32525372e96fb53f42fc993f174c2fd6cd49c79abd1d5b45553c4f94ef94e4935cdd3397d05c45c395748ff48e9b8da4dfb28e4528e6cedb987523539489c5eeb0a8eaafbb4167c99b782fbb9f662b7dd689a672a17fd13df9f4071afae2bfddc9b0cd4a4b6

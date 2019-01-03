@@ -1,10 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="skins.PanelSkin" minHeight="230" minWidth="450" xmlns:e="http://ns.egret.com/eui">
-    <e:Image left="0" right="0" bottom="0"  top="0" source="border_png" scale9Grid="2,2,12,12" />
-    <e:Group id="moveArea" left="0" right="0" top="0" height="45">
-        <e:Image left="0" right="0" bottom="0"  top="0" source="header_png"/>
-        <e:Label id="titleDisplay" size="20" fontFamily="Tahoma" textColor="0xFFFFFF"
-                 wordWrap="false" left="15" right="5" verticalCenter="0"/>
-    </e:Group>
-    <e:Button id="closeButton" label="close" bottom="5" horizontalCenter="0"/>
-</e:Skin>
+c5dd9d7c333099d4995ea45e8c72fb80485fa4bfe551f74b4df40c8375e256461044acda2f7e32c560d1cba50709d997a30b954131b47ba77e8c1b58da2e9ef8b7c821d464d9700da2621474f6b0a764e94acac4cd702a6e9377e30b8035975bdaac5f40f3b132acbd5be83d2c94e17dfb7a7f68daa15b1b9ceca835711d60b375bb85302fe32d44e01674bf71e2ba8fa85beb0a53ac2c6afaf1f6b001a9f365aabe2b714927276ea73ecd12cb5fbf88355c66da0029677a280e45aaf915450245455189f7e6400be2fb120b3ed47bc5eac7a584177b70a6abb184ae163b16c12b8e98d0a5309a8b9607b5d0f21337c5fb08c74c1812d120571a63292ee6851646c05951f6195cc8484d079d15317b811f364461bd6c9998e1a381df5b3e9c23c0d50b7e32efb16711931c34f98f2e07adef97c3381af75a4bf4252b09691e272c863a94a2e10c56f6a2ae216b07b79108cc285583cff6ccaadf28583f3dab5a2153bb661f49787587385592a40249245abeaf760918b319d3d687e46706de26a7a3a6b0c96983feda9728f644ceb84cf07491cc370791f0a994322493bc6386d29fe8d64e0a9bc48e3c4778815e9bbb7e7933e42ab406dc5303b0065fb757c8466200dedff8fa2c95949ad7494ef4054892d43af087c18e302c7e91fd6783c152f606148961f45220a1a0b5844b15cd9b6e1eca22cc65deb1909ee707bc3e5e43ef5ba1d6f319b821b45eb9fd436ea3cd6b2c93eb3e38831eb2609d38abb1c70e75387f58e246f18e570ce8e8a57ebf275da3e82e1ca79d875ca68d89c0fcd730bb565b1fa4ca0a29fa7c01183f5edf45960d65b4661a3532591dfcad96371d67c3ea58689e236ac1571b2868e79337a0ddf0d67b31ddb05c7fd9363599ce175ae7befd1550aad363eff88f3f24611e

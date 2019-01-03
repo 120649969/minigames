@@ -1,4 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="BallSkin" width="196" height="196" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Image id="img_ball" source="xingqiu1_png" x="0" y="0"/>
-</e:Skin>
+c5dd9d7c333099d4995ea45e8c72fb80485fa4bfe551f74b4df40c8375e256461044acda2f7e32c560d1cba50709d997ebd4da0387b5def09a0a2422b761a4bf4abd777084754c78d8c8bc824ea656beb8dea948fddb5a468664f60be53c9cc664022de7811526b018ca4824c39becc4f5dddee8edb040808c4762b98dc5540f89883a76a1eb542ed7be91b595ad0911281ff71071322ae9047798e845da27dd754a2942d510433a4417fafcd9877155d47edf2728855add2fcc6e3e209b08d2531e0048586f9b8f211b487760b7d84ab86c13d246441525d8e0fa6c5cb05c0b87024776969a15b892a2fa4b1b19ea84

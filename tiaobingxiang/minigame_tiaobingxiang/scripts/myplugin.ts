@@ -1,17 +1,1 @@
-/**
- * 示例自定义插件，您可以查阅 http://developer.egret.com/cn/github/egret-docs/Engine2D/projectConfig/cmdExtensionPlugin/index.html
- * 了解如何开发一个自定义插件
- */
-export class CustomPlugin implements plugins.Command {
-
-    constructor() {
-    }
-
-    async onFile(file: plugins.File) {
-        return file;
-    }
-
-    async onFinish(commandContext: plugins.CommandContext) {
-
-    }
-}
+2e191ff3d5191de86af2741712be6eff1e027daa58445c945e31075b03ce9046a7ee0dfbfeb32c60e3a6b27e2c94cee916baedc8f47c47348c99f335fe0c73ec42bab0dc01e6ff3966982b6e8dc73e50826484e8043d13bbf6b09b2eea80c84c0a584f759de66133fcd33635fe49701d91db35b0a93534b2750c5c8fc5410fcf21c588332564749e8e7bace33ecc719aa817b435e97d12680f0e418b382058c1adfb0590ac83a394a0050f10a08907516956462308a086387456d959eea02a99f7f901f9b852548881a3949895803b57e187f0e11d75c871212b15f1dab4f72b598559ba54b5d5f1e8cc8d9342e99ebba88c7bd18fa2c3438e31d4c4eac85b07ae25cc2d1bb5a57ca2b2c453fe0f89693d5abe7566458e4bed71476b67e78a27bfa3d3bef8f7d1f576c916075dd8f818982d2df6f48506317c0724b56859de1269aa72a326a0874823d3a55dd63ab678e84434118360a950319ba72277bf00388aa5cc63d439402e679cb8247cc5585515656d3da6b3a807ad86e9ff917fc553c0f31cff3dbff49b64d17e13e80f3e18e274811293a53374cf6ef6d31e8ebb8e

@@ -1,4 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="BarrelSkin" width="147" height="209" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Image id="img_ball" source="paotong2_png" x="0" y="0"/>
-</e:Skin>
+c5dd9d7c333099d4995ea45e8c72fb80485fa4bfe551f74b4df40c8375e256461044acda2f7e32c560d1cba50709d997d1b4c3cf4d6587560c0b21bc4ce92fb3faaff6b185821a77e441d518041a09ed58899f9db31964c359beea9f2863482a9f495a7fa40642c7eb3d2a9ccc113ea874675ddc45b7db820517fa356391cd1a2ea49cbd67d2d27e996aad7a3b84b8b66dd9335f10516ac58331d0284fc0fb1aa0686be18304fc6748c082826f061a5981ee2229dbfc45a13c8dc61589a9f44752cc220541a6bf00edd39b1caff0f4f59d813d39bf0ec3d01650963939624f457e8046ec82e6a70cc4b003964cb0aba7

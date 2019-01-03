@@ -1,7 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="MyMoveObjectSkin" width="175" height="631" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Image source="guang_png" y="8" x="11.8" anchorOffsetY="0" height="712" visible="false"/>
-	<e:Image id="img_box" source="normal_png" y="-9" horizontalCenter="0" visible="false"/>
-	<e:Image source="shang_png" x="-2" y="83.69" visible="false"/>
-	<e:Image source="shang_png" x="-1" y="136.42" visible="false"/>
-</e:Skin>
+c5dd9d7c333099d4995ea45e8c72fb80485fa4bfe551f74b4df40c8375e256461044acda2f7e32c560d1cba50709d997c6a334d0f1ea8a02652da735d560ef075609add756711a959d6bfd3da4daaabede4d1ebf112b74f27a97a2f47a86a4c8f9983e9ed792ad93c82248ce0f10bb31ec9c1ba548c5dd9281385ae9163b814f98696ef467baa958fa5913527e4d6ac347d470fb6349c8d14849976f0cadda00c85e21c7ee0e3d22bc89f0e6dd7ca50149fe0d77d0335e9e03eb4e112be60d9437b61189d7783cb919c97d8e99070bdf1bb25d7f414ae2b66a4733c6986220fd0149d0ac67c4aae6171f9fa13f457ae197c63e91bbc3481b059bdee777c6db122b34b7930ee72174d38f2b36721895b1dfb5b7e542b73ebac36737ddfc15c00ecb89fb04ca8a2073cb31177a31c8d420ff4fb0129cd01340d2850391e48ea27a1b814ec7730876962c41c3145478821e86c7ea046075da8fa48f94e4fbd4eae75aeb4d1976f712fed8d470ab36fd9f29106628611b7871d55206ca7f5c65ea33300c0effe436e845146d832f83a282a8dc43f67be52be410db5ae63c7a7afc9d3e7c695c5a4314967dd70a07c280bfdc6b412a6f982d3c8f09cf59053299549f93950db72a4a8ea78ecea3be783182810d2925646ec6a4372cb844bb4e8eb5f8922a236b5b934f22f426710e67d8e31c

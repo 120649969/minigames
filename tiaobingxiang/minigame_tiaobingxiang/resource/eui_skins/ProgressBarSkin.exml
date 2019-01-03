@@ -1,9 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="skins.ProgressBarSkin" minWidth="30" minHeight="18" xmlns:e="http://ns.egret.com/eui">
-	<e:Image source="track_pb_png" scale9Grid="1,1,4,4" width="100%"
-			 height="100%" verticalCenter="0"/>
-	<e:Image id="thumb" height="100%" width="100%" source="thumb_pb_png"/>
-	<e:Label id="labelDisplay" textAlign="center" verticalAlign="middle"
-			 size="15" fontFamily="Tahoma" textColor="0x707070"
-			 horizontalCenter="0" verticalCenter="0"/>
-</e:Skin>
+c5dd9d7c333099d4995ea45e8c72fb80485fa4bfe551f74b4df40c8375e256461044acda2f7e32c560d1cba50709d9979a37dfe51f35ba3ef20155750622609eba919d68a66d2336a9fb5f440796bd8eedcd5fd40ae4ee33805f46bd3091917149a4bebc81f896807a85ea61d553d54377ca261bf1c04b7f270d120fbf4b8007f43b0d5df98b1f380ddfb7e33a5f6c840a8b9f98af9c1d090c410ee8978393de9bbff332091a0672bb488aef609d3fb47f65eb0e38f52970782bf73b961810bd342768a343cdd060f7866f8be9cc7c757e63d83a2af5176dd335dfcfe055db03c862dc85cf5aa551c366eacf9029addc6e016746fb6940fed6ed2915d9ced49cbf29cff40c67b50cb78642bada3d89a7b000577b6a8dfb114aa45ed63e04affe441267de83664de92eaba50543d9695e9d32b76481999f799a03092c20a385f8edfb30c2df37ef3ef0af54d47a8f5c167db7c0a76016207702f3787fc1b113d1b4d37279357921efa23461b75783709c9aa3953076cfdfe2a5b43899db665aa5d2e43ec40be08ec0b18c37e1b4f847d8668f6cb98bf92cea1d20f92231715a3c937ec22cf1f98b1e5883b44ddf9bc97d8a2c11498d80c3f5093ee0f1fe43b207712225c69e0a25d44ebfbdabe692016980caaca4b31e14131b397f2a48e380fd17bdc5bcfade70a7f5f56b66fbe1f374e7dd763c49d21eaeb89a946574bce312
