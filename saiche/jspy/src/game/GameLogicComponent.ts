@@ -67,7 +67,6 @@ class GameLogicComponent extends BaseComponent{
 
 	private _begin_move_car():void
 	{
-		
 		let global_center = new egret.Point(this._mainPanel.stage.stageWidth / 2, this._mainPanel.stage.stageHeight - this._mainPanel.m_start_line.height - this._mainPanel.moveCar.height / 2 - 20)
 		let local_in_role_container = this._mainPanel.roleContainer.globalToLocal(global_center.x, global_center.y)
 		this._mainPanel.moveCar.x = local_in_role_container.x
@@ -77,9 +76,12 @@ class GameLogicComponent extends BaseComponent{
 		let target_local_point = this._mainPanel.roleContainer.globalToLocal(target_point.x, target_point.y)
 		this._mainPanel.moveCar.visible = true
 		let __this = this
-		egret.Tween.get(this._mainPanel.moveCar).to({y:target_local_point.y}, 0.5 * 1000).call(function(){
-			__this.On_Move_Begin_Move_Car_End()
-		})
+		CommonUtils.performDelay(function(){
+			egret.Tween.get(this._mainPanel.moveCar).to({y:target_local_point.y}, 0.5 * 1000).call(function(){
+				__this.On_Move_Begin_Move_Car_End()
+			})
+		}, 0.8 * 1000, this)
+		
 	}
 
 	private _has_update:boolean = false
@@ -92,11 +94,11 @@ class GameLogicComponent extends BaseComponent{
 
 	public OnStart():void
 	{
+		this._mainPanel.m_start_line.visible = true
 		this._generate_map()
 		this._mainPanel.moveCar.OnStart()
 		this.currentTerrain = this.allTerrains[0]
 		this._begin_move_car()
-
 	}
 
 	public ChangeTerrainToNext():void
@@ -211,5 +213,29 @@ class GameLogicComponent extends BaseComponent{
 			return next_terrain
 		}
 		return null
+	}
+
+
+	public ReStartGame(allTerrainConfigs:Array<TerrainConfig>):void
+	{
+		GameController.instance.serverModel.left_time = Const.GAME_TIME
+		this._has_update = false
+		this._mainPanel.moveCar.ChangeStatus(CarStatus.Idle)
+		this._mainPanel.moveContainer.x = this._mainPanel.moveContainer.y = 0
+		this._mainPanel.mapContainer.removeChildren()
+		this._mainPanel.copyContainer.removeChildren()
+		this.allTerrains = []
+		this.allTerrainConfigs = []
+		
+		this._mainPanel.m_start_line.visible = true
+		for(let config of allTerrainConfigs)
+		{
+			this.OnAddTerrainConfig(config)
+		}
+		this._mainPanel.moveCar.OnStart()
+		this.currentTerrain = this.allTerrains[0]
+		this._begin_move_car()
+		GameController.instance.is_game_over = false
+		GameController.instance.StartGame()
 	}
 }

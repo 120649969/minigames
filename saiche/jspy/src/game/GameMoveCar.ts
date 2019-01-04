@@ -9,12 +9,17 @@ enum CarStatus{
 
 class GameMoveCar extends eui.Component{
 
+	public hit_rect:eui.Rect
 	public status:CarStatus
 	private _gameLogicComponent:GameLogicComponent
 	private _mainPanel:ui.MainScenePanel
 
 	public m_left:eui.Rect
 	public m_right:eui.Rect
+
+	private img_car:eui.Image
+
+	private _armatureDisplay:dragonBones.EgretArmatureDisplay
 
 	public constructor() {
 		super()
@@ -23,6 +28,39 @@ class GameMoveCar extends eui.Component{
 
 		this.anchorOffsetX = this.width / 2
 		this.anchorOffsetY = this.height / 2
+
+	}
+
+	public AddAnimation():void
+	{
+		let armatureDisplay = CommonUtils.createDragonBones("car_ske_json", "car_tex_json", "car_tex_png", "car_armature")
+		this.addChild(armatureDisplay)
+		armatureDisplay.rotation = -90
+		armatureDisplay.x = this.width / 2
+		armatureDisplay.y = this.height / 2
+		armatureDisplay.visible = false
+
+		this._armatureDisplay = armatureDisplay
+	}
+
+	private _get_rotation_of_terrain(terrain:GameTerrain):number
+	{
+		let first_track = terrain.allTracks[0]
+		let target_rotate_degree = 0
+		if(first_track.fromDirection == TrackDirection.Left){ //左向右
+			target_rotate_degree = 90
+		}else if(first_track.fromDirection == TrackDirection.Right){
+			target_rotate_degree = -90
+		}else if(first_track.fromDirection == TrackDirection.Top){
+			if(this.rotation < 0){
+				target_rotate_degree = -180
+			}else{
+				target_rotate_degree = 180
+			}
+		}else{
+			target_rotate_degree = 0
+		}
+		return target_rotate_degree
 	}
 
 	public Auto_adjust_rotate():void
@@ -30,20 +68,7 @@ class GameMoveCar extends eui.Component{
 		let currentTerrain:GameTerrain = this._gameLogicComponent.currentTerrain
 		if(currentTerrain && currentTerrain.IsLine() && this.status != CarStatus.Drag){
 			let first_track = currentTerrain.allTracks[0]
-			let target_rotate_degree = 0
-			if(first_track.fromDirection == TrackDirection.Left){ //左向右
-				target_rotate_degree = 90
-			}else if(first_track.fromDirection == TrackDirection.Right){
-				target_rotate_degree = -90
-			}else if(first_track.fromDirection == TrackDirection.Top){
-				if(this.rotation < 0){
-					target_rotate_degree = -180
-				}else{
-					target_rotate_degree = 180
-				}
-			}else{
-				target_rotate_degree = 0
-			}
+			let target_rotate_degree = this._get_rotation_of_terrain(currentTerrain)
 			if((this.rotation + 360) % 360 != (target_rotate_degree + 360) % 360){
 				let delta_degree = Math.abs((this.rotation + 360) % 360 - (target_rotate_degree + 360) % 360)
 
@@ -74,6 +99,7 @@ class GameMoveCar extends eui.Component{
 
 	public OnStart():void
 	{
+		this.rotation = 0
 		this._gameLogicComponent = GameController.instance.GetMainScenePanel().GetGameLogicComponent()
 		this._mainPanel = GameController.instance.GetMainScenePanel()
 	}
@@ -189,7 +215,59 @@ class GameMoveCar extends eui.Component{
 	private _on_hit():void
 	{
 		this.ChangeStatus(CarStatus.Dead)
-		GameController.instance.OnClientOver()
+
+		this.img_car.visible = false
+		this._armatureDisplay.visible = true
+		this._armatureDisplay.animation.play("dead_animation", 1)
+		let __this = this
+		CommonUtils.performDelay(function(){
+			__this.Relive()
+			__this._armatureDisplay.visible = false
+		}, 1 * 1000, this)
+		// GameController.instance.OnClientOver()
+	}
+
+	public Relive():void
+	{
+		let currentTerrain = this._gameLogicComponent.currentTerrain
+
+		let lineTerrain = currentTerrain
+		let trackIndex = 0
+		if(lineTerrain && lineTerrain.IsLine()){
+			trackIndex = 0
+		}else{
+			let last_index = this._gameLogicComponent.allTerrains.indexOf(lineTerrain) - 1
+			lineTerrain = this._gameLogicComponent.allTerrains[last_index]
+
+			trackIndex = Math.floor(lineTerrain.allTracks.length / 2)
+		}
+		let target_rotate_degree = this._get_rotation_of_terrain(lineTerrain)
+		this.rotation = target_rotate_degree
+		let first_track = lineTerrain.allTracks[trackIndex]
+		this.anchorOffsetX = this.width / 2
+		this.anchorOffsetY = this.height / 2
+
+		let temp_local_point = new egret.Point(0, 0)
+		if(first_track.toDirection == TrackDirection.Right){
+			temp_local_point.x = 0
+			temp_local_point.y = first_track.height / 2
+		}else if(first_track.toDirection == TrackDirection.Left){
+			temp_local_point.x = first_track.width
+			temp_local_point.y = first_track.height / 2
+		}else if(first_track.toDirection == TrackDirection.Top){
+			temp_local_point.x = first_track.width / 2
+			temp_local_point.y = 0
+		}else if(first_track.toDirection == TrackDirection.Down){
+			temp_local_point.x = first_track.width / 2
+			temp_local_point.y = first_track.height
+		}
+
+		let global_point = first_track.localToGlobal(temp_local_point.x, temp_local_point.y)
+		let roleContainerPoint = this._mainPanel.roleContainer.globalToLocal(global_point.x, global_point.y)
+		this.x = roleContainerPoint.x
+		this.y = roleContainerPoint.y
+		this.ChangeStatus(CarStatus.Moving)
+		this._gameLogicComponent.currentTerrain = lineTerrain
 	}
 
 	private get_instance(point1:egret.Point, point2:egret.Point)

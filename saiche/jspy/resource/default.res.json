@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,egret_icon_png,description_json,zhi_png,che_png,di_png,dian1_png,dian2_png,wan1_png,hongse_png,lvse_png,shuoming_png,touxiang1_png,touxiang2_png,touxiangdi_png,wenhao_png,lingxian_png,clock_png,clock_fnt,score_png,score_fnt,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,ready_go_mp3,dead_line_tips_mp3,last_one_second_mp3,data_json,wan2_png,zhi2_png,jindu12_png,jindu1_png,jindu13_png,jindu14_png,xian_png,qibaoxian_png",
+			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,egret_icon_png,description_json,zhi_png,che_png,di_png,dian1_png,dian2_png,wan1_png,hongse_png,lvse_png,shuoming_png,touxiang1_png,touxiang2_png,touxiangdi_png,wenhao_png,lingxian_png,clock_png,clock_fnt,score_png,score_fnt,ready_go_ske_json,ready_go_tex_json,ready_go_tex_png,ready_go_mp3,dead_line_tips_mp3,last_one_second_mp3,data_json,wan2_png,zhi2_png,jindu12_png,jindu1_png,jindu13_png,jindu14_png,xian_png,qibaoxian_png,score-10_png,score+5_png,score+10_png,car_ske_json,car_tex_json,car_tex_png",
 			"name": "preload"
 		}
 	],
@@ -295,6 +295,36 @@
 			"name": "qibaoxian_png",
 			"type": "image",
 			"url": "assets/qibaoxian.png"
+		},
+		{
+			"name": "score-10_png",
+			"type": "image",
+			"url": "assets/score-10.png"
+		},
+		{
+			"name": "score+5_png",
+			"type": "image",
+			"url": "assets/score+5.png"
+		},
+		{
+			"name": "score+10_png",
+			"type": "image",
+			"url": "assets/score+10.png"
+		},
+		{
+			"name": "car_ske_json",
+			"type": "json",
+			"url": "assets/db/car/car_ske.json"
+		},
+		{
+			"name": "car_tex_json",
+			"type": "json",
+			"url": "assets/db/car/car_tex.json"
+		},
+		{
+			"name": "car_tex_png",
+			"type": "image",
+			"url": "assets/db/car/car_tex.png"
 		}
 	]
 }

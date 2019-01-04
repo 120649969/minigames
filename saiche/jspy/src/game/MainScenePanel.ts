@@ -44,6 +44,7 @@ module ui {
 				this.btn_debug3.visible = true
 			}
 			this.moveCar.visible = false
+			this.m_start_line.visible = false
 		}
 
 		public GetGameLogicComponent():GameLogicComponent
@@ -89,8 +90,19 @@ module ui {
 			this.m_start_line.y = this.stage.stageHeight - this.m_start_line.height
 		}
 
+		public OnConnectServer():void
+		{
+			let __this = this
+			this._commonUIComponent.PlayReadyAnimation(function(){
+				CommonUtils.performDelay(function(){
+					__this.StartGame()
+				}, 0.5 * 1000, __this)
+			})
+		}
+
 		public StartGame():void
 		{
+			this.moveCar.AddAnimation()
 			super.StartGame()
 
 			this.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onTouchBegin, this)

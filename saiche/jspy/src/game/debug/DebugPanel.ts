@@ -6,7 +6,7 @@ module ui {
 		private btn_delete:eui.Button
 		private btn_export:eui.Button
 		private btn_load:eui.Button
-
+		private btn_test:eui.Button
 
 		public mapContainer:eui.Group
 		public allTerrainConfigs:Array<TerrainConfig> = []
@@ -22,6 +22,7 @@ module ui {
 			CommonUtils.Add_Btn_Click(this.btn_delete, this.onClickDelete, this)
 			CommonUtils.Add_Btn_Click(this.btn_export, this.onClickExport, this)
 			CommonUtils.Add_Btn_Click(this.btn_load, this.onClickLoad, this)
+			CommonUtils.Add_Btn_Click(this.btn_test, this._onClickTest, this)
 			window['debugPanel'] = this
 
 			let __this = this
@@ -37,6 +38,12 @@ module ui {
 					__this._move_down()
 				}
 			})
+		}
+
+		private _onClickTest():void
+		{
+			ui.WindowManager.getInstance().close("DebugPanel")
+			GameController.instance.GetMainScenePanel().GetGameLogicComponent().ReStartGame(this.allTerrainConfigs)
 		}
 			
 		public _move_left():void

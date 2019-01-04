@@ -367,7 +367,7 @@ class GameTerrain {
 	//车bound和Terrain的bound是否相交
 	public IsCarInBoard():boolean
 	{
-		let carBoundInMapCoordinate = GameController.instance.GetMainScenePanel().moveCar.getTransformedBounds(GameController.instance.GetMainScenePanel().mapContainer)
+		let carBoundInMapCoordinate = GameController.instance.GetMainScenePanel().moveCar.hit_rect.getTransformedBounds(GameController.instance.GetMainScenePanel().mapContainer)
 		if(this.IsThreeTerrain()){
 			let first_track:GameThreeArcTrack = this.allTracks[0] as GameThreeArcTrack
 			let bounds = first_track.GetValidBounds()
